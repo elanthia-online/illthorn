@@ -135,23 +135,7 @@ body {
 }
 
 .hand:before {
-  background-color: var(--main-bg-color)
-}
-
-.hand:empty:before {
   background-color: var(--text-color)
-}
-
-.hand.right:empty:after {
-  content: "right"
-}
-
-.hand.left:empty:after {
-  content: "left"
-}
-
-.hand.spell:empty:after {
-  content: "spell"
 }
 
 .feed pre {

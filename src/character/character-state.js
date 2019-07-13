@@ -1,4 +1,5 @@
 const Lens = require("../util/lens")
+const Bus  = require("../bus")
 
 module.exports = class CharacterState {
   static TAGS =
@@ -43,6 +44,8 @@ module.exports = class CharacterState {
   }
 
   put (prop, val) {
-    return Lens.put(this, prop, val)
+    Lens.put(this, prop, val)
+    Bus.emit("redraw")
+    return this
   }
 }

@@ -58,6 +58,9 @@ module.exports = class Feed {
    * add <pre> to the feed without rendering it
    */
   rpush (pre) {
+    if (Feed.is_prompt(this.retained[this.retained.length-1])) {
+      this.retained.pop()
+    }
     this.retained.push(pre)
     return this.flush()
   }

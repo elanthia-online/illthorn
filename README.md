@@ -2,6 +2,8 @@
 
 An attempt at a modern cross-platform FE.
 
+![illthorn_fe](https://user-images.githubusercontent.com/1090434/61176194-924b7780-a58a-11e9-92eb-4fbc225f3828.png)
+
 ## Current Features
 
 1. Attempts to autostart sessions by detecting open lich processes started with `--without-frontend`
@@ -15,6 +17,7 @@ An attempt at a modern cross-platform FE.
 2. Theme Interface
 3. Custom Highlights
 4. Macros
+5. Command History / Autocomplete (ala fish/bash/zsh)
 
 ## FE Commands (Vim prefixed)
 

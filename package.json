@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "@elanthia/koschei": "^2.0.0",
+    "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^4.0.0",
     "keyboardjs": "^2.5.1",
     "mithril": "^1.1.6",

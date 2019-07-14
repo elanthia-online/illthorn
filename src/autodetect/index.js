@@ -10,9 +10,10 @@ const not_zero_port =
   ({port})=> port > 0
 
 const parse_lich_cmd =
-  cmd => ({ name: cmd.match(/--login\s(\w+)\s/)[1]
-          , port: cmd.match(/--detachable-client=(\d+)\s/)[1]
-          })
+  (proc) => ({ ...proc
+             , name: proc.cmd.match(/--login\s(\w+)\s/)[1]
+             ,  port: proc.cmd.match(/--detachable-client=(\d+)\s/)[1]
+            })
 
 module.exports = class Autodetect {
   static async list_unsafe () {
@@ -20,14 +21,25 @@ module.exports = class Autodetect {
   }
 
   static async list () {
-    return (await Autodetect.list_unsafe())
-      .map(({cmd})=> cmd)
+    return Object.values((await Autodetect.list_unsafe())
       .map(parse_lich_cmd)
       .filter(not_zero_port)
+      .reduce((acc, conn) => { 
+        acc[conn.port] = acc[conn.port] || conn
+        // higher processes should have a higher pid
+        // to account for zombie processes that Lich loves 
+        // to allow to linger
+        if (acc[conn.port].pid < conn.pid) {
+          acc[conn.port] = conn
+        }
+        return acc
+      }, {}))
   }
 
   static async connect_all () {
     const connections = (await Autodetect.list()).map(opts => {
+      if (Character.Connected.has(opts.name)) return
+
       try {
         Character.of(opts)
       } catch (err) {

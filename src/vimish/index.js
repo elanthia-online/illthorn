@@ -14,10 +14,11 @@ const redraw = (character)=> {
  * connect to a session
  */
 exports.connect = exports.c = Command.of(["name", "port"], async argv => {
+  // connect to all the sessions
   if (!argv.port && !argv.name) {
     return await Autodect.connect_all()
   }
-
+  // attempt to autodetect what port to connect to
   if (!argv.port) {
     const running = await Autodetect.list()
 

@@ -25,9 +25,12 @@ All FE commands are prefixed by the `:` character, ala `vim` or other common cli
 
 #### `:connect <name> <port>`
 #### (alias) `:c <name> <port>`
+#### `:connect`
+#### `:connect <name>`
 
 Attempts to create a new named session with the given arguments.
 If `name` and `port` are omitted, it will attempt to autodetect any newly created Lich processes.
+If `port` is omitted we will attempt to autodetect which port to connect to.
 
 #### `:focus <session>`
 #### (alias) `:f <session>`

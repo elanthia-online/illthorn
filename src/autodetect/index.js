@@ -15,8 +15,12 @@ const parse_lich_cmd =
           })
 
 module.exports = class Autodetect {
-  static async list () {
+  static async list_unsafe () {
     return (await ps_list()).filter(is_lich_proc)
+  }
+
+  static async list () {
+    return (await Autodetect.list_unsafe())
       .map(({cmd})=> cmd)
       .map(parse_lich_cmd)
       .filter(not_zero_port)

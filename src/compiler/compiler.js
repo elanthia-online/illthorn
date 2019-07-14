@@ -50,7 +50,7 @@ module.exports = class Compiler {
   static compile_root(tag, body) {
     const pre = document.createElement("pre")
     pre.className = [tag.name || "", tag.id || ""].join(" ").trim()
-    pre.innerHTML = body
+    pre.innerHTML = body.trimLeft()
     const frag = document.createDocumentFragment()
     frag.appendChild(pre)
     return frag

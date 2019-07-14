@@ -4,6 +4,7 @@ const Command    = require("./command")
 const Character  = require("../character")
 const Bus        = require("../bus")
 const Autodetect = require("../autodetect")
+const Lens       = require("../util/lens")
 
 const redraw = (character)=> {
   Bus.emit(Bus.events.FOCUS, character)
@@ -39,7 +40,7 @@ exports.rename = exports.r = Command.of(["name"], ({name}) => {
  * focus on a session, will loosely match
  */
 exports.focus = exports.f = Command.of(["name"], ({name}) => {
-  const candidates = Array.from(Character.Connected).filter(([active, _])=> ~active.indexOf(name))
+  const candidates = Character.loose_select(name)
 
   if (candidates.length > 1) {
     throw new Error(`Ambigious match for name(${name}) found ${candidates.length} matches`)
@@ -72,4 +73,24 @@ exports.swap = Command.of(["other"], ({other})=> {
   Character.Connected.get(other).rename(this_name)
   focused.rename(other)
   Bus.emit(Bus.events.REDRAW)
+})
+
+exports.quit = exports.q = Command.of(["name"], async ({name})=> {
+  if (!name) {
+    name = Lens.get(Character.get_active(), "name")
+  }
+
+  const candidates = Character.loose_select(name)
+
+  if (candidates.length > 1) {
+    throw new Error(`Ambigious match for name(${name}) found ${candidates.length} matches`)
+  }
+
+  if (candidates.length == 0) {
+    throw new Error(`No matches found for name(${name})`)
+  }
+
+  const [_, character] = candidates[0]
+
+  character.quit()
 })

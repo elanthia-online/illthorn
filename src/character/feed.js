@@ -55,6 +55,17 @@ module.exports = class Feed {
     Feed.Feeds.set(character, this)
   }
   /**
+   * clean up all unsafe references
+   */
+  destroy () {
+    Feed.Feeds.delete(this.character)
+
+    this.root = 
+    this.character = 
+    this.retained.length = 
+    this.middleware.length = 0
+  }
+  /**
    * add <pre> to the feed without rendering it
    */
   rpush (pre) {
@@ -68,6 +79,7 @@ module.exports = class Feed {
    * mark a feed as idle
    */
   idle () {
+    if (this.root == 0) return
     this._active = false
     this.root.parentElement && this.root.parentElement.removeChild(this.root)
     this.root.innerHTML = ""

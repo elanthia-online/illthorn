@@ -24,5 +24,8 @@ Bus.on(Bus.events.FOCUS, character => {
   character.attach(document.getElementById("feed-wrapper"))
 })
 
+Bus.on(Bus.events.ERR, err => {
+  console.error(err)
+})
 
 Autodect().catch(err => Bus.emit(Bus.events.ERR, err))

@@ -2,6 +2,7 @@ const {Parser} = require("@elanthia/koschei")
 const net      = require("net")
 const State    = require("./character-state")
 const Feed     = require("./feed")
+const Bus      = require("../bus")
 
 const last = 
   list => list.pop()
@@ -11,6 +12,11 @@ module.exports = class Character {
 
   static is_active (character) {
     return character.is_active()
+  }
+
+  static loose_select (name) {
+    return Array.from(Character.Connected)
+      .filter(([active, _])=> ~active.indexOf(name))
   }
 
   static async of (opts) {
@@ -38,6 +44,22 @@ module.exports = class Character {
     this.state   = State.of(this)
   }
 
+  _sock_listeners () {
+    this.sock.on("close", _   => this.destroy())
+    this.sock.on("error", err => Bus.emit(err, {message: err.message, from: this.name}))
+  }
+
+  destroy () {
+    Character.Connected.delete(this.name)
+    this.feed.destroy()
+    this.feed = this.parser = this.state = void 0
+    Bus.emit(Bus.events.REDRAW)
+  }
+
+  quit () {
+    return this.sock.end()
+  }
+
   is_active () {
     return this.feed.is_active()
   }
@@ -63,7 +85,7 @@ module.exports = class Character {
     if (this.name && Character.Connected.has(this.name)) Character.Connected.delete(this.name)
     this.name = name
     Character.Connected.set(this.name, this)
-    window.dispatchEvent(new Event("redraw"))
+    Bus.emit(Bus.events.REDRAW)
   }
 
   async connect () {
@@ -73,6 +95,8 @@ module.exports = class Character {
         this.sock.pipe(this.parser)
         resolve(this)
       })
+
+      this._sock_listeners()
     })
   }
 

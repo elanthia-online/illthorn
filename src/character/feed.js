@@ -19,6 +19,7 @@ module.exports = class Feed {
    * safely check if an HTMLElement is a prompt or not
    */
   static is_prompt (pre) {
+
     return pre && pre.classList && pre.classList.contains("prompt")
   }
   /**
@@ -69,10 +70,10 @@ module.exports = class Feed {
    * add <pre> to the feed without rendering it
    */
   rpush (pre) {
-    if (Feed.is_prompt(this.retained[this.retained.length-1])) {
+    if (Feed.is_prompt(this.retained[this.retained.length-1]) && Feed.is_prompt(pre.firstElementChild)) {
       this.retained.pop()
     }
-    this.retained.push(pre)
+    this.retained.push(pre.firstElementChild)
     return this.flush()
   }
   /**

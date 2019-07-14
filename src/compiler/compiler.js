@@ -28,12 +28,6 @@ module.exports = class Compiler {
   static is_doubled (tag) {
     return tag.name == "stream" && tag.id in DuplicateStream
   }
-
-  static to_html (compiled) {    
-    const div = document.createElement("div")
-    div.innerHTML = compiled
-    return div.lastChild
-  }
   
   static compile (parent) {
     return Compiler.compile_root(parent, 
@@ -54,8 +48,12 @@ module.exports = class Compiler {
   }
 
   static compile_root(tag, body) {
-    const klass = [tag.name || "", tag.id || ""].join(" ").trim()
-    return `<pre class="${klass}">${body}</pre>`
+    const pre = document.createElement("pre")
+    pre.className = [tag.name || "", tag.id || ""].join(" ").trim()
+    pre.innerHTML = body
+    const frag = document.createDocumentFragment()
+    frag.appendChild(pre)
+    return frag
   }
   
   static compile_a_tag (kind, attrs = {}, text) {

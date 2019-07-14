@@ -1,17 +1,22 @@
 
 
-const Command   = require("./command")
-const Character = require("../character")
-const Bus       = require("../bus")
+const Command    = require("./command")
+const Character  = require("../character")
+const Bus        = require("../bus")
+const Autodetect = require("../autodetect")
 
 const redraw = (character)=> {
-  Bus.emit("character:focus", character)
-  Bus.emit("redraw")
+  Bus.emit(Bus.events.FOCUS, character)
+  Bus.emit(Bus.events.REDRAW)
 }
 /**
  * connect to a session
  */
 exports.connect = exports.c = Command.of(["name", "port"], async argv => {
+  if (!argv.port && !argv.name) {
+    return await Autodetect()
+  }
+
   if (Character.Connected.has(argv.name)) {
     throw new Error(`Session(name: ${argv.name}) already exists`)
   }
@@ -66,5 +71,5 @@ exports.swap = Command.of(["other"], ({other})=> {
   focused.rename(swap)
   Character.Connected.get(other).rename(this_name)
   focused.rename(other)
-  Bus.emit("redraw")
+  Bus.emit(Bus.events.REDRAW)
 })

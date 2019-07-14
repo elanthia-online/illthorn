@@ -22,7 +22,13 @@ module.exports = async function () {
     .map(({cmd})=> cmd)
     .map(parse_lich_cmd)
     .filter(not_zero_port)
-    .map(Character.of))
+    .map(opts => {
+      try {
+        Character.of(opts)
+      } catch (err) {
+        Bus.emit("error")
+      }
+    }))
 
-  Bus.emit("redraw")
+  Bus.emit(Bus.events.REDRAW)
 }

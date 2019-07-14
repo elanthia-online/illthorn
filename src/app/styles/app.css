@@ -162,6 +162,10 @@ a.speech {
   color: limegreen;
 }
 
+a.d {
+  border-bottom: 2px solid fuchsia;
+}
+
 ol#characters {
   list-style-type: none;
   padding: 0;

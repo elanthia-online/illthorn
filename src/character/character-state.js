@@ -45,7 +45,7 @@ module.exports = class CharacterState {
 
   put (prop, val) {
     Lens.put(this, prop, val)
-    Bus.emit("redraw")
+    Bus.emit(Bus.events.REDRAW)
     return this
   }
 }

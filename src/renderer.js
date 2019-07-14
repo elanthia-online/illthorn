@@ -17,13 +17,12 @@ m.mount(document.getElementById("spell-hand"),
   { view: _=> m(UI.Hand, {kind: "spell"}) 
   })
 
+Bus.on(Bus.events.REDRAW, m.redraw)
 
-Bus.on("redraw", m.redraw)
-
-Bus.on("character:focus", (character) => {
+Bus.on(Bus.events.FOCUS, character => {
   if (character.is_active()) return character.idle()
   character.attach(document.getElementById("feed-wrapper"))
 })
 
 
-Autodect().catch(console.error)
+Autodect().catch(err => Bus.emit(Bus.events.ERR, err))

@@ -91,7 +91,8 @@ module.exports = class Feed {
     this._active = true
     this.root.innerHTML = ""
     const frag = document.createDocumentFragment()
-    const to_render = this.retained.slice(0, 50)
+    const length = this.retained.length
+    const to_render = this.retained.slice(length - 100, length)
     // todo: prune to max size?
     to_render.forEach(node => frag.appendChild(node))
     this.root.appendChild(frag)
@@ -129,18 +130,19 @@ module.exports = class Feed {
    */
   append (pre) {
     // swap for the latest prompt
-    if (Feed.is_prompt(pre) && this.has_prompt()) {
+    if (Feed.is_prompt(pre.firstElementChild) && this.has_prompt()) {
       this.retained.pop()
-      this.retained.push(pre)
+      this.retained.push(pre.firstElementChild)
       return this.root.replaceChild(pre, this.root.lastElementChild)
     }
     // add this to retained node list
-    this.retained.push(pre)
+    this.retained.push(pre.firstElementChild)
     // append the tag to the actual HTML
     this.root.append(pre)
     // prune the real DOM
     Occlusion.prune(this.root, 
-      {  retain: Percent(300)
+      { retain     : Percent(500)
+      , mix_length : 100 // minimum number of nodes to retain in DOM
       })
     // if our pruned in-memory buffer has grown too long
     // we must prune it again.  These messages are lost forever
@@ -170,7 +172,10 @@ module.exports = class Feed {
    * finalizer for pruned nodes
    */
   flush () {
-    while (this.retained.length > Feed.MAX_MEMORY_LENGTH) this.retained.shift()
+    while (this.retained.length > Feed.MAX_MEMORY_LENGTH) {
+      this.retained.shift()
+      console.log(":flush")
+    }
     return this
   }
 
@@ -179,7 +184,6 @@ module.exports = class Feed {
 
     Pipe.of(tag)
       .fmap(Compiler.compile)
-      .fmap(Compiler.to_html)
       .fmap(Feed.consume, this)
   }
 }

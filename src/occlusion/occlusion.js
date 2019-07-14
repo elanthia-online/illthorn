@@ -4,8 +4,13 @@ module.exports = class Occlusion {
    * a minimally perfomant amount of nodes are retained 
    * in the DOM
    */
-  static prune (ele, {retain = 2.0} = {}) {
-    const pruned    = []
+  static prune (ele, {retain, min_length}) {
+    const pruned = []
+    // min-items heuristic
+    if (ele.childNodes.length < min_length) {
+      return pruned
+    }
+
     const threshold = Math.max(ele.clientHeight, 
       Math.round(ele.clientHeight * retain))
    

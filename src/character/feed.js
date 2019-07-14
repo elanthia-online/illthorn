@@ -1,6 +1,6 @@
 const Occlusion = require("../occlusion/occlusion")
 const Compiler  = require("../compiler/compiler")
-const Pipe      = require("@elanthia/koschei/dist/util/pipe").default
+const Pipe      = require("../util/pipe")
 /**
  * verbose helper
  */
@@ -60,7 +60,7 @@ module.exports = class Feed {
    */
   destroy () {
     Feed.Feeds.delete(this.character)
-
+    this.idle()
     this.root = 
     this.character = 
     this.retained.length = 

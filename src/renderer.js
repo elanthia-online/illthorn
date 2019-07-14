@@ -28,4 +28,5 @@ Bus.on(Bus.events.ERR, err => {
   console.error(err)
 })
 
-Autodect().catch(err => Bus.emit(Bus.events.ERR, err))
+Autodect.connect_all()
+  .catch(err => Bus.emit(Bus.events.ERR, err))

@@ -28,8 +28,10 @@ body {
 .left-pane {
   background-color: var(--accent-color);
 }
+
 .hud  {
-  background-color: var(--main-bg-color)
+  background-color: var(--main-bg-color);
+  border-right: 3px solid var(--accent-color);
 } 
 
 .feed  {
@@ -53,6 +55,7 @@ body {
 
 #cli-wrapper {
   background-color: var(--main-bg-color);
+  border-top: 3px solid var(--accent-color);
   padding: 1em;
 }
 

@@ -15,7 +15,15 @@ const redraw = (character)=> {
  */
 exports.connect = exports.c = Command.of(["name", "port"], async argv => {
   if (!argv.port && !argv.name) {
-    return await Autodetect()
+    return await Autodect.connect_all()
+  }
+
+  if (!argv.port) {
+    const running = await Autodetect.list()
+
+    const auto_detected = running.find(({name})=> ~name.indexOf(argv.name)) || {}
+
+    Object.assign(argv, auto_detected)
   }
 
   if (Character.Connected.has(argv.name)) {

@@ -3,7 +3,6 @@ const ps_list   = require("ps-list")
 const Bus       = require("../bus")
 
 // ruby /home/benjamin/gemstone/lich/lich.rb --login Ondreian --detachable-client=8003 --without-frontend
-
 const is_lich_proc = 
   ({name, cmd})=> name == "ruby" && cmd.includes("lich.rb") && cmd.includes("--without-frontend")
 
@@ -15,20 +14,24 @@ const parse_lich_cmd =
           , port: cmd.match(/--detachable-client=(\d+)\s/)[1]
           })
 
-module.exports = async function () {
-  const running = await ps_list()
+module.exports = class Autodetect {
+  static async list () {
+    return (await ps_list()).filter(is_lich_proc)
+      .map(({cmd})=> cmd)
+      .map(parse_lich_cmd)
+      .filter(not_zero_port)
+  }
 
-  await Promise.all(running.filter(is_lich_proc)
-    .map(({cmd})=> cmd)
-    .map(parse_lich_cmd)
-    .filter(not_zero_port)
-    .map(opts => {
+  static async connect_all () {
+    const connections = (await Autodetect.list()).map(opts => {
       try {
         Character.of(opts)
       } catch (err) {
-        Bus.emit("error")
+        Bus.emit("error", {message: err.message, from: opts.name})
       }
-    }))
+    })
 
-  Bus.emit(Bus.events.REDRAW)
+    await Promise.all(connections)
+    Bus.emit(Bus.events.REDRAW)
+  }
 }

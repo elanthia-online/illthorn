@@ -38,16 +38,23 @@ module.exports = class Autodetect {
 
   static async connect_all () {
     const connections = (await Autodetect.list()).map(opts => {
-      if (Character.Connected.has(opts.name)) return
+      if (Character.Connected.has(opts.name)) {
+        return Character.Connected.get(opts.name)
+      }
 
       try {
-        Character.of(opts)
+        return Character.of(opts)
       } catch (err) {
         Bus.emit("error", {message: err.message, from: opts.name})
       }
     })
 
-    await Promise.all(connections)
+    const characters = (await Promise.all(connections)).filter(char => char instanceof Character)
+
+    if (characters.length && !Character.get_active()) {
+      Bus.emit(Bus.events.FOCUS, characters[0])
+    }
+
     Bus.emit(Bus.events.REDRAW)
   }
 }

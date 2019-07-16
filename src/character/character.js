@@ -3,6 +3,7 @@ const net      = require("net")
 const State    = require("./character-state")
 const Feed     = require("./feed")
 const Bus      = require("../bus")
+const History  = require("./command-history")
 
 const last = 
   list => list.pop()
@@ -16,7 +17,13 @@ module.exports = class Character {
 
   static loose_select (name) {
     return Array.from(Character.Connected)
-      .filter(([active, _])=> ~active.indexOf(name))
+      .filter(([active, _])=> ~active.toString().toLowerCase().indexOf(name.toLowerCase()))
+  }
+
+  static get_current_command () {
+    const character = Character.get_active()
+    if (!character) return ""
+    return character.history.read()
   }
 
   static async of (opts) {
@@ -38,6 +45,7 @@ module.exports = class Character {
   constructor ({port, name}) {
     this.port    = port
     this.sock    = void 0
+    this.history = History.of()
     this.name    = name || port
     this.parser  = Parser.of()
     this.feed    = Feed.of({character: this})
@@ -45,12 +53,20 @@ module.exports = class Character {
   }
 
   _sock_listeners () {
-    this.sock.on("close", _   => this.destroy())
+    this.sock.on("close", _   => {
+      if (!this.feed) return
+      const pre = document.createElement("pre")
+      pre.innerText = "*** Connection Closed ***"
+      const frag = document.createDocumentFragment()
+      frag.appendChild(pre)
+      this.feed.append(frag)
+    })
     this.sock.on("error", err => Bus.emit(err, {message: err.message, from: this.name}))
   }
 
   destroy () {
     Character.Connected.delete(this.name)
+    this.sock.end()
     this.feed.destroy()
     this.feed = this.parser = this.state = void 0
     Bus.emit(Bus.events.REDRAW)
@@ -101,7 +117,10 @@ module.exports = class Character {
   }
 
   send_command (cmd) {
-    this.sock.write(cmd.toString() + "\n")
+    cmd = cmd.toString().trim()
+    if (cmd.length == 0) return
+    this.history.add(cmd)
+    this.sock.write(cmd + "\n")
     this.parser.emit("tag", 
       { name : "prompt"
       , id   : "cli"

@@ -49,6 +49,7 @@ module.exports = class Feed {
     this.middleware = middleware 
     this.root       = document.createElement("div")
     this.root.classList.add("feed")
+    this.root.classList.add("scroll")
     this.retained   = []
     this._active    = false
     this._scrolling = false

@@ -7,24 +7,13 @@
   </head>
   <body>
     <div id="app">
-      <div class="app-layout">
-        <div class="left-pane box">
-          <div class="header"></div>
-          <ol id="characters"></ol>
+        <div id="sessions" class="pane"></div>
+        <div id="hud" class="pane"></div>
+        <div id="main" class="pane">
+          <div id="hands-wrapper"></div>
+          <div id="feed-wrapper"></div>
+          <div id="cli-wrapper"></div>
         </div>
-        <div class="hud box">
-          <div class="header char-name"></div>
-        </div>
-        <div class="header box">
-          <div class="hands">
-            <div class="hand left" id="left-hand"></div>
-            <div class="hand right" id="right-hand"></div>
-            <div class="hand spell" id="spell-hand"></div>
-          </div>
-        </div>
-        <div class="box" id="feed-wrapper"></div>
-        <div class="box" id="cli-wrapper" ></div>
-      </div>
     </div>
   </body>
   <script>

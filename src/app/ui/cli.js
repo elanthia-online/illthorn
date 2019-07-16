@@ -1,6 +1,7 @@
 const m         = require("mithril")
 const Character = require("../../character")
 const Vimish    = require("../../vimish")
+const Lens      = require("../../util/lens")
 
 module.exports = class CLI {
   static CONTROL_CHAR = ":"
@@ -13,7 +14,6 @@ module.exports = class CLI {
 
   static async fe_cmd (raw) {
     const [command, ...argv] = raw.slice(1).split(" ")
-    console.log("Command(%s -> %s) %o", raw, command, argv)
     const impl = Vimish[command]
 
     try {
@@ -34,17 +34,27 @@ module.exports = class CLI {
     char.send_command(cmd)
   }
 
-  static onkeypress (e) {
-    if (e.key == "Enter") return CLI.parse(
-      { target: e.target
-      ,  value: e.target.value
-      })
+  static onkeyup (e) {
+    if (e.key == "Enter") {
+      return CLI.parse(
+        { target: e.target
+        ,  value: e.target.value
+        })
+    }
+
+    const char = Character.get_active()
+    if (!char) return
+    //console.log("CLI(%s)", e.target.value)
+    char.history.update(e.target.value)
   }
 
   view () {
-    return m("input#cli", 
-      { onkeypress : CLI.onkeypress
-      , autofocus  : true
-      })
+    return [
+      m("span.prompt", Lens.get(Character.get_active(), "state.prompt.text", ">"))
+    , m("input#cli", 
+        { onkeyup : CLI.onkeyup
+        , autofocus  : true
+        })
+    ]
   }
 }

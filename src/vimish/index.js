@@ -5,6 +5,7 @@ const Character  = require("../character")
 const Bus        = require("../bus")
 const Autodetect = require("../autodetect")
 const Lens       = require("../util/lens")
+const Settings   = require("../settings")
 
 const redraw = (character)=> {
   Bus.emit(Bus.events.FOCUS, character)
@@ -101,5 +102,10 @@ exports.quit = exports.q = Command.of(["name"], async ({name})=> {
 
   const [_, character] = candidates[0]
 
-  character.quit()
+  character.destroy()
+})
+
+exports.ui = Command.of(["component", "state"], async ({component, state}) => {
+  Settings.set(`ui.${component}`, state)
+  Bus.emit(Bus.events.REDRAW)
 })

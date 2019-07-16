@@ -9,6 +9,7 @@ const DuplicateStream =
   { speech : 1
   , room   : 1
   , inv    : 1
+  , bounty : 1
   }
 
 module.exports = class Compiler {
@@ -50,7 +51,7 @@ module.exports = class Compiler {
   static compile_root(tag, body) {
     const pre = document.createElement("pre")
     pre.className = [tag.name || "", tag.id || ""].join(" ").trim()
-    pre.innerHTML = body//.trimLeft()
+    pre.innerHTML = body.trimLeft()
     const frag = document.createDocumentFragment()
     frag.appendChild(pre)
     return frag

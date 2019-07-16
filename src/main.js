@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron')
+const path = require("path")
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -12,10 +13,14 @@ let mainWindow
 const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow(
-    { show          : false
-    , frame         : false
-    , webPreferences: {nodeIntegration: true}
+    { show           : false
+    , frame          : false
+    , webPreferences : {nodeIntegration: true}
+    , titleBarStyle  : "hidden"
+    , icon           : path.join(__dirname, 'src/app/png/64x64.png')
     })
+
+  console.log(path.join(__dirname, 'app/png/64x64.png'))
 
   mainWindow.maximize()
   mainWindow.show()

@@ -1,3 +1,5 @@
+const Settings = require("../settings")
+
 const CompileEnum =
   { style  : 1
   , text   : 1
@@ -35,9 +37,24 @@ module.exports = class Compiler {
       Compiler.compile_child_substr(parent))
   }
 
+  static trim_left (body) {
+    let idx = 0
+    while (idx < 5) {
+      const char = body[idx]
+      ++idx
+      if (char == " ") continue
+      if (char == "\r") return body.trimLeft()
+      if (char == "\n") return body.trimLeft()
+      return body
+    }
+
+    return body
+  }
+
   static compile_child_substr (parent) {
     // skip for faster renders
-    if (parent.text.length > 600) return parent.text
+    if (parent.text.length > Settings.get("compiler.max", 600)) return parent.text
+    if (Settings.get("compiler.run", true) === false) return parent.text
 
     return (parent.children || []).reduce((compiler, tag)=> {
       const before  = compiler.text.substr(0, tag.start + compiler.offset)
@@ -51,7 +68,7 @@ module.exports = class Compiler {
   static compile_root(tag, body) {
     const pre = document.createElement("pre")
     pre.className = [tag.name || "", tag.id || ""].join(" ").trim()
-    pre.innerHTML = body.trimLeft()
+    pre.innerHTML = Compiler.trim_left(body)
     const frag = document.createDocumentFragment()
     frag.appendChild(pre)
     return frag

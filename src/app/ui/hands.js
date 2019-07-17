@@ -1,6 +1,6 @@
-const m         = require("mithril")
-const Character = require("../../character")
-const Lens      = require("../../util/lens")
+const m       = require("mithril")
+const Session = require("../../session")
+const Lens    = require("../../util/lens")
 
 module.exports = class Hands {
   static KINDS =
@@ -9,6 +9,10 @@ module.exports = class Hands {
     , "magic"
     ]
 
+  static Lookup =
+    Hands.KINDS.reduce((acc, hand)=> Object
+      .assign(acc, {[hand]: Lens.of(["state", hand, "text"], Hands.fallback(hand)) }),{})
+
   static fallback (hand) {
     switch (hand) {
       case "magic": return "None"
@@ -16,11 +20,11 @@ module.exports = class Hands {
     }
   }
 
-  view ({attrs}) {
-    const char = Character.get_active()
+  view () {
+    const session = Session.focused()
 
-    return m("ol#hands", Hands.KINDS.map(hand => m(`li.hand#${hand}`, 
+    return session && m("ol#hands", Hands.KINDS.map(hand => m(`li.hand#${hand}`, 
       {key: hand},
-      Lens.get(char, ["state", hand, "text"], Hands.fallback(hand)))))
+      Hands.Lookup[hand].get(session))))
   }
 }

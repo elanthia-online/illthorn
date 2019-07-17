@@ -1,26 +1,31 @@
-const m         = require("mithril")
-const Character = require("../../character")
-const Lens      = require("../../util/lens")
+const m    = require("mithril")
+const Lens = require("../../util/lens")
 
 
 module.exports = class Progress {
   static DIVISOR = /(\d+)\/(\d+)$/
 
   static parse_percentage (bar) {
-    if (bar.text.match(Progress.DIVISOR)) {
+    if (typeof bar.text == "string" && bar.text.match(Progress.DIVISOR)) {
       const [_, current, max] = bar.text.match(Progress.DIVISOR)
       return (parseInt(current, 10) / parseInt(max, 10) * 100)
     }
 
-    const value = Lens.get(bar, "attrs.value", 0)
+    if (bar.id == "encumlevel") console.log(bar)
 
-    return parseInt(value, 10)
+    return parseInt(Lens.get(bar, "attrs.value", 0), 10)
   }
 
   static classify (percent) {
     if (percent > 66) return "high"
     if (percent > 33) return "medium"
     return "low"
+  }
+
+  static classify_down (percent) {
+    if (percent > 66) return "low"
+    if (percent > 33) return "medium"
+    return "high"
   }
 
   static text (bar) {

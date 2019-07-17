@@ -1,10 +1,10 @@
 module.exports = class LimitedList {
-  static of(members  = [], opts) {
+  static of(members = [], opts = {}) {
     return new LimitedList(members, opts)
   }
-  constructor (members, opts) {
+  constructor (members = [], opts = {}) {
     this.members = members
-    this.limit   = opts.limit
+    this.limit   = opts.limit || 100
   }
   get size () {
     return this.members.length
@@ -15,7 +15,7 @@ module.exports = class LimitedList {
   
   lpush (...items) {
     this.members.unshift(...items)
-    while (this.size > this.limit) this.lpop()
+    while (this.size > this.limit) this.rpop()
     return this
   }
 

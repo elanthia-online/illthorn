@@ -1,5 +1,5 @@
 const m         = require("mithril")
-const Character = require("../../../character")
+const Session = require("../../../session")
 const Panel     = require("./panel")
 const Lens      = require("../../../util/lens")
 const Progress  = require("../progress")
@@ -34,7 +34,7 @@ module.exports = class ActiveSpells {
   }
 
   static spells () {
-    return Lens.get(Character.get_active(), "state.ActiveSpells.children", [])
+    return Lens.get(Session.focused(), "state.ActiveSpells.children", [])
       .filter((_, i)=> i % 2 == 1)
       .map(Attrs.get)
       .map((attrs)=> ({name: attrs.anchor_right, remaining: attrs.value}))   

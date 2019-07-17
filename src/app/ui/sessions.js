@@ -1,15 +1,15 @@
 const m         = require("mithril")
-const Character = require("../../character")
+const Session = require("../../session")
 const Bus       = require("../../bus")
 
-module.exports = class Sessions {
-  static tab ([name, character]) {   
-    return m(`li.${ character.is_active() ? "on" : "off" }`,
-      {key: name, onclick: Bus.emit.bind(Bus, Bus.events.FOCUS, character) },
-      m("span", name))
+module.exports = class SessionsList {
+  static tab (session) {   
+    return m(`li.${ session.has_focus() ? "on" : "off" }`,
+      {key: name, onclick: Bus.emit.bind(Bus, Bus.events.FOCUS, session) },
+      m("span", session.name))
   }
 
   view () {
-    return m("ol", Array.from(Character.Connected).map(Sessions.tab))
+    return m("ol", Session.list().map(SessionsList.tab))
   }
 }

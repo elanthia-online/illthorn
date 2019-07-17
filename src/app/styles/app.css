@@ -129,7 +129,7 @@ body {
 }
 
 .feed {
-  padding: 0 1em;
+  padding: 0 1em 1em 1em;
   height: 100%;
 }
 .feed pre {
@@ -175,8 +175,16 @@ a.d {
   font-size: 1.6em;
 }
 
-#cli-wrapper input {
-  background-color: rgba(0,0,0,0.2);
+#cnc {
+  position: relative;
+}
+
+#cnc input {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 1.4em;
+  margin-top: -0.7em;
   border: none;
   width: 100%;
   padding: 0.3em;
@@ -184,8 +192,17 @@ a.d {
   font-size: 1.2em;
 }
 
-#cli-wrapper input:focus {
+#cnc input:focus {
   outline: none;
+}
+
+#cnc input#cli {
+  background-color: transparent;
+  z-index: 1;
+}
+
+#cnc input#cli-suggestions {
+  background-color: rgba(0,0,0,0.2);
 }
 
 .panel {
@@ -234,6 +251,10 @@ a.d {
   position: relative;
   text-align: right;
   display: flex;
+}
+
+.panel .value.center {
+  text-align: center;
 }
 
 .panel .value span {

@@ -30,7 +30,7 @@ module.exports = class Feed {
   }
 
   static consume (message, feed) {
-    if (feed.is_active()) return feed.append(message)
+    if (feed.has_focus()) return feed.append(message)
     feed.rpush(message)
   }
   /**
@@ -43,27 +43,27 @@ module.exports = class Feed {
    * creates a new Feed instance
    * tying a Character to an HTMLElement
    */
-  constructor ({character, middleware = []}) {
-    this.character  = character
+  constructor ({session, middleware = []}) {
+    this.session  = session
     // todo: add hiliter, etc
     this.middleware = middleware 
     this.root       = document.createElement("div")
     this.root.classList.add("feed")
     this.root.classList.add("scroll")
     this.retained   = []
-    this._active    = false
+    this._focused    = false
     this._scrolling = false
-    character.parser.on("tag", tag => this.add(tag))
-    Feed.Feeds.set(character, this)
+    session.parser.on("tag", tag => this.add(tag))
+    Feed.Feeds.set(session, this)
   }
   /**
    * clean up all unsafe references
    */
   destroy () {
-    Feed.Feeds.delete(this.character)
+    Feed.Feeds.delete(this.session)
     this.idle()
     this.root = 
-    this.character = 
+    this.session = 
     this.retained.length = 
     this.middleware.length = 0
   }
@@ -82,7 +82,7 @@ module.exports = class Feed {
    */
   idle () {
     if (this.root == 0) return
-    this._active = false
+    this._focused = false
     this.root.parentElement && this.root.parentElement.removeChild(this.root)
     this.root.innerHTML = ""
     return this
@@ -102,7 +102,7 @@ module.exports = class Feed {
   activate () {
     // turn siblings off
     Array.from(Feed.Feeds).forEach(([_, feed]) => feed.idle())
-    this._active = true
+    this._focused = true
     this.root.innerHTML = ""
     const frag = document.createDocumentFragment()
     const length = this.retained.length
@@ -116,8 +116,8 @@ module.exports = class Feed {
   /**
    * is this the current active feed?
    */
-  is_active () {
-    return this._active
+  has_focus () {
+    return this._focused
   }
   /**
    * if the HEAD of the feed is a prompt or not

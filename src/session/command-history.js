@@ -4,7 +4,9 @@ module.exports = class CommandHistory {
   static of () {
     return new CommandHistory()
   }
-
+  /**
+   * [recent] ----> [oldest]
+   */
   constructor () {
     this.index  = 0
     this.buffer = LimitedList.of([], 
@@ -13,25 +15,30 @@ module.exports = class CommandHistory {
   }
 
   add (command) {
+    if (this.head().length == 0) {
+      return this.buffer.members[0] = command
+    }
     this.buffer.lpush(command)
   }
 
   get last_index () {
-    return this.buffer.length - 1
+    return Math.max(this.buffer.length - 1, 0)
   }
 
-  left () {
+  forward () {
     --this.index
     if (this.index < 0) this.index = this.last_index
+    console.log("history:forward", this.index, this.read())
   }
 
-  right () {
+  back () {
     ++this.index
     if (this.index > this.last_index) this.index = 0
+    console.log("history:back", this.index, this.read())
   }
 
-  read () {
-    return this.buffer[this.index] || ""
+  read (index = this.index) {
+    return this.buffer.members[index] || ""
   }
 
   update (value) {
@@ -41,10 +48,14 @@ module.exports = class CommandHistory {
   write (input) {
     input.value = this.read()
     input.focus()
-    input.setSelectionRange(input.value.length)
+  }
+
+  head () {
+    return this.read(0)
   }
 
   seek (idx) {
+    console.log("command:seek", idx)
     this.index = idx
     if (this.index < 0) this.index = this.last_index
     if (this.index > this.last_index) this.index = 0

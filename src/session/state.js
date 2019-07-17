@@ -1,9 +1,10 @@
-const Lens = require("../util/lens")
-const Bus  = require("../bus")
-const {Tag} = require("@elanthia/koschei")
+const Lens     = require("../util/lens")
+const Bus      = require("../bus")
+const {Tag}    = require("@elanthia/koschei")
 const Settings = require("../settings")
+const TagUtil  = require("../util/tag")
 
-module.exports = class CharacterState {
+module.exports = class SessionState {
   static TAGS =
     [ "prompt"
     , "right"
@@ -23,34 +24,34 @@ module.exports = class CharacterState {
     , "ActiveSpells"
     ].reduce((acc, id) => Object.assign(acc, {[id]: 1}), {})
 
-  static of (character) {
-    return new CharacterState(character)
+  static of (session) {
+    return new SessionState(session)
   }
 
   static consume (state, tag) {
-    if (tag.id && tag.id in CharacterState.ID_TAGS) {  
+    if (tag.id && tag.id in SessionState.ID_TAGS) {  
       //console.log(tag)
       return state.put(tag.id, tag)
     }
-    if (tag.children && tag.children.length) tag.children.forEach(child => CharacterState.consume(state, child))
+    if (tag.children && tag.children.length) tag.children.forEach(child => SessionState.consume(state, child))
   }
 
-  constructor (character) {
-    this._character = character
+  constructor (session) {
+    this._session = session
     this.wire_up()
   }
 
   by_name (name) {
     return Object.keys(this)
-      .filter(key => this[key] instanceof Tag && this[key].name == name)
+      .filter(key => typeof this[key] == "object" && this[key].name == name)
       .map(key => this[key])
   }
 
   wire_up () {
-    const {parser} = this._character
+    const {parser} = this._session
 
     parser.on("tag", tag => {
-      CharacterState.consume(this, tag)
+      SessionState.consume(this, tag)
     })
 
     parser.on("notification", tag => {
@@ -59,10 +60,8 @@ module.exports = class CharacterState {
       let silent = false
       if ("sound" in tag.attrs) silent = Settings.cast(tag.attrs.sound)
       silent = Settings.get("mute", silent)
-
-      console.log("silent", silent)
       
-      if (tag.text) new Notification(this._character.name + " " + Lens.get(tag, "attrs.title"),
+      if (tag.text) new Notification(this._session.name + " " + Lens.get(tag, "attrs.title"),
         { ...tag.attrs, silent
         , body   : tag.text
         })
@@ -70,10 +69,9 @@ module.exports = class CharacterState {
 
     parser.on("launchurl", tag => {
       console.log(tag)
-      //require("electron").shell.openExternal("https://play.net/" + tag.attrs.src)
     })
 
-    CharacterState.TAGS.forEach(tag => 
+    SessionState.TAGS.forEach(tag => 
       parser.on(tag, val => this.put(tag, val)))
   }
 
@@ -86,6 +84,7 @@ module.exports = class CharacterState {
   }
 
   put (prop, val) {
+    if (val instanceof Tag) val = TagUtil.to_pojo(val)
     Lens.put(this, prop, val)
     Bus.emit(Bus.events.REDRAW)
     return this

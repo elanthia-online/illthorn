@@ -1,20 +1,25 @@
 const m         = require("mithril")
-const Character = require("../../../character")
+const Session   = require("../../../session")
 const Lens      = require("../../../util/lens")
 const Progress  = require("../progress")
 const Panel     = require("./panel")
 const Attrs     = Lens.of("attrs")
 
 const span = 
-  text => m("span", text)
+  text => m("span", (text || "").toString().toLowerCase())
 
 module.exports = class Vitals {
   static PATTERN = /^(\w+) (\d+)\/(\d+)/
 
+  static ID_TO_UI = 
+    { encumlevel : "encumbrance"
+    , mindState  : "mind"
+    }
+
   static parse (attrs) {
     const percent = attrs.width 
-      ? parseInt(attrs.value) 
-      : Progress.parse_percentage(attrs)
+      ? parseInt(attrs.value, 10) 
+      : Progress.parse_percentage({text: attrs.text, attrs})
 
     let text = attrs.text
 
@@ -23,16 +28,20 @@ module.exports = class Vitals {
     }
 
     if (!Array.isArray(text)) {
-      text = [text]
+      text = [Vitals.ID_TO_UI[attrs.id], percent.toString()]
     }
 
-    return {percent, text}
+    return {percent, text, id: attrs.id}
   } 
 
   static show (attrs) {
-    return m(`li`, 
-      [ m(`.bar.${Progress.classify(attrs.percent)}`, Lens.put({}, "style.width", attrs.percent + "%"))
-      , m(".value", attrs.text.map(span))
+    const bar_klass = attrs.id == "encumlevel" || attrs.id == "mindState"
+      ? Progress.classify_down(attrs.percent)
+      : Progress.classify(attrs.percent)
+
+    return m(`li#vitals-${attrs.id}`, {key: attrs.id},
+      [ m(`.bar.${bar_klass}`, Lens.put({}, "style.width", attrs.percent + "%"))
+      , m(`.value`, attrs.text.map(span))
       ])
   }
 
@@ -48,6 +57,6 @@ module.exports = class Vitals {
   view () {
     return m(Panel, {id: "vitals", title: "vitals"},
       Vitals.bars(
-        Lens.get(Character.get_active(), "state")))
+        Lens.get(Session.focused(), "state")))
   }
 }

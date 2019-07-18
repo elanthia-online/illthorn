@@ -186,10 +186,7 @@ module.exports = class Feed {
    * finalizer for pruned nodes
    */
   flush () {
-    while (this.retained.length > Feed.MAX_MEMORY_LENGTH) {
-      this.retained.shift()
-      console.log(":flush")
-    }
+    while (this.retained.length > Feed.MAX_MEMORY_LENGTH) this.retained.shift()
     return this
   }
 

@@ -9,8 +9,11 @@ module.exports = class Command {
   }
 
   run (argv) {
+    const named_args = argv.slice(0, this.named_arg_tuple.length)
+    const rest = argv.slice(this.named_arg_tuple.length, argv.length)
+
     const argument = this.named_arg_tuple.reduce((acc, prop, i)=> Object
-      .assign(acc, {[prop]: argv[i]}), {})
-    return this.impl(argument)
+      .assign(acc, {[prop]: named_args[i]}), {})
+    return this.impl(argument, rest)
   }
 }

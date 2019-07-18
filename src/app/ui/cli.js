@@ -15,7 +15,6 @@ module.exports = class CLI {
   static async fe_cmd (raw) {
     const [command, ...argv] = raw.slice(1).split(" ")
     const impl = Vimish[command]
-
     try {
       if (!impl) {
         throw new Error(`:${command} is not a valid command`)
@@ -56,6 +55,8 @@ module.exports = class CLI {
 
   static on_enter (cli, val) {
     cli.value = ""
+    const session = Session.focused()
+    session && session.history.update(val)
 
     return CLI.parse(
       { target: cli
@@ -86,10 +87,7 @@ module.exports = class CLI {
       case "ArrowUp"   : return session && CLI.on_up_arrow(cli, session)
       case "ArrowDown" : return session && CLI.on_down_arrow(cli, session)
       default          : 
-        if (e.key.length == 1) {
-          CLI.handle_input(cli, e)
-          session && session.history.update(cli.value)
-        }   
+        if (e.key.length == 1) { CLI.handle_input(cli, e) }   
     }
   }
 

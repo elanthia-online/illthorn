@@ -15,7 +15,7 @@ const createWindow = () => {
   mainWindow = new BrowserWindow(
     { show           : false
     , frame          : false
-    , webPreferences : {nodeIntegration: true}
+    , webPreferences : {nodeIntegration: true, nodeIntegrationInWorker: true}
     , titleBarStyle  : "hidden"
     , icon           : path.join(__dirname, 'src/app/png/64x64.png')
     })

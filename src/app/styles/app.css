@@ -139,27 +139,6 @@ body {
   font-size: 16px;
 }
 
-a.monster {
-  border-bottom: 2px solid #ccff00;
-}
-
-a.exist {
-  border-bottom: 2px solid #1ad1bd;
-}
-
-.stream.thoughts {
-  background-color: #8A2BE2;
-  color: #fff
-}
-
-a.speech {
-  color: limegreen;
-}
-
-a.d {
-  border-bottom: 2px solid fuchsia;
-}
-
 #cli-wrapper {
   background-color: var(--info);
   padding: 0.5em 1em;
@@ -282,5 +261,26 @@ a.d {
 .bar.low {
   background: var(--danger);
 }
+/**
+ * skinnables via :hilite group 
+ */
+.monster {
+  border-bottom: 2px solid #ccff00;
+}
 
+.exist {
+  border-bottom: 2px solid #1ad1bd;
+}
 
+.thoughts {
+  background-color: #8A2BE2;
+  color: #fff
+}
+
+.speech {
+  color: limegreen;
+}
+
+.d {
+  border-bottom: 2px solid fuchsia;
+}

@@ -39,8 +39,9 @@ module.exports = class Settings {
 
   constructor (namespace) {
     this.namespace = Array.isArray(namespace) ? namespace : namespace.split(".")
-    this._path = path => this.namespace.join(".") + (path ? "." + path : "")
+    this._path = path => this.namespace.join(".") + (typeof path == "string" ? "." + path : "")
     this.get   = (path, fallback) => Settings.get(this._path(path), fallback)
     this.set   = (path, value)    => Settings.set(this._path(path), value)
+    this.delete = path => Settings.delete(this._path(path))
   }
 }

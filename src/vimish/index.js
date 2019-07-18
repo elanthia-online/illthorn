@@ -6,6 +6,7 @@ const Bus        = require("../bus")
 const Autodetect = require("../autodetect")
 const Lens       = require("../util/lens")
 const Settings   = require("../settings")
+const Hilites    = require("../hilites")
 
 const redraw = (session)=> {
   Bus.emit(Bus.events.FOCUS, session)
@@ -121,4 +122,31 @@ exports.compiler = Command.of(["option", "value"], async ({option, value})=> {
   }
 
   Settings.set(`compiler.${option}`, value)
+})
+
+exports.hilite = exports.hilites = exports.hilight = Command.of(["sub_command"], async (opts, rest)=> {
+  
+  if (opts.sub_command == "add") {
+    const [pattern, group] = rest
+    if (!pattern) {throw new Error(":hilite add <pattern> <group> was missing pattern")}
+    if (!group)   {throw new Error(":hilite add <pattern> <group> was missing group")}
+    Hilites.add_pattern(pattern, group)
+  }
+  
+  if (opts.sub_command == "rm") {
+
+  }
+
+  if (opts.sub_command == "reload") {
+    return Hilites.reload()
+  }
+
+  if (opts.sub_command == "group") {
+    const [group, ...rules] = rest
+
+    if (!rules.length) { throw new Error(`:hilite group <group> ...<rules> requires at least 1 rule`) }
+
+    Hilites.add_group(group, rules.map(rule => rule.split("="))
+      .reduce((acc, [rule, value])=> Object.assign(acc, {[rule]: value}), {}))
+  }
 })

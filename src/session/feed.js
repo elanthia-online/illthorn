@@ -70,8 +70,6 @@ module.exports = class Feed {
   }
 
   render_history (e) {
-    // scroll forward
-    if (e.deltaY > 0) return
     // scroll back
     const last_rendered_idx = this.retained.indexOf(this.root.firstElementChild)
     // we have rendered the entire history already

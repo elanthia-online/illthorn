@@ -47,14 +47,23 @@ module.exports = class Macros {
     })
     // todo: handle scrolling from any focused state
     KeyboardJS.on("pageup", e => {
-      const feed = document.querySelector(".feed")
-      feed && feed.focus()
+      e.preventDefault()
+      const sess = Session.focused()
+      if (!sess) return
+      const ele = sess.feed.root
+      if (!ele) return
+      ele.scrollBy(0, ele.clientHeight * -0.8)
+      ele.dispatchEvent(new Event("scroll"))
     })
 
     KeyboardJS.on("pagedown", e => {
-      e.stopPropagation()
-      const feed = document.querySelector(".feed")
-      feed && feed.focus()
+      e.preventDefault()
+      const sess = Session.focused()
+      if (!sess) return
+      const ele = sess.feed.root
+      if (!ele) return
+      ele.scrollBy(0, ele.clientHeight * 0.8)
+      ele.dispatchEvent(new Event("scroll"))
     })
   }
 

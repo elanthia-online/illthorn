@@ -1,6 +1,7 @@
-const Session = require("../session")
-const ps_list = require("ps-list")
-const Bus     = require("../bus")
+const ps_list  = require("ps-list")
+const Session  = require("../session")
+const Settings = require("../settings")
+const Bus      = require("../bus")
 
 // ruby /home/benjamin/gemstone/lich/lich.rb --login Ondreian --detachable-client=8003 --without-frontend
 const is_lich_proc = 
@@ -59,7 +60,11 @@ module.exports = class Autodetect {
     const sessions = (await Promise.all(connections)).filter(session => session instanceof Session)
   
     if (sessions.length && !Session.focused()) {
-      Bus.emit(Bus.events.FOCUS, sessions[0])
+      // restore last focus from last session
+      const last_focused = 
+        Session.fuzzy_find(Settings.get("focus", sessions[0].name))
+
+      Bus.emit(Bus.events.FOCUS, last_focused[0] || sessions[0])
     }
 
     Bus.emit(Bus.events.REDRAW)

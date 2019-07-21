@@ -3,6 +3,7 @@ const Session = require("../../session")
 const Vimish  = require("../../vimish")
 const Lens    = require("../../util/lens")
 const Bus     = require("../../bus")
+const Macros  = require("../../macros")
 
 module.exports = class CLI {
   static CONTROL_CHAR = ":"
@@ -14,7 +15,7 @@ module.exports = class CLI {
 
   static async fe_cmd (raw) {
     const [command, ...argv] = raw.slice(1).split(" ")
-    const impl = Vimish[command]
+    const impl = Vimish[command.toLowerCase()]
     try {
       if (!impl) {
         throw new Error(`:${command} is not a valid command`)
@@ -31,27 +32,14 @@ module.exports = class CLI {
     }
   }
 
-  static game_cmd (cmd) {
+  static game_cmd (cmd, id) {
     const sess = Session.focused()
     if (!sess) return
-    sess.send_command(cmd)
+    sess.send_command(cmd, id)
     sess.history.add(cmd)
     sess.history.seek(0)
   }
 
-  static on_up_arrow (cli, session) {
-    if (session.history.head() !== cli.value && session.history.index == 0) {
-      session.history.add(cli.value)
-      session.history.back()
-    }
-    session.history.write(cli)
-    session.history.back()
-  }
-
-  static on_down_arrow (cli, session) {
-    session.history.write(cli)
-    session.history.forward()
-  }
 
   static on_enter (cli, val) {
     cli.value = ""
@@ -66,29 +54,31 @@ module.exports = class CLI {
 
   static handle_input (cli, e) {
     if (document.activeElement == cli) return
-    cli.focus()
     cli.value = cli.value + e.key
   }
 
   static is_macro (e) {
-    return e.shiftKey || e.ctrlKey || e.metaKey || e.altKey
+    return e.ctrlKey || e.metaKey || e.altKey
+  }
+
+  static exec_macro (cli, macro) {
+    const replacement = macro.indexOf("\?")
+    if (!~replacement) {
+      return macro.trim().split(/\r|\n/g)
+        .map(cmd => cmd.trim())
+        .forEach(cmd=> cmd.length && CLI.game_cmd(cmd, "macro"))
+    }
+    cli.value = macro
+    cli.focus()
+    cli.setSelectionRange(replacement-1, replacement + "\?".length)
   }
 
   static handlekeypress (e) {
     const cli = document.getElementById("cli")
     if (!cli) return
     if (e.key == "Enter") return CLI.on_enter(cli, cli.value)
-
-    const session = Session.focused()
-
-    if (CLI.is_macro(e)) return // todo: handle macro
-
-    switch (e.key) {
-      case "ArrowUp"   : return session && CLI.on_up_arrow(cli, session)
-      case "ArrowDown" : return session && CLI.on_down_arrow(cli, session)
-      default          : 
-        if (e.key.length == 1) { CLI.handle_input(cli, e) }   
-    }
+    if (CLI.is_macro(e)) return
+    return cli.focus()
   }
 
   view () {

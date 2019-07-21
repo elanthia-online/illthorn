@@ -11,6 +11,8 @@ const Percent =
  */
 module.exports = class Feed {
   static Feeds = new Map()
+
+  static MIN_SCROLL_BUFFER = 300
   /**
    * maximum number of nodes to store in memory
    */
@@ -51,11 +53,44 @@ module.exports = class Feed {
     this.root.classList.add("feed")
     this.root.classList.add("scroll")
     this.retained   = []
-    this._focused    = false
-    this._scrolling = false
+    this._focused   = false
+    this.root.addEventListener("mousewheel", e => this.on_user_scroll(e))
     session.parser.on("tag", tag => this.add(tag))
     Feed.Feeds.set(session, this)
   }
+
+  on_user_scroll (e) {
+    if (this._scrolling) {
+      this.root.classList.add("scrolling")
+      return this.root.scrollTop < Feed.MIN_SCROLL_BUFFER && this.render_history(e)
+    }
+
+    this.root.classList.remove("scrolling")
+    this.prune()
+  }
+
+  render_history (e) {
+    // scroll forward
+    if (e.deltaY > 0) return
+    // scroll back
+    const last_rendered_idx = this.retained.indexOf(this.root.firstElementChild)
+    // we have rendered the entire history already
+    if (last_rendered_idx == 0) return
+    // move the index to render back one so we can 
+    // get the first retained node that is not rendered
+    // todo: maybe use a full slice here?
+    const idx_to_render = last_rendered_idx - 1
+    // show it!
+    this.root.prepend(this.retained[idx_to_render])
+  }
+
+  get _scrolling () {
+    // no content scrollable
+    if (this.root.scrollHeight == this.root.clientHeight) return false
+    // check the relative scroll offset from the head
+    return (this.root.scrollHeight - this.root.scrollTop) !== this.root.clientHeight
+  }
+
   /**
    * clean up all unsafe references
    */
@@ -135,6 +170,18 @@ module.exports = class Feed {
            }
   }
   /**
+   * prunes the retained DOM elements to something manageable
+   */
+  prune () {
+   if (this._scrolling) return 
+
+    return Occlusion.prune(this.root, 
+      { retain     : Percent(500)
+      , min_length : 100 // minimum number of nodes to retain in DOM
+      })
+  }
+
+  /**
    * appends a single <pre> element to the HEAD
    * of the message feed
    * 
@@ -143,6 +190,8 @@ module.exports = class Feed {
    *   2. re-render slices of pruned nodes when scrolling
    */
   append (pre) {
+    const was_scrolling = this._scrolling
+
     // swap for the latest prompt
     if (Feed.is_prompt(pre.firstElementChild) && this.has_prompt()) {
       this.retained.pop()
@@ -154,33 +203,21 @@ module.exports = class Feed {
     // append the tag to the actual HTML
     this.root.append(pre)
     // prune the real DOM
-    Occlusion.prune(this.root, 
-      { retain     : Percent(500)
-      , mix_length : 100 // minimum number of nodes to retain in DOM
-      })
+    this.prune()
     // if our pruned in-memory buffer has grown too long
     // we must prune it again.  These messages are lost forever
     // but that is what logs are for!
     this.flush()
     // scroll the feed to the HEAD position
-    this.scroll_to_bottom()
-  }
-  /**
-   * scrolls to bottom of feed if a user has not
-   *  detached from the HEAD of the feed
-   */
-  scroll_to_bottom () {
-    if (this._scrolling) return
-    this.root.scrollTop = this.root.scrollHeight
-    return this
+    if (!was_scrolling) this.reattach_head()
   }
   /**
    * some user gesture (scrolling forward/button) has triggered
    * reattaching to the head of the message feed
    */
   reattach_head () {
-    this._scrolling = false
-    return this.scroll_to_bottom()
+    this.root.scrollTop = this.root.scrollHeight
+    return this
   }
   /**
    * finalizer for pruned nodes

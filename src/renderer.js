@@ -3,6 +3,7 @@ const UI       = require("./app/ui")
 const Bus      = require("./bus")
 const Autodect = require("./autodetect")
 const Session  = require("./session")
+const Macros   = require("./macros")
 
 m.mount(document.getElementById("sessions"), UI.Sessions)
 m.mount(document.getElementById("hands-wrapper"), UI.Hands) 
@@ -20,13 +21,20 @@ Bus.on(Bus.events.FOCUS, session => {
   session.attach(document.getElementById("feed-wrapper"))
 })
 
+Bus.on("macro", macro => {
+  const cli = document.getElementById("cli")
+  cli && UI.CLI.exec_macro(cli, macro)
+})
+
 window.addEventListener("resize", function () {
   const session = Session.focused()
   if (!session) return
-  session.feed.scroll_to_bottom()
+  session.feed.reattach_head()
 })
 
-document.addEventListener("keyup", UI.CLI.handlekeypress)
+document.addEventListener("keypress", UI.CLI.handlekeypress)
 
 Autodect.connect_all()
   .catch(err => Bus.emit(Bus.events.ERR, err))
+
+Macros.set_context()

@@ -261,15 +261,24 @@ body {
 .bar.low {
   background: var(--danger);
 }
+
+ins {
+  text-decoration: none;
+}
+
 /**
  * skinnables via :hilite group 
  */
 .monster {
-  border-bottom: 2px solid #ccff00;
+  color: #ccff00;
+}
+
+.macro {
+  background: purple;
 }
 
 .exist {
-  border-bottom: 2px solid #1ad1bd;
+  color: #1ad1bd;
 }
 
 .thoughts {

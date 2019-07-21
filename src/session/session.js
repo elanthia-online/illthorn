@@ -127,7 +127,7 @@ module.exports = class Session {
   attach (view) {
     this.activate()
     this.feed.attach_to_dom(view)
-    this.feed.scroll_to_bottom()
+    this.feed.reattach_head()
     return this
   }
 
@@ -150,13 +150,13 @@ module.exports = class Session {
     })
   }
 
-  send_command (cmd) {
+  send_command (cmd, id = "cli") {
     cmd = cmd.toString().trim()
     if (cmd.length == 0) return
     this.sock.write(cmd + "\n")
     this.parser.emit("tag", 
-      { name : "prompt"
-      , id   : "cli"
+      { id
+      , name : "prompt" 
       , text : this.state.get("prompt.text", ">") + cmd
       })
 

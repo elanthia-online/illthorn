@@ -57,12 +57,18 @@ module.exports = class Hilites {
   }
 
   static deserialize (hilite) {
-    if (Hilites.is_regex(hilite)) return (new Function(`return ${hilite}g`))()
+    if (Hilites.is_regex(hilite)) return new RegExp(hilite.slice(1, hilite.length-2), "g")
     return new RegExp(hilite, "g")
   }
 
-  static add_pattern (pattern, scheme) {
-    Hilites.Patterns.set(pattern, scheme)
+  static serialize (hilite) {
+    return (Hilites.is_regex(hilite) 
+      ? new RegExp(hilite.slice(1, hilite.length-2), "g")
+      : new RegExp(hilite, "g")).toString()
+  }
+
+  static add_pattern (group, pattern) {
+    Hilites.Patterns.set(pattern, group)
     Hilites.reload()
   }
 

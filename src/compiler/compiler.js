@@ -156,8 +156,8 @@ module.exports = class Compiler {
     const pre = document.createElement("pre")
     pre.className = [tag.name || "", tag.id || ""].join(" ").trim()
     pre.innerHTML = Compiler.trim_left(body)
-    //Compiler.add_hilites(pre)
-    Bench.mark(":hilite", function () { Compiler.add_hilites(pre) })
+    Compiler.add_hilites(pre)
+    //Bench.mark(":hilite", function () { Compiler.add_hilites(pre) })
     const frag = document.createDocumentFragment()
     frag.appendChild(pre)
     return frag

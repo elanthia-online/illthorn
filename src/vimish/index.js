@@ -7,11 +7,21 @@ const Autodetect = require("../autodetect")
 const Lens       = require("../util/lens")
 const Settings   = require("../settings")
 const Hilites    = require("../hilites")
+const Macros     = require("../macros")
 
 const redraw = (session)=> {
   Bus.emit(Bus.events.FOCUS, session)
   Bus.emit(Bus.events.REDRAW)
 }
+/**
+ * for sudo actions
+ */
+exports.sudo = Command.of(["command"], async (opts, argv)=> {
+  const command = opts.command[0] == ":" ? opts.command.slice(1) : opts.command
+  const cmd = exports[command] 
+  if (cmd) return cmd.run(argv, true)
+  throw new Error(`:${opts.command} not found`)
+})
 /**
  * connect to a session
  */
@@ -62,6 +72,8 @@ exports.focus = exports.f = Command.of(["name"], ({name}) => {
   if (candidates.length == 0) {
     throw new Error(`No matches found for name(${name})`)
   }
+
+  Settings.set("focus", candidates[0].name)
 
   redraw(candidates[0])
 })
@@ -124,17 +136,22 @@ exports.compiler = Command.of(["option", "value"], async ({option, value})=> {
   Settings.set(`compiler.${option}`, value)
 })
 
-exports.hilite = exports.hilites = exports.hilight = Command.of(["sub_command"], async (opts, rest)=> {
-  
+exports.hilite = exports.hilites = exports.hilight = Command.of(["sub_command"], async (opts, rest, sudo)=> {
   if (opts.sub_command == "add") {
-    const [pattern, group] = rest
-    if (!pattern) {throw new Error(":hilite add <pattern> <group> was missing pattern")}
+    let [group, ...pattern] = rest
+    pattern = pattern.join(" ")
+    if (!pattern || pattern.length == 0) {throw new Error(":hilite add <pattern> <group> was missing pattern")}
     if (!group)   {throw new Error(":hilite add <pattern> <group> was missing group")}
-    Hilites.add_pattern(pattern, group)
+    return Hilites.add_pattern(group, pattern)
   }
   
-  if (opts.sub_command == "rm") {
+  if ((opts.sub_command == "rm" || opts.sub_command == "remove") && sudo) {
+    throw new Error(":hilite remove not implemented yet")
+    // todo: sudo ?
+  }
 
+  if (opts.sub_command == "rm" || opts.sub_command == "remove") {
+    throw new Error(":sudo is required for :hilite rm")
   }
 
   if (opts.sub_command == "reload") {
@@ -146,7 +163,31 @@ exports.hilite = exports.hilites = exports.hilight = Command.of(["sub_command"],
 
     if (!rules.length) { throw new Error(`:hilite group <group> ...<rules> requires at least 1 rule`) }
 
-    Hilites.add_group(group, rules.map(rule => rule.split("="))
+    return Hilites.add_group(group, rules.map(rule => rule.split("="))
       .reduce((acc, [rule, value])=> Object.assign(acc, {[rule]: value}), {}))
   }
+
+  throw new Error(`:hilite ${opts.sub_command} is not a valid subcommand`)
 })
+
+exports.macros = exports.macro = Command.of(["sub_command", "profile"], 
+  async function ({sub_command, profile}, args) {
+  
+    if (sub_command == "use") {
+      return Macros.set_context(profile)
+    }
+    
+    const [combo, ...macro] = args
+
+    if (!macro) throw new Error(":macros <sub_command> <profile> ...rest was missing a <profile>")
+
+    if (sub_command == "add" || sub_command == "set") {
+      return Macros.put(profile, combo, macro.join(" "))
+    }
+
+    if (sub_command == "rm") {
+      return Macros.delete(profile, combo)
+    }
+
+    throw new Error(`:macros ${sub_command} is not a valid subcommand`)
+  })

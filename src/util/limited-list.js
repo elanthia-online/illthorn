@@ -12,6 +12,10 @@ module.exports = class LimitedList {
   get length () {
     return this.size
   }
+
+  toJSON () {
+    return this.members
+  }
   
   lpush (...items) {
     this.members.unshift(...items)

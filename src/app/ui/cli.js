@@ -40,7 +40,6 @@ module.exports = class CLI {
     sess.history.seek(0)
   }
 
-
   static on_enter (cli, val) {
     cli.value = ""
     const session = Session.focused()

@@ -25,20 +25,21 @@ module.exports = class Macros {
 
   static bind_meta_macros () {
 
-    KeyboardJS.on("up", e=> {
+    KeyboardJS.on("up", e => {
+      e.preventDefault()
       const sess = Session.focused()
       const cli  = document.getElementById("cli")
       if (!sess || !cli) return
-      sess.history.back()
-      sess.history.write(cli)
+      if (!sess.history.seeking)
+      sess.history.write(cli, {back: 1})
     })
 
-    KeyboardJS.on("down", e=> {
+    KeyboardJS.on("down", e => {
+      e.preventDefault()
       const sess = Session.focused()
       const cli  = document.getElementById("cli")
       if (!sess || !cli) return
-      sess.history.forward()
-      sess.history.write(cli)
+      sess.history.write(cli, {forward: 1})
     })
    
     KeyboardJS.on("ctrl+pagedown", e => {

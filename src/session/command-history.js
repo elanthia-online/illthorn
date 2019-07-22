@@ -28,13 +28,13 @@ module.exports = class CommandHistory {
   forward () {
     --this.index
     if (this.index < 0) this.index = this.last_index
-    console.log("history:forward", this.index, this.read())
+    console.log("history:forward", this.index, this.read(), this.buffer.toJSON())
   }
 
   back () {
     ++this.index
     if (this.index > this.last_index) this.index = 0
-    console.log("history:back", this.index, this.read())
+    console.log("history:back", this.index, this.read(), this.buffer.toJSON())
   }
 
   read (index = this.index) {
@@ -45,8 +45,10 @@ module.exports = class CommandHistory {
     this.buffer[this.index] = value
   }
 
-  write (input) {
+  write (input, {forward, back}) {
     input.value = this.read()
+    if (forward) this.forward()
+    if (back)    this.back()
     input.focus()
   }
 

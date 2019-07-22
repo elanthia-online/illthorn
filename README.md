@@ -2,7 +2,7 @@
 
 An attempt at a modern cross-platform FE.
 
-![illthorn_fe](https://user-images.githubusercontent.com/1090434/61176194-924b7780-a58a-11e9-92eb-4fbc225f3828.png)
+![illthorn fe](https://user-images.githubusercontent.com/1090434/61599184-7e3fef80-abf4-11e9-96fc-5edaa7505a6f.png)
 
 ## Current Features
 

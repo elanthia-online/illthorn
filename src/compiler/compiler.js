@@ -1,12 +1,14 @@
 const Settings = require("../settings")
 const Hilites  = require("../hilites")
 const Bench    = require("../util/bench")
+const Lens     = require("../util/lens")
 
 const CompileEnum =
   { style  : 1
   , text   : 1
   , stream : 1
   , prompt : 1
+  , output : 1
   }
 
 const DuplicateStream =
@@ -39,18 +41,9 @@ module.exports = class Compiler {
       Compiler.compile_child_substr(parent))
   }
 
-  static trim_left (body) {
-    let idx = 0
-    while (idx < 5) {
-      const char = body[idx]
-      ++idx
-      if (char == " ") continue
-      if (char == "\r") return body.trimLeft()
-      if (char == "\n") return body.trimLeft()
-      return body
-    }
-
-    return body
+  static trim_left (tag, body) {
+    if (Lens.get(tag, "attrs.class") == "mono") return body
+    return body.trimLeft()
   }
 
   static compile_child_substr (parent) {
@@ -155,7 +148,7 @@ module.exports = class Compiler {
   static compile_root(tag, body) {
     const pre = document.createElement("pre")
     pre.className = [tag.name || "", tag.id || ""].join(" ").trim()
-    pre.innerHTML = Compiler.trim_left(body)
+    pre.innerHTML = Compiler.trim_left(tag, body)
     Compiler.add_hilites(pre)
     //Bench.mark(":hilite", function () { Compiler.add_hilites(pre) })
     const frag = document.createDocumentFragment()

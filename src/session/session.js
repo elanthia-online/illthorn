@@ -95,7 +95,8 @@ module.exports = class Session {
       frag.appendChild(pre)
       this.feed.append(frag)
     })
-    this.sock.on("error", err => Bus.emit(err, {message: err.message, from: this.name}))
+    this.sock.on("error", err => Bus
+      .emit(err, {message: err.message, from: this.name}))
   }
 
   destroy () {

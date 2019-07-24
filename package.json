@@ -42,7 +42,7 @@
     }
   },
   "dependencies": {
-    "@elanthia/koschei": "^2.1.0",
+    "@elanthia/koschei": "^2.2.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^4.0.0",
     "keyboardjs": "^2.5.1",

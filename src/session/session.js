@@ -4,7 +4,8 @@ const State    = require("./state")
 const Feed     = require("./feed")
 const Bus      = require("../bus")
 const History  = require("./command-history")
-
+const {shell}  = require("electron")
+ 
 module.exports = class Session {
   static Sessions = new Map()
 
@@ -143,7 +144,14 @@ module.exports = class Session {
     return new Promise((resolve, reject)=> {
       this.sock = net.connect({port: this.port}, err => {
         if (err) return reject(err)
-        this.sock.pipe(this.parser)
+
+        this.sock.on("data", data => {
+          if (data.toString().startsWith("<Launch")) {
+            const src =  data.toString().match(/src="(.+)" \/>/)[1]
+            return src && shell.openExternal("https://www.play.net" + src)
+          }
+          this.parser.parse(data)
+        })
         resolve(this)
       })
 

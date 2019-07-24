@@ -43,7 +43,7 @@ module.exports = class Compiler {
 
   static trim_left (tag, body) {
     if (Lens.get(tag, "attrs.class") == "mono") return body
-    return body.trimLeft()
+    return body.startsWith("\r\n") ? body.trimLeft() : body
   }
 
   static compile_child_substr (parent) {

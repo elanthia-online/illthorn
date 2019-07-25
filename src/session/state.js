@@ -54,6 +54,10 @@ module.exports = class SessionState {
       SessionState.consume(this, tag)
     })
 
+    parser.on("tag", tag => {
+      //if (this._session.has_focus()) console.log(tag)
+    })
+
     parser.on("notification", tag => {
       if (!tag.text || tag.text.length == 0) return
 
@@ -65,10 +69,6 @@ module.exports = class SessionState {
         { ...tag.attrs, silent
         , body   : tag.text
         })
-    })
-
-    parser.on("launchurl", tag => {
-      console.log(tag)
     })
 
     SessionState.TAGS.forEach(tag => 

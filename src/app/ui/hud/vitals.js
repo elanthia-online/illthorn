@@ -28,7 +28,7 @@ module.exports = class Vitals {
     }
 
     if (!Array.isArray(text)) {
-      text = [Vitals.ID_TO_UI[attrs.id], percent.toString()]
+      text = [Vitals.ID_TO_UI[attrs.id] ? attrs.text : "", percent.toString()]
     }
 
     return {percent, text, id: attrs.id}

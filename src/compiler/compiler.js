@@ -9,6 +9,7 @@ const CompileEnum =
   , stream : 1
   , prompt : 1
   , output : 1
+  , b      : 1
   }
 
 const DuplicateStream =
@@ -33,7 +34,7 @@ module.exports = class Compiler {
   }
 
   static is_doubled (tag) {
-    return tag.name == "stream" && tag.id in DuplicateStream
+    return ~tag.name.toLowerCase().indexOf("stream") && tag.id in DuplicateStream
   }
   
   static compile (parent) {
@@ -49,7 +50,7 @@ module.exports = class Compiler {
   static compile_child_substr (parent) {
     // skip for faster renders
     if (Settings.get("compiler.run", true) === false) return parent.text
-    if (parent.text.length > Settings.get("compiler.max_length", 600)) return parent.text
+    if (parent.text.length > Settings.get("compiler.max_length", 800)) return parent.text
     
     return (parent.children || []).reduce((compiler, tag)=> {
       const before  = compiler.text.substr(0, tag.start + compiler.offset)
@@ -62,42 +63,6 @@ module.exports = class Compiler {
 
   static add_hilites (pre) {
     Compiler.add_hilites_v2(pre)
-  }
-
-  static add_hilites_v1 (pre) {
-    const hilites = Hilites.get()
-    const nodes   = pre.childNodes
-    const length  = nodes.length
-    let i = 0
-    // this is so ugly, but it unfortunately 
-    // the fastest way I found to make this code run.
-    while (i < length) {
-      for (const [pattern, group] of hilites) {
-        const node = pre.childNodes[i]
-        let redraw = false
-        // text nodes do not have innerHTML to manipulate so
-        // we must generate a new html slice here **if** we found
-        // a hilite match
-        if (node.nodeName == "#text") {
-          const update = node.substringData(0, node.length).replace(pattern, function (match) {
-            redraw = true
-            return `<span class="${group}">${match}</span>`
-          })
-
-          if (redraw) {
-            const hilited = document.createElement("span")
-            hilited.innerHTML = update
-            pre.replaceChild(hilited, node)
-          }
-
-        } else {
-          node.innerHTML = node.innerHTML.replace(pattern, function (match) {
-            return `<span class="${group}">${match}</span>`
-          })
-        }
-      }
-      ++i
-    }
   }
 
   static add_hilites_v2 (parent, hilites = Hilites.get(), depth = 0) {

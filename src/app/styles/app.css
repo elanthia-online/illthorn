@@ -269,10 +269,6 @@ ins {
 /**
  * skinnables via :hilite group 
  */
-.monster {
-  color: #ccff00;
-}
-
 .macro {
   background: purple;
 }
@@ -292,4 +288,8 @@ ins {
 
 .d {
   border-bottom: 2px solid fuchsia;
+}
+
+.b, .monster {
+  color: #C4D428;
 }

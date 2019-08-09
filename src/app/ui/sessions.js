@@ -10,6 +10,8 @@ module.exports = class SessionsList {
   }
 
   view () {
-    return m("ol", Session.list().map(SessionsList.tab))
+    return m("ol", Session.list()
+      .sort((left, right) => left.name.localeCompare(right.name))
+      .map(SessionsList.tab))
   }
 }

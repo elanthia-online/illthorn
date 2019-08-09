@@ -19,9 +19,11 @@ module.exports = class SessionState {
     , "health"
     , "stamina"
     , "spirit"
+    , "stance"
     , "mindState"
     , "encumlevel"
     , "ActiveSpells"
+    , "injuries"
     ].reduce((acc, id) => Object.assign(acc, {[id]: 1}), {})
 
   static of (session) {
@@ -52,10 +54,6 @@ module.exports = class SessionState {
 
     parser.on("tag", tag => {
       SessionState.consume(this, tag)
-    })
-
-    parser.on("tag", tag => {
-      //if (this._session.has_focus()) console.log(tag)
     })
 
     parser.on("notification", tag => {

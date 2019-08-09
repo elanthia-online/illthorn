@@ -36,8 +36,8 @@ module.exports = class CLI {
     const sess = Session.focused()
     if (!sess) return
     sess.send_command(cmd, id)
-    sess.history.add(cmd)
     sess.history.seek(0)
+    sess.history.add(cmd)
   }
 
   static on_enter (cli, val) {

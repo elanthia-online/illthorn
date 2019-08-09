@@ -188,6 +188,7 @@ body {
   font-size: 14px;
   font-weight: bold;
   border-bottom: 2px solid var(--info);
+  position: relative;
 }
 
 .panel h3 {
@@ -250,6 +251,11 @@ body {
   text-align: left;
 }
 
+.panel .value .center {
+  text-align: center;
+  margin-right: 0;
+}
+
 .bar.high {
   background: var(--ok);
 }
@@ -273,17 +279,20 @@ ins {
   background: purple;
 }
 
-.exist {
-  color: #1ad1bd;
+a[class="exist"] {
+  color: #a0a0a0;
 }
 
 .thoughts {
-  background-color: #8A2BE2;
   color: #fff
 }
 
 .speech {
   color: limegreen;
+}
+
+.whisper {
+  color: #4F8B89;
 }
 
 .d {

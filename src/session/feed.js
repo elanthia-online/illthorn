@@ -46,13 +46,12 @@ module.exports = class Feed {
    * tying a Character to an HTMLElement
    */
   constructor ({session, middleware = []}) {
-    this.session  = session
-    // todo: add hiliter, etc
+    this.retained   = []
+    this.session    = session
     this.middleware = middleware 
     this.root       = document.createElement("div")
     this.root.classList.add("feed")
     this.root.classList.add("scroll")
-    this.retained   = []
     this._focused   = false
     this.root.addEventListener("mousewheel", e => this.on_user_scroll(e))
     session.parser.on("tag", tag => this.add(tag))
@@ -62,16 +61,23 @@ module.exports = class Feed {
   on_user_scroll (e) {
     if (this._scrolling) {
       this.root.classList.add("scrolling")
-      return this.root.scrollTop < Feed.MIN_SCROLL_BUFFER && this.render_history(e)
+      while (this.root.scrollTop < (Feed.MIN_SCROLL_BUFFER * 1.5) && this.last_rendered_index > 0) {
+        this.render_history(e)
+      }
+      return void 0
     }
 
     this.root.classList.remove("scrolling")
     this.prune()
   }
 
+  get last_rendered_index () {
+    return this.retained.indexOf(this.root.firstElementChild)
+  }
+
   render_history (e) {
     // scroll back
-    const last_rendered_idx = this.retained.indexOf(this.root.firstElementChild)
+    const last_rendered_idx = this.last_rendered_index
     // we have rendered the entire history already
     if (last_rendered_idx == 0) return
     // move the index to render back one so we can 
@@ -171,9 +177,7 @@ module.exports = class Feed {
    * prunes the retained DOM elements to something manageable
    */
   prune () {
-   if (this._scrolling) return 
-
-    return Occlusion.prune(this.root, 
+    return void Occlusion.prune(this.root, 
       { retain     : Percent(500)
       , min_length : 100 // minimum number of nodes to retain in DOM
       })

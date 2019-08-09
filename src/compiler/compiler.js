@@ -9,6 +9,7 @@ const CompileEnum =
   , stream : 1
   , prompt : 1
   , output : 1
+  , preset : 1
   , b      : 1
   }
 
@@ -44,7 +45,7 @@ module.exports = class Compiler {
 
   static trim_left (tag, body) {
     if (Lens.get(tag, "attrs.class") == "mono") return body
-    return body.startsWith("\r\n") ? body.trimLeft() : body
+    return body.startsWith("\r\n") ? body.slice(2) : body
   }
 
   static compile_child_substr (parent) {
@@ -103,9 +104,7 @@ module.exports = class Compiler {
       const [pattern, group] = hilites[i]
       // return on first-match (same behavior as SF)
       const match = a.innerText.match(pattern)
-      if (match && match[0].length == a.innerText.length) { 
-        return a.className = group 
-      }
+      if (match) return a.classList.add(group)
       i++
     }
   }
@@ -129,6 +128,7 @@ module.exports = class Compiler {
 
   static compile_attrs (kind, attrs) {
     if (kind == "a" && attrs["exist"]) kind = "exist"
+    if (attrs.id) kind = `${kind} ${attrs.id}`
     const klass = ` class="${kind}"`
     if (Object.keys(attrs).length == 0) return klass
     return klass + Object.keys(attrs)

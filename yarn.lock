@@ -9,10 +9,10 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@elanthia/koschei@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@elanthia/koschei/-/koschei-2.2.0.tgz#3b902dd0148bebc13665b4ab4fda885c7cfa9970"
-  integrity sha512-hXFks4aH/7rjH+of2Wfo1AvJgqytRtM8AkAaNFnvq1TClwNRcBmozJYlZfDjMw3TkY4tLq19gfdW39+f2EW7kQ==
+"@elanthia/koschei@^2.2.5":
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/@elanthia/koschei/-/koschei-2.2.5.tgz#f9c5259d08994441a17312969412540cc9852487"
+  integrity sha512-ABldVOhCzDIXkWdY1XA8F/XI4Kjp5QiHBVnIsuudhY4cmd8EGOmy7GLjAMafZ+PIvmie5augzSDQ+sDTDqThtA==
   dependencies:
     "@types/debug" "^4.1.4"
     debug "^4.1.1"

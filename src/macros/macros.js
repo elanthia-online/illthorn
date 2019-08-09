@@ -54,7 +54,7 @@ module.exports = class Macros {
       const ele = sess.feed.root
       if (!ele) return
       ele.scrollBy(0, ele.clientHeight * -0.8)
-      ele.dispatchEvent(new Event("scroll"))
+      ele.dispatchEvent(new Event("mousewheel"))
     })
 
     KeyboardJS.on("pagedown", e => {
@@ -64,7 +64,7 @@ module.exports = class Macros {
       const ele = sess.feed.root
       if (!ele) return
       ele.scrollBy(0, ele.clientHeight * 0.8)
-      ele.dispatchEvent(new Event("scroll"))
+      ele.dispatchEvent(new Event("mousewheel"))
     })
   }
 

@@ -1,5 +1,5 @@
 const m         = require("mithril")
-const Session = require("../../../session")
+const Session   = require("../../../session")
 const Panel     = require("./panel")
 const Lens      = require("../../../util/lens")
 const Progress  = require("../progress")

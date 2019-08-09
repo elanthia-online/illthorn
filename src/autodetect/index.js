@@ -22,6 +22,7 @@ module.exports = class Autodetect {
   }
 
   static async list () {
+    console.log(await Autodetect.list_unsafe())
     return Object.values((await Autodetect.list_unsafe())
       .map(parse_lich_cmd)
       .filter(not_zero_port)

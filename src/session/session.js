@@ -1,12 +1,14 @@
 const {Parser} = require("@elanthia/koschei")
+const events   = require("events")
 const net      = require("net")
 const State    = require("./state")
 const Feed     = require("./feed")
 const Bus      = require("../bus")
 const History  = require("./command-history")
 const {shell}  = require("electron")
+const path     = require("path")
  
-module.exports = class Session {
+module.exports = class Session extends events.EventEmitter {
   static Sessions = new Map()
 
   static has_focus (sess) {
@@ -46,12 +48,12 @@ module.exports = class Session {
 
   static fuzzy_find (name) {
     const case_matches = Session
-      .select(sess => ~sess.name.indexOf(name))
+      .select(sess => sess.name && ~sess.name.indexOf(name))
 
     if (case_matches.length) return case_matches
 
     return Session
-      .select(sess => ~sess.name.toLowerCase().indexOf(name.toLowerCase()))
+      .select(sess => sess.name && ~sess.name.toLowerCase().indexOf(name.toLowerCase()))
   }
 
   static get_current_command () {
@@ -78,38 +80,49 @@ module.exports = class Session {
   }
 
   constructor ({port, name}) {
+    super()
     this.port    = port
     this.sock    = void 0
     this.history = History.of()
     this.name    = name || port
-    this.parser  = Parser.of()
     this.feed    = Feed.of({session: this})
     this.state   = State.of(this)
+    this.worker  = new Worker(path.resolve(__dirname, 'worker.js'))
+    this.worker.onerror = console.error
+    this.worker.onmessage = ({data})=> {
+      if (data.topic == "CLOSE") return this.close()
+      if (data.topic == "TAG") this.emit(data.gram.name, data.gram)
+      if (data.topic) return this.emit(data.topic, data.gram)
+      console.warn("Message(%o) was passed without a topic", data)
+    }
   }
 
-  _sock_listeners () {
-    this.sock.on("close", _   => {
-      if (!this.feed) return
-      const pre = document.createElement("pre")
-      pre.innerText = "\n*** Connection Closed ***\n"
-      const frag = document.createDocumentFragment()
-      frag.appendChild(pre)
-      this.feed.append(frag)
-    })
-    this.sock.on("error", err => Bus
-      .emit(err, {message: err.message, from: this.name}))
+  get pending () {
+    return !this.worker
   }
+
+  close () {
+    this.worker.terminate()
+    this.worker = void 0
+    if (!this.feed) return
+    const pre = document.createElement("pre")
+    pre.innerText = "\n*** Connection Closed ***\n"
+    const frag = document.createDocumentFragment()
+    frag.appendChild(pre)
+    this.feed.append(frag)
+  }
+
 
   destroy () {
     Session.delete(this.name)
-    this.sock.end()
+    this.quit()
     this.feed.destroy()
-    this.feed = this.parser = this.state = void 0
+    this.feed = this.worker = this.state = void 0
     Bus.emit(Bus.events.REDRAW)
   }
 
   quit () {
-    return this.sock.end()
+    return this.worker.terminate()
   }
 
   has_focus () {
@@ -141,32 +154,26 @@ module.exports = class Session {
   }
 
   async connect () {
-    return new Promise((resolve, reject)=> {
-      this.sock = net.connect({port: this.port}, err => {
-        if (err) return reject(err)
-
-        this.sock.on("data", data => {
-          if (data.toString().startsWith("<Launch")) {
-            const src =  data.toString().match(/src="(.+)" \/>/)[1]
-            return src && shell.openExternal("https://www.play.net" + src)
-          }
-          this.parser.parse(data)
-        })
-        resolve(this)
-      })
-
-      this._sock_listeners()
-    })
+    this.worker.postMessage({topic: "CONNECT", port: this.port})
   }
 
   send_command (cmd, id = "cli") {
     cmd = cmd.toString().trim()
     if (cmd.length == 0) return
-    this.sock.write(cmd + "\n")
-    this.parser.emit("tag", 
+
+    const prompt = this.worker 
+      ? ">"
+      : "closed>"
+
+    this.emit("TAG", 
       { id
       , name : "prompt" 
-      , text : this.state.get("prompt.text", ">") + cmd
+      , text : this.state.get("prompt.text", prompt) + cmd
+      })
+
+    this.worker && this.worker.postMessage(
+      { topic   : "COMMAND"
+      , command : cmd
       })
 
     return this

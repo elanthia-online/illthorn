@@ -6,7 +6,7 @@ module.exports = class Hands {
   static KINDS =
     [ "left"
     , "right"
-    , "magic"
+    , "spell"
     ]
 
   static Lookup =
@@ -15,7 +15,7 @@ module.exports = class Hands {
 
   static fallback (hand) {
     switch (hand) {
-      case "magic": return "None"
+      case "spell": return "None"
       default     : return "Empty"
     }
   }

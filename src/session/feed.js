@@ -21,8 +21,7 @@ module.exports = class Feed {
    * safely check if an HTMLElement is a prompt or not
    */
   static is_prompt (pre) {
-
-    return pre && pre.classList && pre.classList.contains("prompt")
+    return pre && pre.classList && pre.classList.contains("prompt") && !pre.classList.contains("cli")
   }
   /**
    * pure append method for Pipe interop
@@ -32,8 +31,9 @@ module.exports = class Feed {
   }
 
   static consume (message, feed) {
-    if (feed.has_focus()) return feed.append(message)
-    feed.rpush(message)
+    requestAnimationFrame(function () {
+      feed.append(message)
+    }) 
   }
   /**
    * pure constructor
@@ -46,46 +46,14 @@ module.exports = class Feed {
    * tying a Character to an HTMLElement
    */
   constructor ({session, middleware = []}) {
-    this.retained   = []
     this.session    = session
     this.middleware = middleware 
     this.root       = document.createElement("div")
     this.root.classList.add("feed")
     this.root.classList.add("scroll")
     this._focused   = false
-    this.root.addEventListener("mousewheel", e => this.on_user_scroll(e))
-    session.parser.on("tag", tag => this.add(tag))
+    session.on("TAG", tag => this.add(tag))
     Feed.Feeds.set(session, this)
-  }
-
-  on_user_scroll (e) {
-    if (this._scrolling) {
-      this.root.classList.add("scrolling")
-      while (this.root.scrollTop < (Feed.MIN_SCROLL_BUFFER * 1.5) && this.last_rendered_index > 0) {
-        this.render_history(e)
-      }
-      return void 0
-    }
-
-    this.root.classList.remove("scrolling")
-    this.prune()
-  }
-
-  get last_rendered_index () {
-    return this.retained.indexOf(this.root.firstElementChild)
-  }
-
-  render_history (e) {
-    // scroll back
-    const last_rendered_idx = this.last_rendered_index
-    // we have rendered the entire history already
-    if (last_rendered_idx == 0) return
-    // move the index to render back one so we can 
-    // get the first retained node that is not rendered
-    // todo: maybe use a full slice here?
-    const idx_to_render = last_rendered_idx - 1
-    // show it!
-    this.root.prepend(this.retained[idx_to_render])
   }
 
   get _scrolling () {
@@ -103,18 +71,7 @@ module.exports = class Feed {
     this.idle()
     this.root = 
     this.session = 
-    this.retained.length = 
     this.middleware.length = 0
-  }
-  /**
-   * add <pre> to the feed without rendering it
-   */
-  rpush (pre) {
-    if (Feed.is_prompt(this.retained[this.retained.length-1]) && Feed.is_prompt(pre.firstElementChild)) {
-      this.retained.pop()
-    }
-    this.retained.push(pre.firstElementChild)
-    return this.flush()
   }
   /**
    * mark a feed as idle
@@ -123,7 +80,6 @@ module.exports = class Feed {
     if (this.root == 0) return
     this._focused = false
     this.root.parentElement && this.root.parentElement.removeChild(this.root)
-    this.root.innerHTML = ""
     return this
   }
   /**
@@ -142,13 +98,6 @@ module.exports = class Feed {
     // turn siblings off
     Array.from(Feed.Feeds).forEach(([_, feed]) => feed.idle())
     this._focused = true
-    this.root.innerHTML = ""
-    const frag = document.createDocumentFragment()
-    const length = this.retained.length
-    const to_render = this.retained.slice(length - 100, length)
-    // todo: prune to max size?
-    to_render.forEach(node => frag.appendChild(node))
-    this.root.appendChild(frag)
     this.reattach_head()
     return this
   }
@@ -166,24 +115,6 @@ module.exports = class Feed {
     return Feed.is_prompt(this.root.lastElementChild)
   }
   /**
-   * the current viewable slice of the retained nodes
-   */
-  view () {
-    return { start : this.root.firstElementChild ? this.retained.indexOf(this.root.firstElementChild) : -1
-           , end   : this.root.lastElementChild  ? this.retained.indexOf(this.root.lastElementChild)  : -1
-           }
-  }
-  /**
-   * prunes the retained DOM elements to something manageable
-   */
-  prune () {
-    return void Occlusion.prune(this.root, 
-      { retain     : Percent(500)
-      , min_length : 100 // minimum number of nodes to retain in DOM
-      })
-  }
-
-  /**
    * appends a single <pre> element to the HEAD
    * of the message feed
    * 
@@ -196,16 +127,10 @@ module.exports = class Feed {
 
     // swap for the latest prompt
     if (Feed.is_prompt(pre.firstElementChild) && this.has_prompt()) {
-      this.retained.pop()
-      this.retained.push(pre.firstElementChild)
       return this.root.replaceChild(pre, this.root.lastElementChild)
     }
-    // add this to retained node list
-    this.retained.push(pre.firstElementChild)
     // append the tag to the actual HTML
     this.root.append(pre)
-    // prune the real DOM
-    this.prune()
     // if our pruned in-memory buffer has grown too long
     // we must prune it again.  These messages are lost forever
     // but that is what logs are for!
@@ -225,7 +150,9 @@ module.exports = class Feed {
    * finalizer for pruned nodes
    */
   flush () {
-    while (this.retained.length > Feed.MAX_MEMORY_LENGTH) this.retained.shift()
+    while (this.root.childElementCount > Feed.MAX_MEMORY_LENGTH) {
+      this.root && this.root.firstChild && this.root.firstChild.remove()
+    }
     return this
   }
 

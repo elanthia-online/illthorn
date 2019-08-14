@@ -31,10 +31,7 @@ module.exports = class SessionState {
   }
 
   static consume (state, tag) {
-    if (tag.id && tag.id in SessionState.ID_TAGS) {  
-      //console.log(tag)
-      return state.put(tag.id, tag)
-    }
+    if (tag.id && tag.id in SessionState.ID_TAGS) return state.put(tag.id, tag)
     if (tag.children && tag.children.length) tag.children.forEach(child => SessionState.consume(state, child))
   }
 
@@ -50,13 +47,13 @@ module.exports = class SessionState {
   }
 
   wire_up () {
-    const {parser} = this._session
+    const parser = this._session
 
-    parser.on("tag", tag => {
+    parser.on("TAG", tag => {
       SessionState.consume(this, tag)
     })
 
-    parser.on("notification", tag => {
+    parser.on("NOTIFICATION", tag => {
       if (!tag.text || tag.text.length == 0) return
 
       let silent = false

@@ -40,7 +40,7 @@ module.exports = class Autodetect {
 
   static async connect_all () {
     const connections = (await Autodetect.list()).map(opts => {
-      if (Session.has(opts.name) && Session.get(opts.name).sock.readyState == "closed") {
+      if (Session.has(opts.name) && Session.get(opts.name).pending) {
         Session.get(opts.name).destroy()
       }
 

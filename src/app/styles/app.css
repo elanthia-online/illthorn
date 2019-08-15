@@ -302,3 +302,17 @@ a[class="exist"] {
 .b, .monster {
   color: #C4D428;
 }
+
+#compass ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  text-align: center
+}
+
+#compass li {
+  color: var(--main-bg-color);
+}
+
+#compass li.on {
+  background: yellowgreen;
+}

@@ -38,9 +38,9 @@ module.exports = class Compiler {
     return ~tag.name.toLowerCase().indexOf("stream") && tag.id in DuplicateStream
   }
   
-  static compile (parent) {
-    return Compiler.compile_root(parent, 
-      Compiler.compile_child_substr(parent))
+  static compile (parent, cb) {
+    Compiler.compile_child_substr(parent, 
+      children => Compiler.compile_root(parent, children, cb))
   }
 
   static trim_left (tag, body) {
@@ -48,18 +48,20 @@ module.exports = class Compiler {
     return body.startsWith("\r\n") ? body.slice(2) : body
   }
 
-  static compile_child_substr (parent) {
-    // skip for faster renders
-    if (Settings.get("compiler.run", true) === false) return parent.text
-    if (parent.text.length > Settings.get("compiler.max_length", 800)) return parent.text
-    
-    return (parent.children || []).reduce((compiler, tag)=> {
-      const before  = compiler.text.substr(0, tag.start + compiler.offset)
-      const after   = compiler.text.substr(tag.end + compiler.offset, compiler.text.length)
-      const {hilited, offset} = Compiler.compile_a_tag(tag.id || tag.name, tag.attrs, tag.text)
-      const text = before + hilited + after
-      return {text, offset : offset + compiler.offset}
-    }, {offset: 0, text: parent.text}).text
+  static compile_child_substr (parent, cb) {
+    requestAnimationFrame(function () {
+      // skip for faster renders
+      if (Settings.get("compiler.run", true) === false) return cb(parent.text)
+      if (parent.text.length > Settings.get("compiler.max_length", 800)) return cb(parent.text)
+      
+      return cb((parent.children || []).reduce((compiler, tag)=> {
+        const before  = compiler.text.substr(0, tag.start + compiler.offset)
+        const after   = compiler.text.substr(tag.end + compiler.offset, compiler.text.length)
+        const {hilited, offset} = Compiler.compile_a_tag(tag.id || tag.name, tag.attrs, tag.text)
+        const text = before + hilited + after
+        return {text, offset : offset + compiler.offset}
+      }, {offset: 0, text: parent.text}).text)
+    })
   }
 
   static add_hilites (pre) {
@@ -109,15 +111,14 @@ module.exports = class Compiler {
     }
   }
 
-  static compile_root(tag, body) {
+  static compile_root(tag, body, cb) {
     const pre = document.createElement("pre")
     pre.className = [tag.name || "", tag.id || ""].join(" ").trim()
     pre.innerHTML = Compiler.trim_left(tag, body)
     Compiler.add_hilites(pre)
-    //Bench.mark(":hilite", function () { Compiler.add_hilites(pre) })
     const frag = document.createDocumentFragment()
     frag.appendChild(pre)
-    return frag
+    cb(frag)
   }
   
   static compile_a_tag (kind, attrs = {}, text) {

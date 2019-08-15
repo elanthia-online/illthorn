@@ -1,8 +1,9 @@
 const m            = require("mithril")
+const Settings     = require("../../../settings").of("ui")
 const Vitals       = require("./vitals")
 const ActiveSpells = require("./active-spells")
 const Stance       = require("./stance")
-const Settings     = require("../../../settings").of("ui")
+const Compass      = require("./compass")
 
 module.exports = class HUD {
   view () {
@@ -10,6 +11,7 @@ module.exports = class HUD {
       [ Settings.get("vitals", true) && m(Vitals)
       , Settings.get("stance", true) && m(Stance)
       , Settings.get("active-spells", true) && m(ActiveSpells)
+      , Settings.get("compass", true) && m(Compass)
       ])
   }
 }

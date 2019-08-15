@@ -1,11 +1,4 @@
-const Occlusion = require("../occlusion/occlusion")
 const Compiler  = require("../compiler/compiler")
-const Pipe      = require("../util/pipe")
-/**
- * verbose helper
- */
-const Percent = 
-  hundreds => hundreds / 100
 /**
  * a TCP Game feed -> DOM renderer
  */
@@ -159,8 +152,7 @@ module.exports = class Feed {
   add (tag) {
     if (Compiler.cannot_compile(tag)) return
 
-    Pipe.of(tag)
-      .fmap(Compiler.compile)
-      .fmap(Feed.consume, this)
+    Compiler
+      .compile(tag, tag => Feed.consume(tag, this))
   }
 }

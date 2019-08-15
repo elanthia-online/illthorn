@@ -1,6 +1,4 @@
-const {Parser} = require("@elanthia/koschei")
 const events   = require("events")
-const net      = require("net")
 const State    = require("./state")
 const Feed     = require("./feed")
 const Bus      = require("../bus")
@@ -75,6 +73,10 @@ module.exports = class Session extends events.EventEmitter {
       .pop()
   }
 
+  static get current () {
+    return Session.focused()
+  }
+
   static send_command (sess, command) {
     return sess.send_command(command)
   }
@@ -91,6 +93,10 @@ module.exports = class Session extends events.EventEmitter {
     this.worker.onerror = console.error
     this.worker.onmessage = ({data})=> {
       if (data.topic == "CLOSE") return this.close()
+      if (data.topic == "OPEN") {
+        console.log(data)
+        return shell.openExternal(data.link)
+      }
       if (data.topic == "TAG") this.emit(data.gram.name, data.gram)
       if (data.topic) return this.emit(data.topic, data.gram)
       console.warn("Message(%o) was passed without a topic", data)
@@ -102,8 +108,7 @@ module.exports = class Session extends events.EventEmitter {
   }
 
   close () {
-    this.worker.terminate()
-    this.worker = void 0
+    this.quit()
     if (!this.feed) return
     const pre = document.createElement("pre")
     pre.innerText = "\n*** Connection Closed ***\n"
@@ -122,7 +127,8 @@ module.exports = class Session extends events.EventEmitter {
   }
 
   quit () {
-    return this.worker.terminate()
+    this.worker && this.worker.terminate()
+    this.worker = void 0
   }
 
   has_focus () {

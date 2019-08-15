@@ -17,10 +17,10 @@ class Bridge {
       sock.on("close", _ => self.postMessage({topic: "CLOSE"}))
 
       sock.on("data", data => {
+        // handle open links
         if (data.toString().startsWith("<Launch")) {
-          const src =  data.toString().match(/src="(.+)" \/>/)[1]
-          // handle open links
-          return self.postMessage({topic: "OPEN", gram: src})
+          const src =  (data.toString().match(/src="(.+)" \/>/) || [])[1]
+          return src && self.postMessage({topic: "OPEN", link: "http://play.net" + src})
         }
 
         Bridge.parser.parse(data)

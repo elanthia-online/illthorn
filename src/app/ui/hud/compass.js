@@ -8,7 +8,7 @@ module.exports = class Compass {
   static DIRS =
     [ "", "up", ""
     , "nw", "n", "ne", 
-    , "w" , "o", "e",
+    , "w" , "out", "e",
     , "sw", "s", "se", 
     , "", "down", ""
     ]

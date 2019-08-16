@@ -6,9 +6,11 @@ const Progress  = require("../progress")
 
 module.exports = class Compass {
   static DIRS =
-    [ "nw", "n", "ne", "up"
-    , "w" , "o", "e", ""
-    , "sw", "s", "se", "down"
+    [ "", "up", ""
+    , "nw", "n", "ne", 
+    , "w" , "o", "e",
+    , "sw", "s", "se", 
+    , "", "down", ""
     ]
 
   static current () {

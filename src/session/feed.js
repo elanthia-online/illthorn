@@ -46,6 +46,8 @@ module.exports = class Feed {
     this.root       = document.createElement("div")
 
     Bus.on(Bus.events.REDRAW, e => {
+      if (!this.root || !this.root.classList) return
+
       if (Settings.get("clickable")) {
         return this.root.classList.add("clickable")
       }

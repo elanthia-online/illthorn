@@ -296,11 +296,12 @@ a[class="exist"] {
 }
 
 .clickable .d {
-  border-bottom: 2px solid fuchsia;
+  border-bottom: 2px solid #db238e;
 }
 
 .clickable .d:hover {
   cursor: pointer;
+  border-color: #6f23db;
 }
 
 .b, .monster {

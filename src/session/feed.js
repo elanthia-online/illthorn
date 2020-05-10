@@ -1,4 +1,6 @@
 const Compiler  = require("../compiler/compiler")
+const Settings  = require("../settings")
+const Bus       = require("../bus")
 /**
  * a TCP Game feed -> DOM renderer
  */
@@ -42,6 +44,23 @@ module.exports = class Feed {
     this.session    = session
     this.middleware = middleware 
     this.root       = document.createElement("div")
+
+    Bus.on(Bus.events.REDRAW, e => {
+      if (Settings.get("clickable")) {
+        return this.root.classList.add("clickable")
+      }
+      this.root.classList.remove("clickable")
+    })
+
+    this.root.addEventListener("click", e => {
+      if (!e.target) return
+      if (!e.target.classList.contains("d")) return
+      if (this.root.classList.contains("clickable")) {
+        
+        this.session.send_command(e.target.dataset.cmd || e.target.text)
+      }
+    })
+
     this.root.classList.add("feed")
     this.root.classList.add("scroll")
     this._focused   = false

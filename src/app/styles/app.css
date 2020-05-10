@@ -295,8 +295,12 @@ a[class="exist"] {
   color: #4F8B89;
 }
 
-.d {
+.clickable .d {
   border-bottom: 2px solid fuchsia;
+}
+
+.clickable .d:hover {
+  cursor: pointer;
 }
 
 .b, .monster {

@@ -193,3 +193,8 @@ exports.macros = exports.macro = Command.of(["sub_command", "profile"],
 
     throw new Error(`:macros ${sub_command} is not a valid subcommand`)
   })
+
+exports.set = Command.of(["option", "value"], async ({option, value}) => {
+  Settings.set(option, value)
+  Bus.emit(Bus.events.REDRAW)
+})

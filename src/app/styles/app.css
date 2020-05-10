@@ -306,11 +306,20 @@ a[class="exist"] {
 #compass ul {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  text-align: center
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  width: 90px;
+  height: 150px;
+  margin: 0 auto;
 }
 
 #compass li {
   color: var(--main-bg-color);
+  height: 30px;
+  width: 30px;
+  padding: 0;
+  line-height: 30px;
 }
 
 #compass li.on {

@@ -23,7 +23,7 @@ module.exports = class Compass {
   view () {
     const available_dirs = Compass.current()
 
-    console.log(available_dirs)
+    //console.log(available_dirs)
 
     return m(Panel, {id: "compass", title: "compass"}, 
       m("ul", Compass.DIRS.map(dir => m("li", 

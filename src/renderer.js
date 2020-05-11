@@ -19,6 +19,7 @@ Bus.on(Bus.events.FOCUS, session => {
   if (session.has_focus()) return session.idle()
   document.querySelector("title").innerText = session.name
   session.attach(document.getElementById("feed-wrapper"))
+  m.redraw()
 })
 
 Bus.on("macro", macro => {

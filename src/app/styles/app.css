@@ -63,11 +63,15 @@ body {
 }
 
 #sessions li {
-  padding: 1em;
+  padding: 1em 1em 1em 0.5em;
   margin: 0;
   text-align: right;
   font-weight: bold;
   border-right: 4px solid var(--info);
+}
+
+#sessions .alt-numeric {
+  float: left;
 }
 
 #sessions li:hover {
@@ -329,4 +333,13 @@ a[class="exist"] {
 
 #compass li.on {
   background: yellowgreen;
+}
+
+#compass li:empty {
+  visibility: hidden;
+}
+
+#compass li.off {
+  background: yellowgreen;
+  opacity: 0.2;
 }

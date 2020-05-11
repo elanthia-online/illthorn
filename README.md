@@ -60,4 +60,4 @@ Sets a configuration path to a value.
 
 | key         |  value   | description                                 |
 |-------------|:---------|---------------------------------------------|
-| clickable   | on|off   | turns clickable `<d cmd>` elements on or off|
+| clickable   | boolean  | turns clickable `<d cmd>` elements on or off|

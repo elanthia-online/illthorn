@@ -24,6 +24,21 @@ module.exports = class Macros {
   }
 
   static bind_meta_macros () {
+    KeyboardJS.on("tab", e => {
+      e.preventDefault()
+      // todo: tab completion
+      console.log(e)
+    })
+
+    "1 2 3 4 5 6 7 8 9".split(" ").forEach(sess_idx => {
+      const idx = parseInt(sess_idx, 10) - 1
+      KeyboardJS.on(`alt+${sess_idx}`, e => {
+        const sess = Session.list()[idx]
+        if (sess && sess !== Session.focused()) {
+          Bus.emit(Bus.events.FOCUS, sess)
+        }
+      })
+    })
 
     KeyboardJS.on("up", e => {
       e.preventDefault()

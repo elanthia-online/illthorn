@@ -2,7 +2,7 @@
 
 An attempt at a modern cross-platform FE.
 
-![illthorn fe](https://user-images.githubusercontent.com/1090434/61599184-7e3fef80-abf4-11e9-96fc-5edaa7505a6f.png)
+![illthorn-fe](https://user-images.githubusercontent.com/1090434/81620486-0082e580-93ba-11ea-91ad-b526bb16ceac.png)
 
 ## Current Features
 
@@ -18,6 +18,14 @@ An attempt at a modern cross-platform FE.
 3. Custom Highlights
 4. Macros
 5. Command History / Autocomplete (ala fish/bash/zsh)
+
+## Meta Shortcuts
+
+Meta shortcuts are not customizable, as this project will general prefer sane defaults over configuration
+
+#### `alt+<n>` 
+
+quick swap between sessions based on the numeric order on the left-hand session pane, similar to many modern terminals
 
 ## FE Commands (Vim prefixed)
 
@@ -44,3 +52,13 @@ Renames the currently focused session.
 #### `:swap <other name>`
 
 If you accidentally mixed up the name/port combos when connecting, this allows you to easily swap between the names.
+
+#### `:set <path> <value>`
+
+Sets a configuration path to a value.
+
+----------------------------------------------------------------------
+| key                  |           value           | description     |
+----------------------------------------------------------------------
+| clickable   | on|off | turns clickable `<d cmd>` elements on or off|
+----------------------------------------------------------------------

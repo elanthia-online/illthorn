@@ -57,8 +57,7 @@ If you accidentally mixed up the name/port combos when connecting, this allows y
 
 Sets a configuration path to a value.
 
-----------------------------------------------------------------------
-| key                  |           value           | description     |
-----------------------------------------------------------------------
-| clickable   | on|off | turns clickable `<d cmd>` elements on or off|
-----------------------------------------------------------------------
+
+| key         |  value   | description                                 |
+|-------------|:---------|---------------------------------------------|
+| clickable   | on|off   | turns clickable `<d cmd>` elements on or off|

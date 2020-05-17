@@ -72,18 +72,40 @@ module.exports = class CLI {
     cli.setSelectionRange(replacement-1, replacement + "\?".length)
   }
 
-  static handlekeypress (e) {
+  static global_handlekeypress (e) {
     const cli = document.getElementById("cli")
-    if (!cli) return
+    if (!cli || CLI.is_macro(e)) return
     if (e.key == "Enter") return CLI.on_enter(cli, cli.value)
-    if (CLI.is_macro(e)) return
-    return cli.focus()
+    console.log(e)
+    cli.focus()
   }
 
-  view () {
+  static autocomplete_right (e) {
+    const cli = document.getElementById("cli")
+    const suggestion = document.getElementById("cli-suggestions")
+    if (!cli || !suggestion) return
+    // do not disable the right arrow if we 
+    // are not at the head of the input buffer
+    if (cli.selectionStart < cli.value.length) return
+    // perform the suggestion autocomplete
+    if (suggestion.placeholder) {
+      cli.value = suggestion.placeholder
+      suggestion.placeholder = ""
+    }
+  }
+
+  static oninput (e) {
+    const suggestions = e.target.parentElement.querySelector("#cli-suggestions")
+    if (!suggestions || !Session.current) return
+    if (e.target.value == "") return suggestions.placeholder = ""
+    const [most_recent] = Session.current.history.match(e.target.value)
+    suggestions.placeholder = most_recent || ""
+  }
+
+  view ({attrs}) {
     return (
       [ m("span.prompt", Lens.get(Session.focused(), "state.prompt.text", ">"))
-      , m("#cnc", [ m("input#cli", { autofocus : true })
+      , m("#cnc", [ m("input#cli", { autofocus : true, oninput: CLI.oninput.bind(attrs) })
                   , m("input#cli-suggestions")
                   ])
       ])

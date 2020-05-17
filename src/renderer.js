@@ -16,7 +16,7 @@ Bus.on(Bus.events.ERR, console.error)
 Bus.on(Bus.events.REDRAW, m.redraw)
 
 Bus.on(Bus.events.FOCUS, session => {
-  if (session.has_focus()) return session.idle()
+  //if (session.has_focus()) return session.idle()
   document.querySelector("title").innerText = session.name
   session.attach(document.getElementById("feed-wrapper"))
   m.redraw()
@@ -33,7 +33,8 @@ window.addEventListener("resize", function () {
   session.feed.reattach_head()
 })
 
-document.addEventListener("keypress", UI.CLI.handlekeypress)
+document.addEventListener("keypress", UI.CLI.global_handlekeypress)
+document.addEventListener("autocomplete/right", UI.CLI.autocomplete_right)
 
 Autodect.connect_all()
   .catch(err => Bus.emit(Bus.events.ERR, err))

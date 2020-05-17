@@ -57,7 +57,7 @@ If you accidentally mixed up the name/port combos when connecting, this allows y
 
 Sets a configuration path to a value.
 
-
-| key         |  value   | description                                 |
+Currently supported `:set` operations:
+| path        |  value   | description                                 |
 |-------------|:---------|---------------------------------------------|
 | clickable   | boolean  | turns clickable `<d cmd>` elements on or off|

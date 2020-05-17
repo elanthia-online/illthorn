@@ -30,6 +30,10 @@ module.exports = class Macros {
       console.log(e)
     })
 
+    KeyboardJS.on("right", e => {
+      document.dispatchEvent(new Event("autocomplete/right"))
+    })
+
     "1 2 3 4 5 6 7 8 9".split(" ").forEach(sess_idx => {
       const idx = parseInt(sess_idx, 10) - 1
       KeyboardJS.on(`alt+${sess_idx}`, e => {

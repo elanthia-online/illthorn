@@ -16,6 +16,10 @@ module.exports = class LimitedList {
   toJSON () {
     return this.members
   }
+
+  filter (...args) {
+    return this.members.filter.apply(this.members, args)
+  }
   
   lpush (...items) {
     this.members.unshift(...items)

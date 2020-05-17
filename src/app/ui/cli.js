@@ -41,6 +41,8 @@ module.exports = class CLI {
   }
 
   static on_enter (cli, val) {
+    const suggestion = document.getElementById("cli-suggestions")
+    if (suggestion) suggestion.placeholder = ""
     cli.value = ""
     const session = Session.focused()
     session && session.history.update(val)

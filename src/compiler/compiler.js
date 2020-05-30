@@ -18,6 +18,7 @@ const CompileEnum =
   , output : 1
   , preset : 1
   , b      : 1
+  , d      : 1
   }
 
 const DuplicateStream =
@@ -55,13 +56,13 @@ module.exports = class Compiler {
   
   static compile (parent, cb) {
     Compiler.compile_child_substr(parent, 
-      children => Compiler.compile_root(parent, children, cb))
+      children => {
+        Compiler.compile_root(parent, children, cb)
+      })
   }
 
   static trim_left (tag, body) {
     return body
-    if (Lens.get(tag, "attrs.class") == "mono") return body
-    return body.startsWith("\r\n") ? body.slice(2) : body
   }
 
   static compile_child_substr (parent, cb) {

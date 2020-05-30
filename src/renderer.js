@@ -4,6 +4,9 @@ const Bus      = require("./bus")
 const Autodect = require("./autodetect")
 const Session  = require("./session")
 const Macros   = require("./macros")
+const CustomCSS = require("./storage/custom-css")
+
+CustomCSS.injectCSS()
 
 m.mount(document.getElementById("sessions"), UI.Sessions)
 m.mount(document.getElementById("hands-wrapper"), UI.Hands) 

@@ -1,10 +1,11 @@
 /* https://paletton.com/#uid=75u0u0kmcf4eunphzibqDaMvZ6s */
 :root { 
   --main-bg-color: #1a1a1d;
-  --danger: #6F2232;
   --ok: #396820;
   --info: #184F3F;
+  --gentle-warn: rgb(122, 96, 28);
   --warn: #784225;
+  --danger: #6F2232;
   --text-color: #f1f1f1;
   --icon-size: 1em;
   --base-padding: 3em;
@@ -353,7 +354,7 @@ a.external-link {
 }
 
 .severity-1 {
-  background-color: var(--info);
+  background-color: var(--gentle-warn);
 }
 
 .severity-2 {

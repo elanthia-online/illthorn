@@ -1,8 +1,10 @@
 language: node_js
+node_js:
+  - 12
 
 before_deploy:
   - npx electron-forge publish --dry-run --platform=linux
-  
+
 deploy:
   provider: releases
   api_key:

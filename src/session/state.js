@@ -23,6 +23,7 @@ module.exports = class SessionState {
     , "mindState"
     , "encumlevel"
     , "ActiveSpells"
+    , "nextLvlPB"
     , "injuries"
     ].reduce((acc, id) => Object.assign(acc, {[id]: 1}), {})
 

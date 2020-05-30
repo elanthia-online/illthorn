@@ -7,20 +7,29 @@ const Attrs     = Lens.of("attrs")
 const Stance    = require("./stance")
 
 const span = 
-  text => m("span", (text || "").toString().toLowerCase())
+  (text, klass = "") => m(`span.${klass}`, (text || "").toString().toLowerCase())
 
 module.exports = class Vitals {
   static PATTERN = /^(\w+) (\d+)\/(\d+)/
 
   static ID_TO_UI = 
-    { encumlevel : "encumbrance"
-    , mindState  : "mind"
+    { encumlevel  : "encumbrance"
+    , mindState   : "mind"
+    , nextLevelPB : "exp"
     }
 
   static parse (attrs) {
     const percent = attrs.width 
       ? parseInt(attrs.value, 10) 
       : Progress.parse_percentage({text: attrs.text, attrs})
+
+      if (attrs.id == "nextLvlPB") console.log(attrs)
+
+    if (attrs.id == "nextLvlPB") {
+      return {   id: attrs.id
+             , text: [attrs.text.split("\n").shift().replace(/\B(?=(\d{3})+(?!\d))/g, ",")]
+             , percent}
+    }
 
     let text = attrs.text
 
@@ -36,13 +45,14 @@ module.exports = class Vitals {
   } 
 
   static show (attrs) {
-    const bar_klass = attrs.id == "encumlevel" || attrs.id == "mindState"
+    
+    const bar_klass = attrs.id == "encumlevel" || attrs.id == "mindState" || attrs.id == "nextLvlPB"
       ? Progress.classify_down(attrs.percent)
       : Progress.classify(attrs.percent)
 
     return m(`li#vitals-${attrs.id}`, {key: attrs.id},
       [ m(`.bar.${bar_klass}`, Lens.put({}, "style.width", attrs.percent + "%"))
-      , m(`.value`, attrs.text.map(span))
+      , m(`.value.${attrs.text.length > 1 ? "" : "center"}`,  attrs.text.map(span))
       ])
   }
 

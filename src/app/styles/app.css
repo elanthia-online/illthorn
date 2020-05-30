@@ -237,10 +237,6 @@ body {
   display: flex;
 }
 
-.panel .value.center {
-  text-align: center;
-}
-
 .panel .value span {
   display: inline-block;
 }
@@ -248,6 +244,14 @@ body {
 .panel .value span:first-child {
   margin-right: 1em;
   flex: 1;
+}
+
+.panel .value.center {
+  text-align: center;
+}
+
+.panel .value.center span {
+  margin: 0;
 }
 
 .panel .value span:nth-child(2) {

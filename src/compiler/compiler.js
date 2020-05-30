@@ -5,6 +5,7 @@ const Lens     = require("../util/lens")
 const m        = require("mithril")
 
 const open_external_link = url => {
+  console.log("opening:url(%s)", url)
   require('electron').shell.openExternal(url)
   return false
 }
@@ -130,7 +131,7 @@ module.exports = class Compiler {
     return str.split(LinkRegex).map(part => {
       if (part.startsWith("https://") || part.startsWith("http://")) {
         return m("a.external-link"
-          , {href: "#", onclick: ()=> open_external_link.bind(0, part) }
+          , {href: "#", onclick: open_external_link.bind(0, part)}
           , "link:" + part)
       }
      return m("webview", part)

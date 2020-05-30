@@ -17,7 +17,7 @@ const createWindow = () => {
     , frame          : false
     , webPreferences : {nodeIntegration: true, nodeIntegrationInWorker: true}
     , titleBarStyle  : "hidden"
-    , icon           : path.join(__dirname, 'src/app/png/64x64.png')
+    , icon           : "/src/app/png/64x64.png"
     })
 
   mainWindow.maximize()

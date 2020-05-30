@@ -17,7 +17,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "./src/app/png/64x64.png"
+       
       },
       "makers": [
         {
@@ -34,11 +34,11 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {}
+          "config": {"icon": "build/icons/64x64.png"}
         },
         {
           "name": "@electron-forge/maker-rpm",
-          "config": {}
+          "config": {"icon": "build/icons/64x64.png"}
         }
       ]
     }

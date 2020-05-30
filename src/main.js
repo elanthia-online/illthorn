@@ -20,8 +20,6 @@ const createWindow = () => {
     , icon           : path.join(__dirname, 'src/app/png/64x64.png')
     })
 
-  console.log(path.join(__dirname, 'app/png/64x64.png'))
-
   mainWindow.maximize()
   mainWindow.show()
 

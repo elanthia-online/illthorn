@@ -11,7 +11,7 @@ module.exports = class Feed {
   /**
    * maximum number of nodes to store in memory
    */
-  static MAX_MEMORY_LENGTH = 1000 * 1
+  static MAX_MEMORY_LENGTH = 100 * 5
   /**
    * safely check if an HTMLElement is a prompt or not
    */

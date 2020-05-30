@@ -14,7 +14,7 @@ const parse_lich_cmd =
   (proc) => ({ ...proc
              , name: proc.cmd.match(/--login\s(\w+)\s/)[1]
              ,  port: proc.cmd.match(/--detachable-client=(\d+)\s/)[1]
-            })
+             })
 
 module.exports = class Autodetect {
   static async list_unsafe () {
@@ -39,7 +39,10 @@ module.exports = class Autodetect {
   }
 
   static async connect_all () {
-    const connections = (await Autodetect.list()).map(opts => {
+    const skippable = Settings.get("no-autoconnect")
+    const connections = (await Autodetect.list())
+    .filter(opts => skippable.indexOf(opts.name) == -1)
+    .map(opts => {
       if (Session.has(opts.name) && Session.get(opts.name).pending) {
         Session.get(opts.name).destroy()
       }

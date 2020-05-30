@@ -11,7 +11,7 @@ window.Injuries = module.exports = class Injuries {
     return m("ol", Injuries.injuries().map(injury => {
       return m(`li.${injury.type}.severity-${injury.severity}`, 
         m(".value", 
-          [ m("span", injury.type + " / " + injury.name)
+          [ m("span",  injury.name + " / " + injury.type)
           , m("span", injury.severity)
           ]))
     }))
@@ -29,6 +29,7 @@ window.Injuries = module.exports = class Injuries {
         , severity: parseInt(injury.name.toLowerCase().replace(/^[a-z]+/, ""), 10)
         ,     name: injury.id.replace(/([A-Z])/g, " $&").toLowerCase()
         }))
+      .filter(injury => !isNaN(injury.severity))
   }
 
   view () {

@@ -10,7 +10,7 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\"",
-    "text": "echo \"No testing configured\""
+    "test": "echo \"No testing configured\""
   },
   "keywords": [],
   "author": "benjamin",

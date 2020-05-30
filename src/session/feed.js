@@ -58,7 +58,6 @@ module.exports = class Feed {
       if (!e.target) return
       if (!e.target.classList.contains("d")) return
       if (this.root.classList.contains("clickable")) {
-        
         this.session.send_command(e.target.dataset.cmd || e.target.text)
       }
     })

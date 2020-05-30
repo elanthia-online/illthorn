@@ -4,6 +4,8 @@ const {Tag}    = require("@elanthia/koschei")
 const Settings = require("../settings")
 const TagUtil  = require("../util/tag")
 
+const makeLookup = keys => keys.reduce((acc, id) => Object.assign(acc, {[id]: 1}), {})
+
 module.exports = class SessionState {
   static TAGS =
     [ "prompt"
@@ -14,24 +16,33 @@ module.exports = class SessionState {
     , "compass"
     ]
 
+  static INJURY_IDS =
+    makeLookup(
+      [ "head", "leftEye", "rightEye", "neck"
+      , "chest", "abdomen", "legArm", "rightArm", "leftHand", "rightHand"
+      , "leftLeg", "rightLeg", "nsys"
+      ])
+
   static ID_TAGS = 
-    [ "mana"
-    , "health"
-    , "stamina"
-    , "spirit"
-    , "stance"
-    , "mindState"
-    , "encumlevel"
-    , "ActiveSpells"
-    , "nextLvlPB"
-    , "injuries"
-    ].reduce((acc, id) => Object.assign(acc, {[id]: 1}), {})
+    makeLookup(
+      [ "mana"
+      , "health"
+      , "stamina"
+      , "spirit"
+      , "stance"
+      , "mindState"
+      , "encumlevel"
+      , "ActiveSpells"
+      , "nextLvlPB"
+      //, "injuries"
+      ])
 
   static of (session) {
     return new SessionState(session)
   }
 
   static consume (state, tag) {
+    if (tag.id && tag.id in SessionState.INJURY_IDS) return state.put("injuries." + tag.id, tag)
     if (tag.id && tag.id in SessionState.ID_TAGS) return state.put(tag.id, tag)
     if (tag.children && tag.children.length) tag.children.forEach(child => SessionState.consume(state, child))
   }

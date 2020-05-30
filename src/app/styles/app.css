@@ -351,3 +351,15 @@ a.external-link {
   background: yellowgreen;
   opacity: 0.2;
 }
+
+.severity-1 {
+  background-color: var(--info);
+}
+
+.severity-2 {
+  background-color: var(--warn);
+}
+
+.severity-3 {
+  background-color: var(--danger);
+}

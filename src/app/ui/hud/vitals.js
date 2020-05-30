@@ -23,8 +23,6 @@ module.exports = class Vitals {
       ? parseInt(attrs.value, 10) 
       : Progress.parse_percentage({text: attrs.text, attrs})
 
-      if (attrs.id == "nextLvlPB") console.log(attrs)
-
     if (attrs.id == "nextLvlPB") {
       return {   id: attrs.id
              , text: [attrs.text.split("\n").shift().replace(/\B(?=(\d{3})+(?!\d))/g, ",")]

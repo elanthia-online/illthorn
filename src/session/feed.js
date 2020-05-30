@@ -170,7 +170,6 @@ module.exports = class Feed {
   }
 
   add (tag) {
-    //if (this.session.has_focus()) console.log(tag)
     if (Compiler.cannot_compile(tag)) return
 
     Compiler

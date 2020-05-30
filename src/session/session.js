@@ -98,7 +98,10 @@ module.exports = class Session extends events.EventEmitter {
         console.log(data)
         return shell.openExternal(data.link)
       }
-      if (data.topic == "TAG") this.emit(data.gram.name, data.gram)
+      if (data.topic == "TAG") {
+        //if (this.has_focus()) console.log(data.gram)
+        this.emit(data.gram.name, data.gram)
+      }
       if (data.topic) return this.emit(data.topic, data.gram)
       console.warn("Message(%o) was passed without a topic", data)
     }

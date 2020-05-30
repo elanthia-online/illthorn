@@ -287,6 +287,10 @@ a[class="exist"] {
   color: #a0a0a0;
 }
 
+a.external-link {
+  color: #82B3AE;
+}
+
 .thoughts {
   color: #fff
 }

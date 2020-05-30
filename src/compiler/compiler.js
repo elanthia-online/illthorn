@@ -2,6 +2,7 @@ const Settings = require("../settings")
 const Hilites  = require("../hilites")
 const Bench    = require("../util/bench")
 const Lens     = require("../util/lens")
+const shell    = require('electron').shell
 
 const CompileEnum =
   { style  : 1
@@ -19,6 +20,9 @@ const DuplicateStream =
   , inv    : 1
   , bounty : 1
   }
+
+const LinkRegex =
+  /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
 
 module.exports = class Compiler {
   static is_empty (tag) {
@@ -44,6 +48,7 @@ module.exports = class Compiler {
   }
 
   static trim_left (tag, body) {
+    return body
     if (Lens.get(tag, "attrs.class") == "mono") return body
     return body.startsWith("\r\n") ? body.slice(2) : body
   }
@@ -111,10 +116,17 @@ module.exports = class Compiler {
     }
   }
 
+  static linkify (str) {
+    return str.replace(LinkRegex, 
+      `<a class="external-link" data-link="$&" onclick="require('electron').shell.openExternal(this.dataset.link)" href="#">$&</a>`)
+  }
+
   static compile_root(tag, body, cb) {
     const pre = document.createElement("pre")
     pre.className = [tag.name || "", tag.id || ""].join(" ").trim()
-    pre.innerHTML = Compiler.trim_left(tag, body)
+    const contents = Compiler.linkify(Compiler.trim_left(tag, body))
+    pre.innerHTML = contents
+
     Compiler.add_hilites(pre)
     const frag = document.createDocumentFragment()
     frag.appendChild(pre)

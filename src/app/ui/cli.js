@@ -78,22 +78,23 @@ module.exports = class CLI {
     const cli = document.getElementById("cli")
     if (!cli || CLI.is_macro(e)) return
     if (e.key == "Enter") return CLI.on_enter(cli, cli.value)
-    console.log(e)
     cli.focus()
   }
 
   static autocomplete_right (e) {
-    const cli = document.getElementById("cli")
-    const suggestion = document.getElementById("cli-suggestions")
-    if (!cli || !suggestion) return
-    // do not disable the right arrow if we 
-    // are not at the head of the input buffer
-    if (cli.selectionStart < cli.value.length) return
-    // perform the suggestion autocomplete
-    if (suggestion.placeholder) {
-      cli.value = suggestion.placeholder
-      suggestion.placeholder = ""
-    }
+    requestAnimationFrame(function () {
+      const cli = document.getElementById("cli")
+      const suggestion = document.getElementById("cli-suggestions")
+      if (!cli || !suggestion) return
+      // do not disable the right arrow if we 
+      // are not at the head of the input buffer
+      if (cli.selectionStart < cli.value.length) return
+      // perform the suggestion autocomplete
+      if (suggestion.placeholder) {
+        cli.value = suggestion.placeholder
+        suggestion.placeholder = ""
+      }
+    })
   }
 
   static oninput (e) {

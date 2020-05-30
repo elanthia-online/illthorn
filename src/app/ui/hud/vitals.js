@@ -4,6 +4,7 @@ const Lens      = require("../../../util/lens")
 const Progress  = require("../progress")
 const Panel     = require("./panel")
 const Attrs     = Lens.of("attrs")
+const Stance    = require("./stance")
 
 const span = 
   text => m("span", (text || "").toString().toLowerCase())
@@ -45,13 +46,12 @@ module.exports = class Vitals {
       ])
   }
 
-
   static bars (state) {
     return state && m(`ol` , 
       state.by_name("progressbar")
         .map(Attrs.get)
         .map(Vitals.parse)
-        .map(Vitals.show))
+        .map(Vitals.show).concat(m(Stance)))
   }
 
   view () {

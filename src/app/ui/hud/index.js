@@ -9,7 +9,6 @@ module.exports = class HUD {
   view () {
     return (
       [ Settings.get("vitals", true) && m(Vitals)
-      , Settings.get("stance", true) && m(Stance)
       , Settings.get("active-spells", true) && m(ActiveSpells)
       , Settings.get("compass", true) && m(Compass)
       ])

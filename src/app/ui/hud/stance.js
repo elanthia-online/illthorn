@@ -20,10 +20,10 @@ module.exports = class Stance {
 
     const [_, state, percent] = Stance.parse(stance)
 
-    return m(Panel, {id: "stance", title: "stance"}, 
-      m("ul", m("li", 
+    return m("li", 
       [ m(`.bar.${Progress.classify(percent + 20)}`, {style: {width: percent + "%" }})
-      , m(".value", m("span.center", stance))
-      ])))
+      , m(".value", [m("span", state)
+                    ,m("span", percent)])
+      ])
   }
 }

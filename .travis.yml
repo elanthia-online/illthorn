@@ -11,7 +11,8 @@ deploy:
   provider: releases
   api_key:
     secure: oxPAq7NwKhkGCxsXzOEFYnrnqbQ8I6uHdR7dE8Hl7x0wB8ege+urUzTLtS5eM3sZEO9Shq2r5N4NxKL2ejm2tsZNnml+IRe7/1YVCuTyIzrU4/4WHjlQy1A3WWG9ytKzoGSII47Li+JQhmKve2yWpnfPHc+6QUpxbVPvGG/ivqwtYyzstHHMyG1hzkCJj3bObWDRxUHUWOaTgkFMkMD3QWF8wuLvLif/XR9g9HhuuTAwZF/JgcLrQD4kqhzAmv5UZdMA/oZGR4iLfojlmMxOebDtfkD9oC531y8L98SkoJ84E5582r4fwsW1Tog/ixKO5460/5P/UzAuYVOCQYLOXF5kUUfBnz30vbcPjjqlrk7Bu/W5TUz6BrjlFNj/CRuftdu21Oyk84AYIAkosSDkL8isq277TwNJUYBlmBVcFyztdCSJg1f3i133Q6k6XPDxioNC+Lj15UUrX1aCxoqH3EHvn1uBc8viFCT/43L00bVp7fKu9qb52TzJn9yotBQrtJu3FPNfeb4jfkfdQKcknBHO0M2dzcBF5TYoYvKp3fnmoG2DwTf9DBIG3zMaQHpTRLcdK05IeVN9EQKPwV2Us54F3QftelLiYBmbIIB1arA2LQ4/w/8BRUjIJwWkYdlx7wNs1Teu7FAo3Z7D3Z7gRJiB55hejseKoNe4CLh4t2I=
-  file: out/**/*.deb
+  file: out/make/*
+  file_glob: true
   on:
     repo: elanthia-online/illthorn
     tags: true

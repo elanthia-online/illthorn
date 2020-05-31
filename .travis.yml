@@ -3,7 +3,7 @@ node_js:
   - 12
 
 before_install:
-  - sudo apt-get -y install fakeroot
+  - sudo apt-get -y install fakeroot rpm
 
 script: yarn run test
 

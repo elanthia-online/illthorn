@@ -94,13 +94,13 @@ module.exports = class Compiler {
     while (i < length) {
       const node = nodes[i]
       ++i // in
-      if (node.nodeName == "#text") Compiler.hilite_text_node(parent, node, hilites, depth + 1)
+      if (node.nodeName == "#text") Compiler.hilite_safe_text_node(parent, node, hilites, depth + 1)
       if (node.nodeName == "A")     Compiler.hilite_exist_tag(node, hilites, depth + 1)
       if (node.nodeName == "INS")   continue // already processed
     }
   }
 
-  static hilite_text_node (parent, text_node, hilites, depth) {
+  static hilite_safe_text_node (parent, text_node, hilites, depth) {
     let i = 0;
     const text = text_node.substringData(0, text_node.length)
     
@@ -117,25 +117,35 @@ module.exports = class Compiler {
     }
   }
 
-  static hilite_exist_tag (a, hilites) {
-    let i = 0
+  static hilite_unsafe_text (text, hilites = Hilites.get()) {
+    let i = 0;
+    
+    
     while (i < hilites.length) {
       const [pattern, group] = hilites[i]
-      // return on first-match (same behavior as SF)
-      const match = a.innerText.match(pattern)
-      if (match) return a.classList.add(group)
       i++
+      if (text.match(pattern)) {
+        text = text.replace(pattern, function (match) { return `<ins class="${group}">${match}</ins>` })
+      }
     }
+
+    return text
+  }
+
+  static hilite_exist_tag (a, hilites) {
+    a.innerHTML = Compiler.hilite_unsafe_text(a.innerText, hilites)
   }
 
   static linkify (str) {
+    str = Compiler.hilite_unsafe_text(str)
+
     return str.split(LinkRegex).map(part => {
       if (part.startsWith("https://") || part.startsWith("http://")) {
         return m("a.external-link"
           , {href: "#", onclick: open_external_link.bind(0, part)}
           , "link:" + part)
       }
-     return m("webview", part)
+     return m("webview", m.trust(str))
     })
   }
 

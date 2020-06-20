@@ -4,27 +4,42 @@ const Settings = require("../settings")
 const Bus      = require("../bus")
 
 // ruby /home/benjamin/gemstone/lich/lich.rb --login Ondreian --detachable-client=8003 --without-frontend
-const is_lich_proc = 
-  ({name, cmd})=> name == "ruby" && cmd.includes("lich.rb") && cmd.includes("--without-frontend")
+const is_gemstone = 
+  ({name, cmd})=> name == "ruby" && (is_lich_proc(cmd) || is_cabal_proc(cmd))
+
+const is_lich_proc =
+  cmd => cmd.includes("lich.rb") && 
+         cmd.includes("--detachable-client=")
+
+const is_cabal_proc =
+  cmd => cmd.includes("cabal.rb") && (cmd.includes("--port=") || cmd.includes("--detachable-client="))
 
 const not_zero_port =
   ({port})=> port > 0
 
+const match = 
+  (string, regex)=> string.match(regex) || []
+
+const extract_port =
+  cmd => match(cmd, /--detachable-client=(\d+)/)[1] || 
+         match(cmd, /--port=(\d+)/)[1]
+
+const extract_name =
+  cmd => match(cmd, /--character=(\w+)\b/)[1] ||
+         match(cmd, /--login\s(\w+)\s/)[1]
+
 const parse_lich_cmd =
-  (proc) => ({ ...proc
-             , name: proc.cmd.match(/--login\s(\w+)\s/)[1]
-             ,  port: proc.cmd.match(/--detachable-client=(\d+)\s/)[1]
-             })
+  proc => ({ ...proc, name: extract_name(proc.cmd), port: extract_port(proc.cmd)})
 
 module.exports = class Autodetect {
   static async list_unsafe () {
-    return (await ps_list()).filter(is_lich_proc)
+    return (await ps_list()).filter(is_gemstone)
   }
 
   static async list () {
-    console.log(await Autodetect.list_unsafe())
     return Object.values((await Autodetect.list_unsafe())
       .map(parse_lich_cmd)
+      .map(proc => console.log(proc) || proc)
       .filter(not_zero_port)
       .reduce((acc, conn) => { 
         acc[conn.port] = acc[conn.port] || conn
@@ -40,7 +55,11 @@ module.exports = class Autodetect {
 
   static async connect_all () {
     const skippable = Settings.get("no-autoconnect")
-    const connections = (await Autodetect.list())
+    const detected =  await Autodetect.list()
+
+    console.log("autoconnect:%o", detected)
+
+    const connections = detected
     .filter(opts => skippable.indexOf(opts.name) == -1)
     .map(opts => {
       if (Session.has(opts.name) && Session.get(opts.name).pending) {

@@ -44,7 +44,6 @@ module.exports = class Autodetect {
     return Object.values(
       (await Autodetect.list_unsafe())
         .map(parse_lich_cmd)
-        .map((proc) => console.log(proc) || proc)
         .filter(not_zero_port)
         .reduce((acc, conn) => {
           acc[conn.port] = acc[conn.port] || conn
@@ -70,8 +69,6 @@ module.exports = class Autodetect {
 
   static async connect_all() {
     const detected = await Autodetect.list()
-
-    console.log("autoconnect:%o", detected)
 
     const connections = Autodetect.apply_filters(
       detected

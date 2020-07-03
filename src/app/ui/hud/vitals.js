@@ -12,10 +12,21 @@ const span =
 module.exports = class Vitals {
   static PATTERN = /^(\w+) (\d+)\/(\d+)/
 
+  static SORT_ORDER = 
+    [ "spirit"
+    , "health"
+    , "mana"
+    , "stamina"
+    , "encumlevel"
+    , "mindState"
+    , "nextLvlPB"
+    ]
+
   static ID_TO_UI = 
     { encumlevel  : "encumbrance"
     , mindState   : "mind"
     , nextLevelPB : "exp"
+    , nextLvlPB   : "exp"
     }
 
   static parse (attrs) {
@@ -58,6 +69,7 @@ module.exports = class Vitals {
     return state && m(`ol` , 
       state.by_name("progressbar")
         .map(Attrs.get)
+        .sort((a,b) => Vitals.SORT_ORDER.indexOf(a.id) - Vitals.SORT_ORDER.indexOf(b.id))
         .map(Vitals.parse)
         .map(Vitals.show).concat(m(Stance)))
   }

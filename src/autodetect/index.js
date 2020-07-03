@@ -8,7 +8,7 @@ const is_gemstone =
   ({name, cmd})=> name == "ruby" && (is_lich_proc(cmd) || is_cabal_proc(cmd))
 
 const is_lich_proc =
-  cmd => cmd.includes("lich.rb") && 
+  cmd => (cmd.includes("lich.rbw") || cmd.includes("lich.rb")) && 
          cmd.includes("--detachable-client=")
 
 const is_cabal_proc =
@@ -60,6 +60,8 @@ module.exports = class Autodetect {
     console.log("autoconnect:%o", detected)
 
     const connections = detected
+      // TODO: "I added that so you could configure it to not autoconnect to some sessions (if you have a utility character you only interact with programmatically or something)"
+      // [Chris]: This causes a fatal JavaScript error for me and prevents game connection.
     .filter(opts => skippable.indexOf(opts.name) == -1)
     .map(opts => {
       if (Session.has(opts.name) && Session.get(opts.name).pending) {

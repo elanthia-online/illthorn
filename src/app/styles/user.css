@@ -1,0 +1,56 @@
+/* Example User Style Overrides */
+
+/*
+  THIS FILE WILL HAVE NO EFFECT IN IT'S CURRENT LOCATION.
+  You have to move it to the correct place on your system first.
+
+  On a Mac, this file goes in:
+  /Users/USERNAME/Library/Application%20Support/illthorn/user.css
+
+  TODO: Where does this file go on Linux, Windows, etc?
+
+  You're overriding the styles from
+  https://github.com/elanthia-online/illthorn/blob/master/src/app/styles/app.css
+
+  Some of the styles are set up as CSS Custom Properties, so you can override them here:
+*/
+
+:root {
+  --main-bg-color: #232323;
+
+  --ok: #547b16;
+  --info: #292929;
+  --gentle-warn: #654c11;
+  --warn: #922d06;
+  --danger: #b30000;
+
+  --text-color: #f1f1f1;
+
+  --icon-size: 1em;
+  --base-padding: 3em;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+}
+
+.panel {
+  padding: 4px;
+  margin: 0 0 20px 0;
+  margin: 10px;
+  border: 1px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+}
+.panel h3 {
+  border-bottom: 1px solid black;
+  background: linear-gradient(to bottom, #332f2f, #111);
+  margin: 0 0 4px 0;
+}
+.panel li {
+  margin: 0 0 1px 0;
+}
+
+#hands-wrapper {
+  border-bottom: 3px solid gray;
+}

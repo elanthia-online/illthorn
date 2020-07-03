@@ -230,28 +230,18 @@ body {
 .panel {
   font-size: 14px;
   font-weight: bold;
-  border-bottom: 2px solid var(--info);
   position: relative;
+  padding: 4px;
+  margin: 0 0 20px 0;
+  margin: 10px;
 }
 
-.panel h3 {
+.panel summary {
   margin: 0;
   padding: 0.5em;
   text-transform: uppercase;
   text-align: center;
   background-color: var(--info);
-}
-
-.panel h3:hover {
-  cursor: pointer;
-}
-
-.panel h3:after {
-  content: "+";
-  transform: rotate(45deg);
-  display: inline-block;
-  margin-right: 0.5em;
-  float: right;
 }
 
 .panel ol {

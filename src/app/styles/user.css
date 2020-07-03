@@ -5,9 +5,16 @@
   You have to move it to the correct place on your system first.
 
   On a Mac, this file goes in:
-  /Users/USERNAME/Library/Application%20Support/illthorn/user.css
+    /Users/USERNAME/Library/Application%20Support/illthorn/user.css
 
-  TODO: Where does this file go on Linux, Windows, etc?
+  On Linux (XDG specification):
+    ~/.config/illthorn/user.css
+
+  On Windows:
+    %APPDATA% environment variable
+
+  Documentation about how application works:
+    https://www.electronjs.org/docs/api/app#appgetpathname
 
   You're overriding the styles from
   https://github.com/elanthia-online/illthorn/blob/master/src/app/styles/app.css

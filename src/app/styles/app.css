@@ -11,6 +11,33 @@
   --base-padding: 3em;
 }
 
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 400;
+  src: url("../fonts/MonoLisa-Regular.woff") format("woff2"),
+    url("../fonts/MonoLisa-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 700;
+  src: url("../fonts/MonoLisa-Bold.woff") format("woff2"),
+    url("../fonts/MonoLisa-Bold.woff") format("woff");
+}
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 400;
+  font-style: italic;
+  src: url("../fonts/MonoLisa-RegularItalic.woff2") format("woff2"),
+    url("../fonts/MonoLisa-RegularItalic.woff") format("woff");
+}
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 700;
+  font-style: italic;
+  src: url("../fonts/MonoLisa-BoldItalic.woff") format("woff2"),
+    url("../fonts/MonoLisa-BoldItalic.woff") format("woff");
+}
+
 *,
 *:before,
 *:after {
@@ -40,7 +67,7 @@ ul {
 body {
   font-size: 15px;
   margin: 0;
-  font-family: Arial;
+  font-family: system-ui, sans-serif;
   background-color: var(--main-bg-color);
   color: var(--text-color);
 }
@@ -148,6 +175,7 @@ body {
   height: 100%;
 }
 .feed pre {
+  font-family: "MonoLisa", system-ui, sans-serif;
   white-space: pre-wrap;
   margin: 0;
   line-height: 1.4em;

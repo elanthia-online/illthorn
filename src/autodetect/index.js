@@ -62,7 +62,7 @@ module.exports = class Autodetect {
     const connections = detected
       // TODO: "I added that so you could configure it to not autoconnect to some sessions (if you have a utility character you only interact with programmatically or something)"
       // [Chris]: This `filter` causes a fatal JavaScript error for me and prevents game connection.
-    .filter(opts => skippable.indexOf(opts.name) == -1)
+    .filter(opts => typeof skippable !== "string" ? true : skippable.indexOf(opts.name) == -1)
     .map(opts => {
       if (Session.has(opts.name) && Session.get(opts.name).pending) {
         Session.get(opts.name).destroy()

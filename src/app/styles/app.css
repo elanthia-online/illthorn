@@ -1,14 +1,41 @@
 /* https://paletton.com/#uid=75u0u0kmcf4eunphzibqDaMvZ6s */
-:root { 
+:root {
   --main-bg-color: #1a1a1d;
   --ok: #396820;
-  --info: #184F3F;
+  --info: #184f3f;
   --gentle-warn: rgb(122, 96, 28);
   --warn: #784225;
-  --danger: #6F2232;
+  --danger: #6f2232;
   --text-color: #f1f1f1;
   --icon-size: 1em;
   --base-padding: 3em;
+}
+
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 400;
+  src: url("../fonts/MonoLisa-Regular.woff") format("woff2"),
+    url("../fonts/MonoLisa-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 700;
+  src: url("../fonts/MonoLisa-Bold.woff") format("woff2"),
+    url("../fonts/MonoLisa-Bold.woff") format("woff");
+}
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 400;
+  font-style: italic;
+  src: url("../fonts/MonoLisa-RegularItalic.woff2") format("woff2"),
+    url("../fonts/MonoLisa-RegularItalic.woff") format("woff");
+}
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 700;
+  font-style: italic;
+  src: url("../fonts/MonoLisa-BoldItalic.woff") format("woff2"),
+    url("../fonts/MonoLisa-BoldItalic.woff") format("woff");
 }
 
 *,
@@ -17,20 +44,30 @@
   box-sizing: border-box;
 }
 
-ol, ul, h1, h2, h3, h4, h5, h6, body, html {
+ol,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+body,
+html {
   margin: 0;
   padding: 0;
   font-size: 1em;
 }
 
-ol, ul {
+ol,
+ul {
   list-style-type: none;
 }
 
 body {
   font-size: 15px;
   margin: 0;
-  font-family: Arial;
+  font-family: system-ui, sans-serif;
   background-color: var(--main-bg-color);
   color: var(--text-color);
 }
@@ -109,7 +146,7 @@ body {
 }
 
 .hand:before {
-  background-color: var(--text-color)
+  background-color: var(--text-color);
 }
 
 .scroll {
@@ -126,7 +163,7 @@ body {
 
 .scroll::-webkit-scrollbar-thumb {
   background-color: var(--info);
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
 #feed-wrapper {
@@ -138,6 +175,7 @@ body {
   height: 100%;
 }
 .feed pre {
+  font-family: "MonoLisa", system-ui, sans-serif;
   white-space: pre-wrap;
   margin: 0;
   line-height: 1.4em;
@@ -149,7 +187,7 @@ body {
   padding: 0.5em 1em;
   display: grid;
   grid-template-columns: 3em 1fr;
-  align-items: center
+  align-items: center;
 }
 
 #cli-wrapper .prompt {
@@ -186,7 +224,7 @@ body {
 }
 
 #cnc input#cli-suggestions {
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .panel {
@@ -293,11 +331,11 @@ a[class="exist"] {
 }
 
 a.external-link {
-  color: #82B3AE;
+  color: #82b3ae;
 }
 
 .thoughts {
-  color: #fff
+  color: #fff;
 }
 
 .speech {
@@ -305,7 +343,7 @@ a.external-link {
 }
 
 .whisper {
-  color: #4F8B89;
+  color: #4f8b89;
 }
 
 .clickable .d {
@@ -317,8 +355,9 @@ a.external-link {
   border-color: #6f23db;
 }
 
-.b, .monster {
-  color: #C4D428;
+.b,
+.monster {
+  color: #c4d428;
 }
 
 #compass ul {

@@ -53,16 +53,19 @@ module.exports = class Autodetect {
       }, {}))
   }
 
-  static async connect_all () {
+  static apply_filters (sessions) {
     const skippable = Settings.get("no-autoconnect")
+    if (typeof (skippable || {}).indexOf !== "function") return sessions
+    return sessions.filter(opts => skippable.indexOf(opts.name) == -1)
+  }
+
+  static async connect_all () {
+    
     const detected =  await Autodetect.list()
 
     console.log("autoconnect:%o", detected)
 
-    const connections = detected
-      // TODO: "I added that so you could configure it to not autoconnect to some sessions (if you have a utility character you only interact with programmatically or something)"
-      // [Chris]: This `filter` causes a fatal JavaScript error for me and prevents game connection.
-    .filter(opts => skippable.indexOf(opts.name) == -1)
+    const connections = Autodetect.apply_filters(detected)
     .map(opts => {
       if (Session.has(opts.name) && Session.get(opts.name).pending) {
         Session.get(opts.name).destroy()

@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Illthorn</title>
-    <link href="./app/styles/app.css" type="text/css" rel="stylesheet">
+    <link href="./app/styles/app.css" type="text/css" rel="stylesheet" />
   </head>
   <body>
     <div id="app">
-        <div id="sessions" class="pane"></div>
-        <div id="hud" class="pane"></div>
-        <div id="main" class="pane">
-          <div id="hands-wrapper"></div>
-          <div id="feed-wrapper"></div>
-          <div id="cli-wrapper"></div>
-        </div>
+      <div id="sessions" class="pane"></div>
+      <div id="hud" class="pane"></div>
+      <div id="main" class="pane">
+        <div id="hands-wrapper"></div>
+        <div id="feed-wrapper"></div>
+        <div id="cli-wrapper"></div>
+      </div>
     </div>
   </body>
   <script>
     document.addEventListener("keydown", function (e) {
       if (e.which === 123) {
-        require("electron").remote.getCurrentWindow().toggleDevTools()
+        require("electron").remote.getCurrentWindow().toggleDevTools();
       } else if (e.which === 116) {
-        location.reload()
+        location.reload();
       }
-    })
+    });
   </script>
   <script src="./renderer.js"></script>
 </html>

@@ -1,8 +1,11 @@
-const array  = "array"
-const number = "number"
-const string = "string" 
-const object = "string"
+const array = "array";
+const number = "number";
+const string = "string";
+const object = "string";
 
 module.exports = {
-  macros: {type: array, items: {type: object, properties: {keys: string, command: string}}}
-}
+  macros: {
+    type: array,
+    items: { type: object, properties: { keys: string, command: string } },
+  },
+};

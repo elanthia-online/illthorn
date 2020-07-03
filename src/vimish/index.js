@@ -6,6 +6,7 @@ const Bus        = require("../bus")
 const Autodetect = require("../autodetect")
 const Lens       = require("../util/lens")
 const Settings   = require("../settings")
+const Storage    = require("../storage")
 const Hilites    = require("../hilites")
 const Macros     = require("../macros")
 
@@ -197,4 +198,8 @@ exports.macros = exports.macro = Command.of(["sub_command", "profile"],
 exports.set = Command.of(["option", "value"], async ({option, value}) => {
   Settings.set(option, value)
   Bus.emit(Bus.events.REDRAW)
+})
+
+exports.config = Command.of([], async ()=> {
+  Storage.openInEditor()
 })

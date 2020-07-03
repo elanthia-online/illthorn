@@ -107,7 +107,12 @@ module.exports = class CLI {
 
   view ({attrs}) {
     return (
-      [ m("span.prompt", Lens.get(Session.focused(), "state.prompt.text", ">"))
+      [ m("div.round-time", [
+          // TODO: Is the some kind of global object to hook into to know the current roundtime?
+          // Not sure what the programmatic options are here, I imagine we'll have to be doing our own math to figure out how best to handle this bars size.
+          m("div.round-time-current", { style: "width: 50%;" }),
+        ])
+      , m("span.prompt", Lens.get(Session.focused(), "state.prompt.text", ">"))
       , m("#cnc", [ m("input#cli", { autofocus : true, oninput: CLI.oninput.bind(attrs) })
                   , m("input#cli-suggestions")
                   ])

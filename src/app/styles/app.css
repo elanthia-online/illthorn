@@ -1,11 +1,11 @@
 /* https://paletton.com/#uid=75u0u0kmcf4eunphzibqDaMvZ6s */
-:root { 
+:root {
   --main-bg-color: #1a1a1d;
   --ok: #396820;
-  --info: #184F3F;
+  --info: #184f3f;
   --gentle-warn: rgb(122, 96, 28);
   --warn: #784225;
-  --danger: #6F2232;
+  --danger: #6f2232;
   --text-color: #f1f1f1;
   --icon-size: 1em;
   --base-padding: 3em;
@@ -17,13 +17,23 @@
   box-sizing: border-box;
 }
 
-ol, ul, h1, h2, h3, h4, h5, h6, body, html {
+ol,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+body,
+html {
   margin: 0;
   padding: 0;
   font-size: 1em;
 }
 
-ol, ul {
+ol,
+ul {
   list-style-type: none;
 }
 
@@ -109,7 +119,7 @@ body {
 }
 
 .hand:before {
-  background-color: var(--text-color)
+  background-color: var(--text-color);
 }
 
 .scroll {
@@ -126,7 +136,7 @@ body {
 
 .scroll::-webkit-scrollbar-thumb {
   background-color: var(--info);
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
 #feed-wrapper {
@@ -146,21 +156,31 @@ body {
 
 #cli-wrapper {
   background-color: var(--info);
-  padding: 0.5em 1em;
   display: grid;
-  grid-template-columns: 3em 1fr;
-  align-items: center
+  grid-template-columns: 5em 1fr;
+  grid-template-rows: 3px 1fr;
+}
+
+.round-time {
+  grid-column: 1 / -1;
+}
+.round-time-current {
+  height: 3px;
+  background: linear-gradient(to right, darkred, red);
 }
 
 #cli-wrapper .prompt {
-  display: inline-block;
   text-align: right;
   padding-right: 0.3em;
   font-size: 1.6em;
+  align-self: center;
+  position: relative;
+  top: -0.1em;
 }
 
 #cnc {
   position: relative;
+  padding-right: 1em;
 }
 
 #cnc input {
@@ -170,7 +190,7 @@ body {
   height: 1.4em;
   margin-top: -0.7em;
   border: none;
-  width: 100%;
+  width: calc(100% - 1em);
   padding: 0.3em;
   color: #fff;
   font-size: 1.2em;
@@ -186,7 +206,7 @@ body {
 }
 
 #cnc input#cli-suggestions {
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .panel {
@@ -293,11 +313,11 @@ a[class="exist"] {
 }
 
 a.external-link {
-  color: #82B3AE;
+  color: #82b3ae;
 }
 
 .thoughts {
-  color: #fff
+  color: #fff;
 }
 
 .speech {
@@ -305,7 +325,7 @@ a.external-link {
 }
 
 .whisper {
-  color: #4F8B89;
+  color: #4f8b89;
 }
 
 .clickable .d {
@@ -317,8 +337,9 @@ a.external-link {
   border-color: #6f23db;
 }
 
-.b, .monster {
-  color: #C4D428;
+.b,
+.monster {
+  color: #c4d428;
 }
 
 #compass ul {

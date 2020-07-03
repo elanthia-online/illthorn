@@ -23,17 +23,20 @@ An attempt at a modern cross-platform FE.
 
 Meta shortcuts are not customizable, as this project will general prefer sane defaults over configuration
 
-#### `alt+<n>` 
+#### `alt+<n>`
 
 quick swap between sessions based on the numeric order on the left-hand session pane, similar to many modern terminals
 
 ## FE Commands (Vim prefixed)
 
-All FE commands are prefixed by the `:` character, ala `vim` or other common cli utils.
+All FE commands are prefixed by the `:` character, ala `vim` or other common CLI utils.
 
 #### `:connect <name> <port>`
+
 #### (alias) `:c <name> <port>`
+
 #### `:connect`
+
 #### `:connect <name>`
 
 Attempts to create a new named session with the given arguments.
@@ -41,6 +44,7 @@ If `name` and `port` are omitted, it will attempt to autodetect any newly create
 If `port` is omitted we will attempt to autodetect which port to connect to.
 
 #### `:focus <session>`
+
 #### (alias) `:f <session>`
 
 Swaps focus to another session.
@@ -58,6 +62,17 @@ If you accidentally mixed up the name/port combos when connecting, this allows y
 Sets a configuration path to a value.
 
 Currently supported `:set` operations:
-| path        |  value   | description                                 |
+| path | value | description |
 |-------------|:---------|---------------------------------------------|
-| clickable   | boolean  | turns clickable `<d cmd>` elements on or off|
+| clickable | boolean | turns clickable `<d cmd>` elements on or off|
+
+#### `:ui <component id> <state>`
+
+Sets the panels. State is `on` or `off`.
+
+- `vitals`
+- `injuries`
+- `active-spells`
+- `compass`
+
+Example: `:ui compass off`

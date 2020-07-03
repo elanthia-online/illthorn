@@ -1,15 +1,15 @@
-const make_path = 
-  path => Array.isArray(path) ? path.slice(0) : path.split(".")
+const make_path = (path) =>
+  Array.isArray(path) ? path.slice(0) : path.split(".")
 
-const is_nothing =
-  t => (typeof t === "undefined" || t === null)
+const is_nothing = (t) =>
+  typeof t === "undefined" || t === null
 
 module.exports = class Lens {
-  static of (path) {
+  static of(path) {
     return new Lens(path)
   }
 
-  static get (obj, path, fallback) {
+  static get(obj, path, fallback) {
     path = make_path(path)
     // walk the object
     while (path.length) {
@@ -20,10 +20,10 @@ module.exports = class Lens {
     return is_nothing(obj) ? fallback : obj
   }
 
-  static put (obj, path, val, root) {
+  static put(obj, path, val, root) {
     root = root || obj
     path = make_path(path)
-    obj  = (typeof obj == "object" && obj) ? obj : {}
+    obj = typeof obj == "object" && obj ? obj : {}
 
     if (path.length == 0) {
       return root
@@ -35,13 +35,14 @@ module.exports = class Lens {
     }
 
     const next_key = path.shift()
-    const next_obj = obj[next_key] = obj[next_key] || {}
+    const next_obj = (obj[next_key] = obj[next_key] || {})
     return Lens.put(next_obj, path, val, root)
   }
 
-  constructor (path) {
+  constructor(path) {
     this.path = path
-    this.get = (obj, fallback) => Lens.get(obj, this.path, fallback)
-    this.put = (obj, val)      => Lens.put(obj, this.path, val)
+    this.get = (obj, fallback) =>
+      Lens.get(obj, this.path, fallback)
+    this.put = (obj, val) => Lens.put(obj, this.path, val)
   }
 }

@@ -1,5 +1,5 @@
 module.exports = class Time {
-  static format (seconds) {
+  static format(seconds) {
     let days, hours, minutes
     days = Math.floor(seconds / 86400)
     seconds -= days * 86400
@@ -9,11 +9,15 @@ module.exports = class Time {
     seconds -= minutes * 60
     let str = ""
     // only show days if it makes sense
-    if (days)  str += days + "d "
+    if (days) str += days + "d "
     if (hours) str += hours + "h "
     // show all other columns
-    return  (str + 
-      minutes.toString().padStart(2, "0") + "m " + 
-      seconds.toString().padStart(2, "0") + "s")
+    return (
+      str +
+      minutes.toString().padStart(2, "0") +
+      "m " +
+      seconds.toString().padStart(2, "0") +
+      "s"
+    )
   }
 }

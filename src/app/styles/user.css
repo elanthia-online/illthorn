@@ -47,7 +47,11 @@ body {
   margin: 10px;
   border: 1px solid;
   border-image-slice: 1;
-  border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+  border-image-source: linear-gradient(
+    to left,
+    #743ad5,
+    #d53a9d
+  );
 }
 .panel h3 {
   border-bottom: 1px solid black;

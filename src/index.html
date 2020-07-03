@@ -3,7 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <title>Illthorn</title>
-    <link href="./app/styles/app.css" type="text/css" rel="stylesheet" />
+    <link
+      href="./app/styles/app.css"
+      type="text/css"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="app">
@@ -19,11 +23,13 @@
   <script>
     document.addEventListener("keydown", function (e) {
       if (e.which === 123) {
-        require("electron").remote.getCurrentWindow().toggleDevTools();
+        require("electron")
+          .remote.getCurrentWindow()
+          .toggleDevTools()
       } else if (e.which === 116) {
-        location.reload();
+        location.reload()
       }
-    });
+    })
   </script>
   <script src="./renderer.js"></script>
 </html>

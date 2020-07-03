@@ -1,8 +1,8 @@
-const m = require("mithril");
-const Session = require("../../../session");
-const Panel = require("./panel");
-const Lens = require("../../../util/lens");
-const Progress = require("../progress");
+const m = require("mithril")
+const Session = require("../../../session")
+const Panel = require("./panel")
+const Lens = require("../../../util/lens")
+const Progress = require("../progress")
 
 module.exports = class Compass {
   static DIRS = [
@@ -21,21 +21,25 @@ module.exports = class Compass {
     "",
     "down",
     "",
-  ];
+  ]
 
-  static MAP = { up: "u", down: "d", out: "o" };
+  static MAP = { up: "u", down: "d", out: "o" }
 
   static current() {
-    return Lens.get(Session.current, "state.compass.children", [])
+    return Lens.get(
+      Session.current,
+      "state.compass.children",
+      []
+    )
       .map((dir) => Lens.get(dir, "attrs.value"))
       .filter((dir) => typeof dir == "string")
       .reduce((acc, dir) => {
-        return Object.assign(acc, { [dir]: 1 });
-      }, {});
+        return Object.assign(acc, { [dir]: 1 })
+      }, {})
   }
 
   view() {
-    const available_dirs = Compass.current();
+    const available_dirs = Compass.current()
 
     return m(
       Panel,
@@ -50,6 +54,6 @@ module.exports = class Compass {
           )
         )
       )
-    );
+    )
   }
-};
+}

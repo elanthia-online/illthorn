@@ -5,5 +5,5 @@ exports.to_pojo = function (tag) {
     text: tag.text,
     id: tag.id,
     children: tag.children.map(exports.to_pojo),
-  };
-};
+  }
+}

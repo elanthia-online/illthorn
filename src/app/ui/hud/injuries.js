@@ -1,10 +1,10 @@
-const m = require("mithril");
-const Session = require("../../../session");
-const Panel = require("./panel");
-const Lens = require("../../../util/lens");
-const Pipe = require("../../../util/pipe");
-const Progress = require("../progress");
-const Attrs = Lens.of("attrs");
+const m = require("mithril")
+const Session = require("../../../session")
+const Panel = require("./panel")
+const Lens = require("../../../util/lens")
+const Pipe = require("../../../util/pipe")
+const Progress = require("../progress")
+const Attrs = Lens.of("attrs")
 
 window.Injuries = module.exports = class Injuries {
   static list() {
@@ -17,9 +17,9 @@ window.Injuries = module.exports = class Injuries {
             m("span", injury.name + " / " + injury.type),
             m("span", injury.severity),
           ])
-        );
+        )
       })
-    );
+    )
   }
 
   static injuries() {
@@ -32,19 +32,29 @@ window.Injuries = module.exports = class Injuries {
           {},
           {
             area: injury.id,
-            type: injury.name.replace(/\d+/, "").toLowerCase(),
+            type: injury.name
+              .replace(/\d+/, "")
+              .toLowerCase(),
             severity: parseInt(
-              injury.name.toLowerCase().replace(/^[a-z]+/, ""),
+              injury.name
+                .toLowerCase()
+                .replace(/^[a-z]+/, ""),
               10
             ),
-            name: injury.id.replace(/([A-Z])/g, " $&").toLowerCase(),
+            name: injury.id
+              .replace(/([A-Z])/g, " $&")
+              .toLowerCase(),
           }
         )
       )
-      .filter((injury) => !isNaN(injury.severity));
+      .filter((injury) => !isNaN(injury.severity))
   }
 
   view() {
-    return m(Panel, { id: "injuries", title: "injuries" }, Injuries.list());
+    return m(
+      Panel,
+      { id: "injuries", title: "injuries" },
+      Injuries.list()
+    )
   }
-};
+}

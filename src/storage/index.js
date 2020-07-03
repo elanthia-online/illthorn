@@ -1,4 +1,4 @@
-const Store = require("electron-store");
-const schema = require("./schema");
+const Store = require("electron-store")
+const schema = require("./schema")
 
-module.exports = new Store();
+module.exports = new Store()

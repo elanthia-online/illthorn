@@ -1,24 +1,28 @@
-const m = require("mithril");
-const Session = require("../../../session");
-const Panel = require("./panel");
-const Lens = require("../../../util/lens");
-const Progress = require("../progress");
-const Attrs = Lens.of("attrs");
+const m = require("mithril")
+const Session = require("../../../session")
+const Panel = require("./panel")
+const Lens = require("../../../util/lens")
+const Progress = require("../progress")
+const Attrs = Lens.of("attrs")
 
 module.exports = class ActiveSpells {
-  static MAX_DURATION = 4 * 60 + 10;
+  static MAX_DURATION = 4 * 60 + 10
 
   static minutes_left(spell) {
-    const [hours, minutes] = spell.remaining.split(":");
-    return parseInt(hours, 10) * 60 + parseInt(minutes, 10);
+    const [hours, minutes] = spell.remaining.split(":")
+    return parseInt(hours, 10) * 60 + parseInt(minutes, 10)
   }
 
   static percent_remaining(spell) {
-    return (ActiveSpells.minutes_left(spell) / ActiveSpells.MAX_DURATION) * 100;
+    return (
+      (ActiveSpells.minutes_left(spell) /
+        ActiveSpells.MAX_DURATION) *
+      100
+    )
   }
 
   static spell(spell) {
-    const percent = ActiveSpells.percent_remaining(spell);
+    const percent = ActiveSpells.percent_remaining(spell)
 
     return m("li", [
       m(`.bar.${Progress.classify(percent + 20)}`, {
@@ -28,18 +32,28 @@ module.exports = class ActiveSpells {
         m("span.spell", spell.name),
         m("span.remaining", spell.remaining),
       ]),
-    ]);
+    ])
   }
 
   static list(spells) {
-    return m(`ol.spells.scroll`, spells.map(ActiveSpells.spell));
+    return m(
+      `ol.spells.scroll`,
+      spells.map(ActiveSpells.spell)
+    )
   }
 
   static spells() {
-    return Lens.get(Session.focused(), "state.ActiveSpells.children", [])
+    return Lens.get(
+      Session.focused(),
+      "state.ActiveSpells.children",
+      []
+    )
       .filter((_, i) => i % 2 == 1)
       .map(Attrs.get)
-      .map((attrs) => ({ name: attrs.anchor_right, remaining: attrs.value }));
+      .map((attrs) => ({
+        name: attrs.anchor_right,
+        remaining: attrs.value,
+      }))
   }
 
   view() {
@@ -47,6 +61,6 @@ module.exports = class ActiveSpells {
       Panel,
       { id: "active-spells", title: "active spells" },
       ActiveSpells.list(ActiveSpells.spells())
-    );
+    )
   }
-};
+}

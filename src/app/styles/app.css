@@ -89,11 +89,11 @@ body {
 #app {
   display: grid;
   height: 100vh;
-  grid-template-columns: 8em var(--column-width) 1fr 0;
+  grid-template-columns: 6em var(--column-width) 1fr 0;
   overflow: hidden;
 }
 #app.right-panels-on {
-  grid-template-columns: 8em var(--column-width) 1fr var(
+  grid-template-columns: 6em var(--column-width) 1fr var(
       --column-width
     );
 }
@@ -130,6 +130,7 @@ body {
   border-bottom: 3px solid var(--info);
 }
 .streams {
+  padding: 0 1em;
   height: var(--stream-height);
 }
 .streams pre {
@@ -143,35 +144,47 @@ body {
 
 #sessions {
   background: var(--info);
-  padding: var(--base-padding) 0;
+  padding: 40px 1em 1em;
 }
-
 #sessions ol {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-
 #sessions li {
-  padding: 1em 1em 1em 0.5em;
-  margin: 0;
-  text-align: right;
+  margin: 0 0 1em 0;
+  border: 0;
+  height: 4em;
+  text-align: center;
+  line-height: 4em;
+  font-size: 1em;
   font-weight: bold;
-  border-right: 4px solid var(--info);
+  position: relative;
+  background-color: var(--main-bg-color);
+  border-radius: 4px;
+  border: 4px solid transparent;
 }
-
-#sessions .alt-numeric {
-  float: left;
-}
-
 #sessions li:hover {
   cursor: pointer;
-  border-right: 4px solid var(--main-bg-color);
 }
-
 #sessions li.on {
-  background-color: var(--main-bg-color);
-  border-right: 4px solid var(--main-bg-color);
+  box-shadow: 0 0 0 2px white;
+  border: 4px solid var(--info);
+}
+#sessions .session-name {
+  font-size: 1.5em;
+}
+#sessions .alt-numeric {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: var(--info);
+  border-radius: 50px;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  text-align: center;
+  margin: -0.75em 0 0 -0.75em;
 }
 
 #hands {

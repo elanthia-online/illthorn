@@ -4,6 +4,16 @@ A modern cross-platform front-end for [Gemstone IV](https://www.play.net/gs4/).
 
 ![illthorn-fe](https://user-images.githubusercontent.com/1090434/81620486-0082e580-93ba-11ea-91ad-b526bb16ceac.png)
 
+## Connecting to the game
+
+You need to have an active Lich session. So you'd connect something like...
+
+```
+ruby lich.rb --login CHARACTER_NAME --detachable-client=8003 --without-frontend
+```
+
+Lich might also be `lich.rbw` on your setup. You can run multiple connections (for multiple characters/accounts) in multiple terminals and Illtorn will autodetect them. You'll have to run them on different ports though, like `--detachable-client=8004`.
+
 ## Current Features
 
 1. Attempts to autostart sessions by detecting open lich processes started with `--without-frontend`

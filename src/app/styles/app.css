@@ -1,15 +1,18 @@
 /* https://paletton.com/#uid=75u0u0kmcf4eunphzibqDaMvZ6s */
 :root {
   --main-bg-color: #1a1a1d;
+  --text-color: #f1f1f1;
+
   --ok: #396820;
   --info: #184f3f;
   --gentle-warn: rgb(122, 96, 28);
   --warn: #784225;
   --danger: #6f2232;
-  --text-color: #f1f1f1;
+
   --icon-size: 1em;
   --base-padding: 3em;
-  --streams-height: 12em;
+
+  --stream-channel-color: #91d686;
 }
 
 @font-face {
@@ -68,6 +71,10 @@ ul {
   list-style-type: none;
 }
 
+pre {
+  font-family: "MonoLisa", system-ui, sans-serif;
+}
+
 body {
   font-size: 15px;
   margin: 0;
@@ -105,20 +112,16 @@ body {
 #hud {
 }
 
-#app.streams-on .streams {
-  border-bottom: 3px solid var(--info);
-}
-
 .streams {
-  height: 100%;
+  max-height: 40vh;
 }
-
-.streams {
-  padding: 0 1em 1em 1em;
-}
-
 .streams pre {
   margin: 0.2em 0;
+}
+.stream-channel {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--stream-channel-color);
 }
 
 #sessions {
@@ -211,7 +214,6 @@ body {
   height: 100%;
 }
 .feed pre {
-  font-family: "MonoLisa", system-ui, sans-serif;
   white-space: pre-wrap;
   margin: 0;
   line-height: 1.4em;
@@ -265,7 +267,6 @@ body {
 
 .panel {
   font-size: 14px;
-  font-weight: bold;
   position: relative;
   padding: 4px;
   margin: 0 0 20px 0;
@@ -278,6 +279,7 @@ body {
   text-transform: uppercase;
   text-align: center;
   background-color: var(--info);
+  font-weight: bold;
 }
 
 .panel ol {
@@ -309,6 +311,10 @@ body {
 .panel .value span:first-child {
   margin-right: 1em;
   flex: 1;
+}
+
+.panel .value span:nth-child(2) {
+  font-weight: bold;
 }
 
 .panel .value.center {

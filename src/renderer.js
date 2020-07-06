@@ -4,7 +4,9 @@ const Bus = require("./bus")
 const Autodect = require("./autodetect")
 const Session = require("./session")
 const Macros = require("./macros")
+const Settings = require("./settings")
 const CustomCSS = require("./storage/custom-css")
+const session = require("./session")
 
 CustomCSS.injectCSS()
 
@@ -16,7 +18,11 @@ m.mount(document.getElementById("hud"), UI.HUD)
 // todo: show flash message
 Bus.on(Bus.events.ERR, console.error)
 
-Bus.on(Bus.events.REDRAW, m.redraw)
+Bus.on(Bus.events.REDRAW, () => {
+  const sess = Session.focused()
+  if (sess) sess.streams.redraw()
+  m.redraw
+})
 
 Bus.on(Bus.events.FOCUS, (session) => {
   //if (session.has_focus()) return session.idle()

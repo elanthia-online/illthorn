@@ -192,8 +192,13 @@ module.exports = class Feed {
   }
 
   add(tag) {
-    if (Compiler.cannot_compile(tag)) return
+    const streams = this.session.streams
+    if (tag.name == "stream" && streams.wants(tag.id))
+      return streams.insert(tag)
+    if (Compiler.cannot_compile(tag)) return void 0
 
-    Compiler.compile(tag, (tag) => Feed.consume(tag, this))
+    Compiler.compile(tag, (compiled) => {
+      Feed.consume(compiled, this)
+    })
   }
 }

@@ -221,6 +221,8 @@ module.exports = class Compiler {
       .join(" ")
       .trim()
 
+    pre.dataset.now = Date.now()
+
     m.render(
       pre,
       UNTRUSTED_TAG_IDS[tag.id]

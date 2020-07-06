@@ -9,6 +9,7 @@
   --text-color: #f1f1f1;
   --icon-size: 1em;
   --base-padding: 3em;
+  --streams-height: 12em;
 }
 
 @font-face {
@@ -27,14 +28,17 @@
   font-family: "MonoLisa";
   font-weight: 400;
   font-style: italic;
-  src: url("../fonts/MonoLisa-RegularItalic.woff2") format("woff2"),
-    url("../fonts/MonoLisa-RegularItalic.woff") format("woff");
+  src: url("../fonts/MonoLisa-RegularItalic.woff2")
+      format("woff2"),
+    url("../fonts/MonoLisa-RegularItalic.woff")
+      format("woff");
 }
 @font-face {
   font-family: "MonoLisa";
   font-weight: 700;
   font-style: italic;
-  src: url("../fonts/MonoLisa-BoldItalic.woff") format("woff2"),
+  src: url("../fonts/MonoLisa-BoldItalic.woff")
+      format("woff2"),
     url("../fonts/MonoLisa-BoldItalic.woff") format("woff");
 }
 
@@ -81,12 +85,28 @@ body {
 
 #main {
   display: grid;
-  grid-auto-rows: 3em 1fr 4em;
+  grid-auto-rows: 3em 0em 1fr 4em;
   max-height: 100vh;
+}
+
+#app.streams-on #main {
+  grid-auto-rows: 3em var(--streams-height) 1fr 4em;
 }
 
 #hud {
   border-right: 3px solid var(--info);
+}
+
+.streams {
+  height: 100%;
+}
+
+.streams {
+  padding: 0 1em 1em 1em;
+}
+
+.streams pre {
+  margin: 0.2em 0;
 }
 
 #sessions {
@@ -151,6 +171,10 @@ body {
 
 .scroll {
   overflow-y: scroll;
+}
+
+.scroll pre {
+  white-space: pre-wrap;
 }
 
 .scroll::-webkit-scrollbar {

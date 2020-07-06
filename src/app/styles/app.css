@@ -105,6 +105,10 @@ body {
 #hud {
 }
 
+#app.streams-on .streams {
+  border-bottom: 3px solid var(--info);
+}
+
 .streams {
   height: 100%;
 }

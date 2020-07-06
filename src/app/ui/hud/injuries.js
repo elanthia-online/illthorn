@@ -8,18 +8,23 @@ const Attrs = Lens.of("attrs")
 
 window.Injuries = module.exports = class Injuries {
   static list() {
-    return m(
-      "ol",
-      Injuries.injuries().map((injury) => {
-        return m(
-          `li.${injury.type}.severity-${injury.severity}`,
-          m(".value", [
-            m("span", injury.name + " / " + injury.type),
-            m("span", injury.severity),
-          ])
-        )
-      })
-    )
+    if (Injuries.injuries().length) {
+      return m(
+        "ol",
+        Injuries.injuries().map((injury) => {
+          return m(
+            `li.${injury.type}.severity-${injury.severity}`,
+            m(".value", [
+              m("span", injury.name + " / " + injury.type),
+              m("span", injury.severity),
+            ])
+          )
+        })
+      )
+    } else {
+      // TODO: Should have a loading state rather than saying there are no injuries at first when there might actually be injuries.
+      return m(`div.empty-message`, "No injuries.")
+    }
   }
 
   static injuries() {

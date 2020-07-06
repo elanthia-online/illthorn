@@ -317,6 +317,11 @@ body {
   margin-right: 0;
 }
 
+.empty-message {
+  padding: 1em;
+  text-align: center;
+}
+
 .bar.high {
   background: var(--ok);
 }

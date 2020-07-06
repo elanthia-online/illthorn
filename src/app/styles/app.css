@@ -122,9 +122,13 @@ body {
   grid-auto-rows: 3em var(--stream-height) 1fr 4em;
 }
 
-#hud {
+#panels-left {
+  border-right: 3px solid var(--info);
 }
 
+#app.streams-on .streams {
+  border-bottom: 3px solid var(--info);
+}
 .streams {
   height: var(--stream-height);
 }
@@ -174,6 +178,7 @@ body {
   display: flex;
   align-items: center;
   height: 100%;
+  border-bottom: 3px solid var(--info);
 }
 
 .hand {

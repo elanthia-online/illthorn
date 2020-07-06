@@ -258,12 +258,18 @@ body {
   grid-template-rows: 3px 1fr;
 }
 
-.round-time {
+.timers {
   grid-column: 1 / -1;
 }
 .round-time-current {
   height: 3px;
   background: linear-gradient(to right, darkred, red);
+  grid-template-columns: 3em 1fr;
+  align-items: center;
+}
+.cast-time-current {
+  height: 3px;
+  background: linear-gradient(to right, #008a83, #03b9cc);
   grid-template-columns: 3em 1fr;
   align-items: center;
 }

@@ -123,12 +123,35 @@ module.exports = class CLI {
   }
 
   view({ attrs }) {
+    // TODO: Roundtime/Casttime and the CLI are probably different enough to abstract away instead of leaving combined like I have it here.
+    const sess = Session.focused()
+    const roundTime = Lens.get(
+      sess,
+      "state._timers.roundtime"
+    )
+    const castTime = Lens.get(
+      sess,
+      "state._timers.casttime"
+    )
+
+    let roundTimeWidth = 80
+    if (roundTime) {
+      // TODO: Actually calculate how wide to render the roundtime bar.
+      roundTimeWidth = 50
+    }
+    let castTimeWidth = 40
+    if (castTime) {
+      // TODO: Actually calculate how wide to render the casttime bar.
+      castTimeWidth = 50
+    }
+
     return [
-      m("div.round-time", [
-        // TODO: Is the some kind of global object to hook into to know the current roundtime?
-        // Not sure what the programmatic options are here, I imagine we'll have to be doing our own math to figure out how best to handle this bars size.
+      m("div.timers", [
         m("div.round-time-current", {
-          style: "width: 50%;",
+          style: `width: ${roundTimeWidth}%;`,
+        }),
+        m("div.cast-time-current", {
+          style: `width: ${castTimeWidth}%;`,
         }),
       ]),
       m(

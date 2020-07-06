@@ -34,9 +34,7 @@ module.exports = class Session extends events.EventEmitter {
   static list() {
     return Array.from(Session.Sessions)
       .map(([_, session]) => session)
-      .sort((left, right) =>
-        left.name.localeCompare(right.name)
-      )
+      .sort((left, right) => left.port - right.port)
   }
 
   static select(...args) {

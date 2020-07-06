@@ -68,7 +68,6 @@ module.exports = class Streams {
     // TODO: Doesn't account for messages that use square brackets in the message itself. https://regex101.com/r/iMjWM1/1/
     const messageRegEx = /(\[.*\])(.*)/
     let messageParts = messageRegEx.exec(tag.text)
-    console.log(messageParts)
     pre.innerHTML = `
       <span class="stream-channel">${messageParts[1]}</span><span class="stream-text">${messageParts[2]}</span>
     `.trim()

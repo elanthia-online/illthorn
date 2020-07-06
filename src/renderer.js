@@ -6,7 +6,9 @@ const Session = require("./session")
 const Macros = require("./macros")
 const CustomCSS = require("./storage/custom-css")
 
-CustomCSS.injectCSS()
+CustomCSS.injectCSS().then(() =>
+  document.body.classList.remove("loading")
+)
 
 m.mount(document.getElementById("sessions"), UI.Sessions)
 m.mount(document.getElementById("hands-wrapper"), UI.Hands)
@@ -16,7 +18,11 @@ m.mount(document.getElementById("hud"), UI.HUD)
 // todo: show flash message
 Bus.on(Bus.events.ERR, console.error)
 
-Bus.on(Bus.events.REDRAW, m.redraw)
+Bus.on(Bus.events.REDRAW, () => {
+  const sess = Session.focused()
+  if (sess) sess.streams.redraw()
+  m.redraw
+})
 
 Bus.on(Bus.events.FOCUS, (session) => {
   //if (session.has_focus()) return session.idle()

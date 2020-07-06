@@ -7,12 +7,14 @@ const customCSS = path.join(config_dir, "user.css")
 exports.customCSS = customCSS
 
 exports.injectCSS = function (fileName = customCSS) {
-  const head = document.head
-  const link = document.createElement("link")
+  return new Promise((ok) => {
+    const head = document.head
+    const link = document.createElement("link")
 
-  link.type = "text/css"
-  link.rel = "stylesheet"
-  link.href = fileName
-
-  head.appendChild(link)
+    link.type = "text/css"
+    link.rel = "stylesheet"
+    link.href = fileName
+    link.onload = link.onerror = link.onabort = ok
+    head.appendChild(link)
+  })
 }

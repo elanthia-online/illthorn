@@ -1,6 +1,7 @@
 const events = require("events")
 const State = require("./state")
 const Feed = require("./feed")
+const Streams = require("./streams")
 const Bus = require("../bus")
 const History = require("./command-history")
 const { shell } = require("electron")
@@ -91,6 +92,7 @@ module.exports = class Session extends events.EventEmitter {
     this.history = History.of()
     this.name = name || port
     this.feed = Feed.of({ session: this })
+    this.streams = Streams.of({ session: this })
     this.state = State.of(this)
     this.worker = new Worker(
       path.resolve(__dirname, "worker.js")
@@ -159,6 +161,7 @@ module.exports = class Session extends events.EventEmitter {
   attach(view) {
     this.activate()
     this.feed.attach_to_dom(view)
+    this.streams.redraw()
     this.feed.reattach_head()
     return this
   }

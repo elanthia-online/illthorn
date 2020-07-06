@@ -6,6 +6,7 @@ const Lens = require("../util/lens")
 const Settings = require("../settings")
 const Storage = require("../storage")
 const Hilites = require("../hilites")
+const Streams = require("../session/streams")
 const Macros = require("../macros")
 
 const redraw = (session) => {
@@ -286,3 +287,25 @@ exports.set = Command.of(
 exports.config = Command.of([], async () => {
   Storage.openInEditor()
 })
+
+exports.stream = exports.streams = Command.of(
+  ["stream", "state"],
+  async ({ stream, state }) => {
+    stream = stream.toString().toLowerCase()
+    if (state == "off") state = false
+    if (state == "on") state = true
+    if ("string" == typeof state)
+      state = !!new Function(`return ${state}`).call()
+
+    if (!Streams.ENUM[stream]) {
+      throw new Error(
+        `${stream} is not a valid stream, must be one of ${Object.keys(
+          Streams.ENUM
+        ).join(", ")}`
+      )
+    }
+
+    Streams.Settings.set(`active.${stream}`, state)
+    Bus.emit(Bus.events.REDRAW)
+  }
+)

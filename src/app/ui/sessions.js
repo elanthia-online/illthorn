@@ -13,9 +13,10 @@ module.exports = class SessionsList {
           Bus.events.FOCUS,
           session
         ),
+        title: session.name,
       },
       m("span.alt-numeric", { data: idx }, idx + 1),
-      m("span", session.name)
+      m("span.session-name", session.name[0])
     )
   }
 

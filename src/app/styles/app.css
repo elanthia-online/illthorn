@@ -1,15 +1,21 @@
 /* https://paletton.com/#uid=75u0u0kmcf4eunphzibqDaMvZ6s */
 :root {
   --main-bg-color: #1a1a1d;
+  --text-color: #f1f1f1;
+
   --ok: #396820;
   --info: #184f3f;
   --gentle-warn: rgb(122, 96, 28);
   --warn: #784225;
   --danger: #6f2232;
-  --text-color: #f1f1f1;
+
   --icon-size: 1em;
   --base-padding: 3em;
-  --streams-height: 12em;
+
+  --column-width: 16em;
+
+  --stream-height: 13em;
+  --stream-channel-color: #91d686;
 }
 
 @font-face {
@@ -43,8 +49,8 @@
 }
 
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -68,6 +74,10 @@ ul {
   list-style-type: none;
 }
 
+pre {
+  font-family: "MonoLisa", system-ui, sans-serif;
+}
+
 body {
   font-size: 15px;
   margin: 0;
@@ -79,38 +89,56 @@ body {
 #app {
   display: grid;
   height: 100vh;
-  grid-template-columns: 8em 16em 1fr;
+  grid-template-columns: 8em var(--column-width) 1fr 0;
   overflow: hidden;
 }
+#app.right-panels-on {
+  grid-template-columns: 8em var(--column-width) 1fr var(
+      --column-width
+    );
+}
 
+#sessions {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+#panels-left {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+#panels-right {
+  grid-column: 4 / 5;
+  grid-row: 1 / 2;
+}
 #main {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+
   display: grid;
-  grid-auto-rows: 3em 0em 1fr 4em;
+  grid-auto-rows: 3em 0 1fr 4em;
   max-height: 100vh;
 }
-
 #app.streams-on #main {
-  grid-auto-rows: 3em var(--streams-height) 1fr 4em;
+  grid-auto-rows: 3em var(--stream-height) 1fr 4em;
 }
 
-#hud {
+#panels-left {
   border-right: 3px solid var(--info);
 }
 
 #app.streams-on .streams {
   border-bottom: 3px solid var(--info);
 }
-
 .streams {
-  height: 100%;
+  height: var(--stream-height);
 }
-
-.streams {
-  padding: 0 1em 1em 1em;
-}
-
 .streams pre {
   margin: 0.2em 0;
+}
+.stream-channel {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--stream-channel-color);
 }
 
 #sessions {
@@ -150,6 +178,7 @@ body {
   display: flex;
   align-items: center;
   height: 100%;
+  border-bottom: 3px solid var(--info);
 }
 
 .hand {
@@ -159,7 +188,7 @@ body {
   font-weight: bold;
 }
 
-.hand:before {
+.hand::before {
   content: "";
   display: inline-block;
   height: var(--icon-size);
@@ -169,7 +198,7 @@ body {
   margin-right: 1em;
 }
 
-.hand:before {
+.hand::before {
   background-color: var(--text-color);
 }
 
@@ -181,15 +210,15 @@ body {
   white-space: pre-wrap;
 }
 
-.scroll::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 6px;
 }
 
-.scroll::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   width: 4px;
 }
 
-.scroll::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: var(--info);
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
@@ -203,7 +232,6 @@ body {
   height: 100%;
 }
 .feed pre {
-  font-family: "MonoLisa", system-ui, sans-serif;
   white-space: pre-wrap;
   margin: 0;
   line-height: 1.4em;
@@ -257,11 +285,12 @@ body {
 
 .panel {
   font-size: 14px;
-  font-weight: bold;
   position: relative;
   padding: 4px;
   margin: 0 0 20px 0;
   margin: 10px;
+  overflow: auto;
+  resize: vertical;
 }
 
 .panel summary {
@@ -270,6 +299,7 @@ body {
   text-transform: uppercase;
   text-align: center;
   background-color: var(--info);
+  font-weight: bold;
 }
 
 .panel ol {
@@ -301,6 +331,10 @@ body {
 .panel .value span:first-child {
   margin-right: 1em;
   flex: 1;
+}
+
+.panel .value span:nth-child(2) {
+  font-weight: bold;
 }
 
 .panel .value.center {
@@ -388,7 +422,6 @@ a.external-link {
   height: 150px;
   margin: 0 auto;
 }
-
 #compass li {
   color: var(--main-bg-color);
   height: 30px;
@@ -396,15 +429,12 @@ a.external-link {
   padding: 0;
   line-height: 30px;
 }
-
 #compass li.on {
   background: yellowgreen;
 }
-
 #compass li:empty {
   visibility: hidden;
 }
-
 #compass li.off {
   background: yellowgreen;
   opacity: 0.2;
@@ -413,11 +443,9 @@ a.external-link {
 .severity-1 {
   background-color: var(--gentle-warn);
 }
-
 .severity-2 {
   background-color: var(--warn);
 }
-
 .severity-3 {
   background-color: var(--danger);
 }

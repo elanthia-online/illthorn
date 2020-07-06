@@ -1,6 +1,6 @@
-# Wyrwood / FE
+# Illthorn
 
-An attempt at a modern cross-platform FE.
+A modern cross-platform front-end for [Gemstone IV](https://www.play.net/gs4/).
 
 ![illthorn-fe](https://user-images.githubusercontent.com/1090434/81620486-0082e580-93ba-11ea-91ad-b526bb16ceac.png)
 
@@ -66,9 +66,9 @@ Currently supported `:set` operations:
 |-------------|:---------|---------------------------------------------|
 | clickable | boolean | turns clickable `<d cmd>` elements on or off|
 
-#### `:ui <component id> <state>`
+#### `:ui <name> <state>`
 
-Sets the panels. State is `on` or `off`.
+Sets the panels. State is `on` or `off`. Names are:
 
 - `vitals`
 - `injuries`
@@ -76,3 +76,12 @@ Sets the panels. State is `on` or `off`.
 - `compass`
 
 Example: `:ui compass off`
+
+#### `stream <name> <state>`
+
+Sets the stream panels. State is `on` or `off`. Names are:
+
+- `thoughts`
+- `speech`
+- `logon`
+- `logoff`

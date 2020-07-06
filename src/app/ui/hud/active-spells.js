@@ -36,10 +36,14 @@ module.exports = class ActiveSpells {
   }
 
   static list(spells) {
-    return m(
-      `ol.spells.scroll`,
-      spells.map(ActiveSpells.spell)
-    )
+    if (spells.length) {
+      return m(
+        `ol.spells.scroll`,
+        spells.map(ActiveSpells.spell)
+      )
+    } else {
+      return m(`div.empty-message`, "No active spells.")
+    }
   }
 
   static spells() {

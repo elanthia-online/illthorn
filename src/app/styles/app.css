@@ -79,22 +79,30 @@ body {
 #app {
   display: grid;
   height: 100vh;
-  grid-template-columns: 8em 16em 1fr;
+  grid-template-columns: 8em 16em 1fr 16em;
   overflow: hidden;
 }
-
+#sessions {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+#panels-left {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+#panels-right {
+  grid-column: 4 / 5;
+  grid-row: 1 / 2;
+}
 #main {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
   display: grid;
-  grid-auto-rows: 3em 0em 1fr 4em;
+  grid-auto-rows: 3em 1fr 4em;
   max-height: 100vh;
 }
 
-#app.streams-on #main {
-  grid-auto-rows: 3em var(--streams-height) 1fr 4em;
-}
-
 #hud {
-  border-right: 3px solid var(--info);
 }
 
 .streams {
@@ -155,7 +163,7 @@ body {
   font-weight: bold;
 }
 
-.hand:before {
+.hand::before {
   content: "";
   display: inline-block;
   height: var(--icon-size);
@@ -165,7 +173,7 @@ body {
   margin-right: 1em;
 }
 
-.hand:before {
+.hand::before {
   background-color: var(--text-color);
 }
 

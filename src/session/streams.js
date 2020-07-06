@@ -1,5 +1,13 @@
 const StreamsSettings = require("../settings").of("streams")
 
+// TODO: Didn't seem to catch chat like this:
+// R >
+// [help]-GSIV:Illiphore: "being in an offensive stance help with hamstring success?"
+// [help]-GSPlat:Alsal: "yes"
+// R>
+// This is only the new ESP system, yes?
+// Probably would be cool to add a separate panel for Lich chat
+
 module.exports = class Streams {
   // this class on the top-level application element
   // signals which layout to use
@@ -21,10 +29,15 @@ module.exports = class Streams {
   }
 
   constructor() {
-    this._view = document.createElement("div")
+    // TODO: This should probably use the standard Panel system.
+    this._view = document.createElement("details")
+    this._view.setAttribute("open", true)
+    this._view.classList.add("panel", "streams", "scroll")
+    this._view.insertAdjacentHTML(
+      "afterbegin",
+      `<summary>ESP</summary>`
+    )
     this._settings = StreamsSettings
-    this._view.classList.add("streams")
-    this._view.classList.add("scroll")
   }
 
   get _scrolling() {

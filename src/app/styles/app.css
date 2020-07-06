@@ -12,6 +12,8 @@
   --icon-size: 1em;
   --base-padding: 3em;
 
+  --column-width: 16em;
+
   --stream-height: 13em;
   --stream-channel-color: #91d686;
 }
@@ -47,8 +49,8 @@
 }
 
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -87,9 +89,15 @@ body {
 #app {
   display: grid;
   height: 100vh;
-  grid-template-columns: 8em 16em 1fr 16em;
+  grid-template-columns: 8em var(--column-width) 1fr 0;
   overflow: hidden;
 }
+#app.right-panels-on {
+  grid-template-columns: 8em var(--column-width) 1fr var(
+      --column-width
+    );
+}
+
 #sessions {
   grid-column: 1 / 2;
   grid-row: 1 / 2;
@@ -118,7 +126,7 @@ body {
 }
 
 .streams {
-  max-height: 50vh;
+  height: var(--stream-height);
 }
 .streams pre {
   margin: 0.2em 0;
@@ -409,7 +417,6 @@ a.external-link {
   height: 150px;
   margin: 0 auto;
 }
-
 #compass li {
   color: var(--main-bg-color);
   height: 30px;
@@ -417,15 +424,12 @@ a.external-link {
   padding: 0;
   line-height: 30px;
 }
-
 #compass li.on {
   background: yellowgreen;
 }
-
 #compass li:empty {
   visibility: hidden;
 }
-
 #compass li.off {
   background: yellowgreen;
   opacity: 0.2;
@@ -434,11 +438,9 @@ a.external-link {
 .severity-1 {
   background-color: var(--gentle-warn);
 }
-
 .severity-2 {
   background-color: var(--warn);
 }
-
 .severity-3 {
   background-color: var(--danger);
 }

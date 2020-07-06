@@ -9,6 +9,37 @@
   --text-color: #f1f1f1;
   --icon-size: 1em;
   --base-padding: 3em;
+  --streams-height: 12em;
+}
+
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 400;
+  src: url("../fonts/MonoLisa-Regular.woff") format("woff2"),
+    url("../fonts/MonoLisa-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 700;
+  src: url("../fonts/MonoLisa-Bold.woff") format("woff2"),
+    url("../fonts/MonoLisa-Bold.woff") format("woff");
+}
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 400;
+  font-style: italic;
+  src: url("../fonts/MonoLisa-RegularItalic.woff2")
+      format("woff2"),
+    url("../fonts/MonoLisa-RegularItalic.woff")
+      format("woff");
+}
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 700;
+  font-style: italic;
+  src: url("../fonts/MonoLisa-BoldItalic.woff")
+      format("woff2"),
+    url("../fonts/MonoLisa-BoldItalic.woff") format("woff");
 }
 
 *,
@@ -40,7 +71,7 @@ ul {
 body {
   font-size: 15px;
   margin: 0;
-  font-family: Arial;
+  font-family: system-ui, sans-serif;
   background-color: var(--main-bg-color);
   color: var(--text-color);
 }
@@ -54,12 +85,28 @@ body {
 
 #main {
   display: grid;
-  grid-auto-rows: 3em 1fr 4em;
+  grid-auto-rows: 3em 0em 1fr 4em;
   max-height: 100vh;
+}
+
+#app.streams-on #main {
+  grid-auto-rows: 3em var(--streams-height) 1fr 4em;
 }
 
 #hud {
   border-right: 3px solid var(--info);
+}
+
+.streams {
+  height: 100%;
+}
+
+.streams {
+  padding: 0 1em 1em 1em;
+}
+
+.streams pre {
+  margin: 0.2em 0;
 }
 
 #sessions {
@@ -126,6 +173,10 @@ body {
   overflow-y: scroll;
 }
 
+.scroll pre {
+  white-space: pre-wrap;
+}
+
 .scroll::-webkit-scrollbar {
   width: 6px;
 }
@@ -148,6 +199,7 @@ body {
   height: 100%;
 }
 .feed pre {
+  font-family: "MonoLisa", system-ui, sans-serif;
   white-space: pre-wrap;
   margin: 0;
   line-height: 1.4em;
@@ -167,6 +219,8 @@ body {
 .round-time-current {
   height: 3px;
   background: linear-gradient(to right, darkred, red);
+  grid-template-columns: 3em 1fr;
+  align-items: center;
 }
 
 #cli-wrapper .prompt {
@@ -212,28 +266,18 @@ body {
 .panel {
   font-size: 14px;
   font-weight: bold;
-  border-bottom: 2px solid var(--info);
   position: relative;
+  padding: 4px;
+  margin: 0 0 20px 0;
+  margin: 10px;
 }
 
-.panel h3 {
+.panel summary {
   margin: 0;
   padding: 0.5em;
   text-transform: uppercase;
   text-align: center;
   background-color: var(--info);
-}
-
-.panel h3:hover {
-  cursor: pointer;
-}
-
-.panel h3:after {
-  content: "+";
-  transform: rotate(45deg);
-  display: inline-block;
-  margin-right: 0.5em;
-  float: right;
 }
 
 .panel ol {

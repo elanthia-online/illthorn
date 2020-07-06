@@ -87,8 +87,6 @@ module.exports = class Streams {
       "#streams-wrapper"
     )
     if (!container) return // todo: maybe warn?
-    container.innerHTML = ""
-    container.appendChild(this._view)
 
     const active_streams = Object.entries(
       StreamsSettings.get("active", {})
@@ -98,10 +96,18 @@ module.exports = class Streams {
       return window.app.classList.remove(Streams.STREAMS_ON)
     }
 
-    window.app.classList.add(Streams.STREAMS_ON)
-
     active_streams.forEach(([active]) =>
       this._view.classList.add(active)
     )
+
+    window.app.classList.add(Streams.STREAMS_ON)
+
+    if (this._view.parentElement) return
+    // this code will only run the when the streams component
+    // is attached to the DOM, not on subsequent redraws
+    // this means it will preserve the current scroll state
+    container.innerHTML = ""
+    container.appendChild(this._view)
+    this.advance_scroll()
   }
 }

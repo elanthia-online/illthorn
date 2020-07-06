@@ -113,7 +113,7 @@ body {
 }
 
 .streams {
-  max-height: 40vh;
+  max-height: 50vh;
 }
 .streams pre {
   margin: 0.2em 0;
@@ -192,15 +192,15 @@ body {
   white-space: pre-wrap;
 }
 
-.scroll::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 6px;
 }
 
-.scroll::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   width: 4px;
 }
 
-.scroll::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: var(--info);
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
@@ -271,6 +271,8 @@ body {
   padding: 4px;
   margin: 0 0 20px 0;
   margin: 10px;
+  overflow: auto;
+  resize: vertical;
 }
 
 .panel summary {

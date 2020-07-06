@@ -21,7 +21,7 @@ Bus.on(Bus.events.ERR, console.error)
 Bus.on(Bus.events.REDRAW, () => {
   const sess = Session.focused()
   if (sess) sess.streams.redraw()
-  m.redraw
+  m.redraw()
 })
 
 Bus.on(Bus.events.FOCUS, (session) => {

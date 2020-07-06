@@ -22,9 +22,8 @@ module.exports = class Streams {
 
   constructor() {
     this._view = document.createElement("div")
+    this._view.classList.add("streams", "scroll")
     this._settings = StreamsSettings
-    this._view.classList.add("streams")
-    this._view.classList.add("scroll")
   }
 
   get _scrolling() {
@@ -57,10 +56,25 @@ module.exports = class Streams {
    */
   insert(tag) {
     const was_scrolling = this._scrolling
+
     const pre = document.createElement("pre")
-    pre.classList.add(tag.id)
-    pre.classList.add(tag.name)
-    pre.innerText = tag.text
+    pre.classList.add(tag.id, tag.name)
+
+    // TODO: Doesn't account for messages that use square brackets in the message itself. https://regex101.com/r/iMjWM1/1/
+    const messageRegEx = /(\[.*\])(.*)/
+    const messageParts = messageRegEx.exec(tag.text)
+
+    const streamChannel = document.createElement("span")
+    streamChannel.classList.add("stream-channel")
+    streamChannel.innerText = messageParts[1]
+
+    const streamText = document.createElement("span")
+    streamText.classList.add("stream-text")
+    streamText.innerText = messageParts[2]
+
+    pre.append(streamChannel)
+    pre.append(streamText)
+
     this._view.append(pre)
     // scroll the feed to the HEAD position
     if (!was_scrolling) this.advance_scroll()
@@ -87,8 +101,6 @@ module.exports = class Streams {
       "#streams-wrapper"
     )
     if (!container) return // todo: maybe warn?
-    container.innerHTML = ""
-    container.appendChild(this._view)
 
     const active_streams = Object.entries(
       StreamsSettings.get("active", {})
@@ -98,10 +110,18 @@ module.exports = class Streams {
       return window.app.classList.remove(Streams.STREAMS_ON)
     }
 
-    window.app.classList.add(Streams.STREAMS_ON)
-
     active_streams.forEach(([active]) =>
       this._view.classList.add(active)
     )
+
+    window.app.classList.add(Streams.STREAMS_ON)
+
+    if (this._view.parentElement) return
+    // this code will only run the when the streams component
+    // is attached to the DOM, not on subsequent redraws
+    // this means it will preserve the current scroll state
+    container.innerHTML = ""
+    container.appendChild(this._view)
+    this.advance_scroll()
   }
 }

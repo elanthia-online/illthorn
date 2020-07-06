@@ -1,8 +1,18 @@
-# Wyrwood / FE
+# Illthorn
 
-An attempt at a modern cross-platform FE.
+A modern cross-platform front-end for [Gemstone IV](https://www.play.net/gs4/).
 
 ![illthorn-fe](https://user-images.githubusercontent.com/1090434/81620486-0082e580-93ba-11ea-91ad-b526bb16ceac.png)
+
+## Connecting to the game
+
+You need to have an active Lich session. So you'd connect something like...
+
+```
+ruby lich.rb --login CHARACTER_NAME --detachable-client=8003 --without-frontend
+```
+
+Lich might also be `lich.rbw` on your setup. You can run multiple connections (for multiple characters/accounts) in multiple terminals and Illtorn will autodetect them. You'll have to run them on different ports though, like `--detachable-client=8004`.
 
 ## Current Features
 
@@ -66,9 +76,9 @@ Currently supported `:set` operations:
 |-------------|:---------|---------------------------------------------|
 | clickable | boolean | turns clickable `<d cmd>` elements on or off|
 
-#### `:ui <component id> <state>`
+#### `:ui <name> <state>`
 
-Sets the panels. State is `on` or `off`.
+Sets the panels. State is `on` or `off`. Names are:
 
 - `vitals`
 - `injuries`
@@ -76,3 +86,12 @@ Sets the panels. State is `on` or `off`.
 - `compass`
 
 Example: `:ui compass off`
+
+#### `stream <name> <state>`
+
+Sets the stream panels. State is `on` or `off`. Names are:
+
+- `thoughts`
+- `speech`
+- `logon`
+- `logoff`

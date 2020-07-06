@@ -72,7 +72,6 @@ module.exports = class Feed {
     this.root.classList.add("feed")
     this.root.classList.add("scroll")
     this._focused = false
-    session.on("TAG", (tag) => this.add(tag))
     Feed.Feeds.set(session, this)
   }
 
@@ -192,9 +191,6 @@ module.exports = class Feed {
   }
 
   add(tag) {
-    const streams = this.session.streams
-    if (tag.name == "stream" && streams.wants(tag.id))
-      return streams.insert(tag)
     if (Compiler.cannot_compile(tag)) return void 0
 
     Compiler.compile(tag, (compiled) => {

@@ -143,8 +143,11 @@ module.exports = class CLI {
         m("input#cli", {
           autofocus: true,
           oninput: CLI.oninput.bind(attrs),
+          key: "cli.input",
         }),
-        m("input#cli-suggestions"),
+        m("input#cli-suggestions", {
+          key: "cli.suggestions",
+        }),
       ]),
     ]
   }

@@ -62,15 +62,24 @@ module.exports = class Streams {
    */
   insert(tag) {
     const was_scrolling = this._scrolling
+
     const pre = document.createElement("pre")
     pre.classList.add(tag.id, tag.name)
 
     // TODO: Doesn't account for messages that use square brackets in the message itself. https://regex101.com/r/iMjWM1/1/
     const messageRegEx = /(\[.*\])(.*)/
-    let messageParts = messageRegEx.exec(tag.text)
-    pre.innerHTML = `
-      <span class="stream-channel">${messageParts[1]}</span><span class="stream-text">${messageParts[2]}</span>
-    `.trim()
+    const messageParts = messageRegEx.exec(tag.text)
+
+    const streamChannel = document.createElement("span")
+    streamChannel.classList.add("stream-channel")
+    streamChannel.innerText = messageParts[1]
+
+    const streamText = document.createElement("span")
+    streamText.classList.add("stream-text")
+    streamText.innerText = messageParts[2]
+
+    pre.append(streamChannel)
+    pre.append(streamText)
 
     this._view.append(pre)
     // scroll the feed to the HEAD position

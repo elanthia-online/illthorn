@@ -63,14 +63,14 @@ module.exports = class Streams {
     pre.innerText = tag.text
     this._view.append(pre)
     // scroll the feed to the HEAD position
-    if (!was_scrolling) this.reSTREAMS_ON_head()
+    if (!was_scrolling) this.advance_scroll()
   }
 
   /**
    * some user gesture (scrolling forward/button) has triggered
    * reSTREAMS_ONing to the head of the message feed
    */
-  reSTREAMS_ON_head() {
+  advance_scroll() {
     this._view.scrollTop = this._view.scrollHeight
     return this
   }
@@ -100,7 +100,7 @@ module.exports = class Streams {
 
     window.app.classList.add(Streams.STREAMS_ON)
 
-    active_streams.forEach(([active, _]) =>
+    active_streams.forEach(([active]) =>
       this._view.classList.add(active)
     )
   }

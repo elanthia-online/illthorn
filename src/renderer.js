@@ -4,11 +4,11 @@ const Bus = require("./bus")
 const Autodect = require("./autodetect")
 const Session = require("./session")
 const Macros = require("./macros")
-const Settings = require("./settings")
 const CustomCSS = require("./storage/custom-css")
-const session = require("./session")
 
-CustomCSS.injectCSS()
+CustomCSS.injectCSS().then(() =>
+  document.body.classList.remove("loading")
+)
 
 m.mount(document.getElementById("sessions"), UI.Sessions)
 m.mount(document.getElementById("hands-wrapper"), UI.Hands)

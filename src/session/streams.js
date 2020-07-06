@@ -1,13 +1,5 @@
 const StreamsSettings = require("../settings").of("streams")
 
-// TODO: Didn't seem to catch chat like this:
-// R >
-// [help]-GSIV:Illiphore: "being in an offensive stance help with hamstring success?"
-// [help]-GSPlat:Alsal: "yes"
-// R>
-// This is only the new ESP system, yes?
-// Probably would be cool to add a separate panel for Lich chat
-
 module.exports = class Streams {
   // this class on the top-level application element
   // signals which layout to use

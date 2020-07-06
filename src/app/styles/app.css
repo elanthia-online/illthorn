@@ -462,3 +462,16 @@ a.external-link {
 .severity-3 {
   background-color: var(--danger);
 }
+
+#flash-container {
+  position: absolute;
+  bottom: 5em;
+  right: 2em;
+  padding: 1em;
+  border: 3px solid var(--danger);
+  background: var(--main-bg-color);
+}
+
+#flash-container:empty {
+  display: none;
+}

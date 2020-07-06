@@ -6,6 +6,7 @@ const Bus = require("../bus")
 const History = require("./command-history")
 const { shell } = require("electron")
 const path = require("path")
+const m = require("mithril")
 
 module.exports = class Session extends events.EventEmitter {
   static Sessions = new Map()
@@ -104,10 +105,6 @@ module.exports = class Session extends events.EventEmitter {
         console.log(data)
         return shell.openExternal(data.link)
       }
-      if (data.topic == "TAG") {
-        //if (this.has_focus()) console.log(data.gram)
-        this.emit(data.gram.name, data.gram)
-      }
       if (data.topic)
         return this.emit(data.topic, data.gram)
       console.warn(
@@ -115,6 +112,26 @@ module.exports = class Session extends events.EventEmitter {
         data
       )
     }
+
+    this.on("TAG", (tag) => {
+      this.handle_tag(tag)
+      m.redraw()
+    })
+  }
+
+  handle_tag(tag) {
+    //if (this.has_focus()) console.log("tag:%o", tag)
+    // broadcast individual tags
+    this.emit(tag.name, tag)
+    // route streams
+    if (
+      tag.name == "stream" &&
+      this.streams.wants(tag.id)
+    ) {
+      return this.streams.insert(tag)
+    }
+    // route main feed
+    this.feed.add(tag)
   }
 
   get pending() {
@@ -189,7 +206,7 @@ module.exports = class Session extends events.EventEmitter {
 
     this.emit("TAG", {
       id,
-      name: "prompt",
+      name: "sent",
       text: this.state.get("prompt.text", prompt) + cmd,
     })
 

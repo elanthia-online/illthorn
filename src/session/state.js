@@ -16,9 +16,11 @@ module.exports = class SessionState {
     "right",
     "left",
     "spell",
-    "roundtime",
     "compass",
+    "style",
   ]
+
+  static TIMERS = ["roundtime", "casttime"]
 
   static INJURY_IDS = makeLookup([
     "head",
@@ -46,7 +48,7 @@ module.exports = class SessionState {
     "encumlevel",
     "ActiveSpells",
     "nextLvlPB",
-    //, "injuries"
+    "roomName",
   ])
 
   static of(session) {
@@ -66,6 +68,7 @@ module.exports = class SessionState {
 
   constructor(session) {
     this._session = session
+    this._timers = {}
     this.wire_up()
   }
 
@@ -106,6 +109,10 @@ module.exports = class SessionState {
     SessionState.TAGS.forEach((tag) =>
       parser.on(tag, (val) => this.put(tag, val))
     )
+
+    SessionState.TIMERS.forEach((tag) => {
+      parser.on(tag, (val) => this.spawn_timer(val))
+    })
   }
 
   get(prop, fallback) {
@@ -123,5 +130,39 @@ module.exports = class SessionState {
     Lens.put(this, prop, val)
     Bus.emit(Bus.events.REDRAW)
     return this
+  }
+  /**
+   * spawns an interval based timer that will
+   * update its state with seconds remaining
+   *
+   * examples:
+   *   1. State.casttime  -> {remaining: 2}
+   *   2. State.roundtime -> {remaining: 6}
+   * @param {Tag} param0
+   */
+  spawn_timer({ name, attrs }) {
+    this._timers[name] = this._timers[name] || {}
+    // gs timers are second precision vs millisecond
+    this._timers[name].end_epoc_time =
+      parseInt(attrs.value, 10) * 1000
+
+    this._timers[name].interval =
+      this._timers[name].interval ||
+      setInterval(() => {
+        const end_epoc_time = this._timers[name]
+          .end_epoc_time
+        // dispose of the timer
+        if (Date.now() > end_epoc_time) {
+          clearInterval(this._timers[name].interval)
+          this._timers[name] = void 0
+        }
+
+        const seconds_left = Math.max(
+          0,
+          Math.ceil((end_epoc_time - Date.now()) / 1000)
+        )
+
+        this.put(name, { remaining: seconds_left })
+      }, 1000)
   }
 }

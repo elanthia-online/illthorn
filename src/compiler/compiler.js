@@ -17,6 +17,7 @@ const CompileEnum = {
   prompt: 1,
   output: 1,
   preset: 1,
+  sent: 1,
   b: 1,
   d: 1,
 }

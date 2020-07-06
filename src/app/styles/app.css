@@ -12,6 +12,7 @@
   --icon-size: 1em;
   --base-padding: 3em;
 
+  --stream-height: 13em;
   --stream-channel-color: #91d686;
 }
 
@@ -104,9 +105,13 @@ body {
 #main {
   grid-column: 3 / 4;
   grid-row: 1 / 2;
+
   display: grid;
-  grid-auto-rows: 3em 1fr 4em;
+  grid-auto-rows: 3em 0 1fr 4em;
   max-height: 100vh;
+}
+#app.streams-on #main {
+  grid-auto-rows: 3em var(--stream-height) 1fr 4em;
 }
 
 #hud {

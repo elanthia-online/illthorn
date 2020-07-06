@@ -21,14 +21,8 @@ module.exports = class Streams {
   }
 
   constructor() {
-    // TODO: This should probably use the standard Panel system.
-    this._view = document.createElement("details")
-    this._view.setAttribute("open", true)
-    this._view.classList.add("panel", "streams", "scroll")
-    this._view.insertAdjacentHTML(
-      "afterbegin",
-      `<summary>ESP</summary>`
-    )
+    this._view = document.createElement("div")
+    this._view.classList.add("streams", "scroll")
     this._settings = StreamsSettings
   }
 

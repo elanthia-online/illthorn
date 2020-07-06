@@ -266,12 +266,20 @@ body {
   background: linear-gradient(to right, darkred, red);
   grid-template-columns: 3em 1fr;
   align-items: center;
+  animation: roundtime var(--duration) linear forwards;
 }
 .cast-time-current {
   height: 3px;
   background: linear-gradient(to right, #008a83, #03b9cc);
   grid-template-columns: 3em 1fr;
   align-items: center;
+  animation: roundtime var(--duration) linear forwards;
+}
+@keyframes roundtime {
+  to {
+    /* TODO: Width isn't the most performant thing to animate. Could switch to a transform that moves the bar to hidden overflow or something. */
+    width: 0;
+  }
 }
 
 #cli-wrapper .prompt {

@@ -148,10 +148,10 @@ module.exports = class CLI {
     return [
       m("div.timers", [
         m("div.round-time-current", {
-          style: `width: ${roundTimeWidth}%;`,
+          style: `width: ${roundTimeWidth}%; --duration: 5s;`,
         }),
         m("div.cast-time-current", {
-          style: `width: ${castTimeWidth}%;`,
+          style: `width: ${castTimeWidth}%; --duration: 3s`,
         }),
       ]),
       m(

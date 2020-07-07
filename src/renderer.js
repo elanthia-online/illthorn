@@ -21,15 +21,17 @@ m.mount(
   UI.FlashMessage
 )
 
-// todo: show flash message
-Bus.on(Bus.events.ERR, (err) => {
-  const flash = {
-    message: err.message,
-    ttl: Date.now() + 5000,
-  }
-  console.log("flash:%o", flash)
-  window.messages.push(flash)
+Bus.on(Bus.events.FLASH, (message) => {
+  message.ttl = message.ttl || Date.now() + 5000 // seconds
+  window.messages.push(message)
   m.redraw()
+})
+
+Bus.on(Bus.events.ERR, (err) => {
+  Bus.emit(Bus.events.FLASH, {
+    message: err.message,
+    kind: "error",
+  })
 })
 
 Bus.on(Bus.events.REDRAW, () => {

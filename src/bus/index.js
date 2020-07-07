@@ -5,4 +5,5 @@ module.exports.events = {
   REDRAW: "redraw",
   FOCUS: "character:focus",
   ERR: "err",
+  FLASH: "message:flash",
 }

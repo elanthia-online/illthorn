@@ -126,14 +126,14 @@ module.exports = class CLI {
   }
 
   view({ attrs }) {
-    let commandsModalOpen = false
-    if (typeof Session.focused() !== "undefined") {
-      if (
-        Session.focused().state._modals.commands === true
-      ) {
-        commandsModalOpen = true
-      }
-    }
+    const commandsModalClass = Lens.get(
+      Session.current,
+      "state._modals.commands",
+      []
+    )
+      ? "open"
+      : ""
+
     return [
       m(
         "span.prompt",
@@ -163,7 +163,7 @@ module.exports = class CLI {
       m(
         "div.modal",
         {
-          class: commandsModalOpen ? "open" : "",
+          class: commandsModalClass,
         },
         [
           m("h2", "Illthorn UI Commands"),

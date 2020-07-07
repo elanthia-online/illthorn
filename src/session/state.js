@@ -20,6 +20,8 @@ module.exports = class SessionState {
     "style",
   ]
 
+  static MODALS = ["commands"]
+
   static TIMERS = ["roundtime", "casttime"]
 
   static INJURY_IDS = makeLookup([
@@ -69,6 +71,11 @@ module.exports = class SessionState {
   constructor(session) {
     this._session = session
     this._timers = {}
+    this._modals = {}
+    SessionState.MODALS.forEach(
+      (modal) => (this._modals[modal] = false)
+    )
+
     this.wire_up()
   }
 

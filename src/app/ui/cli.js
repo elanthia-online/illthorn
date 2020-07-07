@@ -7,6 +7,7 @@ const Macros = require("../../macros")
 
 module.exports = class CLI {
   static CONTROL_CHAR = ":"
+  static HELP_UI_OPEN = false
 
   static parse({ value }) {
     if (value[0] == CLI.CONTROL_CHAR)
@@ -122,6 +123,10 @@ module.exports = class CLI {
     suggestions.placeholder = most_recent || ""
   }
 
+  static onclick(e) {
+    CLI.HELP_UI_OPEN = !CLI.HELP_UI_OPEN
+  }
+
   view({ attrs }) {
     return [
       m(
@@ -142,6 +147,29 @@ module.exports = class CLI {
           key: "cli.suggestions",
         }),
       ]),
+      m(
+        "button.ui-help-button",
+        {
+          onclick: CLI.onclick,
+        },
+        "UI Commands Help"
+      ),
+      m(
+        "div.modal",
+        {
+          class: CLI.HELP_UI_OPEN ? "open" : "",
+        },
+        [
+          m("h2", "Illthorn UI Commands"),
+          m("ul", [
+            m("li", ":ui vitals on|off"),
+            m("li", ":ui injuries on|off"),
+            m("li", ":ui active-spells on|off"),
+            m("li", ":ui compass on|off"),
+            m("li", ":stream thoughts on|off"),
+          ]),
+        ]
+      ),
     ]
   }
 }

@@ -8,6 +8,7 @@ const Storage = require("../storage")
 const Hilites = require("../hilites")
 const Streams = require("../session/streams")
 const Macros = require("../macros")
+const CustomCSS = require("../storage/custom-css")
 
 const redraw = (session) => {
   Bus.emit(Bus.events.FOCUS, session)
@@ -309,3 +310,11 @@ exports.stream = exports.streams = Command.of(
     Bus.emit(Bus.events.REDRAW)
   }
 )
+
+exports["reload-skin"] = Command.of([], async () => {
+  await CustomCSS.injectCSS()
+  Bus.emit(Bus.events.FLASH, {
+    kind: "ok",
+    message: "successfully reloaded your skin",
+  })
+})

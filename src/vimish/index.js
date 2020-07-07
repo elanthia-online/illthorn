@@ -10,6 +10,8 @@ const Streams = require("../session/streams")
 const Macros = require("../macros")
 const CustomCSS = require("../storage/custom-css")
 
+const Launcher = require("./launcher")
+
 const redraw = (session) => {
   Bus.emit(Bus.events.FOCUS, session)
   Bus.emit(Bus.events.REDRAW)
@@ -318,3 +320,10 @@ exports["reload-skin"] = Command.of([], async () => {
     message: "successfully reloaded your skin",
   })
 })
+
+exports["launch"] = Command.of(
+  ["char", "port"],
+  async ({ char, port }) => {
+    return await Launcher.launch({ char, port })
+  }
+)

@@ -1,8 +1,10 @@
 const path = require("path")
+const { format } = require("util")
 const LauncherSettings = require("../settings").of(
   "launcher"
 )
 const { spawn } = require("child_process")
+const Bus = require("../bus")
 
 exports.launch = async function ({ char, port }) {
   const bin = LauncherSettings.get("bin", false)
@@ -33,20 +35,27 @@ function spawn_launcher(bin, { char, port }) {
   })
 
   launcher.stdout.on("data", (data) => {
-    // todo : flash
-    console.log(`(%s):stdout: ${data}`, prepared_cmd)
+    Bus.emit(Bus.events.FLASH, {
+      kind: "info",
+      message: format("%s> %s", char, data),
+    })
   })
 
   launcher.stderr.on("data", (data) => {
-    // todo : flash
-    console.error(`(%s):stderr: ${data}`, prepared_cmd)
+    Bus.emit(Bus.events.FLASH, {
+      kind: "error",
+      message: format("%s> %s", char, data),
+    })
   })
 
   launcher.on("close", (code) => {
-    // todo : flash
-    console.log(
-      `(%s):child process exited with code ${code}`,
-      prepared_cmd
-    )
+    Bus.emit(Bus.events.FLASH, {
+      kind: "info",
+      message: format(
+        "%s> %s",
+        char,
+        `child process exited with code ${code}`
+      ),
+    })
   })
 }

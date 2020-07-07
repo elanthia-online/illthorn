@@ -47,10 +47,15 @@ exports.connect = exports.c = Command.of(
     if (!argv.port) {
       const running = await Autodetect.list()
 
-      const auto_detected =
-        running.find(
-          ({ name }) => ~name.indexOf(argv.name)
-        ) || {}
+      const auto_detected = running.find(
+        ({ name }) => ~name.indexOf(argv.name)
+      )
+
+      if (!auto_detected) {
+        throw new Error(
+          `could not find a session by the name ${argv.name}`
+        )
+      }
 
       Object.assign(argv, auto_detected)
     }
@@ -64,7 +69,8 @@ exports.connect = exports.c = Command.of(
     if (
       Session.find(
         (sess) =>
-          sess.port.toString() == argv.port.toString()
+          sess.port.toString() ==
+          (argv.port || "").toString()
       )
     ) {
       throw new Error(

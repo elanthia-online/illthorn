@@ -1,14 +1,31 @@
+/* https://paletton.com/#uid=75u0u0kmcf4eunphzibqDaMvZ6s */
+:root {
+  --main-bg-color: #1a1a1d;
+  --text-color: #f1f1f1;
+  --ok: #396820;
+  --info: #184f3f;
+  --gentle-warn: rgb(122, 96, 28);
+  --warn: #784225;
+  --danger: #6f2232;
+  --icon-size: 1em;
+  --base-padding: 3em;
+  --column-width: 16em;
+  --stream-height: 13em;
+  --stream-channel-color: #91d686;
+}
+
 @font-face {
   font-family: "MonoLisa";
   font-weight: 400;
-  src: url("../fonts/MonoLisa-Regular.woff") format("woff2"),
-    url("../fonts/MonoLisa-Regular.woff") format("woff");
+  src: url("../../fonts/MonoLisa-Regular.woff")
+      format("woff2"),
+    url("../../fonts/MonoLisa-Regular.woff") format("woff");
 }
 @font-face {
   font-family: "MonoLisa";
   font-weight: 700;
-  src: url("../fonts/MonoLisa-Bold.woff") format("woff2"),
-    url("../fonts/MonoLisa-Bold.woff") format("woff");
+  src: url("../../fonts/MonoLisa-Bold.woff") format("woff2"),
+    url("../../fonts/MonoLisa-Bold.woff") format("woff");
 }
 @font-face {
   font-family: "MonoLisa";
@@ -27,7 +44,6 @@
       format("woff2"),
     url("../fonts/MonoLisa-BoldItalic.woff") format("woff");
 }
-
 *,
 *::before,
 *::after {
@@ -48,6 +64,7 @@ html {
   padding: 0;
   font-size: 1em;
 }
+
 h2 {
   margin: 0 0 1em 0;
 }
@@ -75,6 +92,7 @@ body {
   grid-template-columns: 6em var(--column-width) 1fr 0;
   overflow: hidden;
 }
+
 #app.right-panels-on {
   grid-template-columns: 6em var(--column-width) 1fr var(
       --column-width
@@ -82,25 +100,28 @@ body {
 }
 
 #sessions {
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
+  grid-column: 1/2;
+  grid-row: 1/2;
 }
-#panels-left {
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
-}
-#panels-right {
-  grid-column: 4 / 5;
-  grid-row: 1 / 2;
-}
-#main {
-  grid-column: 3 / 4;
-  grid-row: 1 / 2;
 
+#panels-left {
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+
+#panels-right {
+  grid-column: 4/5;
+  grid-row: 1/2;
+}
+
+#main {
+  grid-column: 3/4;
+  grid-row: 1/2;
   display: grid;
   grid-auto-rows: 3em 0 1fr 4em;
   max-height: 100vh;
 }
+
 #app.streams-on #main {
   grid-auto-rows: 3em var(--stream-height) 1fr 4em;
 }
@@ -112,13 +133,16 @@ body {
 #app.streams-on .streams {
   border-bottom: 3px solid var(--info);
 }
+
 .streams {
   padding: 0 1em;
   height: var(--stream-height);
 }
+
 .streams pre {
   margin: 0.2em 0;
 }
+
 .stream-channel {
   font-weight: bold;
   text-transform: uppercase;
@@ -129,11 +153,13 @@ body {
   background: var(--info);
   padding: 40px 1em 1em;
 }
+
 #sessions ol {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
 #sessions li {
   margin: 0 0 1em 0;
   border: 0;
@@ -147,16 +173,20 @@ body {
   border-radius: 4px;
   border: 4px solid transparent;
 }
+
 #sessions li:hover {
   cursor: pointer;
 }
+
 #sessions li.on {
   box-shadow: 0 0 0 2px white;
   border: 4px solid var(--info);
 }
+
 #sessions .session-name {
   font-size: 1.5em;
 }
+
 #sessions .alt-numeric {
   position: absolute;
   top: 0;
@@ -189,7 +219,7 @@ body {
   display: inline-block;
   height: var(--icon-size);
   width: var(--icon-size);
-  -webkit-mask: url(../svg/hand.svg) no-repeat 50% 50%;
+  -webkit-mask: url(../../svg/hand.svg) no-repeat 50% 50%;
   -webkit-mask-size: cover;
   margin-right: 1em;
 }
@@ -227,6 +257,7 @@ body {
   padding: 0 1em 1em 1em;
   height: 100%;
 }
+
 .feed pre {
   white-space: pre-wrap;
   margin: 0;
@@ -290,9 +321,11 @@ button.ui-help-button {
   background-color: rgba(255, 255, 255, 0.33);
   width: 22px;
   height: 22px;
-  -webkit-mask: url(../svg/icon-help.svg) no-repeat 50% 50%;
+  -webkit-mask: url(../../svg/icon-help.svg) no-repeat 50%
+    50%;
   -webkit-mask-size: contain;
 }
+
 button.ui-help-button:hover {
   background-color: rgba(255, 255, 255, 0.66);
 }
@@ -436,6 +469,7 @@ a.external-link {
   height: 150px;
   margin: 0 auto;
 }
+
 #compass li {
   color: var(--main-bg-color);
   height: 30px;
@@ -443,12 +477,15 @@ a.external-link {
   padding: 0;
   line-height: 30px;
 }
+
 #compass li.on {
   background: yellowgreen;
 }
+
 #compass li:empty {
   visibility: hidden;
 }
+
 #compass li.off {
   background: yellowgreen;
   opacity: 0.2;
@@ -457,9 +494,11 @@ a.external-link {
 .severity-1 {
   background-color: var(--gentle-warn);
 }
+
 .severity-2 {
   background-color: var(--warn);
 }
+
 .severity-3 {
   background-color: var(--danger);
 }
@@ -500,6 +539,9 @@ a.external-link {
   display: none;
   width: 40vw;
 }
+
 .modal.open {
   display: block;
 }
+
+/*# sourceMappingURL=app.css.map */

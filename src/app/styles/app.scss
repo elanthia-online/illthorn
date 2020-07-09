@@ -21,14 +21,15 @@
 @font-face {
   font-family: "MonoLisa";
   font-weight: 400;
-  src: url("../fonts/MonoLisa-Regular.woff") format("woff2"),
-    url("../fonts/MonoLisa-Regular.woff") format("woff");
+  src: url("../../fonts/MonoLisa-Regular.woff")
+      format("woff2"),
+    url("../../fonts/MonoLisa-Regular.woff") format("woff");
 }
 @font-face {
   font-family: "MonoLisa";
   font-weight: 700;
-  src: url("../fonts/MonoLisa-Bold.woff") format("woff2"),
-    url("../fonts/MonoLisa-Bold.woff") format("woff");
+  src: url("../../fonts/MonoLisa-Bold.woff") format("woff2"),
+    url("../../fonts/MonoLisa-Bold.woff") format("woff");
 }
 @font-face {
   font-family: "MonoLisa";
@@ -67,6 +68,9 @@ html {
   margin: 0;
   padding: 0;
   font-size: 1em;
+}
+h2 {
+  margin: 0 0 1em 0;
 }
 
 ol,
@@ -206,7 +210,7 @@ body {
   display: inline-block;
   height: var(--icon-size);
   width: var(--icon-size);
-  -webkit-mask: url(../svg/hand.svg) no-repeat 50% 50%;
+  -webkit-mask: url(../../svg/hand.svg) no-repeat 50% 50%;
   -webkit-mask-size: cover;
   margin-right: 1em;
 }
@@ -255,15 +259,17 @@ body {
   background-color: var(--info);
   padding: 0.5em 1em;
   display: grid;
-  grid-template-columns: 3em 1fr;
+  grid-template-columns: 3em 1fr 22px;
+  grid-gap: 0.5em;
   align-items: center;
 }
 
 #cli-wrapper .prompt {
   display: inline-block;
   text-align: right;
-  padding-right: 0.3em;
   font-size: 1.6em;
+  position: relative;
+  top: -0.1em;
 }
 
 #cnc {
@@ -294,6 +300,23 @@ body {
 
 #cnc input#cli-suggestions {
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+button.ui-help-button {
+  display: inline-block;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  text-indent: -9999px;
+  background-color: rgba(255, 255, 255, 0.33);
+  width: 22px;
+  height: 22px;
+  -webkit-mask: url(../../svg/icon-help.svg) no-repeat 50%
+    50%;
+  -webkit-mask-size: contain;
+}
+button.ui-help-button:hover {
+  background-color: rgba(255, 255, 255, 0.66);
 }
 
 .panel {
@@ -465,8 +488,9 @@ a.external-link {
 
 #flash-container {
   position: absolute;
-  bottom: 5em;
-  right: 2em;
+  bottom: 5.5em;
+  right: 1.5em;
+  z-index: 2;
 }
 
 #flash-container:empty {
@@ -475,7 +499,7 @@ a.external-link {
 
 .flash {
   padding: 1em;
-  border: 3px solid var(--info);
+  border: 2px solid var(--info);
   background: var(--main-bg-color);
   margin-top: 1em;
 }
@@ -486,4 +510,18 @@ a.external-link {
 
 .flash.ok {
   border-color: var(--ok);
+}
+
+.modal {
+  position: fixed;
+  bottom: 5em;
+  right: 1em;
+  background: black;
+  padding: 2em;
+  border: 2px solid var(--info);
+  display: none;
+  width: 40vw;
+}
+.modal.open {
+  display: block;
 }

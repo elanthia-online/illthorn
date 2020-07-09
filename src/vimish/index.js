@@ -10,6 +10,8 @@ const Streams = require("../session/streams")
 const Macros = require("../macros")
 const CustomCSS = require("../storage/custom-css")
 
+const Launcher = require("./launcher")
+
 const redraw = (session) => {
   Bus.emit(Bus.events.FOCUS, session)
   Bus.emit(Bus.events.REDRAW)
@@ -45,10 +47,15 @@ exports.connect = exports.c = Command.of(
     if (!argv.port) {
       const running = await Autodetect.list()
 
-      const auto_detected =
-        running.find(
-          ({ name }) => ~name.indexOf(argv.name)
-        ) || {}
+      const auto_detected = running.find(
+        ({ name }) => ~name.indexOf(argv.name)
+      )
+
+      if (!auto_detected) {
+        throw new Error(
+          `could not find a session by the name ${argv.name}`
+        )
+      }
 
       Object.assign(argv, auto_detected)
     }
@@ -62,7 +69,8 @@ exports.connect = exports.c = Command.of(
     if (
       Session.find(
         (sess) =>
-          sess.port.toString() == argv.port.toString()
+          sess.port.toString() ==
+          (argv.port || "").toString()
       )
     ) {
       throw new Error(
@@ -318,3 +326,10 @@ exports["reload-skin"] = Command.of([], async () => {
     message: "successfully reloaded your skin",
   })
 })
+
+exports["launch"] = Command.of(
+  ["char", "port"],
+  async ({ char, port }) => {
+    return await Launcher.launch({ char, port })
+  }
+)

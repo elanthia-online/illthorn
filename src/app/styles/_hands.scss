@@ -1,0 +1,23 @@
+#hands {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  border-bottom: 3px solid var(--info);
+}
+
+.hand {
+  padding: 0 1em;
+  flex: 1;
+  text-align: left;
+  font-weight: bold;
+  &::before {
+    content: "";
+    display: inline-block;
+    height: var(--icon-size);
+    width: var(--icon-size);
+    -webkit-mask: url(../svg/hand.svg) no-repeat 50% 50%;
+    -webkit-mask-size: cover;
+    margin-right: 1em;
+    background-color: var(--text-color);
+  }
+}

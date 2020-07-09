@@ -1,0 +1,39 @@
+#flash-container {
+  position: absolute;
+  bottom: 5.5em;
+  right: 1.5em;
+  z-index: 2;
+}
+
+#flash-container:empty {
+  display: none;
+}
+
+.flash {
+  padding: 1em;
+  border: 2px solid var(--info);
+  background: var(--main-bg-color);
+  margin-top: 1em;
+}
+
+.flash.error {
+  border-color: var(--danger);
+}
+
+.flash.ok {
+  border-color: var(--ok);
+}
+
+.modal {
+  position: fixed;
+  bottom: 5em;
+  right: 1em;
+  background: black;
+  padding: 2em;
+  border: 2px solid var(--info);
+  display: none;
+  width: 40vw;
+}
+.modal.open {
+  display: block;
+}

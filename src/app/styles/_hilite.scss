@@ -1,0 +1,45 @@
+// For highlighting??
+ins {
+  text-decoration: none;
+}
+
+/**
+ * skinnables via :hilite group 
+ */
+.macro {
+  background: purple;
+}
+
+a[class="exist"] {
+  color: #a0a0a0;
+}
+
+a.external-link {
+  color: #82b3ae;
+}
+
+.thoughts {
+  color: #fff;
+}
+
+.speech {
+  color: limegreen;
+}
+
+.whisper {
+  color: #4f8b89;
+}
+
+.clickable .d {
+  border-bottom: 2px solid #db238e;
+}
+
+.clickable .d:hover {
+  cursor: pointer;
+  border-color: #6f23db;
+}
+
+.b,
+.monster {
+  color: #c4d428;
+}

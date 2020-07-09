@@ -1,13 +1,18 @@
 :root {
   --main-bg-color: #1a1a1d;
   --text-color: #f1f1f1;
+
   --info: #484848;
+
   --ok: #396820;
   --gentle-warn: rgb(122, 96, 28);
   --warn: #784225;
   --danger: #6f2232;
+
   --icon-size: 1em;
+
   --column-width: 16em;
+
   --stream-height: 13em;
   --stream-channel-color: #91d686;
 }
@@ -28,7 +33,6 @@
 #app.streams-on .streams {
   border: 0;
 }
-
 #streams-wrapper {
   z-index: 1;
   position: relative;
@@ -47,44 +51,42 @@
 .panels {
   border: 0;
 }
-
 #panels-left {
   border: 0;
 }
-
 .panel {
   position: relative;
   padding: 1px;
   margin: 1em;
-}
-.panel::before {
-  content: "";
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  background: linear-gradient(135deg, #39abeb, #570275);
-  border-radius: 8px;
-}
-.panel > div {
-  position: relative;
-  background: #191919;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
-  overflow: hidden;
-  padding: 0.5em;
-}
-.panel > summary {
-  position: relative;
-  background: #191919;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-}
-
-.panel-list .bar {
-  position: static;
-  height: 1em;
+  &::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    background: linear-gradient(135deg, #39abeb, #570275);
+    border-radius: 8px;
+  }
+  > div {
+    position: relative;
+    background: #191919;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    overflow: hidden;
+    padding: 0.5em;
+  }
+  > summary {
+    position: relative;
+    background: #191919;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
 }
 
-/*# sourceMappingURL=dark-king.css.map */
+.panel-list {
+  .bar {
+    position: static;
+    height: 1em;
+  }
+}

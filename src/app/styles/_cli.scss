@@ -1,0 +1,62 @@
+#cli-wrapper {
+  background-color: var(--info);
+  padding: 0.5em 1em;
+  display: grid;
+  grid-template-columns: 3em 1fr 22px;
+  grid-gap: 0.5em;
+  align-items: center;
+}
+
+#cli-wrapper .prompt {
+  display: inline-block;
+  text-align: right;
+  font-size: 1.6em;
+  position: relative;
+  top: -0.1em;
+}
+
+#cnc {
+  position: relative;
+}
+
+#cnc input {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 1.4em;
+  margin-top: -0.7em;
+  border: none;
+  width: 100%;
+  padding: 0.3em;
+  color: #fff;
+  font-size: 1.2em;
+}
+
+#cnc input:focus {
+  outline: none;
+}
+
+#cnc input#cli {
+  background-color: transparent;
+  z-index: 1;
+}
+
+#cnc input#cli-suggestions {
+  background-color: rgba(black, 0.2);
+}
+
+button.ui-help-button {
+  display: inline-block;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  text-indent: -9999px;
+  background-color: rgba(white, 0.33);
+  width: 22px;
+  height: 22px;
+  -webkit-mask: url(../svg/icon-help.svg) no-repeat 50% 50%;
+  -webkit-mask-size: contain;
+}
+button.ui-help-button:hover {
+  background-color: rgba(white, 0.66);
+}

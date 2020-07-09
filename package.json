@@ -5,7 +5,7 @@
   "description": "modern front-end for Gemstone IV",
   "main": "./src/main.js",
   "scripts": {
-    "dev": "sass --watch src/app/styles/app.scss src/app/styles/compiled/app.css",
+    "dev": "sass --watch src/app/styles",
     "start": "ENV=dev electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",

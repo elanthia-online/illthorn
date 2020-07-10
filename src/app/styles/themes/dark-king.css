@@ -17,12 +17,18 @@
 }
 
 #sessions,
-.panels {
+.panels,
+#hands-wrapper,
+#cli-wrapper {
   background: linear-gradient(
     261.75deg,
     #202224 35.86%,
     #3e3c42 77.44%
   );
+}
+
+#hands {
+  border: 0;
 }
 
 #app.streams-on .streams {
@@ -37,6 +43,10 @@
 
 .stream-channel[data-stream-channel="[Dreavening]"] {
   color: #d64e4e;
+}
+
+.stream-channel[data-stream-channel="[Help]"] {
+  color: #6cadd0;
 }
 
 .feed,

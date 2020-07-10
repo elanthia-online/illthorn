@@ -24,6 +24,33 @@
     format("woff2");
 }
 
+@font-face {
+  font-family: "PTSerif";
+  font-weight: 400;
+  src: url("../fonts/pt-serif-v11-latin-regular.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "PTSerif";
+  font-weight: 700;
+  src: url("../fonts/pt-serif-v11-latin-700.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "PTSerif";
+  font-weight: 400;
+  font-style: italic;
+  src: url("../fonts/pt-serif-v11-latin-italic.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "PTSerif";
+  font-weight: 700;
+  font-style: italic;
+  src: url("../fonts/pt-serif-v11-latin-700italic.woff2")
+    format("woff2");
+}
+
 body {
   font-size: 15px;
   font-family: system-ui, sans-serif;

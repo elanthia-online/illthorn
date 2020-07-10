@@ -1,3 +1,9 @@
+$blue: #6cadd0;
+$green: #91d686;
+$purple: #a990ef;
+$orange: #fbb17b;
+$red: #d64e4e;
+
 :root {
   --main-bg-color: #1a1a1d;
   --text-color: #f1f1f1;
@@ -26,7 +32,7 @@
   background: linear-gradient(
     261.75deg,
     #202224 35.86%,
-    #464646 77.44%
+    #3e3c42 77.44%
   );
 }
 
@@ -37,6 +43,9 @@
   z-index: 1;
   position: relative;
   box-shadow: 0 20px 20px black;
+}
+.stream-channel[data-stream-channel="[Dreavening]"] {
+  color: $red;
 }
 
 .feed,
@@ -55,16 +64,17 @@
   border: 0;
 }
 .panel {
+  font-family: "PTSerif", Serif;
   position: relative;
   padding: 1px;
   margin: 1em;
   &::before {
     content: "";
     position: absolute;
-    top: -2px;
-    left: -2px;
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
+    top: -1px;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
     background: linear-gradient(135deg, #39abeb, #570275);
     border-radius: 8px;
   }
@@ -74,19 +84,150 @@
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     overflow: hidden;
-    padding: 0.5em;
+    padding: 0.6em;
   }
   > summary {
+    text-transform: capitalize;
+    text-align: left;
+    font-weight: bold;
     position: relative;
+    font-size: 1.2em;
     background: #191919;
+    border-radius: 6px;
+    border-bottom: 1px solid black;
+    box-shadow: 0 1px 1px 0 #282323;
+    position: relative;
+    z-index: 1;
+  }
+  &[open] > summary {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
   }
 }
 
 .panel-list {
-  .bar {
-    position: static;
-    height: 1em;
+  li {
+    padding: 0.2em;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(black, 0.55);
+    &:not(:last-child) {
+      margin: 0 0 0.3em 0;
+    }
   }
+  .value span:nth-child(1) {
+    white-space: nowrap;
+    opacity: 0.9;
+    &::first-letter {
+      text-transform: capitalize;
+    }
+  }
+  .value span:nth-child(2) {
+    min-width: 4em;
+    transform: scale(1.5);
+    transform-origin: center left;
+  }
+  .bar {
+    border-radius: 4px;
+  }
+}
+
+@mixin barBG($color) {
+  background: linear-gradient(
+    to bottom,
+    $color,
+    darken($color, 33%)
+  );
+}
+
+@mixin panelRow($color) {
+  .bar {
+    @include barBG($color);
+  }
+}
+
+#vitals-spirit {
+  @include panelRow($purple);
+}
+#vitals-health {
+  @include panelRow($green);
+}
+#vitals-mana {
+  @include panelRow($blue);
+}
+#vitals-stamina {
+  @include panelRow($orange);
+}
+
+.spells {
+  li {
+    .value {
+      display: grid;
+      grid-template-columns: 1fr 40px;
+      .spell {
+        text-align: left;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+  }
+  li.high {
+  }
+  li.medium {
+    @include barBG($orange);
+  }
+  li.low {
+    .spell {
+      color: #ff6e6e;
+    }
+    .bar.low {
+      display: none;
+    }
+  }
+}
+
+.bar.low,
+.severity-3 {
+  @include barBG(#dc0d0d);
+}
+.bar.medium,
+.severity-2 {
+  @include barBG(#de8e8e);
+}
+.bar.high,
+.severity-1 {
+  @include barBG(#846e6e);
+}
+
+@mixin title($title) {
+  margin-top: 28px;
+  &::before {
+    content: $title;
+    display: block;
+    position: absolute;
+    top: -14px;
+    left: 0;
+    font-size: 0.65em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+}
+
+#vitals-encumlevel {
+  @include title("Encumbrance");
+  .bar[style="width: 0%;"] {
+    @include barBG(#484848);
+    width: 100% !important;
+  }
+}
+#vitals-mindState {
+  @include title("Mind");
+}
+#vitals-nextLvlPB {
+  @include title("Experience");
+}
+#vitals-stance {
+  @include title("Stance");
 }

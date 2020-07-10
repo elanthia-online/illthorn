@@ -1,3 +1,6 @@
+.panels {
+}
+
 #panels-left {
   border-right: 3px solid var(--info);
 }
@@ -6,10 +9,8 @@
   font-size: 14px;
   position: relative;
   padding: 4px;
-  margin: 0 0 20px 0;
   margin: 10px;
   resize: vertical;
-
   summary {
     margin: 0;
     padding: 0.5em;
@@ -23,7 +24,7 @@
     }
   }
   ol {
-    max-height: 300px;
+    // max-height: 300px;
   }
   li {
     padding: 0.5em;

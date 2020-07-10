@@ -23,6 +23,32 @@
   src: url("../fonts/MonoLisa-BoldItalic.woff2")
     format("woff2");
 }
+@font-face {
+  font-family: "PTSerif";
+  font-weight: 400;
+  src: url("../fonts/pt-serif-v11-latin-regular.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "PTSerif";
+  font-weight: 700;
+  src: url("../fonts/pt-serif-v11-latin-700.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "PTSerif";
+  font-weight: 400;
+  font-style: italic;
+  src: url("../fonts/pt-serif-v11-latin-italic.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "PTSerif";
+  font-weight: 700;
+  font-style: italic;
+  src: url("../fonts/pt-serif-v11-latin-700italic.woff2")
+    format("woff2");
+}
 body {
   font-size: 15px;
   font-family: system-ui, sans-serif;
@@ -189,7 +215,6 @@ body {
   font-size: 14px;
   position: relative;
   padding: 4px;
-  margin: 0 0 20px 0;
   margin: 10px;
   resize: vertical;
 }
@@ -204,9 +229,6 @@ body {
 .panel summary:focus {
   /* TODO: Strategy for focus styles */
   outline: 0;
-}
-.panel ol {
-  max-height: 300px;
 }
 .panel li {
   padding: 0.5em;

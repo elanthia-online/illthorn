@@ -66,6 +66,10 @@ module.exports = class Streams {
 
     const streamChannel = document.createElement("span")
     streamChannel.classList.add("stream-channel")
+    streamChannel.setAttribute(
+      "data-stream-channel",
+      messageParts[1]
+    )
     streamChannel.innerText = messageParts[1]
 
     const streamText = document.createElement("span")

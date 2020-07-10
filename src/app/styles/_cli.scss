@@ -17,19 +17,19 @@
 
 #cnc {
   position: relative;
+  height: 38px;
 }
 
 #cnc input {
+  font-family: "MonoLisa", system-ui, sans-serif;
   position: absolute;
   left: 0;
-  top: 50%;
-  height: 1.4em;
-  margin-top: -0.7em;
+  top: 0;
   border: none;
   width: 100%;
-  padding: 0.3em;
+  padding: 0.5em;
   color: #fff;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 #cnc input:focus {

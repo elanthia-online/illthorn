@@ -17,7 +17,7 @@ $red: #d64e4e;
 
   --icon-size: 1em;
 
-  --column-width: 16em;
+  --column-width: minmax(16em, 0.33fr);
 
   --stream-height: 13em;
   --stream-channel-color: #91d686;
@@ -52,7 +52,7 @@ $red: #d64e4e;
 .stream-channel[data-stream-channel="[Dreavening]"] {
   color: $red;
 }
-.stream-channel[data-stream-channel="[Help]"] {
+.stream-channel[data-stream-channel="[help]"] {
   color: $blue;
 }
 
@@ -132,7 +132,7 @@ $red: #d64e4e;
     }
   }
   .value span:nth-child(2) {
-    min-width: 4em;
+    min-width: 3.5em;
     transform: scale(1.5);
     transform-origin: center left;
   }
@@ -172,7 +172,7 @@ $red: #d64e4e;
   li {
     .value {
       display: grid;
-      grid-template-columns: 1fr 40px;
+      grid-template-columns: 1fr 45px;
       .spell {
         text-align: left;
         white-space: nowrap;
@@ -180,11 +180,6 @@ $red: #d64e4e;
         overflow: hidden;
       }
     }
-  }
-  li.high {
-  }
-  li.medium {
-    @include barBG($orange);
   }
   li.low {
     .spell {

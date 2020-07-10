@@ -23,7 +23,10 @@ module.exports = class Stance {
       m(`.bar.${Progress.classify(percent + 20)}`, {
         style: { width: percent + "%" },
       }),
-      m(".value", [m("span", state), m("span", percent)]),
+      m(".value", [
+        m("span", state),
+        m("span", percent + "%"),
+      ]),
     ])
   }
 }

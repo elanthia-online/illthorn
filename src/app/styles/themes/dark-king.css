@@ -7,7 +7,7 @@
   --warn: #784225;
   --danger: #6f2232;
   --icon-size: 1em;
-  --column-width: 16em;
+  --column-width: minmax(16em, 0.33fr);
   --stream-height: 13em;
   --stream-channel-color: #91d686;
 }
@@ -45,7 +45,7 @@
   color: #d64e4e;
 }
 
-.stream-channel[data-stream-channel="[Help]"] {
+.stream-channel[data-stream-channel="[help]"] {
   color: #6cadd0;
 }
 
@@ -126,7 +126,7 @@
   text-transform: capitalize;
 }
 .panel-list .value span:nth-child(2) {
-  min-width: 4em;
+  min-width: 3.5em;
   transform: scale(1.5);
   transform-origin: center left;
 }
@@ -152,16 +152,13 @@
 
 .spells li .value {
   display: grid;
-  grid-template-columns: 1fr 40px;
+  grid-template-columns: 1fr 45px;
 }
 .spells li .value .spell {
   text-align: left;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-}
-.spells li.medium {
-  background: linear-gradient(to bottom, #fbb17b, #c85806);
 }
 .spells li.low .spell {
   color: #ff6e6e;

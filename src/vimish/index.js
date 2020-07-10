@@ -12,6 +12,9 @@ const CustomCSS = require("../storage/custom-css")
 
 const Launcher = require("./launcher")
 
+const THEME_ORIGINAL = "original"
+const THEME_DARK_KING = "dark-king"
+
 const redraw = (session) => {
   Bus.emit(Bus.events.FOCUS, session)
   Bus.emit(Bus.events.REDRAW)
@@ -318,6 +321,21 @@ exports.stream = exports.streams = Command.of(
     Bus.emit(Bus.events.REDRAW)
   }
 )
+
+// `:theme dark-king`
+exports.theme = Command.of(["value"], async ({ value }) => {
+  if (
+    value === THEME_ORIGINAL ||
+    value === THEME_DARK_KING
+  ) {
+    Settings.set("theme", value)
+    Bus.emit(Bus.events.CHANGE_THEME, {
+      theme: value,
+    })
+  } else {
+    throw new Error(`Not a valid theme`)
+  }
+})
 
 exports["reload-skin"] = Command.of([], async () => {
   await CustomCSS.injectCSS()

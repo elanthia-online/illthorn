@@ -1,4 +1,5 @@
 const StreamsSettings = require("../settings").of("streams")
+const Lens = require("../util/lens")
 
 module.exports = class Streams {
   // this class on the top-level application element
@@ -68,23 +69,37 @@ module.exports = class Streams {
   }
 
   transformStreamMessage(tag) {
-    // https://regex101.com/r/iMjWM1/2
-    const messageRegEx = /^(\[\w+\])(.*)/
-    const messageParts = messageRegEx.exec(tag.text)
-
-    if (!messageParts) {
-      const msg = document.createElement("span")
-      msg.innerText = tag.text
-      return [msg]
-    }
-
     const streamChannel = document.createElement("span")
     streamChannel.classList.add("stream-channel")
-    streamChannel.innerText = messageParts[1]
 
     const streamText = document.createElement("span")
     streamText.classList.add("stream-text")
-    streamText.innerText = messageParts[2]
+
+    if (tag.text.trim().startsWith("[")) {
+      // This is a chat message
+      const messageRegEx = /^(\[.*?\])(.*)/
+      const messageParts = messageRegEx.exec(tag.text)
+      // [help]-GSIV:Gilderan: "ahh good to know"
+      // [0] = [help]-GSIV:Gilderan: "ahh good to know"
+      // [1] = [help]
+      // [2] = -GSIV:Gilderan: "ahh good to know"
+      streamChannel.setAttribute(
+        "data-stream-channel",
+        messageParts[1]
+      )
+      streamChannel.innerText = Lens.get(messageParts, "1")
+      streamText.innerText = Lens.get(messageParts, "2")
+    } else if (tag.text.trim().startsWith("*")) {
+      // This is a death message
+      streamChannel.innerText = "* "
+      // For styling the *
+      streamChannel.classList.add("death")
+      // Remove the "* " from the rest of message so it doesn't repeat
+      streamText.innerText = tag.text.trim().substring(2)
+    } else {
+      // Unknown stream message, just dump it in with empty channel
+      streamText.innerText = tag.text
+    }
 
     return [streamChannel, streamText]
   }

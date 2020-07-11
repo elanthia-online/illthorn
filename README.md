@@ -4,6 +4,16 @@ A modern cross-platform front-end for [Gemstone IV](https://www.play.net/gs4/).
 
 ![illthorn-fe](https://user-images.githubusercontent.com/1090434/81620486-0082e580-93ba-11ea-91ad-b526bb16ceac.png)
 
+## Installation
+
+**From The Command Line**
+
+- Have Node
+- Clone the repository or download the [.zip](https://github.com/elanthia-online/illthorn/archive/master.zip).
+- Navigate to the directory and install dependencies with `yarn install`.
+- You can then launch Illthorn with `yarn start`
+- Or make an app file with `yarn make` (look for the executable in `/out/`)
+
 ## Connecting to the game
 
 You need to have an active Lich session. So you'd connect something like...
@@ -87,7 +97,7 @@ Sets the panels. State is `on` or `off`. Names are:
 
 Example: `:ui compass off`
 
-#### `stream <name> <state>`
+#### `:stream <name> <state>`
 
 Sets the stream panels. State is `on` or `off`. Names are:
 
@@ -95,3 +105,7 @@ Sets the stream panels. State is `on` or `off`. Names are:
 - `speech`
 - `logon`
 - `logoff`
+
+## Customization
+
+You can override default styles with a `urser.css` file. In MacOS this file should be located in `/Users/USERNAME/Library/Application Support/illthorn/`

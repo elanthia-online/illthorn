@@ -322,7 +322,12 @@ exports.stream = exports.streams = Command.of(
     }
 
     Streams.Settings.set(`active.${stream}`, state)
-    Bus.emit(Bus.events.REDRAW)
+    Bus.emit(Bus.events.FLASH, {
+      kind: "ok",
+      message: `${stream} stream is now ${
+        state == 1 ? "on" : "off"
+      }`,
+    })
   }
 )
 

@@ -12,6 +12,7 @@ module.exports = class Streams {
     logon: 1,
     logoff: 1,
     speech: 1,
+    death: 1,
   }
 
   static Settings = StreamsSettings

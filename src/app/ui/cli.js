@@ -129,7 +129,7 @@ module.exports = class CLI {
     const commandsModalClass = Lens.get(
       Session.current,
       "state._modals.commands",
-      []
+      false
     )
       ? "open"
       : ""

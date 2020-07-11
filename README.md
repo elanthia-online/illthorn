@@ -4,6 +4,16 @@ A modern cross-platform front-end for [Gemstone IV](https://www.play.net/gs4/).
 
 ![illthorn-fe](https://user-images.githubusercontent.com/1090434/81620486-0082e580-93ba-11ea-91ad-b526bb16ceac.png)
 
+## Installation
+
+**From The Command Line**
+
+- Have Node
+- Clone the repository or download the [.zip](https://github.com/elanthia-online/illthorn/archive/master.zip).
+- Navigate to the directory and install dependencies with `yarn install`.
+- You can then launch Illthorn with `yarn start`
+- Or make an app file with `yarn make` (look for the executable in `/out/`)
+
 ## Connecting to the game
 
 You need to have an active Lich session. So you'd connect something like...
@@ -18,16 +28,18 @@ Lich might also be `lich.rbw` on your setup. You can run multiple connections (f
 
 1. Attempts to autostart sessions by detecting open lich processes started with `--without-frontend`
 2. Renders links/monsters/etc
-3. Rich FE commands
+3. Autocomplete command history
 4. Multiple sessions / 1 application instance (ala `tmux` or `kitty`)
 
 ## Planned Features
 
-1. Plugin Interface
-2. Theme Interface
+- [ ] Plugin Interface
+- [x] Theme Interface
+
 3. Custom Highlights
 4. Macros
-5. Command History / Autocomplete (ala fish/bash/zsh)
+
+- [x] Command History / Autocomplete (ala fish/bash/zsh)
 
 ## Meta Shortcuts
 
@@ -37,27 +49,23 @@ Meta shortcuts are not customizable, as this project will general prefer sane de
 
 quick swap between sessions based on the numeric order on the left-hand session pane, similar to many modern terminals
 
-## FE Commands (Vim prefixed)
+## CLI Commands (Vim prefixed)
 
 All FE commands are prefixed by the `:` character, ala `vim` or other common CLI utils.
 
 #### `:connect <name> <port>`
 
-#### (alias) `:c <name> <port>`
+Also has an alias: `:c <name> <port>`
 
-#### `:connect`
+Attempts to create a new named session with the given arguments. If `name` and `port` are omitted, it will attempt to autodetect any newly created Lich processes.
 
-#### `:connect <name>`
-
-Attempts to create a new named session with the given arguments.
-If `name` and `port` are omitted, it will attempt to autodetect any newly created Lich processes.
 If `port` is omitted we will attempt to autodetect which port to connect to.
 
 #### `:focus <session>`
 
-#### (alias) `:f <session>`
-
 Swaps focus to another session.
+
+There is also an alias: `:f <session>`
 
 #### `:rename <new name>`
 
@@ -87,7 +95,7 @@ Sets the panels. State is `on` or `off`. Names are:
 
 Example: `:ui compass off`
 
-#### `stream <name> <state>`
+#### `:stream <name> <state>`
 
 Sets the stream panels. State is `on` or `off`. Names are:
 
@@ -95,3 +103,32 @@ Sets the stream panels. State is `on` or `off`. Names are:
 - `speech`
 - `logon`
 - `logoff`
+- `death`
+
+Example: `:stream thoughts on`
+
+## Autocomplete
+
+Previous commands in a session are saved and will show a ghosted version as you type characters which you can autocomplete by pressing the **right arrow** key to complete the command.
+
+## Customization
+
+You can override default styles with a `user.css` file.
+
+On a Mac, this file goes in:
+
+```
+/Users/USERNAME/Library/Application%20Support/illthorn/user.css
+```
+
+On Linux (XDG specification):
+
+```
+ ~/.config/illthorn/user.css
+```
+
+On Windows:
+
+```
+%APPDATA% environment variable
+```

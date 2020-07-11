@@ -26,14 +26,30 @@
 
 .modal {
   position: fixed;
+  z-index: 10;
   bottom: 5em;
   right: 1em;
   background: black;
   padding: 2em;
   border: 2px solid var(--info);
   display: none;
-  width: 40vw;
+  width: 50vw;
 }
 .modal.open {
   display: block;
+}
+
+.command-list {
+  font-size: 0.9em;
+  li {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-gap: 1em;
+    background: rgba(white, 0.1);
+    padding: 0.33em;
+    margin: 0 0 0.1em 0;
+  }
+  .space-after {
+    margin: 0 0 0.75em 0;
+  }
 }

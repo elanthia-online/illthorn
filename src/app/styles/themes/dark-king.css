@@ -41,12 +41,20 @@
   box-shadow: 0 20px 20px black;
 }
 
+.stream {
+  font-size: 0.85em;
+}
+
 .stream-channel[data-stream-channel="[Dreavening]"] {
   color: #d64e4e;
 }
 
 .stream-channel[data-stream-channel="[help]"] {
   color: #6cadd0;
+}
+
+.stream-channel.death {
+  color: #f30000;
 }
 
 .feed,

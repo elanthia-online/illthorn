@@ -49,11 +49,17 @@ $red: #d64e4e;
   position: relative;
   box-shadow: 0 20px 20px black;
 }
+.stream {
+  font-size: 0.85em;
+}
 .stream-channel[data-stream-channel="[Dreavening]"] {
   color: $red;
 }
 .stream-channel[data-stream-channel="[help]"] {
   color: $blue;
+}
+.stream-channel.death {
+  color: #f30000;
 }
 
 .feed,

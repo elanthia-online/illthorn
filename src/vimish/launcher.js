@@ -32,9 +32,14 @@ function spawn_launcher(bin, { char, port }) {
 
   const launcher = spawn(absolute_bin, argv, {
     detached: true,
+    shell: true,
+    cwd: process.cwd(),
+    windowsHide: true,
   })
 
   launcher.stdout.on("data", (data) => {
+    data = data.toString().trim()
+    if (data.length == 0) return
     Bus.emit(Bus.events.FLASH, {
       kind: "info",
       message: format("%s> %s", char, data),
@@ -42,6 +47,8 @@ function spawn_launcher(bin, { char, port }) {
   })
 
   launcher.stderr.on("data", (data) => {
+    data = data.toString().trim()
+    if (data.length == 0) return
     Bus.emit(Bus.events.FLASH, {
       kind: "error",
       message: format("%s> %s", char, data),

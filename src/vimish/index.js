@@ -176,6 +176,13 @@ exports.ui = Command.of(
   }
 )
 
+exports.explain = Command.of(["state"], () => {
+  Session.focused().state._modals.commands = !Session.focused()
+    .state._modals.commands
+  // Force redraw so it doesn't wait until next CLI redraw which may not happen right away.
+  m.redraw()
+})
+
 exports.compiler = Command.of(
   ["option", "value"],
   async ({ option, value }) => {
@@ -317,7 +324,12 @@ exports.stream = exports.streams = Command.of(
     }
 
     Streams.Settings.set(`active.${stream}`, state)
-    Bus.emit(Bus.events.REDRAW)
+    Bus.emit(Bus.events.FLASH, {
+      kind: "ok",
+      message: `${stream} stream is now ${
+        state == 1 ? "on" : "off"
+      }`,
+    })
   }
 )
 

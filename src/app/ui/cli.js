@@ -3,11 +3,9 @@ const Session = require("../../session")
 const Vimish = require("../../vimish")
 const Lens = require("../../util/lens")
 const Bus = require("../../bus")
-const Macros = require("../../macros")
 
 module.exports = class CLI {
   static CONTROL_CHAR = ":"
-  static HELP_UI_OPEN = false
 
   static parse({ value }) {
     if (value[0] == CLI.CONTROL_CHAR)
@@ -31,7 +29,6 @@ module.exports = class CLI {
         message: err.message,
         kind: "error",
       })
-      // todo: show flash message
       console.log(err)
     }
   }
@@ -124,10 +121,19 @@ module.exports = class CLI {
   }
 
   static onclick(e) {
-    CLI.HELP_UI_OPEN = !CLI.HELP_UI_OPEN
+    Session.focused().state._modals.commands = !Session.focused()
+      .state._modals.commands
   }
 
   view({ attrs }) {
+    const commandsModalClass = Lens.get(
+      Session.current,
+      "state._modals.commands",
+      false
+    )
+      ? "open"
+      : ""
+
     return [
       m(
         "span.prompt",
@@ -157,16 +163,35 @@ module.exports = class CLI {
       m(
         "div.modal",
         {
-          class: CLI.HELP_UI_OPEN ? "open" : "",
+          class: commandsModalClass,
         },
         [
           m("h2", "Illthorn UI Commands"),
-          m("ul", [
-            m("li", ":ui vitals on|off"),
-            m("li", ":ui injuries on|off"),
-            m("li", ":ui active-spells on|off"),
-            m("li", ":ui compass on|off"),
-            m("li", ":stream thoughts on|off"),
+          m("ul.command-list", [
+            m("li", [
+              m("code.command", ":ui vitals on|off"),
+              m("span", "Show/Hide Vitals Panel"),
+            ]),
+            m("li", [
+              m("code.command", ":ui injuries on|off"),
+              m("span", "Show/Hide Injuries Panel"),
+            ]),
+            m("li", [
+              m("code.command", ":ui active-spells on|off"),
+              m("span", "Show/Hide Active Spells Panel"),
+            ]),
+            m("li.space-after", [
+              m("code.command", ":ui compass on|off"),
+              m("span", "Show/Hide Compass Panel"),
+            ]),
+            m("li.space-after", [
+              m("code.command", ":stream thoughts on|off"),
+              m("span", "Show/Hide Thoughts/Chat Stream"),
+            ]),
+            m("li", [
+              m("code.command", ":explain"),
+              m("span", "Show/Hide This Modal"),
+            ]),
           ]),
         ]
       ),

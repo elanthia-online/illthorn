@@ -8,9 +8,8 @@ exports.changeTheme = function (data) {
   const stylesheet = document.querySelector(
     "#theme-stylesheet"
   )
-  if (data.theme === THEME_NAMES.original) {
-    stylesheet.href = "./app/styles/themes/original.css"
-  } else if (data.theme === THEME_NAMES["dark-king"]) {
-    stylesheet.href = "./app/styles/themes/dark-king.css"
+
+  if (data.theme in THEME_NAMES) {
+    stylesheet.href = `./app/styles/themes/${data.theme}.css`
   }
 }

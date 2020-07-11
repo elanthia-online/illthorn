@@ -323,11 +323,7 @@ exports.stream = exports.streams = Command.of(
 
 // `:theme dark-king`
 exports.theme = Command.of(["value"], async ({ value }) => {
-  if (
-    // TODO: Probably loop over the object to do these checks
-    value === THEME_NAMES.original ||
-    value === THEME_NAMES["dark-king"]
-  ) {
+  if (value in THEME_NAMES) {
     Settings.set("theme", value)
     Bus.emit(Bus.events.CHANGE_THEME, {
       theme: value,

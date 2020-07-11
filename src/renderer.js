@@ -5,12 +5,17 @@ const Autodect = require("./autodetect")
 const Session = require("./session")
 const Macros = require("./macros")
 const CustomCSS = require("./storage/custom-css")
+const ChangeTheme = require("./storage/theme")
 
 window.messages = window.messages || []
 
 CustomCSS.injectCSS().then(() =>
   document.body.classList.remove("loading")
 )
+
+Bus.on(Bus.events.CHANGE_THEME, (data) => {
+  ChangeTheme(data)
+})
 
 m.mount(document.getElementById("sessions"), UI.Sessions)
 m.mount(document.getElementById("hands-wrapper"), UI.Hands)

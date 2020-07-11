@@ -9,11 +9,9 @@ const Hilites = require("../hilites")
 const Streams = require("../session/streams")
 const Macros = require("../macros")
 const CustomCSS = require("../storage/custom-css")
-
 const Launcher = require("./launcher")
 
-const THEME_ORIGINAL = "original"
-const THEME_DARK_KING = "dark-king"
+const THEME_NAMES = require("../storage/theme-names")
 
 const redraw = (session) => {
   Bus.emit(Bus.events.FOCUS, session)
@@ -325,8 +323,8 @@ exports.stream = exports.streams = Command.of(
 // `:theme dark-king`
 exports.theme = Command.of(["value"], async ({ value }) => {
   if (
-    value === THEME_ORIGINAL ||
-    value === THEME_DARK_KING
+    value === THEME_NAMES.original ||
+    value === THEME_NAMES["dark-king"]
   ) {
     Settings.set("theme", value)
     Bus.emit(Bus.events.CHANGE_THEME, {

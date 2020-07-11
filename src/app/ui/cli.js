@@ -29,7 +29,7 @@ module.exports = class CLI {
         message: err.message,
         kind: "error",
       })
-      console.log(err)
+      console.error(err)
     }
   }
 

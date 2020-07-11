@@ -1,4 +1,5 @@
 const StreamsSettings = require("../settings").of("streams")
+const Lens = require("../util/lens")
 
 module.exports = class Streams {
   // this class on the top-level application element
@@ -60,29 +61,47 @@ module.exports = class Streams {
 
     const pre = document.createElement("pre")
     pre.classList.add(tag.id, tag.name)
-
-    // TODO: Doesn't account for messages that use square brackets in the message itself. https://regex101.com/r/iMjWM1/1/
-    const messageRegEx = /(\[.*\])(.*)/
-    const messageParts = messageRegEx.exec(tag.text)
-
-    const streamChannel = document.createElement("span")
-    streamChannel.classList.add("stream-channel")
-    streamChannel.setAttribute(
-      "data-stream-channel",
-      messageParts[1]
-    )
-    streamChannel.innerText = messageParts[1]
-
-    const streamText = document.createElement("span")
-    streamText.classList.add("stream-text")
-    streamText.innerText = messageParts[2]
-
-    pre.append(streamChannel)
-    pre.append(streamText)
-
+    const parts = this.transformStreamMessage(tag)
+    parts.forEach((ele) => pre.append(ele))
     this._view.append(pre)
     // scroll the feed to the HEAD position
     if (!was_scrolling) this.advance_scroll()
+  }
+
+  transformStreamMessage(tag) {
+    const streamChannel = document.createElement("span")
+    streamChannel.classList.add("stream-channel")
+
+    const streamText = document.createElement("span")
+    streamText.classList.add("stream-text")
+
+    if (tag.text.trim().startsWith("[")) {
+      // This is a chat message
+      const messageRegEx = /^(\[.*?\])(.*)/
+      const messageParts = messageRegEx.exec(tag.text)
+      // [help]-GSIV:Gilderan: "ahh good to know"
+      // [0] = [help]-GSIV:Gilderan: "ahh good to know"
+      // [1] = [help]
+      // [2] = -GSIV:Gilderan: "ahh good to know"
+      streamChannel.setAttribute(
+        "data-stream-channel",
+        messageParts[1]
+      )
+      streamChannel.innerText = Lens.get(messageParts, "1")
+      streamText.innerText = Lens.get(messageParts, "2")
+    } else if (tag.text.trim().startsWith("*")) {
+      // This is a death message
+      streamChannel.innerText = "* "
+      // For styling the *
+      streamChannel.classList.add("death")
+      // Remove the "* " from the rest of message so it doesn't repeat
+      streamText.innerText = tag.text.trim().substring(2)
+    } else {
+      // Unknown stream message, just dump it in with empty channel
+      streamText.innerText = tag.text
+    }
+
+    return [streamChannel, streamText]
   }
 
   /**

@@ -9,9 +9,8 @@ const Hilites = require("../hilites")
 const Streams = require("../session/streams")
 const Macros = require("../macros")
 const CustomCSS = require("../storage/custom-css")
-const Launcher = require("./launcher")
 
-const THEME_NAMES = require("../storage/theme-names")
+const Launcher = require("./launcher")
 
 const redraw = (session) => {
   Bus.emit(Bus.events.FOCUS, session)
@@ -44,7 +43,6 @@ exports.connect = exports.c = Command.of(
     }
 
     // console.log(argv)
-
     // attempt to autodetect what port to connect to
     if (!argv.port) {
       const running = await Autodetect.list()
@@ -102,7 +100,7 @@ exports.focus = exports.f = Command.of(
   ({ name }) => {
     const candidates = Session.fuzzy_find(name)
 
-    // console.log("Candidates(%o)", candidates)
+    // ("Candidates(%o)", candidates)
 
     if (candidates.length > 1) {
       throw new Error(
@@ -332,18 +330,6 @@ exports.stream = exports.streams = Command.of(
     })
   }
 )
-
-// `:theme dark-king`
-exports.theme = Command.of(["value"], async ({ value }) => {
-  if (value in THEME_NAMES) {
-    Settings.set("theme", value)
-    Bus.emit(Bus.events.CHANGE_THEME, {
-      theme: value,
-    })
-  } else {
-    throw new Error(`Not a valid theme`)
-  }
-})
 
 exports["reload-skin"] = Command.of([], async () => {
   await CustomCSS.injectCSS()

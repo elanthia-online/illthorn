@@ -290,26 +290,21 @@ body {
   height: 150px;
   margin: 0 auto;
 }
-
-#compass li {
-  color: var(--main-bg-color);
+#compass ul li {
   height: 30px;
   width: 30px;
   padding: 0;
   line-height: 30px;
 }
-
-#compass li.on {
-  background: yellowgreen;
+#compass ul li.on {
+  background: var(--info);
 }
-
-#compass li:empty {
-  visibility: hidden;
-}
-
-#compass li.off {
-  background: yellowgreen;
+#compass ul li.off {
+  background: var(--info);
   opacity: 0.2;
+}
+#compass ul li:empty {
+  visibility: hidden;
 }
 
 #app.streams-on .streams {

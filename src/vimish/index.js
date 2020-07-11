@@ -43,7 +43,8 @@ exports.connect = exports.c = Command.of(
       return await Autodect.connect_all()
     }
 
-    console.log(argv)
+    // console.log(argv)
+
     // attempt to autodetect what port to connect to
     if (!argv.port) {
       const running = await Autodetect.list()
@@ -101,7 +102,7 @@ exports.focus = exports.f = Command.of(
   ({ name }) => {
     const candidates = Session.fuzzy_find(name)
 
-    console.log("Candidates(%o)", candidates)
+    // console.log("Candidates(%o)", candidates)
 
     if (candidates.length > 1) {
       throw new Error(
@@ -323,6 +324,7 @@ exports.stream = exports.streams = Command.of(
 // `:theme dark-king`
 exports.theme = Command.of(["value"], async ({ value }) => {
   if (
+    // TODO: Probably loop over the object to do these checks
     value === THEME_NAMES.original ||
     value === THEME_NAMES["dark-king"]
   ) {

@@ -5,7 +5,8 @@ const Autodect = require("./autodetect")
 const Session = require("./session")
 const Macros = require("./macros")
 const CustomCSS = require("./storage/custom-css")
-const ChangeTheme = require("./storage/theme")
+const Theme = require("./storage/theme")
+const Settings = require("./settings")
 
 window.messages = window.messages || []
 
@@ -14,7 +15,7 @@ CustomCSS.injectCSS().then(() =>
 )
 
 Bus.on(Bus.events.CHANGE_THEME, (data) => {
-  ChangeTheme(data)
+  Theme.changeTheme(data)
 })
 
 m.mount(document.getElementById("sessions"), UI.Sessions)
@@ -50,6 +51,11 @@ Bus.on(Bus.events.FOCUS, (session) => {
   document.querySelector("title").innerText = session.name
   session.attach(document.getElementById("feed-wrapper"))
   m.redraw()
+
+  // Set theme from settings
+  // TODO: flashes original theme
+  const theme = Settings.get("theme")
+  Theme.changeTheme({ theme: theme })
 })
 
 Bus.on("macro", (macro) => {

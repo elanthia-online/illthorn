@@ -60,10 +60,23 @@ module.exports = class Streams {
 
     const pre = document.createElement("pre")
     pre.classList.add(tag.id, tag.name)
+    const parts = this.transformStreamMessage(tag)
+    parts.forEach((ele) => pre.append(ele))
+    this._view.append(pre)
+    // scroll the feed to the HEAD position
+    if (!was_scrolling) this.advance_scroll()
+  }
 
-    // TODO: Doesn't account for messages that use square brackets in the message itself. https://regex101.com/r/iMjWM1/1/
-    const messageRegEx = /(\[.*\])(.*)/
+  transformStreamMessage(tag) {
+    // https://regex101.com/r/iMjWM1/2
+    const messageRegEx = /^(\[\w+\])(.*)/
     const messageParts = messageRegEx.exec(tag.text)
+
+    if (!messageParts) {
+      const msg = document.createElement("span")
+      msg.innerText = tag.text
+      return [msg]
+    }
 
     const streamChannel = document.createElement("span")
     streamChannel.classList.add("stream-channel")
@@ -73,12 +86,7 @@ module.exports = class Streams {
     streamText.classList.add("stream-text")
     streamText.innerText = messageParts[2]
 
-    pre.append(streamChannel)
-    pre.append(streamText)
-
-    this._view.append(pre)
-    // scroll the feed to the HEAD position
-    if (!was_scrolling) this.advance_scroll()
+    return [streamChannel, streamText]
   }
 
   /**

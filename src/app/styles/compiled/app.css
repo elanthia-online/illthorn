@@ -74,7 +74,8 @@ ul {
   list-style-type: none;
 }
 
-pre {
+pre,
+code {
   font-family: "MonoLisa", system-ui, sans-serif;
 }
 
@@ -230,6 +231,7 @@ body {
 
 .scroll {
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .scroll pre {
@@ -537,11 +539,25 @@ a.external-link {
   padding: 2em;
   border: 2px solid var(--info);
   display: none;
-  width: 40vw;
+  width: 50vw;
 }
 
 .modal.open {
   display: block;
+}
+
+.command-list {
+  font-size: 90%;
+}
+
+.command-list li {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  grid-gap: 1em;
+}
+
+.command-list li.space-after {
+  margin-bottom: 0.75em;
 }
 
 /*# sourceMappingURL=app.css.map */

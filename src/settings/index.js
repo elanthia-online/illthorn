@@ -32,7 +32,7 @@ module.exports = class Settings {
 
     val = Settings.cast(val)
 
-    console.log("Settings(key: %s, value: %o)", key, val)
+    // console.log("Settings(key: %s, value: %o)", key, val)
 
     return Storage.set(key, val)
   }

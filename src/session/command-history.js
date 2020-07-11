@@ -62,7 +62,7 @@ module.exports = class CommandHistory {
   }
 
   seek(idx) {
-    console.log("command:seek", idx)
+    // console.log("command:seek", idx)
     this.index = idx
     if (this.index < 0) this.index = this.last_index
     if (this.index > this.last_index) this.index = 0

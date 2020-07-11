@@ -100,7 +100,7 @@ module.exports = class Session extends events.EventEmitter {
     this.worker.onmessage = ({ data }) => {
       if (data.topic == "CLOSE") return this.close()
       if (data.topic == "OPEN") {
-        console.log(data)
+        // console.log(data)
         return shell.openExternal(data.link)
       }
       if (data.topic)

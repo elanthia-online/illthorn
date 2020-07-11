@@ -36,7 +36,7 @@ module.exports = class Macros {
     KeyboardJS.on("tab", (e) => {
       e.preventDefault()
       // todo: tab completion
-      console.log(e)
+      // console.log(e)
     })
 
     KeyboardJS.on("right", (e) => {

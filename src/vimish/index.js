@@ -9,8 +9,9 @@ const Hilites = require("../hilites")
 const Streams = require("../session/streams")
 const Macros = require("../macros")
 const CustomCSS = require("../storage/custom-css")
-
 const Launcher = require("./launcher")
+
+const THEME_NAMES = require("../storage/theme-names")
 
 const redraw = (session) => {
   Bus.emit(Bus.events.FOCUS, session)
@@ -322,14 +323,24 @@ exports.stream = exports.streams = Command.of(
     }
 
     Streams.Settings.set(`active.${stream}`, state)
-    Bus.emit(Bus.events.FLASH, {
-      kind: "ok",
-      message: `${stream} stream is now ${
-        state == 1 ? "on" : "off"
-      }`,
-    })
+    Bus.emit(Bus.events.REDRAW)
   }
 )
+
+// `:theme dark-king`
+exports.theme = Command.of(["value"], async ({ value }) => {
+  if (
+    value === THEME_NAMES.original ||
+    value === THEME_NAMES["dark-king"]
+  ) {
+    Settings.set("theme", value)
+    Bus.emit(Bus.events.CHANGE_THEME, {
+      theme: value,
+    })
+  } else {
+    throw new Error(`Not a valid theme`)
+  }
+})
 
 exports["reload-skin"] = Command.of([], async () => {
   await CustomCSS.injectCSS()

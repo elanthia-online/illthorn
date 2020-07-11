@@ -17,7 +17,9 @@ module.exports = class Progress {
       )
     }
 
-    if (bar.id == "encumlevel") console.log(bar)
+    if (bar.id == "encumlevel") {
+      // console.log(bar)
+    }
 
     return parseInt(Lens.get(bar, "attrs.value", 0), 10)
   }

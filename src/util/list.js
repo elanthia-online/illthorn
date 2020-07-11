@@ -60,7 +60,9 @@ module.exports = class List {
   static inspect(ele) {
     const inspector = this
     if (typeof inspector == "function") inspector(ele)
-    else console.log(ele)
+    else {
+      // console.log(ele)
+    }
     return ele
   }
 }

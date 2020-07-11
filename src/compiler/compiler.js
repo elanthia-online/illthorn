@@ -5,7 +5,7 @@ const Lens = require("../util/lens")
 const m = require("mithril")
 
 const open_external_link = (url) => {
-  console.log("opening:url(%s)", url)
+  // console.log("opening:url(%s)", url)
   require("electron").shell.openExternal(url)
   return false
 }
@@ -122,7 +122,7 @@ module.exports = class Compiler {
     const nodes = parent.childNodes
     const length = nodes.length
     let i = 0
-    //if (depth > 0) console.log("Recursive(%o) Children(%o)", parent.nodeName, nodes)
+    // if (depth > 0) console.log("Recursive(%o) Children(%o)", parent.nodeName, nodes)
     while (i < length) {
       const node = nodes[i]
       ++i // in

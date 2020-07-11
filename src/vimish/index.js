@@ -42,7 +42,7 @@ exports.connect = exports.c = Command.of(
       return await Autodect.connect_all()
     }
 
-    console.log(argv)
+    // console.log(argv)
     // attempt to autodetect what port to connect to
     if (!argv.port) {
       const running = await Autodetect.list()
@@ -100,7 +100,7 @@ exports.focus = exports.f = Command.of(
   ({ name }) => {
     const candidates = Session.fuzzy_find(name)
 
-    console.log("Candidates(%o)", candidates)
+    // ("Candidates(%o)", candidates)
 
     if (candidates.length > 1) {
       throw new Error(

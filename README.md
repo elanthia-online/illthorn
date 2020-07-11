@@ -65,9 +65,9 @@ If `port` is omitted we will attempt to autodetect which port to connect to.
 
 #### `:focus <session>`
 
-#### (alias) `:f <session>`
-
 Swaps focus to another session.
+
+There is also an alias: `:f <session>`
 
 #### `:rename <new name>`
 
@@ -105,6 +105,9 @@ Sets the stream panels. State is `on` or `off`. Names are:
 - `speech`
 - `logon`
 - `logoff`
+- `death`
+
+Example: `:stream thoughts on`
 
 ## Customization
 

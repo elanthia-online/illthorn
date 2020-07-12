@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require("electron")
 const path = require("path")
+const windowStateKeeper = require("electron-window-state")
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -12,8 +13,18 @@ if (require("electron-squirrel-startup")) {
 let mainWindow
 
 const createWindow = () => {
+  //define default window state
+  let mainWindowState = windowStateKeeper({
+    defaultWidth: 1500,
+    defaultHeight: 1000,
+  })
   // Create the browser window.
   mainWindow = new BrowserWindow({
+    //set window state
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
     show: false,
     frame: false,
     webPreferences: {
@@ -23,8 +34,8 @@ const createWindow = () => {
     titleBarStyle: "hidden",
     icon: "/src/app/png/64x64.png",
   })
+  mainWindowState.manage(mainWindow)
 
-  mainWindow.maximize()
   mainWindow.show()
 
   // and load the index.html of the app.

@@ -107,6 +107,15 @@ body {
   grid-column: 1 / 2;
   grid-row: 1 / 2;
 }
+
+#sessions,
+#hands-wrapper {
+  -webkit-app-region: drag;
+}
+#sessions ol li {
+  -webkit-app-region: no-drag;
+}
+
 #panels-left {
   grid-column: 2 / 3;
   grid-row: 1 / 2;

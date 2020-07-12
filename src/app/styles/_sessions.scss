@@ -1,11 +1,13 @@
 #sessions {
   background: var(--info);
   padding: 40px 1em 1em;
+  -webkit-app-region: drag;
   ol {
     display: flex;
     flex-direction: column;
     justify-content: center;
     li {
+      -webkit-app-region: no-drag;
       border: 0;
       text-align: center;
       width: 100%;

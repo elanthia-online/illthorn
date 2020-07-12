@@ -153,6 +153,7 @@ body {
 #sessions {
   background: var(--info);
   padding: 40px 1em 1em;
+  -webkit-app-region: drag;
 }
 #sessions ol {
   display: flex;
@@ -160,6 +161,7 @@ body {
   justify-content: center;
 }
 #sessions ol li {
+  -webkit-app-region: no-drag;
   border: 0;
   text-align: center;
   width: 100%;
@@ -336,6 +338,8 @@ body {
 .hand {
   padding: 0 1em;
   flex: 1;
+  display: flex;
+  align-items: center;
   text-align: left;
   font-weight: bold;
 }

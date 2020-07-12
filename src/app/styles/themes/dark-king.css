@@ -6,7 +6,7 @@
   --gentle-warn: rgb(122, 96, 28);
   --warn: #784225;
   --danger: #6f2232;
-  --icon-size: 1em;
+  --icon-size: 1.4em;
   --column-width: minmax(16em, 0.33fr);
   --stream-height: 13em;
   --stream-channel-color: #91d686;
@@ -28,7 +28,19 @@
 }
 
 #hands {
+  font-family: "PTSerif", Serif;
   border: 0;
+}
+
+.hand#left::before {
+  transform: rotate(22deg) scaleX(-1);
+}
+
+.hand#right::before {
+  transform: rotate(-22deg);
+  order: 2;
+  margin-right: 0;
+  margin-left: 1em;
 }
 
 #app.streams-on .streams {
@@ -177,19 +189,40 @@
   display: none;
 }
 
-.bar.low,
-.severity-3 {
+.bar.low {
   background: linear-gradient(to bottom, #dc0d0d, #3d0404);
 }
 
-.bar.medium,
-.severity-2 {
+.bar.medium {
   background: linear-gradient(to bottom, #de8e8e, #972c2c);
 }
 
-.bar.high,
-.severity-1 {
+.bar.high {
   background: linear-gradient(to bottom, #846e6e, #282222);
+}
+
+.injury.injury {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid black;
+  box-shadow: 0 1px 1px 0 #282323;
+  border-radius: 0;
+  padding-bottom: 0.5em;
+}
+
+.injury.severity-1 {
+  color: #ff7c7c;
+}
+
+.injury.severity-2 {
+  color: #ff3333;
+  font-weight: bold;
+}
+
+.injury.severity-3 {
+  color: #ff0000;
+  text-shadow: 0 0 16px red;
+  font-weight: bold;
 }
 
 #vitals-encumlevel {

@@ -8,6 +8,8 @@
 .hand {
   padding: 0 1em;
   flex: 1;
+  display: flex;
+  align-items: center;
   text-align: left;
   font-weight: bold;
   &::before {

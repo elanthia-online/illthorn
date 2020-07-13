@@ -21,32 +21,34 @@
 @font-face {
   font-family: "MonoLisa";
   font-weight: 400;
-  src: url("../../fonts/MonoLisa-Regular.woff")
+  src: url("../app/fonts/MonoLisa-Regular.woff")
       format("woff2"),
-    url("../../fonts/MonoLisa-Regular.woff") format("woff");
+    url("../app/fonts/MonoLisa-Regular.woff") format("woff");
 }
 @font-face {
   font-family: "MonoLisa";
   font-weight: 700;
-  src: url("../../fonts/MonoLisa-Bold.woff") format("woff2"),
-    url("../../fonts/MonoLisa-Bold.woff") format("woff");
+  src: url("../app/fonts/MonoLisa-Bold.woff")
+      format("woff2"),
+    url("../app/fonts/MonoLisa-Bold.woff") format("woff");
 }
 @font-face {
   font-family: "MonoLisa";
   font-weight: 400;
   font-style: italic;
-  src: url("../fonts/MonoLisa-RegularItalic.woff2")
+  src: url("../app/fonts/MonoLisa-RegularItalic.woff2")
       format("woff2"),
-    url("../fonts/MonoLisa-RegularItalic.woff")
+    url("../app/fonts/MonoLisa-RegularItalic.woff")
       format("woff");
 }
 @font-face {
   font-family: "MonoLisa";
   font-weight: 700;
   font-style: italic;
-  src: url("../fonts/MonoLisa-BoldItalic.woff")
+  src: url("../app/fonts/MonoLisa-BoldItalic.woff")
       format("woff2"),
-    url("../fonts/MonoLisa-BoldItalic.woff") format("woff");
+    url("../app/fonts/MonoLisa-BoldItalic.woff")
+      format("woff");
 }
 
 *,
@@ -211,7 +213,7 @@ body {
   display: inline-block;
   height: var(--icon-size);
   width: var(--icon-size);
-  -webkit-mask: url(../../svg/hand.svg) no-repeat 50% 50%;
+  -webkit-mask: url(../app/svg/hand.svg) no-repeat 50% 50%;
   -webkit-mask-size: cover;
   margin-right: 1em;
 }
@@ -313,7 +315,7 @@ button.ui-help-button {
   background-color: rgba(255, 255, 255, 0.33);
   width: 22px;
   height: 22px;
-  -webkit-mask: url(../../svg/icon-help.svg) no-repeat 50%
+  -webkit-mask: url(../app/svg/icon-help.svg) no-repeat 50%
     50%;
   -webkit-mask-size: contain;
 }

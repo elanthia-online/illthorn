@@ -10,6 +10,6 @@ exports.changeTheme = function (data) {
   )
 
   if (data.theme in THEME_NAMES) {
-    stylesheet.href = `./app/styles/themes/${data.theme}.css`
+    stylesheet.href = `./dist/themes/${data.theme}.css`
   }
 }

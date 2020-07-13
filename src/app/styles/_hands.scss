@@ -17,7 +17,7 @@
     display: inline-block;
     height: var(--icon-size);
     width: var(--icon-size);
-    -webkit-mask: url(../svg/hand.svg) no-repeat 50% 50%;
+    -webkit-mask: url(../app/svg/hand.svg) no-repeat 50% 50%;
     -webkit-mask-size: cover;
     margin-right: 1em;
     background-color: var(--text-color);

@@ -65,6 +65,12 @@
   color: #6cadd0;
 }
 
+.stream-channel[data-stream-channel="[PrivateTo]"],
+.stream-channel[data-stream-channel="[Private]"] {
+  background: #f30000;
+  color: white;
+}
+
 .stream-channel.death {
   color: #f30000;
 }

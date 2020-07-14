@@ -4,7 +4,7 @@ A modern cross-platform front-end for [Gemstone IV](https://www.play.net/gs4/).
 
 ![illthorn-fe](https://user-images.githubusercontent.com/1090434/81620486-0082e580-93ba-11ea-91ad-b526bb16ceac.png)
 
-## Installation
+## Developer Installation
 
 **From The Command Line**
 

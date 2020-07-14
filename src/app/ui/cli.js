@@ -15,7 +15,9 @@ module.exports = class CLI {
 
   static async fe_cmd(raw) {
     const [command, ...argv] = raw.slice(1).split(" ")
-    const impl = Vimish[command.toLowerCase()]
+    const impl = Vimish.commands.get(command.toLowerCase())[
+      command
+    ]
     try {
       if (!impl) {
         throw new Error(

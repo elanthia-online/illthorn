@@ -1,0 +1,27 @@
+#compass ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  width: 90px;
+  height: 150px;
+  margin: 0 auto;
+  li {
+    height: 30px;
+    width: 30px;
+    padding: 0;
+    line-height: 30px;
+    &.on {
+      background: var(--info);
+    }
+    &.off {
+      background: var(--info);
+      opacity: 0.2;
+    }
+
+    &:empty {
+      visibility: hidden;
+    }
+  }
+}

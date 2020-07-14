@@ -3,7 +3,6 @@ const Session = require("../../session")
 const Vimish = require("../../vimish")
 const Lens = require("../../util/lens")
 const Bus = require("../../bus")
-const Macros = require("../../macros")
 
 module.exports = class CLI {
   static CONTROL_CHAR = ":"
@@ -30,8 +29,7 @@ module.exports = class CLI {
         message: err.message,
         kind: "error",
       })
-      // todo: show flash message
-      console.log(err)
+      console.error(err)
     }
   }
 
@@ -122,6 +120,11 @@ module.exports = class CLI {
     suggestions.placeholder = most_recent || ""
   }
 
+  static onclick(e) {
+    Session.focused().state._modals.commands = !Session.focused()
+      .state._modals.commands
+  }
+
   view({ attrs }) {
     // TODO: Roundtime/Casttime and the CLI are probably different enough to abstract away instead of leaving combined like I have it here.
     const sess = Session.focused()
@@ -144,6 +147,13 @@ module.exports = class CLI {
       // TODO: Actually calculate how wide to render the casttime bar.
       castTimeWidth = 50
     }
+    const commandsModalClass = Lens.get(
+      Session.current,
+      "state._modals.commands",
+      false
+    )
+      ? "open"
+      : ""
 
     return [
       m("div.timers", [
@@ -172,6 +182,59 @@ module.exports = class CLI {
           key: "cli.suggestions",
         }),
       ]),
+      m(
+        "button.ui-help-button",
+        {
+          onclick: CLI.onclick,
+        },
+        "UI Commands Help"
+      ),
+      m(
+        "div.modal",
+        {
+          class: commandsModalClass,
+        },
+        [
+          m("h2", "Illthorn UI Commands"),
+          m("ul.command-list", [
+            m("li", [
+              m("code.command", ":ui vitals on|off"),
+              m("span", "Show/Hide Vitals Panel"),
+            ]),
+            m("li", [
+              m("code.command", ":ui injuries on|off"),
+              m("span", "Show/Hide Injuries Panel"),
+            ]),
+            m("li", [
+              m("code.command", ":ui active-spells on|off"),
+              m("span", "Show/Hide Active Spells Panel"),
+            ]),
+            m("li.space-after", [
+              m("code.command", ":ui compass on|off"),
+              m("span", "Show/Hide Compass Panel"),
+            ]),
+            m("li", [
+              m("code.command", ":stream death on|off"),
+              m("span", "Show/Hide Death Stream"),
+            ]),
+            m("li.space-after", [
+              m("code.command", ":stream thoughts on|off"),
+              m("span", "Show/Hide Thoughts/Chat Stream"),
+            ]),
+            m("li.space-after", [
+              m(
+                "code.command",
+                ":theme original|dark-king"
+              ),
+              m("span", "Change Theme"),
+            ]),
+            m("li", [
+              m("code.command", ":explain"),
+              m("span", "Show/Hide This Modal"),
+            ]),
+          ]),
+        ]
+      ),
     ]
   }
 }

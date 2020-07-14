@@ -1,0 +1,85 @@
+#cli-wrapper {
+  background-color: var(--info);
+  display: grid;
+  grid-template-columns: 3em 1fr 22px;
+  grid-template-rows: 6px 1fr;
+  grid-gap: 0 0.5em;
+  padding: 0 0.5em 0 0;
+  align-items: center;
+  .prompt {
+    display: inline-block;
+    text-align: right;
+    font-size: 1.6em;
+    position: relative;
+    top: -0.1em;
+  }
+}
+
+#cnc {
+  position: relative;
+  height: 38px;
+}
+
+#cnc input {
+  font-family: "MonoLisa", system-ui, sans-serif;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: none;
+  width: 100%;
+  padding: 0.5em;
+  color: #fff;
+  font-size: 1em;
+  &:focus {
+    outline: none;
+  }
+  &#cli {
+    background-color: transparent;
+    z-index: 1;
+  }
+  &#cli-suggestions {
+    background-color: rgba(black, 0.2);
+  }
+}
+
+button.ui-help-button {
+  display: inline-block;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  text-indent: -9999px;
+  background-color: rgba(white, 0.33);
+  width: 22px;
+  height: 22px;
+  -webkit-mask: url(../app/svg/icon-help.svg) no-repeat 50%
+    50%;
+  -webkit-mask-size: contain;
+}
+button.ui-help-button:hover {
+  background-color: rgba(white, 0.66);
+}
+
+.timers {
+  grid-column: 1 / -1;
+  align-self: start;
+}
+.round-time-current {
+  height: 3px;
+  background: linear-gradient(to right, darkred, red);
+  grid-template-columns: 3em 1fr;
+  align-items: center;
+  animation: roundtime var(--duration) linear forwards;
+}
+.cast-time-current {
+  height: 3px;
+  background: linear-gradient(to right, #008a83, #03b9cc);
+  grid-template-columns: 3em 1fr;
+  align-items: center;
+  animation: roundtime var(--duration) linear forwards;
+}
+@keyframes roundtime {
+  to {
+    /* TODO: Width isn't the most performant thing to animate. Could switch to a transform that moves the bar to hidden overflow or something. */
+    width: 0;
+  }
+}

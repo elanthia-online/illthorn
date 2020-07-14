@@ -8,6 +8,10 @@ const Storage = require("../storage")
 const Hilites = require("../hilites")
 const Streams = require("../session/streams")
 const Macros = require("../macros")
+const CustomCSS = require("../storage/custom-css")
+const Launcher = require("./launcher")
+
+const THEME_NAMES = require("../storage/theme-names")
 
 const redraw = (session) => {
   Bus.emit(Bus.events.FOCUS, session)
@@ -39,15 +43,20 @@ exports.connect = exports.c = Command.of(
       return await Autodect.connect_all()
     }
 
-    console.log(argv)
+    // console.log(argv)
     // attempt to autodetect what port to connect to
     if (!argv.port) {
       const running = await Autodetect.list()
 
-      const auto_detected =
-        running.find(
-          ({ name }) => ~name.indexOf(argv.name)
-        ) || {}
+      const auto_detected = running.find(
+        ({ name }) => ~name.indexOf(argv.name)
+      )
+
+      if (!auto_detected) {
+        throw new Error(
+          `could not find a session by the name ${argv.name}`
+        )
+      }
 
       Object.assign(argv, auto_detected)
     }
@@ -61,7 +70,8 @@ exports.connect = exports.c = Command.of(
     if (
       Session.find(
         (sess) =>
-          sess.port.toString() == argv.port.toString()
+          sess.port.toString() ==
+          (argv.port || "").toString()
       )
     ) {
       throw new Error(
@@ -91,7 +101,7 @@ exports.focus = exports.f = Command.of(
   ({ name }) => {
     const candidates = Session.fuzzy_find(name)
 
-    console.log("Candidates(%o)", candidates)
+    // ("Candidates(%o)", candidates)
 
     if (candidates.length > 1) {
       throw new Error(
@@ -164,6 +174,13 @@ exports.ui = Command.of(
     Bus.emit(Bus.events.REDRAW)
   }
 )
+
+exports.explain = Command.of(["state"], () => {
+  Session.focused().state._modals.commands = !Session.focused()
+    .state._modals.commands
+  // Force redraw so it doesn't wait until next CLI redraw which may not happen right away.
+  m.redraw()
+})
 
 exports.compiler = Command.of(
   ["option", "value"],
@@ -307,5 +324,31 @@ exports.stream = exports.streams = Command.of(
 
     Streams.Settings.set(`active.${stream}`, state)
     Bus.emit(Bus.events.REDRAW)
+  }
+)
+
+// `:theme dark-king`
+exports.theme = Command.of(["value"], async ({ value }) => {
+  if (!(value in THEME_NAMES)) {
+    throw new Error(`Not a valid theme`)
+  }
+  Settings.set("theme", value)
+  Bus.emit(Bus.events.CHANGE_THEME, {
+    theme: value,
+  })
+})
+
+exports["reload-skin"] = Command.of([], async () => {
+  await CustomCSS.injectCSS()
+  Bus.emit(Bus.events.FLASH, {
+    kind: "ok",
+    message: "successfully reloaded your skin",
+  })
+})
+
+exports["launch"] = Command.of(
+  ["char", "port"],
+  async ({ char, port }) => {
+    return await Launcher.launch({ char, port })
   }
 )

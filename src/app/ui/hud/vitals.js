@@ -92,7 +92,7 @@ module.exports = class Vitals {
     return (
       state &&
       m(
-        `ol`,
+        `ol.vitals.panel-list`,
         state
           .by_name("progressbar")
           .map(Attrs.get)

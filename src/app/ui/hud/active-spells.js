@@ -24,20 +24,27 @@ module.exports = class ActiveSpells {
   static spell(spell) {
     const percent = ActiveSpells.percent_remaining(spell)
 
-    return m("li", [
-      m(`.bar.${Progress.classify(percent + 20)}`, {
-        style: { width: percent + "%" },
-      }),
-      m(".value", [
-        m("span.spell", spell.name),
-        m("span.remaining", spell.remaining),
-      ]),
-    ])
+    return m(
+      "li",
+      {
+        ["data-spell-name"]: spell.name,
+        class: `${Progress.classify(percent + 20)}`,
+      },
+      [
+        m(`.bar.${Progress.classify(percent + 20)}`, {
+          style: { width: percent + "%" },
+        }),
+        m(".value", [
+          m("span.spell", spell.name),
+          m("span.remaining", spell.remaining),
+        ]),
+      ]
+    )
   }
 
   static list(spells) {
     return m(
-      `ol.spells.scroll`,
+      `ol.spells.panel-list`,
       spells.map(ActiveSpells.spell)
     )
   }

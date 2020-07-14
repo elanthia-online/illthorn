@@ -1,0 +1,59 @@
+#sessions {
+  background: var(--info);
+  padding: 40px 1em 1em;
+  -webkit-app-region: drag;
+  ol {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    li {
+      -webkit-app-region: no-drag;
+      border: 0;
+      text-align: center;
+      width: 100%;
+      height: 40px;
+      font-size: 1em;
+      font-weight: bold;
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      height: 64px;
+      display: grid;
+      place-items: center;
+      opacity: 0.75;
+      &:hover {
+        cursor: pointer;
+      }
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 20px;
+        box-shadow: 0 0 0 85em rgba(black, 0.4);
+        border-radius: 50px;
+        margin-left: -18px;
+        margin-top: -18px;
+      }
+      // Active Session
+      &.on {
+        opacity: 1;
+      }
+    }
+  }
+  .session-name {
+    font-size: 1.5em;
+    position: relative;
+  }
+  .alt-numeric {
+    font-size: 0.9em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+    text-align: center;
+    margin: -0.58em 0 0 -0.58em;
+  }
+}

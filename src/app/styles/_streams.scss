@@ -1,0 +1,16 @@
+#app.streams-on .streams {
+  border-bottom: 3px solid var(--info);
+}
+
+.streams {
+  padding: 0 1em;
+  height: var(--stream-height);
+}
+.streams pre {
+  margin: 0.2em 0;
+}
+.stream-channel {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--stream-channel-color);
+}

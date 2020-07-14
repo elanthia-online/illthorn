@@ -1,0 +1,80 @@
+.panels {
+}
+
+#panels-left {
+  border-right: 3px solid var(--info);
+}
+
+.panel {
+  font-size: 14px;
+  position: relative;
+  padding: 4px;
+  margin: 10px;
+  resize: vertical;
+  summary {
+    margin: 0;
+    padding: 0.5em;
+    text-transform: uppercase;
+    text-align: center;
+    background-color: var(--info);
+    font-weight: bold;
+    &:focus {
+      /* TODO: Strategy for focus styles */
+      outline: 0;
+    }
+  }
+  ol {
+    // max-height: 300px;
+  }
+  li {
+    padding: 0.5em;
+    position: relative;
+  }
+
+  .bar {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  .value {
+    position: relative;
+    text-align: right;
+    display: flex;
+    span {
+      display: inline-block;
+      &:first-child {
+        margin-right: 1em;
+        flex: 1;
+      }
+      &:nth-child(2) {
+        font-weight: bold;
+        min-width: 3em;
+        text-align: left;
+      }
+    }
+    &.center {
+      text-align: center;
+      span {
+        margin: 0;
+      }
+      .center {
+        text-align: center;
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.bar.high {
+  background: var(--ok);
+}
+
+.bar.medium {
+  background: var(--warn);
+}
+
+.bar.low {
+  background: var(--danger);
+}

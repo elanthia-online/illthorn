@@ -4,21 +4,30 @@
     <meta charset="utf-8" />
     <title>Illthorn</title>
     <link
-      href="./app/styles/compiled/app.css"
+      href="./dist/app.css"
       type="text/css"
       rel="stylesheet"
+    />
+    <link
+      href="./dist/themes/original.css"
+      type="text/css"
+      rel="stylesheet"
+      id="theme-stylesheet"
     />
   </head>
   <body class="loading">
     <div id="flash-container"></div>
     <div id="app">
       <div id="sessions" class="pane"></div>
-      <div id="panels-left" class="panels panels-left">
+      <div
+        id="panels-left"
+        class="panels panels-left scroll"
+      >
         <div id="hud" class="pane"></div>
       </div>
       <div
         id="panels-right"
-        class="panels panels-right"
+        class="panels panels-right scroll"
       ></div>
       <div id="main" class="pane">
         <div id="hands-wrapper"></div>

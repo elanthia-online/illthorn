@@ -9,7 +9,7 @@ const Attrs = Lens.of("attrs")
 window.Injuries = module.exports = class Injuries {
   static list() {
     return m(
-      "ol",
+      "ol.panel-list",
       Injuries.injuries().map((injury) => {
         return m(
           `li.${injury.type}.severity-${injury.severity}`,

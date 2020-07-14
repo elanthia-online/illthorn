@@ -1,3 +1,6 @@
 node_modules
 out
 .DS_store
+src/dist
+*.css
+.sass-cache

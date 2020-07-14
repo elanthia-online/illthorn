@@ -1,0 +1,17 @@
+.scroll {
+  overflow-y: scroll;
+}
+
+.scroll pre {
+  white-space: pre-wrap;
+}
+
+.severity-1 {
+  background-color: var(--gentle-warn);
+}
+.severity-2 {
+  background-color: var(--warn);
+}
+.severity-3 {
+  background-color: var(--danger);
+}

@@ -184,9 +184,20 @@ module.exports = class CLI {
               m("code.command", ":ui compass on|off"),
               m("span", "Show/Hide Compass Panel"),
             ]),
+            m("li", [
+              m("code.command", ":stream death on|off"),
+              m("span", "Show/Hide Death Stream"),
+            ]),
             m("li.space-after", [
               m("code.command", ":stream thoughts on|off"),
               m("span", "Show/Hide Thoughts/Chat Stream"),
+            ]),
+            m("li.space-after", [
+              m(
+                "code.command",
+                ":theme original|dark-king"
+              ),
+              m("span", "Change Theme"),
             ]),
             m("li", [
               m("code.command", ":explain"),

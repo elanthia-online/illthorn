@@ -169,7 +169,9 @@ module.exports = class SessionState {
           Math.ceil((end_epoc_time - Date.now()) / 1000)
         )
 
-        this.put(name, { remaining: seconds_left })
+        if (seconds_left) {
+          this._timers[name].remaining = seconds_left
+        }
       }, 1000)
   }
 }

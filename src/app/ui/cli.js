@@ -126,27 +126,30 @@ module.exports = class CLI {
   }
 
   view({ attrs }) {
-    // TODO: Roundtime/Casttime and the CLI are probably different enough to abstract away instead of leaving combined like I have it here.
+    // TODO: Probably move this roundtime stuff to it's own component
+
     const sess = Session.focused()
+
     const roundTime = Lens.get(
       sess,
-      "state._timers.roundtime"
+      "state._timers.roundtime.remaining",
+      0
     )
+    let roundTimeVisible = 0
+    if (roundTime) {
+      roundTimeVisible = 1
+    }
+
     const castTime = Lens.get(
       sess,
-      "state._timers.casttime"
+      "state._timers.casttime.remaining",
+      0
     )
-
-    let roundTimeWidth = 80
-    if (roundTime) {
-      // TODO: Actually calculate how wide to render the roundtime bar.
-      roundTimeWidth = 50
-    }
-    let castTimeWidth = 40
+    let castTimeVisible = 0
     if (castTime) {
-      // TODO: Actually calculate how wide to render the casttime bar.
-      castTimeWidth = 50
+      castTimeVisible = 1
     }
+
     const commandsModalClass = Lens.get(
       Session.current,
       "state._modals.commands",
@@ -155,13 +158,27 @@ module.exports = class CLI {
       ? "open"
       : ""
 
+    // TODO: This does NOT seem ideal, but the idea is to force the timer bar `<div>` to re-kick-off the CSS animations when the `style` attribute changes. That can be done by forcing the browser to redraw (since Mithril itself doesn't redraw the whole element, it just updates the attributes).
+    const force = document.querySelector(
+      ".round-time-current"
+    )
+    if (force) {
+      force.classList.remove("go")
+      void force.offsetWidth
+      force.classList.add("go")
+    }
+
     return [
       m("div.timers", [
-        m("div.round-time-current", {
-          style: `width: ${roundTimeWidth}%; --duration: 5s;`,
+        m("div.timer-bar.round-time-current", {
+          style: `--duration: ${roundTime}s; --steps: ${
+            roundTime + 1
+          }; opacity: ${roundTimeVisible}`,
         }),
-        m("div.cast-time-current", {
-          style: `width: ${castTimeWidth}%; --duration: 3s`,
+        m("div.timer-bar.cast-time-current", {
+          style: `--duration: ${castTime}s; --steps: ${
+            roundTime + 1
+          }; opacity: ${castTimeVisible}`,
         }),
       ]),
       m(

@@ -1,3 +1,4 @@
+const m = require("mithril")
 const Lens = require("../util/lens")
 const Bus = require("../bus")
 const { Tag } = require("@elanthia/koschei")
@@ -172,6 +173,10 @@ module.exports = class SessionState {
         if (seconds_left) {
           this._timers[name].remaining = seconds_left
         }
+
+        // Redraws don't happen on setInterval according to the docs
+        // but it's an important time to redraw because a timer just started
+        m.redraw()
       }, 1000)
   }
 }

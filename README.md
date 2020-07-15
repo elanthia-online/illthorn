@@ -26,6 +26,7 @@ Lich might also be `lich.rbw` on your setup. You can run multiple connections (f
 
 ## Current Features
 
+- Runs on macOS, Windows, and Linux ([Electron](https://www.electronjs.org/docs/tutorial/support))
 - Attempts to autostart sessions by detecting open lich processes started with `--without-frontend`
 - Runs multiple sessions in a single app (alt-# between them)
 - Highlights names/monsters/etc
@@ -33,6 +34,7 @@ Lich might also be `lich.rbw` on your setup. You can run multiple connections (f
 - Multiple themes to choose from
 - User Themeable via CSS
 - Zoom in/out (like a web browser)
+- Optional Streams panel for LNet, ESP, and Deaths
 
 ## Planned Features
 

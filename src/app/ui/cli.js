@@ -159,13 +159,21 @@ module.exports = class CLI {
       : ""
 
     // TODO: This does NOT seem ideal, but the idea is to force the timer bar `<div>` to re-kick-off the CSS animations when the `style` attribute changes. That can be done by forcing the browser to redraw (since Mithril itself doesn't redraw the whole element, it just updates the attributes).
-    const force = document.querySelector(
+    const forceRT = document.querySelector(
       ".round-time-current"
     )
-    if (force) {
-      force.classList.remove("go")
-      void force.offsetWidth
-      force.classList.add("go")
+    if (forceRT) {
+      forceRT.classList.remove("go")
+      void forceRT.offsetWidth
+      forceRT.classList.add("go")
+    }
+    const forceCT = document.querySelector(
+      ".cast-time-current"
+    )
+    if (forceCT) {
+      forceCT.classList.remove("go")
+      void forceRT.offsetWidth
+      forceCT.classList.add("go")
     }
 
     return [

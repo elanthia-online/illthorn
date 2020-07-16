@@ -30,6 +30,7 @@ module.exports = class SessionState {
     "rightEye",
     "neck",
     "chest",
+    "back",
     "abdomen",
     "legArm",
     "rightArm",

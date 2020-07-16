@@ -178,6 +178,6 @@ module.exports = class SessionState {
         // Redraws don't happen on setInterval according to the docs
         // but it's an important time to redraw because a timer just started
         m.redraw()
-      }, 1000)
+      }, 1000 / 5) // 5 fps is more than enough for a text-based RPG
   }
 }

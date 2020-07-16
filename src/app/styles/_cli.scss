@@ -1,18 +1,18 @@
 #cli-wrapper {
   background-color: var(--info);
-  padding: 0.5em 1em;
   display: grid;
   grid-template-columns: 3em 1fr 22px;
-  grid-gap: 0.5em;
+  grid-template-rows: 6px 1fr;
+  grid-gap: 0 0.5em;
+  padding: 0 0.5em 0 0;
   align-items: center;
-}
-
-#cli-wrapper .prompt {
-  display: inline-block;
-  text-align: right;
-  font-size: 1.6em;
-  position: relative;
-  top: -0.1em;
+  .prompt {
+    display: inline-block;
+    text-align: right;
+    font-size: 1.6em;
+    position: relative;
+    top: -0.1em;
+  }
 }
 
 #cnc {
@@ -30,19 +30,16 @@
   padding: 0.5em;
   color: #fff;
   font-size: 1em;
-}
-
-#cnc input:focus {
-  outline: none;
-}
-
-#cnc input#cli {
-  background-color: transparent;
-  z-index: 1;
-}
-
-#cnc input#cli-suggestions {
-  background-color: rgba(black, 0.2);
+  &:focus {
+    outline: none;
+  }
+  &#cli {
+    background-color: transparent;
+    z-index: 1;
+  }
+  &#cli-suggestions {
+    background-color: rgba(black, 0.2);
+  }
 }
 
 button.ui-help-button {
@@ -60,4 +57,30 @@ button.ui-help-button {
 }
 button.ui-help-button:hover {
   background-color: rgba(white, 0.66);
+}
+
+.timers {
+  grid-column: 1 / -1;
+  align-self: start;
+}
+.timer-bar {
+  height: 3px;
+  // The bar maxes out, visually, at 20s timers
+  width: calc(var(--steps) * 5%);
+  &.go {
+    animation: roundtime var(--duration) steps(var(--steps))
+      forwards;
+  }
+}
+.round-time-current {
+  background: linear-gradient(to right, darkred, red);
+}
+.cast-time-current {
+  background: linear-gradient(to right, #008a83, #03b9cc);
+}
+@keyframes roundtime {
+  to {
+    /* TODO: Width isn't the most performant thing to animate. Could switch to a transform that moves the bar to hidden overflow or something. */
+    width: 0;
+  }
 }

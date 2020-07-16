@@ -128,6 +128,30 @@ module.exports = class CLI {
   }
 
   view({ attrs }) {
+    // TODO: Probably move this roundtime stuff to it's own component
+
+    const sess = Session.focused()
+
+    const roundTime = Lens.get(
+      sess,
+      "state._timers.roundtime.remaining",
+      0
+    )
+    let roundTimeVisible = 0
+    if (roundTime) {
+      roundTimeVisible = 1
+    }
+
+    const castTime = Lens.get(
+      sess,
+      "state._timers.casttime.remaining",
+      0
+    )
+    let castTimeVisible = 0
+    if (castTime) {
+      castTimeVisible = 1
+    }
+
     const commandsModalClass = Lens.get(
       Session.current,
       "state._modals.commands",
@@ -136,7 +160,37 @@ module.exports = class CLI {
       ? "open"
       : ""
 
+    // TODO: This does NOT seem ideal, but the idea is to force the timer bar `<div>` to re-kick-off the CSS animations when the `style` attribute changes. That can be done by forcing the browser to redraw (since Mithril itself doesn't redraw the whole element, it just updates the attributes).
+    const forceRT = document.querySelector(
+      ".round-time-current"
+    )
+    if (forceRT) {
+      forceRT.classList.remove("go")
+      void forceRT.offsetWidth
+      forceRT.classList.add("go")
+    }
+    const forceCT = document.querySelector(
+      ".cast-time-current"
+    )
+    if (forceCT) {
+      forceCT.classList.remove("go")
+      void forceRT.offsetWidth
+      forceCT.classList.add("go")
+    }
+
     return [
+      m("div.timers", [
+        m("div.timer-bar.round-time-current", {
+          style: `--duration: ${roundTime}s; --steps: ${
+            roundTime + 1
+          }; opacity: ${roundTimeVisible}`,
+        }),
+        m("div.timer-bar.cast-time-current", {
+          style: `--duration: ${castTime}s; --steps: ${
+            roundTime + 1
+          }; opacity: ${castTimeVisible}`,
+        }),
+      ]),
       m(
         "span.prompt",
         Lens.get(

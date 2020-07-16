@@ -26,20 +26,24 @@ Lich might also be `lich.rbw` on your setup. You can run multiple connections (f
 
 ## Current Features
 
-1. Attempts to autostart sessions by detecting open lich processes started with `--without-frontend`
-2. Renders links/monsters/etc
-3. Autocomplete command history
-4. Multiple sessions / 1 application instance (ala `tmux` or `kitty`)
+- Runs on macOS, Windows, and Linux ([Electron](https://www.electronjs.org/docs/tutorial/support))
+- Attempts to autostart sessions by detecting open lich processes started with `--without-frontend`
+- Runs multiple sessions in a single app (alt-# between them)
+- Highlights names/monsters/etc
+- Autocomplete command history
+- Multiple themes to choose from
+- User Themeable via CSS
+- Zoom in/out (like a web browser)
+- Optional Streams panel for LNet, ESP, and Deaths
 
 ## Planned Features
 
 - [ ] Plugin Interface
-- [x] Theme Interface
-
-3. Custom Highlights
-4. Macros
-
-- [x] Command History / Autocomplete (ala fish/bash/zsh)
+- [ ] Custom Highlights
+- [ ] Macros
+- [ ] Saved Logging
+- [ ] Download Public Themes
+- [ ] Clickable links
 
 ## Meta Shortcuts
 

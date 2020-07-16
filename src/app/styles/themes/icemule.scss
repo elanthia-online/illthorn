@@ -6,7 +6,6 @@ A humble, hardscrabble theme—with an arctic, north-blush color palette lifted 
 //@TODO Refactor for Sass, now that it's available
 
 //Default Variables
-
 :root {
   --main-bg-color: #2e3440;
   --ok: #a3be8c;
@@ -24,7 +23,7 @@ A humble, hardscrabble theme—with an arctic, north-blush color palette lifted 
 
 //Local Variables
 $gemcolor: #b48ead;
-
+$magiccolor: #d8dee9;
 //lists
 
 $boxes: "box", "chest", "coffer", "strongbox", "trunk";
@@ -52,6 +51,10 @@ $gems: "mithril-bloom", "faenor-bloom", "rhimar-bloom",
   "tanzanite", "idocrase", "cinderstone", "sandruby",
   "bismuth", "fluorite", "chrysoprase", "prehnite",
   "heliotrope", "viridine", "crescent", "garnet";
+$magics: "crystal", "statue", "filings", "triangle",
+  "granules", "square", "cube", "sculpture", "figurine",
+  "prism", "statuette", "orb", "statuette", "miniature",
+  "wand", "scroll";
 
 .modal {
   background-color: var(--info);
@@ -73,6 +76,11 @@ pre {
 }
 
 //HUD
+#panels-left {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
 .panel {
   background: linear-gradient(
     160deg,
@@ -304,7 +312,7 @@ details summary {
 }
 
 details.panel summary {
-  text-transform: uppercase;
+  text-transform: capitalize;
   font-size: 1rem;
   padding: 4px;
 }
@@ -363,24 +371,32 @@ pre.thoughts.stream {
 }
 @each $box in $boxes {
   a.exist[data-noun="#{$box}"] {
-    color: #bf616a;
+    color: #d08770;
   }
 }
-
 @each $gem in $gems {
   $random: random(360);
   a.exist[data-noun="#{$gem}"] {
     color: adjust-hue($gemcolor, $random);
   }
 }
-
+@each $magic in $magics {
+  $random: random(360);
+  a.exist[data-noun="#{$magic}"] {
+    color: adjust-hue($magiccolor, $random);
+  }
+}
+a[data-noun="spell"] {
+  color: #d08770;
+}
 a.monster {
   color: #ebcb8b;
 }
 a.speech {
   color: #a3be8c;
 }
-a.b {
+a.b,
+pre.stream.society {
   color: #b48ead;
 }
 pre.sent.cli,
@@ -400,10 +416,8 @@ pre.prompt {
 }
 #cli-wrapper .prompt {
   font-size: 1rem;
-  top: 0.2em;
 }
 #cnc input#cli {
-  font-size: 1.1rem;
   font-family: "MonoLisa";
   font-weight: bold;
   box-shadow: inset 3px 3px 5px -5px rgba(0, 0, 0, 1);
@@ -411,7 +425,6 @@ pre.prompt {
 }
 #cnc input#cli-suggestions {
   font-family: "MonoLisa";
-  font-size: 1.1rem;
 }
 
 #sessions {

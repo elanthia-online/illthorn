@@ -96,7 +96,8 @@ module.exports = class Session extends events.EventEmitter {
     this.worker = new Worker(
       path.resolve(__dirname, "worker.js")
     )
-    this.worker.onerror = console.error
+    this.worker.onerror = (err) =>
+      Bus.emit(Bus.events.ERR, err)
     this.worker.onmessage = ({ data }) => {
       if (data.topic == "CLOSE") return this.close()
       if (data.topic == "OPEN") {

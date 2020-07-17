@@ -235,10 +235,12 @@ $red: #d64e4e;
   color: #ff7c7c;
 }
 .injury.severity-2 {
+  // 🩸
   color: #ff3333;
   font-weight: bold;
 }
 .injury.severity-3 {
+  // 🩸
   color: #ff0000;
   text-shadow: 0 0 16px red;
   font-weight: bold;
@@ -307,19 +309,19 @@ a.exist {
 [data-noun="coin"]::before {
   content: "🟡";
 }
-
-// beer, ale 🍺
-// dagger 🗡
-// shield 🛡
-// 🔮
-// blood 🩸
-// key 🗝
-// book, spellbook 📕
-// diamond 🔹
-
-// fruit 🍊
-// leaf, stem, grass, clove, flower, moss, root, grass
-// potion, flask
+[data-noun="dagger"]::before {
+  content: "🗡";
+}
+[data-noun="shield"]::before {
+  content: "🛡";
+}
+[data-noun="beer"]::before,
+[data-noun="ale"]::before {
+  content: "🍺";
+}
+[data-noun="diamond"]::before {
+  content: "🔹";
+}
 
 .feed .roomName {
   margin: 10px 0 0 0;

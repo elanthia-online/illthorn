@@ -280,7 +280,7 @@ $red: #d64e4e;
 }
 
 // Highlighting
-a.exist {
+.exist {
   color: #a7a7a7;
 }
 .monster {
@@ -289,13 +289,27 @@ a.exist {
 .b {
   // e.g. enhanced stat
 }
-[data-noun="trunk"],
-[data-noun="chest"],
-[data-noun="box"],
-[data-noun="coffer"],
-[data-noun="strongbox"] {
-  color: $green;
-  font-weight: bold;
+
+@each $direction in $directions {
+  a.exist[data-noun="#{$direction}"] {
+    color: $blue;
+  }
+}
+@each $box in $boxes {
+  a.exist[data-noun="#{$box}"] {
+    color: $green;
+    font-weight: bold;
+  }
+}
+@each $gem in $gems {
+  a.exist[data-noun="#{$gem}"] {
+    color: $blue;
+  }
+}
+@each $magic in $magics {
+  a.exist[data-noun="#{$magic}"] {
+    color: $purple;
+  }
 }
 
 [data-noun="scarab"]::before {
@@ -309,7 +323,7 @@ a.exist {
   content: "🪓";
 }
 [data-noun="coin"]::before {
-  content: "🟡";
+  content: "Ⓞ";
 }
 [data-noun="dagger"]::before {
   content: "🗡";
@@ -323,6 +337,15 @@ a.exist {
 }
 [data-noun="diamond"]::before {
   content: "🔹";
+}
+[data-noun="lockpick"]::before {
+  content: "𖣣";
+}
+[data-noun="bone"]::before {
+  content: "🦴";
+}
+[data-noun="donut"]::before {
+  content: "🍩";
 }
 
 .feed .roomName {

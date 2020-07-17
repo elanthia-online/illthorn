@@ -5,6 +5,8 @@ A humble, hardscrabble theme—with an arctic, north-blush color palette lifted 
 //@TODO Refactor for duplicates and organize
 //@TODO Refactor for Sass, now that it's available
 
+@import "../vars";
+
 //Default Variables
 :root {
   --main-bg-color: #2e3440;

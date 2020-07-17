@@ -274,3 +274,70 @@ $red: #d64e4e;
 #vitals-stance {
   @include title("Stance");
 }
+
+// Highlighting
+a.exist {
+  color: #a7a7a7;
+}
+.monster {
+  color: $orange;
+}
+.b {
+  // e.g. enhanced stat
+}
+[data-noun="trunk"],
+[data-noun="chest"],
+[data-noun="box"],
+[data-noun="coffer"],
+[data-noun="strongbox"] {
+  color: $green;
+  font-weight: bold;
+}
+
+[data-noun="scarab"]::before {
+  content: "🐞";
+}
+[data-noun="shell"]::before {
+  content: "🦪";
+}
+[data-noun="waraxe"]::before,
+[data-noun="axe"]::before {
+  content: "🪓";
+}
+[data-noun="coin"]::before {
+  content: "🟡";
+}
+
+// beer, ale 🍺
+// dagger 🗡
+// shield 🛡
+// 🔮
+// blood 🩸
+// key 🗝
+// book, spellbook 📕
+// diamond 🔹
+
+// fruit 🍊
+// leaf, stem, grass, clove, flower, moss, root, grass
+// potion, flask
+
+.feed .roomName {
+  margin: 10px 0 0 0;
+  background: linear-gradient(
+    to right,
+    rgba($purple, 0.35),
+    transparent
+  );
+  color: white;
+  padding: 2px;
+}
+.feed .roomDesc {
+  margin: 0 0 10px 0;
+  padding: 6px;
+  opacity: 0.75;
+  background: linear-gradient(
+    to right,
+    rgba($purple, 0.2),
+    transparent
+  );
+}

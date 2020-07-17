@@ -181,14 +181,10 @@ module.exports = class CLI {
     return [
       m("div.timers", [
         m("div.timer-bar.round-time-current", {
-          style: `--duration: ${roundTime}s; --steps: ${
-            roundTime + 1
-          }; opacity: ${roundTimeVisible}`,
+          style: `--duration: ${roundTime}s; --steps: ${roundTime}; opacity: ${roundTimeVisible}`,
         }),
         m("div.timer-bar.cast-time-current", {
-          style: `--duration: ${castTime}s; --steps: ${
-            roundTime + 1
-          }; opacity: ${castTimeVisible}`,
+          style: `--duration: ${castTime}s; --steps: ${castTime}; opacity: ${castTimeVisible}`,
         }),
       ]),
       m(

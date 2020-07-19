@@ -20,13 +20,12 @@ A humble, hardscrabble theme—with an arctic, north-blush color palette lifted 
   --base-padding: 3em;
   --column-width: 16em;
   --stream-height: 13em;
-  --stream-channel-color: #88c0d0;
+  --stream-channel-color: #d8dee9;
 }
 
 //Local Variables
-$gemcolor: #b48ead;
-$magiccolor: #d8dee9;
-//lists
+$gemcolor: hsl(0, 20%, 63%);
+$magiccolor: hsl(283, 20%, 63%);
 
 .modal {
   background-color: var(--info);
@@ -219,6 +218,17 @@ pre {
 #injuries li {
   font-size: 0.8rem;
   text-transform: capitalize;
+  .value {
+    span {
+      text-overflow: ellipsis;
+      text-align: left;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    span:nth-child(2) {
+      display: none;
+    }
+  }
 }
 
 //Active Spells
@@ -319,8 +329,24 @@ details.panel summary {
 #app.streams-on .streams {
   border-bottom: 0px;
 }
+.stream-channel[data-stream-channel="[PrivateTo]"],
+.stream-channel[data-stream-channel="[Private]"] {
+  color: #a3be8c;
+}
+.stream-channel[data-stream-channel="[Merchant]"],
+.stream-channel[data-stream-channel="[Private]"] {
+  color: #ebcb8b;
+}
 
 //Main
+
+.feed.scroll {
+  overflow-x: hidden;
+}
+
+.feed .roomDesc {
+  padding: 0.5rem;
+}
 a.exist {
   color: #81a1c1;
 }
@@ -336,6 +362,7 @@ pre.thoughts.stream {
 
 //Hilites
 
+$start: 0;
 @each $direction in $directions {
   a.exist[data-noun="#{$direction}"] {
     color: #8fbcbb;
@@ -347,16 +374,16 @@ pre.thoughts.stream {
   }
 }
 @each $gem in $gems {
-  $random: random(360);
   a.exist[data-noun="#{$gem}"] {
-    color: adjust-hue($gemcolor, $random);
+    color: adjust-hue($gemcolor, $start);
   }
+  $start: $start + 3;
 }
 @each $magic in $magics {
-  $random: random(360);
   a.exist[data-noun="#{$magic}"] {
-    color: adjust-hue($magiccolor, $random);
+    color: adjust-hue($magiccolor, $start);
   }
+  $start: $start + 3;
 }
 a[data-noun="spell"] {
   color: #d08770;

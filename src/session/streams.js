@@ -1,5 +1,6 @@
 const StreamsSettings = require("../settings").of("streams")
 const Lens = require("../util/lens")
+const Compiler = require("../compiler/compiler")
 
 module.exports = class Streams {
   // this class on the top-level application element
@@ -88,7 +89,9 @@ module.exports = class Streams {
         messageParts[1]
       )
       streamChannel.innerText = Lens.get(messageParts, "1")
-      streamText.innerText = Lens.get(messageParts, "2")
+      streamText.innerHTML = Compiler.make_links(
+        Lens.get(messageParts, "2")
+      )
     } else if (tag.text.trim().startsWith("*")) {
       // This is a death message
       streamChannel.innerText = "* "
@@ -98,7 +101,7 @@ module.exports = class Streams {
       streamText.innerText = tag.text.trim().substring(2)
     } else {
       // Unknown stream message, just dump it in with empty channel
-      streamText.innerText = tag.text
+      streamText.innerHTML = Compiler.make_links(tag.text)
     }
 
     return [streamChannel, streamText]

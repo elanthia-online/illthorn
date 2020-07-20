@@ -1,11 +1,15 @@
 const Settings = require("../settings")
 const Hilites = require("../hilites")
-const Bench = require("../util/bench")
-const Lens = require("../util/lens")
 const m = require("mithril")
 
 const open_external_link = (url) => {
   // console.log("opening:url(%s)", url)
+  require("electron").shell.openExternal(url)
+  return false
+}
+
+// global version of the above so it can be used elsewhere.
+window.open_link = (url) => {
   require("electron").shell.openExternal(url)
   return false
 }
@@ -193,6 +197,21 @@ module.exports = class Compiler {
       a.innerText,
       hilites
     )
+  }
+
+  static make_links(str) {
+    let allParts = str.split(LinkRegex).map((part) => {
+      if (
+        part.startsWith("https://") ||
+        part.startsWith("http://")
+      ) {
+        return `<a class="external-link" onclick="open_link('${part}')">${part}</a>`
+      } else {
+        return part
+      }
+    })
+
+    return allParts.join("")
   }
 
   static linkify(str) {

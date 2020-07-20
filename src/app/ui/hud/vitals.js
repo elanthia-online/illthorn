@@ -30,6 +30,13 @@ module.exports = class Vitals {
   }
 
   static parse(attrs) {
+    /* attrs:
+    {
+      id: "health"
+      text: "health 170/170"
+      value: "0"
+    }
+    */
     const percent = attrs.width
       ? parseInt(attrs.value, 10)
       : Progress.parse_percentage({
@@ -51,12 +58,16 @@ module.exports = class Vitals {
     }
 
     let text = attrs.text
+    let max = 0
 
+    // e.g. health 170/170
     if (text.match(Vitals.PATTERN)) {
       text = Array.from(
         attrs.text.match(Vitals.PATTERN)
       ).slice(1, 3)
+      max = Array.from(attrs.text.match(Vitals.PATTERN))[3]
     }
+    // turns into ["health", "170"]
 
     if (!Array.isArray(text)) {
       text = [
@@ -65,7 +76,7 @@ module.exports = class Vitals {
       ]
     }
 
-    return { percent, text, id: attrs.id }
+    return { percent, text, max, id: attrs.id }
   }
 
   static show(attrs) {
@@ -83,7 +94,8 @@ module.exports = class Vitals {
       ),
       m(
         `.value.${attrs.text.length > 1 ? "" : "center"}`,
-        attrs.text.map(span)
+        attrs.text.map(span),
+        [m("span.max.2", attrs.max <= 0 ? "" : attrs.max)]
       ),
     ])
   }

@@ -258,6 +258,39 @@ span.spell {
   white-space: nowrap;
   overflow: hidden;
 }
+.spells li[data-spell-type="defense"] {
+  &:before {
+    content: "🛡️";
+    display: block;
+    position: absolute;
+    z-index: 100;
+    top: -12px;
+    left: -7px;
+    font-size: 1.4rem;
+  }
+}
+.spells li[data-spell-type="offense"] {
+  &:before {
+    content: "⚔️";
+    display: block;
+    position: absolute;
+    z-index: 100;
+    top: -12px;
+    left: -7px;
+    font-size: 1.4rem;
+  }
+}
+.spells li[data-spell-type="utility"] {
+  &:before {
+    content: "⚙️";
+    display: block;
+    position: absolute;
+    z-index: 100;
+    top: -12px;
+    left: -7px;
+    font-size: 1.4rem;
+  }
+}
 .spells.scroll::-webkit-scrollbar-thumb {
   background-color: rgba(79, 98, 103, 0.35);
   box-shadow: none;

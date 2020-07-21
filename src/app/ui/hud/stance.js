@@ -20,13 +20,13 @@ module.exports = class Stance {
     const [_, state, percent] = Stance.parse(stance)
 
     return m("li#vitals-stance", [
-      m(`.bar.${Progress.classify(percent + 20)}`, {
-        style: { width: percent + "%" },
-      }),
       m(".value", [
         m("span", state),
         m("span", percent + "%"),
       ]),
+      m(`.bar.${Progress.classify(percent + 20)}`, {
+        style: { width: percent + "%" },
+      }),
     ])
   }
 }

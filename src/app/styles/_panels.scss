@@ -10,6 +10,7 @@
   position: relative;
   padding: 4px;
   margin: 10px;
+  overflow: hidden;
   resize: vertical;
   summary {
     margin: 0;
@@ -26,35 +27,31 @@
       cursor: pointer;
     }
   }
-  ol {
-    // max-height: 300px;
-  }
   li {
-    padding: 0.5em;
+    padding: 0.4em 0 0.2em;
     position: relative;
   }
-
   .bar {
-    position: absolute;
-    height: 100%;
-    left: 0;
-    top: 0;
+    height: 2px;
   }
-
   .value {
     position: relative;
-    text-align: right;
     display: flex;
     span {
       display: inline-block;
-      &:first-child {
-        margin-right: 1em;
+      &:nth-child(1) {
+        text-transform: capitalize;
         flex: 1;
+        margin-right: auto;
       }
       &:nth-child(2) {
         font-weight: bold;
-        min-width: 3em;
-        text-align: left;
+      }
+      &:nth-child(3) {
+        opacity: 0.5;
+        &::before {
+          content: "/";
+        }
       }
     }
     &.center {
@@ -80,4 +77,11 @@
 
 .bar.low {
   background: var(--danger);
+}
+
+#vitals-encumlevel,
+#vitals-mindState {
+  .max {
+    display: none;
+  }
 }

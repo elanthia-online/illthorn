@@ -7,6 +7,7 @@
   padding: 0 0.5em 0 0;
   align-items: center;
   .prompt {
+    font-family: "MonoLisa", monospace;
     display: inline-block;
     text-align: right;
     font-size: 1.6em;
@@ -21,7 +22,7 @@
 }
 
 #cnc input {
-  font-family: "MonoLisa", system-ui, sans-serif;
+  font-family: "MonoLisa", monospace;
   position: absolute;
   left: 0;
   top: 0;

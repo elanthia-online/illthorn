@@ -4,4 +4,5 @@ module.exports = {
   kobold: "kobold",
   icemule: "icemule",
   onar: "onar",
+  ["raging-thrak"]: "raging-thrak",
 }

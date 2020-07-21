@@ -11,7 +11,7 @@ body {
 }
 ::-webkit-scrollbar-thumb {
   background-color: var(--info);
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 6px rgba(black, 0.5);
 }
 
 #feed-wrapper {
@@ -21,11 +21,11 @@ body {
 #app {
   display: grid;
   height: 100vh;
-  grid-template-columns: 6em var(--column-width) 1fr 0;
+  grid-template-columns: 6em var(--column-width, 16em) 1fr 0;
   overflow: hidden;
 }
 #app.right-panels-on {
-  grid-template-columns: 6em var(--column-width) 1fr var(
+  grid-template-columns: 6em var(--column-width, 16em) 1fr var(
       --column-width
     );
 }
@@ -51,5 +51,5 @@ body {
   max-height: 100vh;
 }
 #app.streams-on #main {
-  grid-auto-rows: 3em var(--stream-height) 1fr 4em;
+  grid-auto-rows: 3em var(--stream-height, 13em) 1fr 4em;
 }

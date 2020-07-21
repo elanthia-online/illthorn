@@ -7,15 +7,10 @@
   --info: #531a17;
 
   --ok: #bb5913;
-  --gentle-warn: #4a2a2a;
-  --warn: #6f1010;
-  --danger: #b50a0a;
+  --gentle-warn: #d6a013;
+  --warn: #fb5d2d;
+  --danger: #ff3b00;
 
-  --icon-size: 1em;
-
-  --column-width: 16em;
-
-  --stream-height: 13em;
   --stream-channel-color: #91d686;
 }
 
@@ -28,7 +23,6 @@
 }
 
 .panel {
-  font-family: "PTSerif", Serif;
   background: rgba(black, 0.5);
   border-radius: 6px;
   summary {
@@ -49,7 +43,6 @@
 .panel-list {
   li {
     padding: 0.2em;
-    text-shadow: 0 1px 1px rgba(black, 0.55);
     &:not(:last-child) {
       margin: 1px 0;
     }

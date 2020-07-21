@@ -13,9 +13,9 @@ $red: #d64e4e;
   --info: #484848;
 
   --ok: #396820;
-  --gentle-warn: rgb(122, 96, 28);
-  --warn: #784225;
-  --danger: #6f2232;
+  --gentle-warn: #{$orange};
+  --warn: #{$red};
+  --danger: #{$red};
 
   --icon-size: 1.4em;
 
@@ -26,11 +26,7 @@ $red: #d64e4e;
 }
 
 body {
-  font-family: "DutchMediaeval";
-}
-
-#main {
-  box-shadow: 0 35px 25px -8px black;
+  font-family: "DutchMediaeval", serif;
 }
 
 #sessions,
@@ -44,7 +40,7 @@ body {
   );
 }
 #hands {
-  font-family: "DutchMediaeval";
+  font-family: "DutchMediaeval", serif;
   border: 0;
 }
 .hand#left::before {
@@ -58,7 +54,7 @@ body {
 }
 
 .session-name {
-  font-family: "DutchMediaevalBook-Bold";
+  font-family: "DutchMediaevalBook-Bold", serif;
 }
 
 #app.streams-on .streams {
@@ -105,8 +101,8 @@ body {
   > div {
     position: relative;
     background: #191919;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
     overflow: hidden;
     padding: 0.6em;
   }
@@ -117,7 +113,7 @@ body {
     position: relative;
     font-size: 1.2em;
     background: #191919;
-    border-radius: 6px;
+    border-radius: 3px;
     border-bottom: 1px solid black;
     box-shadow: 0 1px 1px 0 #282323;
     position: relative;
@@ -128,18 +124,13 @@ body {
   &[open] > summary {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
   }
 }
 
 .panel-list {
   li {
-    padding: 0.4em 0.4em 0.2em 0.2em;
-    border-radius: 4px;
-    text-shadow: 0 1px 1px rgba(black, 0.55);
-    border: 1px solid #2e2b33;
-    background: linear-gradient(#25222d, #444);
     &:not(:last-child) {
       margin: 0 0 0.3em 0;
     }
@@ -206,32 +197,19 @@ details#vitals {
     border-bottom: 1px solid black;
     box-shadow: 0 1px 1px 0 #282323;
     position: relative;
-    padding-right: 100px;
-    padding-top: 20px;
+    font-size: 1.2em;
     .value {
       text-align: left;
       span:nth-child(1) {
-        position: absolute;
-        top: 0;
-        left: 0;
         font-family: "DutchMediaevalBook-Bold";
       }
       span:nth-child(2) {
-        min-width: 0;
-        font-size: 1.3em;
       }
       span:nth-child(3) {
-        font-size: 1.3em;
-        opacity: 0.5;
-        &::before {
-          content: "/";
-          margin: 0 0.1em;
-        }
       }
     }
     .bar {
-      position: relative;
-      height: 17px;
+      height: 8px;
     }
   }
 }
@@ -251,10 +229,6 @@ details#vitals {
 
 #vitals-encumlevel {
   @include title("Encumbrance");
-  .bar[style="width: 0%;"] {
-    @include barBG(#484848);
-    width: 100% !important;
-  }
 }
 #vitals-mindState {
   @include title("Mind");

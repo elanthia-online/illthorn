@@ -12,7 +12,7 @@ $red: #d64e4e;
 
   --info: #484848;
 
-  --ok: #396820;
+  --ok: #{$green};
   --gentle-warn: #{$orange};
   --warn: #{$red};
   --danger: #{$red};
@@ -22,7 +22,7 @@ $red: #d64e4e;
   --column-width: minmax(16em, 0.33fr);
 
   --stream-height: 13em;
-  --stream-channel-color: #91d686;
+  --stream-channel-color: #{$green};
 }
 
 body {
@@ -40,7 +40,6 @@ body {
   );
 }
 #hands {
-  font-family: "DutchMediaeval", serif;
   border: 0;
 }
 .hand#left::before {
@@ -104,7 +103,7 @@ body {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     overflow: hidden;
-    padding: 0.6em;
+    padding: 1em;
   }
   > summary {
     text-transform: capitalize;
@@ -173,7 +172,7 @@ body {
     content: $title;
     display: block;
     position: absolute;
-    top: -14px;
+    top: -10px;
     left: 0;
     font-size: 0.65em;
     text-transform: uppercase;
@@ -183,7 +182,7 @@ body {
 
 details#vitals {
   > div {
-    padding-top: 0;
+    padding-top: 0.5em;
   }
 }
 
@@ -194,12 +193,11 @@ details#vitals {
   > li#vitals-stamina {
     background: none;
     border: 0;
-    border-bottom: 1px solid black;
-    box-shadow: 0 1px 1px 0 #282323;
     position: relative;
     font-size: 1.2em;
     .value {
       text-align: left;
+      margin: 0 0 0.1em 0;
       span:nth-child(1) {
         font-family: "DutchMediaevalBook-Bold", serif;
       }

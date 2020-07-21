@@ -76,12 +76,6 @@
   background: var(--danger);
 }
 
-// Colors aren't really important here
-#vitals-nextLvlPB {
-  .bar {
-    filter: grayscale(100%);
-  }
-}
 #vitals-encumlevel,
 #vitals-mindState {
   .max {

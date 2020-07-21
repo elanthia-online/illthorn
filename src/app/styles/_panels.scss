@@ -22,6 +22,9 @@
       /* TODO: Strategy for focus styles */
       outline: 0;
     }
+    &:hover {
+      cursor: pointer;
+    }
   }
   ol {
     // max-height: 300px;

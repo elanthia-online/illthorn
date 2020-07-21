@@ -3,4 +3,5 @@ module.exports = {
   ["dark-king"]: "dark-king",
   kobold: "kobold",
   icemule: "icemule",
+  onar: "onar",
 }

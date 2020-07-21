@@ -4,15 +4,11 @@ const Bus = require("./bus")
 const Autodect = require("./autodetect")
 const Session = require("./session")
 const Macros = require("./macros")
-const CustomCSS = require("./storage/custom-css")
+//const CustomCSS = require("./storage/custom-css")
 const Theme = require("./storage/theme")
 const Settings = require("./settings")
 
 window.messages = window.messages || []
-
-CustomCSS.injectCSS().then(() =>
-  document.body.classList.remove("loading")
-)
 
 Bus.on(Bus.events.CHANGE_THEME, (data) => {
   Theme.changeTheme(data)

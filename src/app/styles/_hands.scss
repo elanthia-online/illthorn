@@ -1,8 +1,11 @@
+#hands-wrapper {
+  border-bottom: 3px solid var(--info);
+}
+
 #hands {
   display: flex;
   align-items: center;
   height: 100%;
-  border-bottom: 3px solid var(--info);
 }
 
 .hand {
@@ -15,11 +18,18 @@
   &::before {
     content: "";
     display: inline-block;
-    height: var(--icon-size);
-    width: var(--icon-size);
+    height: var(--icon-size, 1em);
+    width: var(--icon-size, 1em);
     -webkit-mask: url(../app/svg/hand.svg) no-repeat 50% 50%;
     -webkit-mask-size: cover;
     margin-right: 1em;
     background-color: var(--text-color);
+  }
+}
+
+.hand#spell {
+  &::before {
+    -webkit-mask: url(../app/svg/magic.svg) no-repeat 50%
+      50%;
   }
 }

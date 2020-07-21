@@ -1,10 +1,11 @@
-#app.streams-on .streams {
+#app.streams-on #streams-wrapper {
   border-bottom: 3px solid var(--info);
+  height: var(--stream-height);
 }
 
 .streams {
+  height: 100%;
   padding: 0 1em;
-  height: var(--stream-height);
 }
 .streams pre {
   margin: 0.2em 0;
@@ -13,4 +14,16 @@
   font-weight: bold;
   text-transform: uppercase;
   color: var(--stream-channel-color);
+  &.death {
+    color: var(--danger);
+  }
+}
+
+.stream-channel[data-stream-channel="[Dreavening]"] {
+  color: var(--warn);
+}
+.stream-channel[data-stream-channel="[PrivateTo]"],
+.stream-channel[data-stream-channel="[Private]"] {
+  background: var(--danger);
+  color: white;
 }

@@ -55,10 +55,8 @@ body {
   font-family: "DutchMediaevalBook-Bold", serif;
 }
 
-#app.streams-on .streams {
+#app.streams-on #streams-wrapper {
   border: 0;
-}
-#streams-wrapper {
   z-index: 1;
   position: relative;
   box-shadow: 0 20px 20px black;
@@ -67,8 +65,8 @@ body {
   font-size: 0.85em;
 }
 
-.feed,
-.streams {
+#feed-wrapper,
+#streams-wrapper {
   background: radial-gradient(
     60.67% 51% at 16.22% 84.45%,
     #2b2e3a 0%,

@@ -1,10 +1,10 @@
 #app.streams-on #streams-wrapper {
   border-bottom: 3px solid var(--info);
   height: var(--stream-height);
-  overflow: auto;
 }
 
 .streams {
+  height: 100%;
   padding: 0 1em;
 }
 .streams pre {

@@ -4,7 +4,6 @@ const Panel = require("./panel")
 const Lens = require("../../../util/lens")
 const Progress = require("../progress")
 const Attrs = Lens.of("attrs")
-const Spells = require("../../../storage/spells.json")
 
 module.exports = class ActiveSpells {
   static MAX_DURATION = 4 * 60 + 10
@@ -24,25 +23,11 @@ module.exports = class ActiveSpells {
 
   static spell(spell) {
     const percent = ActiveSpells.percent_remaining(spell)
-    //check
-    var spelldetail
-    switch (/^\d+$/.test(spell.name)) {
-      case true:
-        spelldetail = Spells.find(
-          (obj) => obj.number == spell.name
-        )
-        break
-      case false:
-        spelldetail = Spells.find(
-          (obj) => obj.name == spell.name
-        )
-        break
-    }
+
     return m(
       "li",
       {
         ["data-spell-name"]: spell.name,
-        ["data-spell-type"]: spelldetail.type,
         class: `${Progress.classify(percent + 20)}`,
       },
       [
@@ -50,10 +35,7 @@ module.exports = class ActiveSpells {
           style: { width: percent + "%" },
         }),
         m(".value", [
-          m(
-            "span.spell",
-            spelldetail.number + "/" + spelldetail.name
-          ),
+          m("span.spell", spell.name),
           m("span.remaining", spell.remaining),
         ]),
       ]

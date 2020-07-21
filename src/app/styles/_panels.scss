@@ -82,3 +82,9 @@
     filter: grayscale(100%);
   }
 }
+#vitals-encumlevel,
+#vitals-mindState {
+  .max {
+    display: none;
+  }
+}

@@ -33,7 +33,6 @@ $yellow: #ffd60a; // hsl(50, 100%, 52%)
 
   --column-width: minmax(16em, 0.33fr);
 
-  --stream-height: 13em;
   --stream-channel-color: #91d686;
 }
 
@@ -48,6 +47,7 @@ body {
 }
 .panels {
   background: rgba(black, 0.7);
+  padding: 20px;
 }
 #hands-wrapper {
   background: rgba(black, 0.6);
@@ -63,37 +63,32 @@ body {
 #panels-left {
   border-right-color: rgba(black, 0.5);
 }
-
-.panels {
-  padding: 20px;
+#app.streams-on #streams-wrapper,
+#hands-wrapper {
+  border-bottom-color: rgba(black, 0.5);
 }
 
 .panel {
   border: 5px solid transparent;
   padding: 5px;
   margin: 0 0 20px 0;
-  // background: rgba(black, 0.85);
-  // background-clip: content-box;
   border-image: url(../../app/img/wooden-border.png) 25 /
     20px round;
-  // border-image-width: 100;
-  // border-image-slice: 100;
-  // border-image-repeat: repeat;
   > summary {
     background: none;
     font-family: "DutchMediaevalBook-Bold";
     font-weight: bold;
-    padding: 1em 1em 0.7em;
+    padding: 1em;
     font-size: 1.1em;
     letter-spacing: 0.04em;
     margin: 0 0 0.45em 0;
     border-radius: 3px;
     background: linear-gradient(
       to bottom,
-      rgba(255, 0, 16, 0.6),
-      rgba(103, 10, 0, 0.7)
+      rgba(212, 156, 0, 0.5),
+      rgba(64, 44, 0, 0.6)
     );
-    box-shadow: inset 0 2px 4px rgba(black, 0.5);
+    box-shadow: inset 0px -4px 6px 0px rgba(black, 0.5);
   }
 }
 
@@ -108,31 +103,14 @@ body {
   }
 }
 
-// .injury.injury {
-//   background: none;
-//   border: 0;
-//   border-bottom: 1px solid black;
-//   box-shadow: 0 1px 1px 0 #282323;
-//   border-radius: 0;
-//   padding-bottom: 0.5em;
-// }
-// .injury.severity-1 {
-//   color: #ff7c7c;
-// }
 .injury.severity-2 {
   color: #ff3333;
   font-weight: bold;
-  .value::before {
-    content: "🩸";
-  }
 }
 .injury.severity-3 {
   color: #ff0000;
   text-shadow: 0 0 16px red;
   font-weight: bold;
-  .value::before {
-    content: "🩸";
-  }
 }
 
 a.monster {

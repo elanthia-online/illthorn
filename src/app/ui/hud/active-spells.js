@@ -31,13 +31,13 @@ module.exports = class ActiveSpells {
         class: `${Progress.classify(percent + 20)}`,
       },
       [
-        m(`.bar.${Progress.classify(percent + 20)}`, {
-          style: { width: percent + "%" },
-        }),
         m(".value", [
           m("span.spell", spell.name),
           m("span.remaining", spell.remaining),
         ]),
+        m(`.bar.${Progress.classify(percent + 20)}`, {
+          style: { width: percent + "%" },
+        }),
       ]
     )
   }

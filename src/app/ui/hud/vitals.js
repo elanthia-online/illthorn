@@ -89,13 +89,13 @@ module.exports = class Vitals {
 
     return m(`li#vitals-${attrs.id}`, { key: attrs.id }, [
       m(
-        `.bar.${bar_klass}`,
-        Lens.put({}, "style.width", attrs.percent + "%")
-      ),
-      m(
         `.value.${attrs.text.length > 1 ? "" : "center"}`,
         attrs.text.map(span),
         [m("span.max.2", attrs.max <= 0 ? "" : attrs.max)]
+      ),
+      m(
+        `.bar.${bar_klass}`,
+        Lens.put({}, "style.width", attrs.percent + "%")
       ),
     ])
   }

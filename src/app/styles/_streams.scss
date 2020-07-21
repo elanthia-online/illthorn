@@ -13,4 +13,16 @@
   font-weight: bold;
   text-transform: uppercase;
   color: var(--stream-channel-color);
+  &.death {
+    color: var(--danger);
+  }
+}
+
+.stream-channel[data-stream-channel="[Dreavening]"] {
+  color: var(--warn);
+}
+.stream-channel[data-stream-channel="[PrivateTo]"],
+.stream-channel[data-stream-channel="[Private]"] {
+  background: var(--danger);
+  color: white;
 }

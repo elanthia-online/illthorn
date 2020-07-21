@@ -7,11 +7,11 @@
 }
 
 .severity-1 {
-  background: var(--gentle-warn);
+  color: var(--gentle-warn);
 }
 .severity-2 {
-  background: var(--warn);
+  color: var(--warn);
 }
 .severity-3 {
-  background: var(--danger);
+  color: var(--danger);
 }

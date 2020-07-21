@@ -23,3 +23,10 @@
     background-color: var(--text-color);
   }
 }
+
+.hand#spell {
+  &::before {
+    -webkit-mask: url(../app/svg/magic.svg) no-repeat 50%
+      50%;
+  }
+}

@@ -143,7 +143,7 @@ body {
     }
   }
   .value span:nth-child(2) {
-    font-family: "DutchMediaevalBook-Bold";
+    font-family: "DutchMediaevalBook-Bold", serif;
   }
   .bar {
     border-radius: 4px;
@@ -201,7 +201,7 @@ details#vitals {
     .value {
       text-align: left;
       span:nth-child(1) {
-        font-family: "DutchMediaevalBook-Bold";
+        font-family: "DutchMediaevalBook-Bold", serif;
       }
       span:nth-child(2) {
       }

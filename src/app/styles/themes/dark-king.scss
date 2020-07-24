@@ -205,6 +205,21 @@ details#vitals {
     }
     .bar {
       height: 8px;
+      &.low {
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -1em;
+          width: calc(100% + 2em);
+          height: 100%;
+          background: radial-gradient(
+            rgba($red, 0.6),
+            rgba($red, 0)
+          );
+          pointer-events: none;
+        }
+      }
     }
   }
 }

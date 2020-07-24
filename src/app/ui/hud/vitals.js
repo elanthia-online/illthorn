@@ -87,17 +87,19 @@ module.exports = class Vitals {
         ? Progress.classify_down(attrs.percent)
         : Progress.classify(attrs.percent)
 
-    return m(`li#vitals-${attrs.id}`, { key: attrs.id }, [
-      m(
-        `.value.${attrs.text.length > 1 ? "" : "center"}`,
-        attrs.text.map(span),
-        [m("span.max.2", attrs.max <= 0 ? "" : attrs.max)]
-      ),
-      m(
-        `.bar.${bar_klass}`,
-        Lens.put({}, "style.width", attrs.percent + "%")
-      ),
-    ])
+    const [text, value] = attrs.text
+
+    return m(
+      `li#vitals-${attrs.id}.${bar_klass}.vital`,
+      { key: attrs.id },
+      [
+        text && span(text, ".label"),
+        value && m("span.value", value),
+        isNaN(attrs.max)
+          ? void 0
+          : m("span.max", attrs.max),
+      ]
+    )
   }
 
   static bars(state) {

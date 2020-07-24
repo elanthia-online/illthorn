@@ -10,7 +10,8 @@ const span = (text, klass = "") =>
   m(`span.${klass}`, (text || "").toString().toLowerCase())
 
 module.exports = class Vitals {
-  static PATTERN = /^(\w+) (\d+)\/(\d+)/
+  // https://rubular.com/r/ydjHinB5kdvw8l
+  static PATTERN = /^(\w+) ([-\d]+)\/(\d+)/
 
   static SORT_ORDER = [
     "spirit",
@@ -30,13 +31,7 @@ module.exports = class Vitals {
   }
 
   static parse(attrs) {
-    /* attrs:
-    {
-      id: "health"
-      text: "health 170/170"
-      value: "0"
-    }
-    */
+    console.log(attrs)
     const percent = attrs.width
       ? parseInt(attrs.value, 10)
       : Progress.parse_percentage({
@@ -81,9 +76,7 @@ module.exports = class Vitals {
 
   static show(attrs) {
     const bar_klass =
-      attrs.id == "encumlevel" ||
-      attrs.id == "mindState" ||
-      attrs.id == "nextLvlPB"
+      attrs.id == "encumlevel" || attrs.id == "mindState"
         ? Progress.classify_down(attrs.percent)
         : Progress.classify(attrs.percent)
 

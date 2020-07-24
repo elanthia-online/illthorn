@@ -15,6 +15,7 @@
   --text-color: #f8f8f2;
   --info: var(--charcoal);
   --warn: var(--red);
+  --gentle-warn: var(--orange);
   --ok: var(--green);
 
   --stream-height: 10em;
@@ -41,10 +42,6 @@ body {
 }
 .panel ol li {
   margin: 0 0 1px 0;
-}
-
-.panel li {
-  font-size: 0.9em;
 }
 
 #hands-wrapper {
@@ -74,11 +71,38 @@ body {
 
 .panel ol li {
   display: flex;
-  flex-direction: row-reverse;
   align-items: center;
 }
 
-.panel .bar {
-  position: relative;
-  height: 1em;
+.vital {
+  width: 100%;
+}
+
+.vital span {
+  display: block;
+}
+
+.vital .label {
+  flex: 1;
+  text-align: right;
+  max-width: 50%;
+  margin-right: 2em;
+  font-weight: bold;
+}
+
+.vital .max:before {
+  content: "/";
+  margin: 0 0.2em;
+}
+
+.vital.high .label {
+  color: var(--text-color);
+}
+
+.vital.medium .label {
+  color: var(--gentle-warn);
+}
+
+.vital.low .label {
+  color: var(--warn);
 }

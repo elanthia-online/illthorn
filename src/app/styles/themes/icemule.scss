@@ -58,9 +58,7 @@ pre {
     rgba(76, 86, 106, 1) 100%
   );
 }
-.panel li {
-  box-shadow: inset 3px 3px 5px -5px rgba(0, 0, 0, 1);
-}
+
 .panel {
   padding: 4px;
   margin: 0 0 20px 0;
@@ -78,9 +76,6 @@ pre {
   background: linear-gradient(to bottom, #332f2f, #111);
   margin: 0 0 4px 0;
 }
-.panel li {
-  margin: 0 0 1px 0;
-}
 
 //Vitals
 
@@ -88,7 +83,26 @@ pre {
   font-size: 0.9rem;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overvlow: hidden;
+  overflow: hidden;
+  border-radius: 3.5px;
+  background: rgb(48, 53, 66);
+  background: linear-gradient(
+    160deg,
+    rgba(48, 53, 66, 1) 0%,
+    rgba(56, 64, 79, 1) 50%,
+    rgba(64, 72, 89, 1) 100%
+  );
+  box-shadow: inset 3px 3px 5px -5px rgba(0, 0, 0, 1);
+  div.value {
+    z-index: 100;
+    padding: 0 0.3rem 0.2rem 0.3rem;
+  }
+  div.bar {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 #vitals .value span:first-child {
   text-transform: capitalize;
@@ -213,15 +227,26 @@ pre {
 }
 
 //Injuries
-#injuries li {
+#injuries.panel li {
   font-size: 0.8rem;
   text-transform: capitalize;
+  box-shadow: none;
+  &.severity-1 {
+    border: 1px solid var(--gentle-warn);
+  }
+  &.severity-2 {
+    border: 1px solid var(--warn);
+  }
+  &.severity-3 {
+    border: 1px solid var(--danger);
+  }
   .value {
     span {
       text-overflow: ellipsis;
-      text-align: left;
+      text-align: center;
       overflow: hidden;
       white-space: nowrap;
+      padding-bottom: 0.2rem;
     }
     span:nth-child(2) {
       display: none;
@@ -234,19 +259,12 @@ pre {
 #active-spells div.bar {
   border-radius: 3.5px;
 }
-#vitals li,
-#active-spells li {
-  border-radius: 3.5px;
-  background: rgb(48, 53, 66);
-  background: linear-gradient(
-    160deg,
-    rgba(48, 53, 66, 1) 0%,
-    rgba(56, 64, 79, 1) 50%,
-    rgba(64, 72, 89, 1) 100%
-  );
-}
 #active-spells li {
   font-size: 0.8rem;
+  padding: 0.1rem 0.2rem;
+  &:nth-child(even) {
+    background-color: rgba(#e5e9f0, 0.1);
+  }
 }
 span.spell {
   text-align: left;
@@ -255,6 +273,7 @@ span.spell {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  padding-right: 0.3rem;
 }
 .spells.scroll::-webkit-scrollbar-thumb {
   background-color: rgba(79, 98, 103, 0.35);
@@ -307,8 +326,7 @@ details.panel summary {
   z-index: 100;
   background-color: #2e3440;
   border-bottom: 3px solid var(--info);
-  overflow: auto;
-  overflow-y: scroll;
+  overflow: hidden;
   resize: vertical;
 }
 #streams-wrapper::-webkit-resizer {
@@ -319,6 +337,9 @@ details.panel summary {
 }
 .streams.scroll {
   height: 100%;
+  overflow-y: scroll;
+  padding: 0;
+  margin: 0 1rem;
 }
 .streams.scroll::-webkit-scrollbar,
 .streams-wrapper::-webkit-scrollbar {
@@ -330,8 +351,10 @@ details.panel summary {
 .stream-channel[data-stream-channel="[PrivateTo]"],
 .stream-channel[data-stream-channel="[Private]"] {
   color: #a3be8c;
+  background-color: nonem;
 }
-.stream-channel[data-stream-channel="[Merchant]"] {
+.stream-channel[data-stream-channel="[Merchant]"],
+.stream-channel[data-stream-channel="[Dreavening]"] {
   color: #ebcb8b;
 }
 

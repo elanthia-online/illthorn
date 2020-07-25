@@ -10,7 +10,8 @@ const span = (text, klass = "") =>
   m(`span.${klass}`, (text || "").toString().toLowerCase())
 
 module.exports = class Vitals {
-  static PATTERN = /^(\w+) (\d+)\/(\d+)/
+  // https://rubular.com/r/ydjHinB5kdvw8l
+  static PATTERN = /^(\w+) ([-\d]+)\/(\d+)/
 
   static SORT_ORDER = [
     "spirit",
@@ -30,13 +31,6 @@ module.exports = class Vitals {
   }
 
   static parse(attrs) {
-    /* attrs:
-    {
-      id: "health"
-      text: "health 170/170"
-      value: "0"
-    }
-    */
     const percent = attrs.width
       ? parseInt(attrs.value, 10)
       : Progress.parse_percentage({
@@ -81,23 +75,23 @@ module.exports = class Vitals {
 
   static show(attrs) {
     const bar_klass =
-      attrs.id == "encumlevel" ||
-      attrs.id == "mindState" ||
-      attrs.id == "nextLvlPB"
+      attrs.id == "encumlevel" || attrs.id == "mindState"
         ? Progress.classify_down(attrs.percent)
         : Progress.classify(attrs.percent)
 
-    return m(`li#vitals-${attrs.id}`, { key: attrs.id }, [
-      m(
-        `.value.${attrs.text.length > 1 ? "" : "center"}`,
-        attrs.text.map(span),
-        [m("span.max.2", attrs.max <= 0 ? "" : attrs.max)]
-      ),
-      m(
-        `.bar.${bar_klass}`,
-        Lens.put({}, "style.width", attrs.percent + "%")
-      ),
-    ])
+    const [text, value] = attrs.text
+
+    return m(
+      `li#vitals-${attrs.id}.${bar_klass}.vital`,
+      { key: attrs.id },
+      [
+        text && span(text, ".label"),
+        value && m("span.value", value),
+        isNaN(attrs.max)
+          ? void 0
+          : m("span.max", attrs.max),
+      ]
+    )
   }
 
   static bars(state) {

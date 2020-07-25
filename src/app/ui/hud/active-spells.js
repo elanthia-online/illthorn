@@ -35,9 +35,6 @@ module.exports = class ActiveSpells {
           m("span.spell", spell.name),
           m("span.remaining", spell.remaining),
         ]),
-        m(`.bar.${Progress.classify(percent + 20)}`, {
-          style: { width: percent + "%" },
-        }),
       ]
     )
   }

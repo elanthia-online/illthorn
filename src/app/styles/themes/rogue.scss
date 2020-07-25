@@ -1,0 +1,88 @@
+:root {
+  --black: #232323;
+  --yellow: #e6db74;
+  --orange: #fd971f;
+  --red: #f92672;
+  --magenta: #fd5ff0;
+  --violet: #ae81ff;
+  --blue: #66d9ef;
+  --cyan: #a1efe4;
+  --green: #a6e22e;
+  --charcoal: #36454f;
+
+  // map our palette to illthorn vars
+  --main-bg-color: var(--black);
+  --text-color: #f8f8f2;
+  --info: var(--charcoal);
+  --warn: var(--red);
+  --gentle-warn: var(--orange);
+  --ok: var(--green);
+
+  --stream-height: 10em;
+
+  --icon-size: 1em;
+  --base-padding: 3em;
+
+  --column-width: 20em;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+}
+
+.panel {
+  padding: 0px;
+  margin: 10px;
+  border-bottom: 0px;
+  h3 {
+    border-bottom: 1px solid var(--charcoal);
+    background: var(--charcoal);
+    margin: 0 0 3px 0;
+  }
+  .value {
+    margin-left: 0;
+  }
+}
+
+#hands-wrapper {
+  border-color: var(--info);
+}
+
+#sessions li {
+  border-radius: 0px;
+  &.on {
+    box-shadow: 0 0 0 2px var(--ok);
+  }
+  &.off {
+    border-color: var(--info);
+  }
+}
+
+.roomName {
+  color: var(--cyan);
+}
+
+#compass ul li.on {
+  background: none;
+  color: var(--green);
+}
+
+.vital {
+  width: 100%;
+  .label {
+    flex: 1;
+    text-align: right;
+    max-width: 50%;
+    margin-right: 2em;
+    font-weight: bold;
+  }
+  &.high .label {
+    color: var(--text-color);
+  }
+  &.medium .label {
+    color: var(--gentle-warn);
+  }
+  &.low .label {
+    color: var(--warn);
+  }
+}

@@ -130,19 +130,18 @@ body {
     &:not(:last-child) {
       margin: 0 0 0.3em 0;
     }
+    .label {
+      &::first-letter {
+        text-transform: capitalize;
+      }
+    }
   }
   .value span:nth-child(1) {
     white-space: nowrap;
     opacity: 0.9;
-    &::first-letter {
-      text-transform: capitalize;
-    }
   }
   .value span:nth-child(2) {
     font-family: "DutchMediaevalBook-Bold", serif;
-  }
-  .bar {
-    border-radius: 4px;
   }
 }
 
@@ -155,15 +154,22 @@ body {
 }
 
 @mixin panelRow($color) {
-  .bar {
-    @include barBG($color);
-  }
-  .value span:nth-child(1) {
+  background: linear-gradient(
+    5deg,
+    rgba($color, 0.2),
+    rgba($color, 0)
+  );
+  margin-left: -1em;
+  width: calc(100% + 2em);
+  padding: 0.5em 1em;
+  .label,
+  .value {
     color: $color;
   }
 }
 
 @mixin title($title) {
+  position: relative;
   margin-top: 28px;
   &::before {
     content: $title;
@@ -188,23 +194,11 @@ details#vitals {
   > li#vitals-health,
   > li#vitals-mana,
   > li#vitals-stamina {
-    background: none;
     border: 0;
     position: relative;
     font-size: 1.2em;
-    .value {
-      text-align: left;
-      margin: 0 0 0.1em 0;
-      span:nth-child(1) {
-        font-family: "DutchMediaevalBook-Bold", serif;
-      }
-      span:nth-child(2) {
-      }
-      span:nth-child(3) {
-      }
-    }
-    .bar {
-      height: 8px;
+    .label {
+      font-family: "DutchMediaevalBook-Bold", serif;
     }
   }
 }
@@ -233,6 +227,11 @@ details#vitals {
 }
 #vitals-stance {
   @include title("Stance");
+  .stance-title {
+    &::first-letter {
+      text-transform: capitalize;
+    }
+  }
 }
 
 .spells {

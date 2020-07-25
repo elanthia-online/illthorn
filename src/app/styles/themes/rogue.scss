@@ -76,14 +76,13 @@ body {
     margin-right: 2em;
     font-weight: bold;
   }
-}
-
-.vital.high .label {
-  color: var(--text-color);
-}
-.vital.medium .label {
-  color: var(--gentle-warn);
-}
-.vital.low .label {
-  color: var(--warn);
+  &.high .label {
+    color: var(--text-color);
+  }
+  &.medium .label {
+    color: var(--gentle-warn);
+  }
+  &.low .label {
+    color: var(--warn);
+  }
 }

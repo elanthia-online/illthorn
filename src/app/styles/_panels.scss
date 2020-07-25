@@ -10,8 +10,9 @@
   position: relative;
   padding: 4px;
   margin: 10px;
-  overflow-x: hidden;
-  overflow-y: auto;
+  // If we start saving panel heights to storage, let's do this
+  // overflow-x: hidden;
+  // overflow-y: auto;
   resize: vertical;
   summary {
     margin: 0;
@@ -73,5 +74,27 @@
 #vitals-mindState {
   .max {
     display: none;
+  }
+}
+
+#vitals-stance {
+  .stance-title {
+    padding-right: 1em;
+    margin-right: auto;
+  }
+  .stance-percent {
+  }
+}
+
+#active-spells {
+  .value {
+    margin-left: 0;
+    display: flex;
+    width: 100%;
+    .spell {
+      font-weight: normal;
+      padding-right: 1em;
+      margin-right: auto;
+    }
   }
 }

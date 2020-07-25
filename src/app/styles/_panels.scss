@@ -10,7 +10,8 @@
   position: relative;
   padding: 4px;
   margin: 10px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   resize: vertical;
   summary {
     margin: 0;
@@ -29,31 +30,20 @@
   }
   li {
     padding: 0.4em 0 0.2em;
-    position: relative;
-  }
-  .bar {
-    height: 2px;
+    display: flex;
   }
   .value {
-    position: relative;
-    display: flex;
-    span {
-      display: inline-block;
-      &:nth-child(1) {
-        text-transform: capitalize;
-        flex: 1;
-        margin-right: auto;
-      }
-      &:nth-child(2) {
-        font-weight: bold;
-      }
-      &:nth-child(3) {
-        opacity: 0.5;
-        &::before {
-          content: "/";
-        }
-      }
+    margin-left: auto;
+    font-weight: bold;
+  }
+  .max {
+    opacity: 0.5;
+    &::before {
+      content: "/";
+      margin: 0 0.2em;
     }
+  }
+  .value {
     &.center {
       text-align: center;
       span {

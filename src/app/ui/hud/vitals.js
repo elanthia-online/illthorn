@@ -31,7 +31,6 @@ module.exports = class Vitals {
   }
 
   static parse(attrs) {
-    console.log(attrs)
     const percent = attrs.width
       ? parseInt(attrs.value, 10)
       : Progress.parse_percentage({

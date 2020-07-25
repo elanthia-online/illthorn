@@ -17,10 +17,6 @@ module.exports = class Progress {
       )
     }
 
-    if (bar.id == "encumlevel") {
-      // console.log(bar)
-    }
-
     return parseInt(Lens.get(bar, "attrs.value", 0), 10)
   }
 
@@ -43,22 +39,5 @@ module.exports = class Progress {
         " " +
         percent
     )
-  }
-
-  view({ attrs }) {
-    const bar = attrs.bar || {}
-    const percent =
-      "percent" in attrs
-        ? attrs.percent
-        : Progress.parse_percentage(bar)
-    const text =
-      "text" in attrs ? attrs.text : Progress.text(bar)
-
-    return m(`li#${bar.id}`, [
-      m(`.bar.${Progress.classify(percent)}`, {
-        style: { width: percent.toString() + "%" },
-      }),
-      m(".value", text),
-    ])
   }
 }

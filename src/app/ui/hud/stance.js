@@ -19,9 +19,9 @@ module.exports = class Stance {
 
     const [_, state, percent] = Stance.parse(stance)
 
-    return m("li#vitals-stance", [
-      m("span.stance-title", state),
-      m("span.stance-percent", percent + "%"),
+    return m(`li#vitals-stance.vital.${state}`, [
+      m("span.stance-title.label", state),
+      m("span.stance-percent.value", percent + "%"),
     ])
   }
 }

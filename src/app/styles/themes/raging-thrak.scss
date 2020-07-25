@@ -8,26 +8,10 @@ $yellow: #ffd60a; // hsl(50, 100%, 52%)
 
   --info: #484848;
 
-  --ok: linear-gradient(
-    to bottom,
-    rgba(87, 132, 0, 0.2),
-    rgba(0, 64, 0, 0.5)
-  );
-  --gentle-warn: linear-gradient(
-    to bottom,
-    hsla(50, 100%, 52%, 0.2),
-    hsla(50, 100%, 52%, 0.5)
-  );
-  --warn: linear-gradient(
-    to bottom,
-    rgba(255, 42, 42, 0.4),
-    rgba(216, 6, 6, 0.7)
-  );
-  --danger: linear-gradient(
-    to bottom,
-    rgba(255, 42, 42, 0.6),
-    rgba(216, 6, 6, 0.9)
-  );
+  --ok: white;
+  --gentle-warn: #f7f012;
+  --warn: #ff5402;
+  --danger: #ff0000;
 
   --icon-size: 1em;
 
@@ -58,7 +42,7 @@ body {
 }
 
 #hands-wrapper {
-  background: rgba(black, 0.8);
+  background: rgba(black, 0.5);
   grid-row: 3;
 }
 #streams-wrapper,

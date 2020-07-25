@@ -29,7 +29,7 @@ $yellow: #ffd60a; // hsl(50, 100%, 52%)
     rgba(216, 6, 6, 0.9)
   );
 
-  --icon-size: 1.4em;
+  --icon-size: 1em;
 
   --column-width: minmax(16em, 0.33fr);
 
@@ -42,35 +42,53 @@ body {
   font-family: "DutchMediaeval";
 }
 
-#sessions {
+#main {
+  grid-auto-rows: 0 1fr 2em 4em;
+}
+#app.streams-on #main {
+  grid-auto-rows: var(--stream-height, 13em) 1fr 2em 4em;
+}
+
+#sessions,
+.panels {
   background: rgba(black, 0.5);
 }
 .panels {
-  background: rgba(black, 0.7);
-  padding: 20px;
+  padding: 1em;
 }
+
 #hands-wrapper {
-  background: rgba(black, 0.6);
+  background: rgba(black, 0.8);
+  grid-row: 3;
 }
 #streams-wrapper,
 #feed-wrapper {
+  background: rgba(black, 0.5);
+  padding: 1em 1em 1em 0;
+}
+#streams-wrapper {
+  border: 0;
+  padding-bottom: 0;
+}
+.streams,
+.feed {
+  border: 3px solid black;
+  border-image: url(../../app/img/wooden-border.png) 25 /
+    20px round;
   background: rgba(black, 0.9);
 }
 #cli-wrapper {
-  background: rgba(black, 0.8);
+  background: rgba(black, 0.7);
 }
 
 #panels-left {
-  border-right-color: rgba(black, 0.5);
-}
-#app.streams-on #streams-wrapper,
-#hands-wrapper {
-  border-bottom-color: rgba(black, 0.5);
+  border-right: 0;
 }
 
 .panel {
+  background: rgba(black, 0.5);
   border: 5px solid transparent;
-  padding: 5px;
+  padding: 0.75em;
   margin: 0 0 20px 0;
   border-image: url(../../app/img/wooden-border.png) 25 /
     20px round;
@@ -97,7 +115,7 @@ body {
     margin: 0 0 1px 0;
     border-radius: 3px;
     overflow: hidden;
-    .value span:nth-child(2) {
+    .value {
       font-family: "DutchMediaevalBook-Bold";
     }
   }

@@ -73,8 +73,13 @@ body {
   }
 }
 
+.label {
+  text-transform: capitalize;
+}
+
 .panel {
   padding: 1px;
+  // Gradient border around panels
   &::before {
     content: "";
     position: absolute;
@@ -113,27 +118,6 @@ body {
     border-bottom-right-radius: 0;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
-  }
-}
-
-.panel-list {
-  li {
-    &:not(:last-child) {
-      margin: 0 0 0.3em 0;
-    }
-  }
-  .value span:nth-child(1) {
-    white-space: nowrap;
-    opacity: 0.9;
-    &::first-letter {
-      text-transform: capitalize;
-    }
-  }
-  .value span:nth-child(2) {
-    font-family: "DutchMediaevalBook-Bold", serif;
-  }
-  .bar {
-    border-radius: 4px;
   }
 }
 
@@ -232,6 +216,8 @@ li#vitals-stamina {
 
 .spells {
   li {
+    border-bottom: 1px solid black;
+    box-shadow: 0 1px 1px 0 #282323;
     .value {
       display: grid;
       grid-template-columns: 1fr 45px;
@@ -259,7 +245,8 @@ li#vitals-stamina {
   border-radius: 0;
   padding-bottom: 0.5em;
 }
-.injury.severity-1 .scar.severity-1 {
+.injury.severity-1,
+.scar.severity-1 {
   color: #ff7c7c;
 }
 .injury.severity-2 {

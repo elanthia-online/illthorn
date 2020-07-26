@@ -1,16 +1,12 @@
 #panels-left {
   border-right: var(--border-width, 3px) solid var(--info);
 }
-#panels-right {
-  border-left: var(--border-width, 3px) solid var(--info);
-}
 
 .panel {
   font-size: 14px;
   position: relative;
   padding: 4px;
-  overflow: hidden;
-  margin: 1em;
+  margin: 10px;
   // If we start saving panel heights to storage, let's do this
   // overflow-x: hidden;
   // overflow-y: auto;
@@ -26,36 +22,28 @@
       /* TODO: Strategy for focus styles */
       outline: 0;
     }
+    &:hover {
+      cursor: pointer;
+    }
   }
   li {
-    padding: 0.4em 0 0.2em;
     position: relative;
+    padding: 0.4em 0 0.2em;
     display: flex;
     align-items: center;
   }
-  .bar {
-    height: 2px;
+  .value {
+    margin-left: auto;
+    font-weight: bold;
+  }
+  .max {
+    opacity: 0.5;
+    &::before {
+      content: "/";
+      margin: 0 0.2em;
+    }
   }
   .value {
-    position: relative;
-    display: flex;
-    span {
-      display: inline-block;
-      &:nth-child(1) {
-        text-transform: capitalize;
-        flex: 1;
-        margin-right: auto;
-      }
-      &:nth-child(2) {
-        font-weight: bold;
-      }
-      &:nth-child(3) {
-        opacity: 0.5;
-        &::before {
-          content: "/";
-        }
-      }
-    }
     &.center {
       text-align: center;
       span {
@@ -69,21 +57,47 @@
   }
 }
 
-.bar.high {
-  background: var(--ok);
+.high .label {
+  color: var(--ok);
 }
 
-.bar.medium {
-  background: var(--warn);
+.medium .label {
+  color: var(--warn);
 }
 
-.bar.low {
-  background: var(--danger);
+.low .label {
+  color: var(--danger);
+  font-weight: bold;
 }
 
 #vitals-encumlevel,
 #vitals-mindState {
   .max {
     display: none;
+  }
+}
+
+.injury-name {
+  padding-right: 1em;
+  margin-right: auto;
+}
+
+#vitals-nextLvlPB {
+  text-align: center;
+  .label {
+    color: white;
+  }
+}
+
+#active-spells {
+  .value {
+    margin-left: 0;
+    display: flex;
+    width: 100%;
+    .spell {
+      font-weight: normal;
+      padding-right: 1em;
+      margin-right: auto;
+    }
   }
 }

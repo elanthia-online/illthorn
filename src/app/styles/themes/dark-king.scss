@@ -18,6 +18,8 @@ $red: #d64e4e;
   --danger: #{$red};
 
   --icon-size: 1.4em;
+  --border-width: 0;
+  --stream-font-size: 13px;
 
   --column-width: minmax(16em, 0.33fr);
 
@@ -29,18 +31,17 @@ body {
 }
 
 #sessions,
-.panels,
+#panels-left,
+#panels-right,
 #hands-wrapper,
 #cli-wrapper {
   background: linear-gradient(
     261.75deg,
     #202224 35.86%,
-    #3e3c42 77.44%
+    #2b2e3a 77.44%
   );
 }
-#hands {
-  border: 0;
-}
+
 .hand#left::before {
   transform: rotate(22deg) scaleX(-1);
 }
@@ -55,35 +56,25 @@ body {
   font-family: "DutchMediaevalBook-Bold", serif;
 }
 
-#app.streams-on #streams-wrapper {
-  border: 0;
-  z-index: 1;
+#feed-wrapper {
   position: relative;
-  box-shadow: 0 20px 20px black;
-}
-.stream {
-  font-size: 0.85em;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(black, 1),
+      rgba(black, 0)
+    );
+    height: 20px;
+  }
 }
 
-#feed-wrapper,
-#streams-wrapper {
-  background: radial-gradient(
-    60.67% 51% at 16.22% 84.45%,
-    #2b2e3a 0%,
-    #0a0606 100%
-  );
-}
-
-.panels {
-  border: 0;
-}
-#panels-left {
-  border: 0;
-}
 .panel {
-  position: relative;
   padding: 1px;
-  margin: 1em;
   &::before {
     content: "";
     position: absolute;
@@ -97,8 +88,8 @@ body {
   > div {
     position: relative;
     background: #191919;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
     overflow: hidden;
     padding: 1em;
   }
@@ -109,19 +100,19 @@ body {
     position: relative;
     font-size: 1.2em;
     background: #191919;
-    border-radius: 3px;
+    border-radius: 6px;
     border-bottom: 1px solid black;
-    box-shadow: 0 1px 1px 0 #282323;
     position: relative;
     z-index: 1;
     padding: 0.8em 0.5em 0.7em 0.8em;
     margin: 0;
   }
   &[open] > summary {
+    box-shadow: 0 1px 1px 0 #282323;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
   }
 }
 
@@ -146,19 +137,36 @@ body {
   }
 }
 
-@mixin barBG($color) {
-  background: linear-gradient(
-    to bottom,
-    $color,
-    darken($color, 33%)
-  );
-}
-
 @mixin panelRow($color) {
-  .bar {
-    @include barBG($color);
+  background: linear-gradient(
+    5deg,
+    rgba($color, 0.2),
+    rgba($color, 0)
+  );
+  margin-left: -1em;
+  width: calc(100% + 2em);
+  padding: 0.7em 1em 0.5em;
+
+  &.low {
+    background: linear-gradient(
+        5deg,
+        rgba($color, 0.2),
+        rgba($color, 0)
+      ),
+      radial-gradient(
+        ellipse at top right,
+        rgba(red, 0.5),
+        rgba(red, 0)
+      );
+    &::before {
+      content: "⚠️";
+      display: inline-block;
+      line-height: 1;
+    }
   }
-  .value span:nth-child(1) {
+
+  .label,
+  .value {
     color: $color;
   }
 }
@@ -177,50 +185,22 @@ body {
   }
 }
 
-details#vitals {
+#vitals {
   > div {
     padding-top: 0.5em;
   }
 }
 
-.vitals {
-  > li#vitals-spirit,
-  > li#vitals-health,
-  > li#vitals-mana,
-  > li#vitals-stamina {
-    background: none;
-    border: 0;
-    position: relative;
-    font-size: 1.2em;
-    .value {
-      text-align: left;
-      margin: 0 0 0.1em 0;
-      span:nth-child(1) {
-        font-family: "DutchMediaevalBook-Bold", serif;
-      }
-      span:nth-child(2) {
-      }
-      span:nth-child(3) {
-      }
-    }
-    .bar {
-      height: 8px;
-      &.low {
-        &::after {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: -1em;
-          width: calc(100% + 2em);
-          height: 100%;
-          background: radial-gradient(
-            rgba($red, 0.6),
-            rgba($red, 0)
-          );
-          pointer-events: none;
-        }
-      }
-    }
+li#vitals-spirit,
+li#vitals-health,
+li#vitals-mana,
+li#vitals-stamina {
+  border: 0;
+  position: relative;
+  font-size: 1.2em;
+  margin-bottom: 0;
+  .label {
+    font-family: "DutchMediaevalBook-Bold", serif;
   }
 }
 
@@ -267,23 +247,11 @@ details#vitals {
     .spell {
       color: #ff6e6e;
     }
-    .bar.low {
-      display: none;
-    }
   }
 }
 
-.bar.low {
-  @include barBG(#dc0d0d);
-}
-.bar.medium {
-  @include barBG(#de8e8e);
-}
-.bar.high {
-  @include barBG(#846e6e);
-}
-
-.injury.injury {
+.injury,
+.scar {
   background: none;
   border: 0;
   border-bottom: 1px solid black;
@@ -291,23 +259,29 @@ details#vitals {
   border-radius: 0;
   padding-bottom: 0.5em;
 }
-.injury.severity-1 {
+.injury.severity-1 .scar.severity-1 {
   color: #ff7c7c;
 }
 .injury.severity-2 {
-  color: #ff3333;
-  font-weight: bold;
   .value::before {
     content: "🩸";
   }
 }
-.injury.severity-3 {
-  color: #ff0000;
-  text-shadow: 0 0 16px red;
+.injury.severity-2,
+.scar.severity-2 {
+  color: #ff3333;
   font-weight: bold;
+}
+.injury.severity-3 {
   .value::before {
     content: "🩸";
   }
+}
+.injury.severity-3,
+.scar.severity-3 {
+  color: #ff0000;
+  text-shadow: 0 0 16px red;
+  font-weight: bold;
 }
 
 // Highlighting

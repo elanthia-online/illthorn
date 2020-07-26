@@ -1,5 +1,5 @@
 #hands-wrapper {
-  border-bottom: 3px solid var(--info);
+  border-bottom: var(--border-width, 3px) solid var(--info);
 }
 
 #hands {

@@ -1,16 +1,19 @@
-.panels {
-}
-
 #panels-left {
-  border-right: 3px solid var(--info);
+  border-right: var(--border-width, 3px) solid var(--info);
+}
+#panels-right {
+  border-left: var(--border-width, 3px) solid var(--info);
 }
 
 .panel {
   font-size: 14px;
   position: relative;
   padding: 4px;
-  margin: 10px;
   overflow: hidden;
+  margin: 1em;
+  // If we start saving panel heights to storage, let's do this
+  // overflow-x: hidden;
+  // overflow-y: auto;
   resize: vertical;
   summary {
     margin: 0;
@@ -27,6 +30,8 @@
   li {
     padding: 0.4em 0 0.2em;
     position: relative;
+    display: flex;
+    align-items: center;
   }
   .bar {
     height: 2px;

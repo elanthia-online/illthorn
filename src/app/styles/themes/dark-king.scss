@@ -57,7 +57,7 @@ body {
 }
 
 #feed-wrapper {
-  position: relative;
+  // under-shadow
   &::before {
     content: "";
     position: absolute;
@@ -119,6 +119,11 @@ body {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
   }
+  li {
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid black;
+    box-shadow: 0 1px 1px 0 #282323;
+  }
 }
 
 @mixin panelRow($color) {
@@ -171,7 +176,7 @@ body {
 
 #vitals {
   > div {
-    padding-top: 0.5em;
+    padding-top: 0;
   }
 }
 
@@ -216,8 +221,6 @@ li#vitals-stamina {
 
 .spells {
   li {
-    border-bottom: 1px solid black;
-    box-shadow: 0 1px 1px 0 #282323;
     .value {
       display: grid;
       grid-template-columns: 1fr 45px;
@@ -227,6 +230,9 @@ li#vitals-stamina {
         text-overflow: ellipsis;
         overflow: hidden;
       }
+    }
+    &:hover {
+      background: black;
     }
   }
   li.low {

@@ -13,10 +13,13 @@ window.Injuries = module.exports = class Injuries {
       Injuries.injuries().map((injury) => {
         return m(
           `li.${injury.type}.severity-${injury.severity}`,
-          m(".value", [
-            m("span", injury.name + " / " + injury.type),
-            m("span", injury.severity),
-          ])
+          [
+            m(
+              "span.injury-name",
+              injury.name + " / " + injury.type
+            ),
+            m("span.invlue-severity", injury.severity),
+          ]
         )
       })
     )

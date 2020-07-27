@@ -13,7 +13,10 @@ $yellow: #ffd60a; // hsl(50, 100%, 52%)
   --warn: #ff5402;
   --danger: #ff0000;
 
+  --monster-color: #{$yellow};
+
   --icon-size: 1em;
+  --border-width: 0;
 
   --column-width: minmax(16em, 0.33fr);
 
@@ -26,6 +29,7 @@ body {
   font-family: "DutchMediaeval";
 }
 
+// Putting Hands by CLI
 #main {
   grid-auto-rows: 0 1fr 2em 4em;
 }
@@ -40,7 +44,6 @@ body {
 .panels {
   padding: 1em;
 }
-
 #hands-wrapper {
   background: rgba(black, 0.5);
   grid-row: 3;
@@ -51,7 +54,6 @@ body {
   padding: 1em 1em 1em 0;
 }
 #streams-wrapper {
-  border: 0;
   padding-bottom: 0;
 }
 .streams,
@@ -63,10 +65,6 @@ body {
 }
 #cli-wrapper {
   background: rgba(black, 0.7);
-}
-
-#panels-left {
-  border-right: 0;
 }
 
 .panel {
@@ -92,31 +90,6 @@ body {
     );
     box-shadow: inset 0px -4px 6px 0px rgba(black, 0.5);
   }
-}
-
-.panel-list {
-  > li {
-    margin: 0 0 1px 0;
-    border-radius: 3px;
-    overflow: hidden;
-    .value {
-      font-family: "DutchMediaevalBook-Bold";
-    }
-  }
-}
-
-.injury.severity-2 {
-  color: #ff3333;
-  font-weight: bold;
-}
-.injury.severity-3 {
-  color: #ff0000;
-  text-shadow: 0 0 16px red;
-  font-weight: bold;
-}
-
-a.monster {
-  color: $yellow;
 }
 
 .feed .roomName {

@@ -32,7 +32,7 @@ const createWindow = () => {
       nodeIntegrationInWorker: true,
     },
     titleBarStyle: "hidden",
-    icon: "/src/app/png/64x64.png",
+    icon: "./build/icons/64x64.png",
   })
   mainWindowState.manage(mainWindow)
 

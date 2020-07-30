@@ -1,5 +1,6 @@
 #hands-wrapper {
   border-bottom: var(--border-width, 3px) solid var(--info);
+  -webkit-app-region: drag;
 }
 
 #hands {
@@ -9,6 +10,7 @@
 }
 
 .hand {
+  -webkit-app-region: no-drag;
   padding: 0 1em;
   flex: 1;
   display: flex;

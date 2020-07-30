@@ -1,8 +1,5 @@
-.panels {
-}
-
 #panels-left {
-  border-right: 3px solid var(--info);
+  border-right: var(--border-width, 3px) solid var(--info);
 }
 
 .panel {
@@ -30,8 +27,10 @@
     }
   }
   li {
+    position: relative;
     padding: 0.4em 0 0.2em;
     display: flex;
+    align-items: center;
   }
   .value {
     margin-left: auto;
@@ -66,7 +65,8 @@
   color: var(--warn);
 }
 
-.low .label {
+.low .label,
+.low .spell {
   color: var(--danger);
   font-weight: bold;
 }

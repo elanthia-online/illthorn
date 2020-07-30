@@ -65,7 +65,8 @@
   color: var(--warn);
 }
 
-.low .label {
+.low .label,
+.low .spell {
   color: var(--danger);
   font-weight: bold;
 }

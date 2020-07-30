@@ -1,0 +1,2368 @@
+[
+  {
+    "name": "Spirit Warding I",
+    "number": "101",
+    "type": "defense"
+  },
+  {
+    "name": "Spirit Barrier",
+    "number": "102",
+    "type": "defense"
+  },
+  {
+    "name": "Spirit Defense",
+    "number": "103",
+    "type": "defense"
+  },
+  {
+    "name": "Disease Resistance",
+    "number": "104",
+    "type": "defense"
+  },
+  {
+    "name": "Poison Resistance",
+    "number": "105",
+    "type": "defense"
+  },
+  {
+    "name": "Spirit Fog",
+    "number": "106",
+    "type": "defense"
+  },
+  {
+    "name": "Spirit Warding II",
+    "number": "107",
+    "type": "defense"
+  },
+  {
+    "name": "Stun Relief",
+    "number": "108",
+    "type": "utility"
+  },
+  {
+    "name": "Dispel Invisibility",
+    "number": "109",
+    "type": "utility"
+  },
+  {
+    "name": "Unbalance",
+    "number": "110",
+    "type": "attack"
+  },
+  {
+    "name": "Fire Spirit",
+    "number": "111",
+    "type": "attack/utility"
+  },
+  {
+    "name": "Water Walking",
+    "number": "112",
+    "type": "utility"
+  },
+  {
+    "name": "Undisease",
+    "number": "113",
+    "type": "utility"
+  },
+  {
+    "name": "Unpoison",
+    "number": "114",
+    "type": "utility"
+  },
+  {
+    "name": "Fasthr's Reward",
+    "number": "115",
+    "type": "defense"
+  },
+  {
+    "name": "Locate Person",
+    "number": "116",
+    "type": "utility"
+  },
+  {
+    "name": "Spirit Strike",
+    "number": "117",
+    "type": "offense"
+  },
+  {
+    "name": "Web",
+    "number": "118",
+    "type": "attack"
+  },
+  {
+    "name": "Spirit Dispel",
+    "number": "119",
+    "type": "attack/utility"
+  },
+  {
+    "name": "Lesser Shroud",
+    "number": "120",
+    "type": "defense"
+  },
+  {
+    "name": "Call Lightning",
+    "number": "125",
+    "type": "attack/utility"
+  },
+  {
+    "name": "Spirit Guide",
+    "number": "130",
+    "type": "utility"
+  },
+  {
+    "name": "Searing Light",
+    "number": "135",
+    "type": "attack"
+  },
+  {
+    "name": "Wall of Force",
+    "number": "140",
+    "type": "defense"
+  },
+  {
+    "name": "Calm",
+    "number": "201",
+    "type": "attack"
+  },
+  {
+    "name": "Spirit Shield",
+    "number": "202",
+    "type": "defense"
+  },
+  {
+    "name": "Manna",
+    "number": "203",
+    "type": "utility"
+  },
+  {
+    "name": "Unpresence",
+    "number": "204",
+    "type": "utility"
+  },
+  {
+    "name": "Light",
+    "number": "205",
+    "type": "utility"
+  },
+  {
+    "name": "Darkness",
+    "number": "206",
+    "type": "utility"
+  },
+  {
+    "name": "Purify Air",
+    "number": "207",
+    "type": "defense"
+  },
+  {
+    "name": "Living Spell",
+    "number": "208",
+    "type": "attack/utility"
+  },
+  {
+    "name": "Untrammel",
+    "number": "209",
+    "type": "utility"
+  },
+  {
+    "name": "Silence",
+    "number": "210",
+    "type": "attack"
+  },
+  {
+    "name": "Bravery",
+    "number": "211",
+    "type": "offense"
+  },
+  {
+    "name": "Interference",
+    "number": "212",
+    "type": "attack"
+  },
+  {
+    "name": "Minor Sanctuary",
+    "number": "213",
+    "type": "utility"
+  },
+  {
+    "name": "Bind",
+    "number": "214",
+    "type": "attack"
+  },
+  {
+    "name": "Heroism",
+    "number": "215",
+    "type": "offense"
+  },
+  {
+    "name": "Frenzy",
+    "number": "216",
+    "type": "attack"
+  },
+  {
+    "name": "Mass Interference",
+    "number": "217",
+    "type": "attack"
+  },
+  {
+    "name": "Spirit Servant",
+    "number": "218",
+    "type": "utility"
+  },
+  {
+    "name": "Spell Shield",
+    "number": "219",
+    "type": "defense"
+  },
+  {
+    "name": "Major Sanctuary",
+    "number": "220",
+    "type": "utility"
+  },
+  {
+    "name": "Transference",
+    "number": "225",
+    "type": "utility"
+  },
+  {
+    "name": "Spiritual Abolition",
+    "number": "230",
+    "type": "attack"
+  },
+  {
+    "name": "Spirit Slayer",
+    "number": "240",
+    "type": "offense"
+  },
+  {
+    "name": "Prayer of Holding",
+    "number": "301",
+    "type": "attack"
+  },
+  {
+    "name": "Smite",
+    "number": "302",
+    "type": "attack"
+  },
+  {
+    "name": "Prayer of Protection",
+    "number": "303",
+    "type": "defense"
+  },
+  {
+    "name": "Bless Item",
+    "number": "304",
+    "type": "utility"
+  },
+  {
+    "name": "Preservation",
+    "number": "305",
+    "type": "utility"
+  },
+  {
+    "name": "Holy Bolt",
+    "number": "306",
+    "type": "attack"
+  },
+  {
+    "name": "Benediction",
+    "number": "307",
+    "type": "offense/defense"
+  },
+  {
+    "name": "Well of Life",
+    "number": "308",
+    "type": "utility"
+  },
+  {
+    "name": "Neutralize Curse",
+    "number": "309",
+    "type": "utility"
+  },
+  {
+    "name": "Warding Sphere",
+    "number": "310",
+    "type": "defense"
+  },
+  {
+    "name": "Blind",
+    "number": "311",
+    "type": "attack"
+  },
+  {
+    "name": "Fervent Reproach",
+    "number": "312",
+    "type": "attack"
+  },
+  {
+    "name": "Prayer",
+    "number": "313",
+    "type": "defense"
+  },
+  {
+    "name": "Relieve Burden",
+    "number": "314",
+    "type": "utility"
+  },
+  {
+    "name": "Remove Curse",
+    "number": "315",
+    "type": "utility"
+  },
+  {
+    "name": "Censure",
+    "number": "316",
+    "type": "attack"
+  },
+  {
+    "name": "Divine Fury",
+    "number": "317",
+    "type": "attack"
+  },
+  {
+    "name": "Raise Dead",
+    "number": "318",
+    "type": "utility"
+  },
+  {
+    "name": "Soul Ward",
+    "number": "319",
+    "type": "defense"
+  },
+  {
+    "name": "Ethereal Censer",
+    "number": "320",
+    "type": "offensive/utility"
+  },
+  {
+    "name": "Divine Wrath",
+    "number": "335",
+    "type": "attack"
+  },
+  {
+    "name": "Holy Receptacle",
+    "number": "325",
+    "type": "utility"
+  },
+  {
+    "name": "Prayer of Communion",
+    "number": "330",
+    "type": "utility"
+  },
+  {
+    "name": "Symbol of the Proselyte",
+    "number": "340",
+    "type": "utility"
+  },
+  {
+    "name": "Miracle",
+    "number": "350",
+    "type": "utility"
+  },
+  {
+    "name": "Elemental Defense I",
+    "number": "401",
+    "type": "defense"
+  },
+  {
+    "name": "Presence",
+    "number": "402",
+    "type": "utility"
+  },
+  {
+    "name": "Lock Pick Enhancement",
+    "number": "403",
+    "type": "utility"
+  },
+  {
+    "name": "Disarm Enhancement",
+    "number": "404",
+    "type": "utility"
+  },
+  {
+    "name": "Elemental Detection",
+    "number": "405",
+    "type": "utility"
+  },
+  {
+    "name": "Elemental Defense II",
+    "number": "406",
+    "type": "defense"
+  },
+  {
+    "name": "Unlock",
+    "number": "407",
+    "type": "utility"
+  },
+  {
+    "name": "Disarm",
+    "number": "408",
+    "type": "utility"
+  },
+  {
+    "name": "Elemental Blast",
+    "number": "409",
+    "type": "attack"
+  },
+  {
+    "name": "Elemental Wave",
+    "number": "410",
+    "type": "attack/area"
+  },
+  {
+    "name": "Elemental Blade",
+    "number": "411",
+    "type": "utility"
+  },
+  {
+    "name": "Weapon Deflection",
+    "number": "412",
+    "type": "attack"
+  },
+  {
+    "name": "Elemental Saturation",
+    "number": "413",
+    "type": "attack"
+  },
+  {
+    "name": "Elemental Defense III",
+    "number": "414",
+    "type": "defense"
+  },
+  {
+    "name": "Elemental Strike",
+    "number": "415",
+    "type": "attack"
+  },
+  {
+    "name": "Piercing Gaze",
+    "number": "416",
+    "type": "utility"
+  },
+  {
+    "name": "Elemental Dispel",
+    "number": "417",
+    "type": "attack/utility"
+  },
+  {
+    "name": "Mana Focus",
+    "number": "418",
+    "type": "utility"
+  },
+  {
+    "name": "Mass Elemental Defense",
+    "number": "419",
+    "type": "defense"
+  },
+  {
+    "name": "Magic Item Creation",
+    "number": "420",
+    "type": "utility"
+  },
+  {
+    "name": "Elemental Targeting",
+    "number": "425",
+    "type": "offense"
+  },
+  {
+    "name": "Elemental Barrier",
+    "number": "430",
+    "type": "defense"
+  },
+  {
+    "name": "Major Elemental Wave",
+    "number": "435",
+    "type": "attack/area"
+  },
+  {
+    "name": "Mana Focus Water Bonus",
+    "number": "499",
+    "type": "utility"
+  },
+  {
+    "name": "Sleep",
+    "number": "501",
+    "type": "attack"
+  },
+  {
+    "name": "Chromatic Circle",
+    "number": "502",
+    "type": "attack"
+  },
+  {
+    "name": "Thurfel's Ward",
+    "number": "503",
+    "type": "defense"
+  },
+  {
+    "name": "Slow",
+    "number": "504",
+    "type": "attack"
+  },
+  {
+    "name": "Hand of Tonis",
+    "number": "505",
+    "type": "attack"
+  },
+  {
+    "name": "Celerity",
+    "number": "506",
+    "type": "utility"
+  },
+  {
+    "name": "Elemental Deflection",
+    "number": "507",
+    "type": "defense"
+  },
+  {
+    "name": "Elemental Bias",
+    "number": "508",
+    "type": "defense"
+  },
+  {
+    "name": "Strength",
+    "number": "509",
+    "type": "offense/utility"
+  },
+  {
+    "name": "Hurl Boulder",
+    "number": "510",
+    "type": "attack"
+  },
+  {
+    "name": "Floating Disk",
+    "number": "511",
+    "type": "utility"
+  },
+  {
+    "name": "Cold Snap",
+    "number": "512",
+    "type": "attack"
+  },
+  {
+    "name": "Elemental Focus",
+    "number": "513",
+    "type": "offense"
+  },
+  {
+    "name": "Stone Fist",
+    "number": "514",
+    "type": "attack"
+  },
+  {
+    "name": "Rapid Fire",
+    "number": "515",
+    "type": "utility"
+  },
+  {
+    "name": "Mana Leech",
+    "number": "516",
+    "type": "attack/utility"
+  },
+  {
+    "name": "Charge Item",
+    "number": "517",
+    "type": "utility"
+  },
+  {
+    "name": "Cone of Lightning",
+    "number": "518",
+    "type": "attack/area"
+  },
+  {
+    "name": "Immolation",
+    "number": "519",
+    "type": "attack"
+  },
+  {
+    "name": "Mage Armor",
+    "number": "520",
+    "type": "defense"
+  },
+  {
+    "name": "Meteor Swarm",
+    "number": "525",
+    "type": "attack"
+  },
+  {
+    "name": "Elemental Disjunction",
+    "number": "530",
+    "type": "attack"
+  },
+  {
+    "name": "Haste",
+    "number": "535",
+    "type": "utility"
+  },
+  {
+    "name": "Temporal Reversion",
+    "number": "540",
+    "type": "defense"
+  },
+  {
+    "name": "Rapid Fire Penalty",
+    "number": "597",
+    "type": "timer"
+  },
+  {
+    "name": "Celerity Recovery",
+    "number": "598"
+  },
+  {
+    "name": "Rapid Fire Recovery",
+    "number": "599"
+  },
+  {
+    "name": "Natural Colors",
+    "number": "601",
+    "type": "defense"
+  },
+  {
+    "name": "Resist Elements",
+    "number": "602",
+    "type": "defense"
+  },
+  {
+    "name": "Foraging",
+    "number": "603",
+    "type": "utility"
+  },
+  {
+    "name": "Skinning",
+    "number": "604",
+    "type": "utility"
+  },
+  {
+    "name": "Whispering Willow",
+    "number": "605",
+    "type": "utility"
+  },
+  {
+    "name": "Phoen's Strength",
+    "number": "606",
+    "type": "offense"
+  },
+  {
+    "name": "Sounds",
+    "number": "607",
+    "type": "attack"
+  },
+  {
+    "name": "Camouflage",
+    "number": "608",
+    "type": "offense"
+  },
+  {
+    "name": "Sun Burst",
+    "number": "609",
+    "type": "attack/utility"
+  },
+  {
+    "name": "Tangleweed",
+    "number": "610",
+    "type": "attack"
+  },
+  {
+    "name": "Mass Colors",
+    "number": "611",
+    "type": "defense"
+  },
+  {
+    "name": "Breeze",
+    "number": "612",
+    "type": "utility"
+  },
+  {
+    "name": "Self Control",
+    "number": "613",
+    "type": "defense/utility"
+  },
+  {
+    "name": "Imbue",
+    "number": "614",
+    "type": "utility"
+  },
+  {
+    "name": "Call Swarm",
+    "number": "615",
+    "type": "attack"
+  },
+  {
+    "name": "Spike Thorn",
+    "number": "616",
+    "type": "attack"
+  },
+  {
+    "name": "Sneaking",
+    "number": "617",
+    "type": "utility"
+  },
+  {
+    "name": "Mobility",
+    "number": "618",
+    "type": "defense/utility"
+  },
+  {
+    "name": "Mass Calm",
+    "number": "619",
+    "type": "attack"
+  },
+  {
+    "name": "Resist Nature",
+    "number": "620",
+    "type": "utility"
+  },
+  {
+    "name": "Nature's Touch",
+    "number": "625",
+    "type": "defense/utility"
+  },
+  {
+    "name": "Animal Companion",
+    "number": "630",
+    "type": "attack/utility"
+  },
+  {
+    "name": "Nature's Fury",
+    "number": "635",
+    "type": "attack"
+  },
+  {
+    "name": "Wall of Thorns",
+    "number": "640",
+    "type": "defense"
+  },
+  {
+    "name": "Assume Aspect",
+    "number": "650",
+    "type": "utility"
+  },
+  {
+    "name": "Blood Burst",
+    "number": "701",
+    "type": "attack"
+  },
+  {
+    "name": "Mana Disruption",
+    "number": "702",
+    "type": "attack"
+  },
+  {
+    "name": "Corrupt Essence",
+    "number": "703",
+    "type": "attack"
+  },
+  {
+    "name": "Phase",
+    "number": "704",
+    "type": "utility"
+  },
+  {
+    "name": "Disintegrate",
+    "number": "705",
+    "type": "attack"
+  },
+  {
+    "name": "Mind Jolt",
+    "number": "706",
+    "type": "attack"
+  },
+  {
+    "name": "Eye Spy",
+    "number": "707",
+    "type": "utility"
+  },
+  {
+    "name": "Limb Disruption",
+    "number": "708",
+    "type": "attack"
+  },
+  {
+    "name": "Quake",
+    "number": "709",
+    "type": "attack"
+  },
+  {
+    "name": "Energy Maelstrom",
+    "number": "710",
+    "type": "attack"
+  },
+  {
+    "name": "Pain",
+    "number": "711",
+    "type": "attack"
+  },
+  {
+    "name": "Cloak of Shadows",
+    "number": "712",
+    "type": "defense"
+  },
+  {
+    "name": "Balefire",
+    "number": "713",
+    "type": "attack"
+  },
+  {
+    "name": "Scroll Infusion",
+    "number": "714",
+    "type": "utility"
+  },
+  {
+    "name": "Curse",
+    "number": "715",
+    "type": "attack"
+  },
+  {
+    "name": "Pestilence",
+    "number": "716",
+    "type": "defense"
+  },
+  {
+    "name": "Evil Eye",
+    "number": "717",
+    "type": "attack"
+  },
+  {
+    "name": "Torment",
+    "number": "718",
+    "type": "attack"
+  },
+  {
+    "name": "Dark Catalyst",
+    "number": "719",
+    "type": "attack"
+  },
+  {
+    "name": "Implosion",
+    "number": "720",
+    "type": "attack"
+  },
+  {
+    "name": "Minor Summoning",
+    "number": "725",
+    "type": "utility"
+  },
+  {
+    "name": "Animate Dead",
+    "number": "730",
+    "type": "utility"
+  },
+  {
+    "name": "Ensorcell",
+    "number": "735",
+    "type": "utility"
+  },
+  {
+    "name": "Planar Shift",
+    "number": "740",
+    "type": "utility"
+  },
+  {
+    "name": "Minor Shock",
+    "number": "901",
+    "type": "attack"
+  },
+  {
+    "name": "Minor Elemental Edge",
+    "number": "902",
+    "type": "offense"
+  },
+  {
+    "name": "Minor Water",
+    "number": "903",
+    "type": "attack"
+  },
+  {
+    "name": "Minor Acid",
+    "number": "904",
+    "type": "attack"
+  },
+  {
+    "name": "Prismatic Guard",
+    "number": "905",
+    "type": "defense"
+  },
+  {
+    "name": "Minor Fire",
+    "number": "906",
+    "type": "attack"
+  },
+  {
+    "name": "Major Cold",
+    "number": "907",
+    "type": "attack"
+  },
+  {
+    "name": "Major Fire",
+    "number": "908",
+    "type": "attack"
+  },
+  {
+    "name": "Tremors",
+    "number": "909",
+    "type": "attack/area/utility"
+  },
+  {
+    "name": "Major Shock",
+    "number": "910",
+    "type": "attack"
+  },
+  {
+    "name": "Mass Blur",
+    "number": "911",
+    "type": "defense"
+  },
+  {
+    "name": "Call Wind",
+    "number": "912",
+    "type": "attack/area"
+  },
+  {
+    "name": "Melgorehn's Aura",
+    "number": "913",
+    "type": "defense"
+  },
+  {
+    "name": "Sandstorm",
+    "number": "914",
+    "type": "attack"
+  },
+  {
+    "name": "Weapon Fire",
+    "number": "915",
+    "type": "attack"
+  },
+  {
+    "name": "Invisibility",
+    "number": "916",
+    "type": "utility"
+  },
+  {
+    "name": "Boil Earth",
+    "number": "917",
+    "type": "attack"
+  },
+  {
+    "name": "Duplicate",
+    "number": "918",
+    "type": "utility"
+  },
+  {
+    "name": "Wizard's Shield",
+    "number": "919",
+    "type": "defense"
+  },
+  {
+    "name": "Call Familiar",
+    "number": "920",
+    "type": "utility"
+  },
+  {
+    "name": "Enchant Item",
+    "number": "925",
+    "type": "utility"
+  },
+  {
+    "name": "Familiar Gate",
+    "number": "930",
+    "type": "utility"
+  },
+  {
+    "name": "Core Tap",
+    "number": "950",
+    "type": "attack"
+  },
+  {
+    "name": "Core Tap Recovery (1 Charge)",
+    "number": "996"
+  },
+  {
+    "name": "Core Tap Recovery (2 Charges)",
+    "number": "997"
+  },
+  {
+    "name": "Core Tap Recovery (3 Charges)",
+    "number": "998"
+  },
+  {
+    "name": "Core Tap Recovery",
+    "number": "999"
+  },
+  {
+    "name": "Holding Song",
+    "number": "1001",
+    "type": "attack"
+  },
+  {
+    "name": "Vibration Chant",
+    "number": "1002",
+    "type": "attack"
+  },
+  {
+    "name": "Fortitude Song",
+    "number": "1003",
+    "type": "defense"
+  },
+  {
+    "name": "Purification Song",
+    "number": "1004",
+    "type": "utility"
+  },
+  {
+    "name": "Lullabye",
+    "number": "1005",
+    "type": "attack"
+  },
+  {
+    "name": "Song of Luck",
+    "number": "1006",
+    "type": "utility"
+  },
+  {
+    "name": "Kai's Triumph Song",
+    "number": "1007",
+    "type": "offense/bonus"
+  },
+  {
+    "name": "Stunning Shout",
+    "number": "1008",
+    "type": "attack"
+  },
+  {
+    "name": "Sonic Shield Song",
+    "number": "1009",
+    "type": "defense"
+  },
+  {
+    "name": "Song of Valor",
+    "number": "1010",
+    "type": "defense"
+  },
+  {
+    "name": "Song of Peace",
+    "number": "1011",
+    "type": "utility"
+  },
+  {
+    "name": "Sonic Weapon Song",
+    "number": "1012",
+    "type": "attack"
+  },
+  {
+    "name": "Song of Unravelling",
+    "number": "1013",
+    "type": "attack/utility"
+  },
+  {
+    "name": "Sonic Armor",
+    "number": "1014",
+    "type": "defense"
+  },
+  {
+    "name": "Song of Depression",
+    "number": "1015",
+    "type": "attack"
+  },
+  {
+    "name": "Song of Rage",
+    "number": "1016",
+    "type": "attack"
+  },
+  {
+    "name": "Song of Noise",
+    "number": "1017",
+    "type": "utility"
+  },
+  {
+    "name": "Song of Power",
+    "number": "1018",
+    "type": "bonus"
+  },
+  {
+    "name": "Song of Mirrors",
+    "number": "1019",
+    "type": "defense"
+  },
+  {
+    "name": "Traveller's Song",
+    "number": "1020",
+    "type": "utility"
+  },
+  {
+    "name": "Singing Sword Song",
+    "number": "1025",
+    "type": "attack/utility"
+  },
+  {
+    "name": "Song of Sonic Disruption",
+    "number": "1030",
+    "type": "attack"
+  },
+  {
+    "name": "Song of Tonis",
+    "number": "1035",
+    "type": "defense/bonus"
+  },
+  {
+    "name": "Troubadour's Rally",
+    "number": "1040",
+    "type": "defense/utility"
+  },
+  {
+    "name": "Heal",
+    "number": "1101",
+    "type": "utility/attack"
+  },
+  {
+    "name": "Limb Repair",
+    "number": "1102",
+    "type": "utility"
+  },
+  {
+    "name": "System Repair",
+    "number": "1103",
+    "type": "utility"
+  },
+  {
+    "name": "Head Repair",
+    "number": "1104",
+    "type": "utility"
+  },
+  {
+    "name": "Organ Repair",
+    "number": "1105",
+    "type": "utility"
+  },
+  {
+    "name": "Bone Shatter",
+    "number": "1106",
+    "type": "attack"
+  },
+  {
+    "name": "Adrenal Surge",
+    "number": "1107",
+    "type": "utility"
+  },
+  {
+    "name": "Empathy",
+    "number": "1108",
+    "type": "attack"
+  },
+  {
+    "name": "Empathic Focus",
+    "number": "1109",
+    "type": "offense/defense"
+  },
+  {
+    "name": "Empathic Assault",
+    "number": "1110",
+    "type": "attack"
+  },
+  {
+    "name": "Limb Scar Repair",
+    "number": "1111",
+    "type": "utility"
+  },
+  {
+    "name": "System Scar Repair",
+    "number": "1112",
+    "type": "utility"
+  },
+  {
+    "name": "Head Scar Repair",
+    "number": "1113",
+    "type": "utility"
+  },
+  {
+    "name": "Organ Scar Repair",
+    "number": "1114",
+    "type": "utility"
+  },
+  {
+    "name": "Wither",
+    "number": "1115",
+    "type": "attack"
+  },
+  {
+    "name": "Empathic Link",
+    "number": "1117",
+    "type": "attack"
+  },
+  {
+    "name": "Herb Production",
+    "number": "1118",
+    "type": "utility"
+  },
+  {
+    "name": "Strength Of Will",
+    "number": "1119",
+    "type": "defense"
+  },
+  {
+    "name": "Sympathy",
+    "number": "1120",
+    "type": "attack"
+  },
+  {
+    "name": "Troll's Blood",
+    "number": "1125",
+    "type": "utility"
+  },
+  {
+    "name": "Intensity",
+    "number": "1130",
+    "type": "offense/defense"
+  },
+  {
+    "name": "Regeneration",
+    "number": "1150",
+    "type": "utility"
+  },
+  {
+    "name": "Rapid Healing Recovery",
+    "number": "1199"
+  },
+  {
+    "name": "Force Orb",
+    "number": "1201",
+    "type": "attack"
+  },
+  {
+    "name": "Iron Skin",
+    "number": "1202",
+    "type": "defense"
+  },
+  {
+    "name": "Powersink",
+    "number": "1203",
+    "type": "attack"
+  },
+  {
+    "name": "Foresight",
+    "number": "1204",
+    "type": "defense"
+  },
+  {
+    "name": "Soothing Word",
+    "number": "1205",
+    "type": "utility"
+  },
+  {
+    "name": "Telekinesis",
+    "number": "1206"
+  },
+  {
+    "name": "Force Projection",
+    "number": "1207",
+    "type": "attack"
+  },
+  {
+    "name": "Mindward",
+    "number": "1208",
+    "type": "defense"
+  },
+  {
+    "name": "Dragonclaw",
+    "number": "1209",
+    "type": "offense"
+  },
+  {
+    "name": "Thought Lash",
+    "number": "1210",
+    "type": "attack"
+  },
+  {
+    "name": "Confusion",
+    "number": "1211",
+    "type": "attack"
+  },
+  {
+    "name": "Shroud of Deception",
+    "number": "1212"
+  },
+  {
+    "name": "Mind over Body",
+    "number": "1213",
+    "type": "utility"
+  },
+  {
+    "name": "Brace",
+    "number": "1214",
+    "type": "defense"
+  },
+  {
+    "name": "Blink",
+    "number": "1215",
+    "type": "defense"
+  },
+  {
+    "name": "Focus Barrier",
+    "number": "1216",
+    "type": "defense"
+  },
+  {
+    "name": "Vision",
+    "number": "1217",
+    "type": "utility"
+  },
+  {
+    "name": "Mental Dispel",
+    "number": "1218",
+    "type": "attack/utility"
+  },
+  {
+    "name": "Vertigo",
+    "number": "1219",
+    "type": "attack"
+  },
+  {
+    "name": "Premonition",
+    "number": "1220",
+    "type": "defense"
+  },
+  {
+    "name": "Mindwipe",
+    "number": "1225"
+  },
+  {
+    "name": "Provoke",
+    "number": "1235",
+    "type": "utility"
+  },
+  {
+    "name": "Mantle of Faith",
+    "number": "1601",
+    "type": "defense"
+  },
+  {
+    "name": "Pious Trial",
+    "number": "1602",
+    "type": "attack"
+  },
+  {
+    "name": "Faith's Clarity",
+    "number": "1603",
+    "type": "utility"
+  },
+  {
+    "name": "Consecrate",
+    "number": "1604",
+    "type": "utility"
+  },
+  {
+    "name": "Arm of the Arkati",
+    "number": "1605",
+    "type": "offense"
+  },
+  {
+    "name": "Dauntless",
+    "number": "1606",
+    "type": "offense"
+  },
+  {
+    "name": "Rejuvenation",
+    "number": "1607",
+    "type": "utility"
+  },
+  {
+    "name": "Beacon of Courage",
+    "number": "1608",
+    "type": "utility"
+  },
+  {
+    "name": "Divine Shield",
+    "number": "1609",
+    "type": "defense"
+  },
+  {
+    "name": "Higher Vision",
+    "number": "1610",
+    "type": "defense"
+  },
+  {
+    "name": "Patron's Blessing",
+    "number": "1611",
+    "type": "defense"
+  },
+  {
+    "name": "Champion's Might",
+    "number": "1612",
+    "type": "offense"
+  },
+  {
+    "name": "Guard the Meek",
+    "number": "1613",
+    "type": "defense"
+  },
+  {
+    "name": "Aura of the Arkati",
+    "number": "1614",
+    "type": "attack"
+  },
+  {
+    "name": "Divine Strike",
+    "number": "1615",
+    "type": "attack"
+  },
+  {
+    "name": "Vigor",
+    "number": "1616",
+    "type": "utility"
+  },
+  {
+    "name": "Zealot",
+    "number": "1617",
+    "type": "offense"
+  },
+  {
+    "name": "Crusade",
+    "number": "1618",
+    "type": "offense"
+  },
+  {
+    "name": "Faith Shield",
+    "number": "1619",
+    "type": "defense"
+  },
+  {
+    "name": "Aid the Fallen",
+    "number": "1620",
+    "type": "utility"
+  },
+  {
+    "name": "Sanctify",
+    "number": "1625",
+    "type": "utility"
+  },
+  {
+    "name": "Judgment",
+    "number": "1630",
+    "type": "attack"
+  },
+  {
+    "name": "Divine Intervention",
+    "number": "1635",
+    "type": "utility/defense"
+  },
+  {
+    "name": "Divine Word",
+    "number": "1640",
+    "type": "utility"
+  },
+  {
+    "name": "Divine Incarnation",
+    "number": "1650",
+    "type": "utility"
+  },
+  {
+    "name": "Arcane Blast",
+    "number": "1700",
+    "type": "attack"
+  },
+  {
+    "name": "Arcane Decoy",
+    "number": "1701",
+    "type": "defense"
+  },
+  {
+    "name": "Stun Cloud",
+    "number": "1704",
+    "type": "attack"
+  },
+  {
+    "name": "Flaming Aura",
+    "number": "1706",
+    "type": "attack"
+  },
+  {
+    "name": "Minor Steam",
+    "number": "1707",
+    "type": "attack"
+  },
+  {
+    "name": "Mystic Impedance",
+    "number": "1708",
+    "type": "attack"
+  },
+  {
+    "name": "Minor Cold",
+    "number": "1709",
+    "type": "attack"
+  },
+  {
+    "name": "Major Acid",
+    "number": "1710",
+    "type": "attack"
+  },
+  {
+    "name": "Mystic Focus",
+    "number": "1711",
+    "type": "offense"
+  },
+  {
+    "name": "Spirit Guard",
+    "number": "1712",
+    "type": "defense"
+  },
+  {
+    "name": "Death Cloud",
+    "number": "1713",
+    "type": "attack"
+  },
+  {
+    "name": "Firestorm",
+    "number": "1715",
+    "type": "attack"
+  },
+  {
+    "name": "V'Tull's Fury",
+    "number": "1718",
+    "type": "attack"
+  },
+  {
+    "name": "Arcane Barrier",
+    "number": "1720",
+    "type": "defense"
+  },
+  {
+    "name": "Fash'lo'nae's Gift",
+    "number": "1750",
+    "type": "utility"
+  },
+  {
+    "name": "Decaying",
+    "number": "6666",
+    "type": "timer"
+  },
+  {
+    "name": "Tortoise Stance",
+    "number": "9401",
+    "type": "defense"
+  },
+  {
+    "name": "Slash Protection",
+    "number": "9501",
+    "type": "defense"
+  },
+  {
+    "name": "Crush Protection",
+    "number": "9502",
+    "type": "defense"
+  },
+  {
+    "name": "Puncture Protection",
+    "number": "9503",
+    "type": "defense"
+  },
+  {
+    "name": "Armor Support",
+    "number": "9504",
+    "type": "bonus"
+  },
+  {
+    "name": "Armored Evasion",
+    "number": "9505",
+    "type": "bonus"
+  },
+  {
+    "name": "Armored Casting",
+    "number": "9506",
+    "type": "bonus"
+  },
+  {
+    "name": "Armored Fluidity",
+    "number": "9507",
+    "type": "bonus"
+  },
+  {
+    "name": "Armored Stealth",
+    "number": "9508",
+    "type": "bonus"
+  },
+  {
+    "name": "Armor Reinforcement",
+    "number": "9509",
+    "type": "defense"
+  },
+  {
+    "name": "Combat Movement",
+    "number": "9601",
+    "type": "defense"
+  },
+  {
+    "name": "Combat Focus",
+    "number": "9602",
+    "type": "defense"
+  },
+  {
+    "name": "Shadow Mastery",
+    "number": "9603",
+    "type": "utility"
+  },
+  {
+    "name": "Shadow Mastery Cooldown",
+    "number": "9604"
+  },
+  {
+    "name": "Surge of Strength",
+    "number": "9605",
+    "type": "utility"
+  },
+  {
+    "name": "Surge of Strength Cooldown",
+    "number": "9606"
+  },
+  {
+    "name": "Berserk",
+    "number": "9607",
+    "type": "attack"
+  },
+  {
+    "name": "Rolling Krynch Stance",
+    "number": "9620",
+    "type": "timer"
+  },
+  {
+    "name": "Stance of the Mongoose",
+    "number": "9621",
+    "type": "timer"
+  },
+  {
+    "name": "Slippery Mind",
+    "number": "9622",
+    "type": "timer"
+  },
+  {
+    "name": "Flurry of Blows",
+    "number": "9623",
+    "type": "timer"
+  },
+  {
+    "name": "Inner Harmony",
+    "number": "9624",
+    "type": "timer"
+  },
+  {
+    "name": "Burst of Swiftness",
+    "number": "9625",
+    "type": "utility"
+  },
+  {
+    "name": "Ki Focus",
+    "number": "9626",
+    "type": "offense"
+  },
+  {
+    "name": "Duck and Weave",
+    "number": "9627",
+    "type": "utility"
+  },
+  {
+    "name": "POPed muscles",
+    "number": "9699"
+  },
+  {
+    "name": "Sigil of Recognition",
+    "number": "9701",
+    "type": "utility"
+  },
+  {
+    "name": "Sigil of Location",
+    "number": "9702",
+    "type": "utility"
+  },
+  {
+    "name": "Sigil of Contact",
+    "number": "9703",
+    "type": "utility"
+  },
+  {
+    "name": "Sigil of Resolve",
+    "number": "9704",
+    "type": "utility"
+  },
+  {
+    "name": "Sigil of Minor Bane",
+    "number": "9705",
+    "type": "offense"
+  },
+  {
+    "name": "Sigil of Bandages",
+    "number": "9706",
+    "type": "utility"
+  },
+  {
+    "name": "Sigil of Defense",
+    "number": "9707",
+    "type": "defense"
+  },
+  {
+    "name": "Sigil of Offense",
+    "number": "9708",
+    "type": "offense"
+  },
+  {
+    "name": "Sigil of Distraction",
+    "number": "9709",
+    "type": "attack"
+  },
+  {
+    "name": "Sigil of Minor Protection",
+    "number": "9710",
+    "type": "defense"
+  },
+  {
+    "name": "Sigil of Focus",
+    "number": "9711",
+    "type": "defense"
+  },
+  {
+    "name": "Sigil of Intimidation",
+    "number": "9712",
+    "type": "attack"
+  },
+  {
+    "name": "Sigil of Mending",
+    "number": "9713",
+    "type": "utility"
+  },
+  {
+    "name": "Sigil of Concentration",
+    "number": "9714",
+    "type": "bonus"
+  },
+  {
+    "name": "Sigil of Major Bane",
+    "number": "9715",
+    "type": "offense"
+  },
+  {
+    "name": "Sigil of Determination",
+    "number": "9716",
+    "type": "utility"
+  },
+  {
+    "name": "Sigil of Health",
+    "number": "9717",
+    "type": "utility"
+  },
+  {
+    "name": "Sigil of Power",
+    "number": "9718",
+    "type": "utility"
+  },
+  {
+    "name": "Sigil of Major Protection",
+    "number": "9719",
+    "type": "defense"
+  },
+  {
+    "name": "Sigil of Escape",
+    "number": "9720",
+    "type": "utility"
+  },
+  {
+    "name": "Symbol of Recognition",
+    "number": "9801",
+    "type": "utility"
+  },
+  {
+    "name": "Symbol of Blessing",
+    "number": "9802",
+    "type": "utility"
+  },
+  {
+    "name": "Symbol of Thought",
+    "number": "9803",
+    "type": "utility"
+  },
+  {
+    "name": "Symbol of Diminishment",
+    "number": "9804",
+    "type": "attack"
+  },
+  {
+    "name": "Symbol of Courage",
+    "number": "9805",
+    "type": "offense"
+  },
+  {
+    "name": "Symbol of Protection",
+    "number": "9806",
+    "type": "defense"
+  },
+  {
+    "name": "Symbol of Submission",
+    "number": "9807",
+    "type": "attack"
+  },
+  {
+    "name": "Kai's Strike",
+    "number": "9808"
+  },
+  {
+    "name": "Symbol of Holiness",
+    "number": "9809",
+    "type": "attack"
+  },
+  {
+    "name": "Symbol of Recall",
+    "number": "9810",
+    "type": "utility"
+  },
+  {
+    "name": "Symbol of Sleep",
+    "number": "9811",
+    "type": "attack"
+  },
+  {
+    "name": "Symbol of Transcendence",
+    "number": "9812",
+    "type": "defense"
+  },
+  {
+    "name": "Symbol of Mana",
+    "number": "9813",
+    "type": "utility"
+  },
+  {
+    "name": "Symbol of Sight",
+    "number": "9814",
+    "type": "utility"
+  },
+  {
+    "name": "Symbol of Retribution",
+    "number": "9815",
+    "type": "attack/utility"
+  },
+  {
+    "name": "Symbol of Supremacy",
+    "number": "9816",
+    "type": "offensive"
+  },
+  {
+    "name": "Symbol of Restoration",
+    "number": "9817",
+    "type": "utility"
+  },
+  {
+    "name": "Symbol of Need",
+    "number": "9818",
+    "type": "utility"
+  },
+  {
+    "name": "Symbol of Renewal",
+    "number": "9819",
+    "type": "utility"
+  },
+  {
+    "name": "Symbol of Disruption",
+    "number": "9820",
+    "type": "offensive"
+  },
+  {
+    "name": "Kai's Smite",
+    "number": "9821",
+    "type": "attack"
+  },
+  {
+    "name": "Symbol of Turning",
+    "number": "9822",
+    "type": "attack"
+  },
+  {
+    "name": "Symbol of Preservation",
+    "number": "9823",
+    "type": "utility"
+  },
+  {
+    "name": "Symbol of Dreams",
+    "number": "9824",
+    "type": "utility"
+  },
+  {
+    "name": "Symbol of Return",
+    "number": "9825",
+    "type": "utility"
+  },
+  {
+    "name": "Symbol of Seeking",
+    "number": "9826",
+    "type": "utility"
+  },
+  {
+    "name": "Sign of Recognition",
+    "number": "9901",
+    "type": "utility"
+  },
+  {
+    "name": "Sign of Warding",
+    "number": "9903",
+    "type": "defense"
+  },
+  {
+    "name": "Sign of Striking",
+    "number": "9904",
+    "type": "offense"
+  },
+  {
+    "name": "Sign of Clotting",
+    "number": "9905",
+    "type": "utility"
+  },
+  {
+    "name": "Sign of Thought",
+    "number": "9906",
+    "type": "utility"
+  },
+  {
+    "name": "Sign of Defending",
+    "number": "9907",
+    "type": "defense"
+  },
+  {
+    "name": "Sign of Smiting",
+    "number": "9908",
+    "type": "offense"
+  },
+  {
+    "name": "Sign of Staunching",
+    "number": "9909",
+    "type": "utility"
+  },
+  {
+    "name": "Sign of Deflection",
+    "number": "9910",
+    "type": "defense"
+  },
+  {
+    "name": "Sign of Hypnosis",
+    "number": "9911",
+    "type": "attack"
+  },
+  {
+    "name": "Sign of Swords",
+    "number": "9912",
+    "type": "offense"
+  },
+  {
+    "name": "Sign of Shields",
+    "number": "9913",
+    "type": "defense"
+  },
+  {
+    "name": "Sign of Dissipation",
+    "number": "9914",
+    "type": "defense"
+  },
+  {
+    "name": "Sign of Healing",
+    "number": "9915",
+    "type": "utility"
+  },
+  {
+    "name": "Sign of Madness",
+    "number": "9916",
+    "type": "offense"
+  },
+  {
+    "name": "Sign of Possession",
+    "number": "9917",
+    "type": "attack"
+  },
+  {
+    "name": "Sign of Wracking",
+    "number": "9918",
+    "type": "utility"
+  },
+  {
+    "name": "Sign of Darkness",
+    "number": "9919",
+    "type": "utility"
+  },
+  {
+    "name": "Sign of Hopelessness",
+    "number": "9920",
+    "type": "utility"
+  },
+  {
+    "name": "Arcane Mobility",
+    "number": "9002",
+    "type": "offense"
+  },
+  {
+    "name": "Next Bounty",
+    "number": "9003",
+    "type": "timer"
+  },
+  {
+    "name": "Next Group Bounty",
+    "number": "9056",
+    "type": "timer"
+  },
+  {
+    "name": "Next GoS Task",
+    "number": "9004",
+    "type": "timer"
+  },
+  {
+    "name": "MStrike Cooldown",
+    "number": "9005",
+    "type": "timer"
+  },
+  {
+    "name": "Lichbane",
+    "number": "9006",
+    "type": "defense"
+  },
+  {
+    "name": "Well of Life Cooldown",
+    "number": "9007",
+    "type": "timer"
+  },
+  {
+    "name": "Sacrifice Cooldown",
+    "number": "9008",
+    "type": "timer"
+  },
+  {
+    "name": "Raise Dead Cooldown",
+    "number": "9009",
+    "type": "timer"
+  },
+  {
+    "name": "Adrenal Surge Cooldown",
+    "number": "9010",
+    "type": "timer"
+  },
+  {
+    "name": "Council Task",
+    "number": "9011",
+    "type": "timer"
+  },
+  {
+    "name": "Council Punishment",
+    "number": "9012",
+    "type": "timer"
+  },
+  {
+    "name": "Fog Concealment",
+    "number": "9013",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Wolf",
+    "number": "9014",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Wolf Cooldown",
+    "number": "9015",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Jackal",
+    "number": "9016",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Jackal Cooldown",
+    "number": "9017",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Lion",
+    "number": "9018",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Lion Cooldown",
+    "number": "9019",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Panther",
+    "number": "9020",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Panther Cooldown",
+    "number": "9021",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Owl",
+    "number": "9022",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Owl Cooldown",
+    "number": "9023",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Hawk",
+    "number": "9024",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Hawk Cooldown",
+    "number": "9025",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Rat",
+    "number": "9026",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Rat Cooldown",
+    "number": "9027",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Porcupine",
+    "number": "9028",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Porcupine Cooldown",
+    "number": "9029",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Bear",
+    "number": "9030",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Bear Cooldown",
+    "number": "9031",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Serpent",
+    "number": "9032",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Serpent Cooldown",
+    "number": "9033",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Burgee",
+    "number": "9034",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Burgee Cooldown",
+    "number": "9035",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Mantis",
+    "number": "9036",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Mantis Cooldown",
+    "number": "9037",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Yierka",
+    "number": "9038",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Yierka Cooldown",
+    "number": "9039",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Spider",
+    "number": "9040",
+    "type": "timer"
+  },
+  {
+    "name": "AA: Spider Cooldown",
+    "number": "9041",
+    "type": "timer"
+  },
+  {
+    "name": "Meditation",
+    "number": "9075",
+    "type": "timer"
+  },
+  {
+    "name": "Pre-Meditate",
+    "number": "9042",
+    "type": "timer"
+  },
+  {
+    "name": "Meditate",
+    "number": "9043",
+    "type": "timer"
+  },
+  {
+    "name": "Miracle Cooldown",
+    "number": "9044",
+    "type": "timer"
+  },
+  {
+    "name": "Sigil of Escape Cooldown",
+    "number": "9045",
+    "type": "timer"
+  },
+  {
+    "name": "Regeneration Cooldown",
+    "number": "9046",
+    "type": "timer"
+  },
+  {
+    "name": "Lantern Charm Cooldown",
+    "number": "9047",
+    "type": "timer"
+  },
+  {
+    "name": "Symbol of Mana Cooldown",
+    "number": "9048",
+    "type": "timer"
+  },
+  {
+    "name": "Symbol of Transcendence Cooldown",
+    "number": "9049",
+    "type": "timer"
+  },
+  {
+    "name": "Symbol of Renewal Cooldown",
+    "number": "9050",
+    "type": "timer"
+  },
+  {
+    "name": "Burst of Swiftness Cooldown",
+    "number": "9051",
+    "type": "timer"
+  },
+  {
+    "name": "Curse of the Star (bonus)",
+    "number": "9053",
+    "type": "timer"
+  },
+  {
+    "name": "Doomstone Curse",
+    "number": "9054",
+    "type": "timer"
+  },
+  {
+    "name": "Divine Word Cooldown",
+    "number": "9055",
+    "type": "timer"
+  },
+  {
+    "name": "Planar Fragment Cooldown",
+    "number": "9057",
+    "type": "timer"
+  },
+  {
+    "name": "Chronomage Teleport Staff Cooldown",
+    "number": "9058",
+    "type": "timer"
+  },
+  {
+    "name": "Meditative Resistance (acid)",
+    "number": "9060",
+    "type": "defense"
+  },
+  {
+    "name": "Meditative Resistance (cold)",
+    "number": "9061",
+    "type": "defense"
+  },
+  {
+    "name": "Meditative Resistance (crush)",
+    "number": "9062",
+    "type": "defense"
+  },
+  {
+    "name": "Meditative Resistance (disintegration)",
+    "number": "9063",
+    "type": "defense"
+  },
+  {
+    "name": "Meditative Resistance (disruption)",
+    "number": "9064",
+    "type": "defense"
+  },
+  {
+    "name": "Meditative Resistance (electrical)",
+    "number": "9065",
+    "type": "defense"
+  },
+  {
+    "name": "Meditative Resistance (grapple)",
+    "number": "9066",
+    "type": "defense"
+  },
+  {
+    "name": "Meditative Resistance (fire)",
+    "number": "9067",
+    "type": "defense"
+  },
+  {
+    "name": "Meditative Resistance (impact)",
+    "number": "9068",
+    "type": "defense"
+  },
+  {
+    "name": "Meditative Resistance (plasma)",
+    "number": "9069",
+    "type": "defense"
+  },
+  {
+    "name": "Meditative Resistance (puncture)",
+    "number": "9070",
+    "type": "defense"
+  },
+  {
+    "name": "Meditative Resistance (slash)",
+    "number": "9071",
+    "type": "defense"
+  },
+  {
+    "name": "Meditative Resistance (steam)",
+    "number": "9072",
+    "type": "defense"
+  },
+  {
+    "name": "Meditative Resistance (unbalance)",
+    "number": "9073",
+    "type": "defense"
+  },
+  {
+    "name": "Meditative Resistance (vacuum)",
+    "number": "9074",
+    "type": "defense"
+  },
+  {
+    "name": "Major Loot Boost",
+    "number": "9100",
+    "type": "utility"
+  },
+  {
+    "name": "Minor Loot Boost",
+    "number": "9101",
+    "type": "utility"
+  },
+  {
+    "name": "Mana Leech Recovery",
+    "number": "9516",
+    "type": "timer"
+  },
+  {
+    "name": "Duck and Weave Cooldown",
+    "number": "9052",
+    "type": "timer"
+  }
+]

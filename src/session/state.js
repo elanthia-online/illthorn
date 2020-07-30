@@ -33,7 +33,7 @@ module.exports = class SessionState {
     "chest",
     "back",
     "abdomen",
-    "legArm",
+    "leftArm",
     "rightArm",
     "leftHand",
     "rightHand",

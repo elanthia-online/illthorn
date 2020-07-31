@@ -1,12 +1,15 @@
 const events = require("events")
+const m = require("mithril")
+const net = require("net")
+const Parser = require("../parser")
 const State = require("./state")
 const Feed = require("./feed")
 const Streams = require("./streams")
 const Bus = require("../bus")
 const History = require("./command-history")
 const { shell } = require("electron")
-const path = require("path")
-const m = require("mithril")
+
+const SessionEvents = { TAG: "session:tag" }
 
 module.exports = class Session extends events.EventEmitter {
   static Sessions = new Map()
@@ -67,7 +70,6 @@ module.exports = class Session extends events.EventEmitter {
 
   static async of(opts) {
     const char = new Session(opts)
-    await char.connect()
     char.rename(char.name || char.port)
     return char
   }
@@ -93,28 +95,24 @@ module.exports = class Session extends events.EventEmitter {
     this.feed = Feed.of({ session: this })
     this.streams = Streams.of({ session: this })
     this.state = State.of(this)
-    this.worker = new Worker(
-      path.resolve(__dirname, "worker.js")
-    )
-    this.worker.onerror = (err) =>
-      Bus.emit(Bus.events.ERR, err)
-    this.worker.onmessage = ({ data }) => {
-      if (data.topic == "CLOSE") return this.close()
-      if (data.topic == "OPEN") {
-        // console.log(data)
-        return shell.openExternal(data.link)
-      }
-      if (data.topic)
-        return this.emit(data.topic, data.gram)
-      console.warn(
-        "Message(%o) was passed without a topic",
-        data
-      )
-    }
+    this.sock = net.connect({ port })
+    this.sock.on("data", (data) => this.parse(data))
+    this.sock.on("error", (err) => this.emit(err))
+  }
 
-    this.on("TAG", (tag) => {
-      this.handle_tag(tag)
-      m.redraw()
+  parse(string) {
+    Parser.parse(string, (tag) => {
+      const tagName = tag.nodeName.toLowerCase()
+      if (tagName == "pre") return this.feed.append(tag)
+      if (tagName == "b") return this.feed.append(tag)
+      if (tagName == "a") return this.feed.append(tag)
+      if (tagName == "#text") return this.feed.append(tag)
+      if (
+        tagName == "indicator" &&
+        tag.innerText.length > 0
+      )
+        return this.feed.append(tag)
+      console.log(tagName, tag)
     })
   }
 
@@ -133,10 +131,6 @@ module.exports = class Session extends events.EventEmitter {
     this.feed.add(tag)
   }
 
-  get pending() {
-    return !this.worker
-  }
-
   close() {
     this.quit()
     if (!this.feed) return
@@ -151,14 +145,11 @@ module.exports = class Session extends events.EventEmitter {
     Session.delete(this.name)
     this.quit()
     this.feed.destroy()
-    this.feed = this.worker = this.state = void 0
+    this.feed = this.state = void 0
     Bus.emit(Bus.events.REDRAW)
   }
 
-  quit() {
-    this.worker && this.worker.terminate()
-    this.worker = void 0
-  }
+  quit() {}
 
   has_focus() {
     return this.feed.has_focus()
@@ -190,30 +181,19 @@ module.exports = class Session extends events.EventEmitter {
     Bus.emit(Bus.events.REDRAW)
   }
 
-  async connect() {
-    this.worker.postMessage({
-      topic: "CONNECT",
-      port: this.port,
-    })
-  }
-
   send_command(cmd, id = "cli") {
     cmd = cmd.toString().trim()
     if (cmd.length == 0) return
 
-    const prompt = this.worker ? ">" : "closed>"
-
-    this.emit("TAG", {
+    this.emit(SessionEvents.TAG, {
       id,
       name: "sent",
-      text: this.state.get("prompt.text", prompt) + cmd,
+      text: this.state.get("prompt.text", ">") + cmd,
     })
 
-    this.worker &&
-      this.worker.postMessage({
-        topic: "COMMAND",
-        command: cmd,
-      })
+    console.log(cmd)
+
+    this.sock.write(`${cmd}\r\n`)
 
     return this
   }

@@ -15,19 +15,22 @@ body {
 }
 
 #feed-wrapper {
+  position: relative;
   overflow: hidden;
 }
 
 #app {
   display: grid;
   height: 100vh;
-  grid-template-columns: 6em var(--column-width, 16em) 1fr 0;
+  grid-template-columns:
+    var(--session-width, 6em) var(--column-width, 16em)
+    1fr 0;
   overflow: hidden;
 }
 #app.right-panels-on {
-  grid-template-columns: 6em var(--column-width, 16em) 1fr var(
-      --column-width
-    );
+  grid-template-columns:
+    var(--session-width, 6em) var(--column-width, 16em)
+    1fr var(--column-width);
 }
 
 #sessions {

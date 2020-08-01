@@ -1,44 +1,41 @@
-ins {
-  text-decoration: none;
-}
-
 /**
- * skinnables via :hilite group 
+ * String highligting via :hilite 
  */
-.macro {
-  background: purple;
-}
 
 .exist {
-  color: #a0a0a0;
+  color: var(--hilite-color, #a0a0a0);
 }
 
-.external-link {
-  color: #82b3ae;
+.b {
+  // e.g. bigshot script output
+  color: var(--hilite-color, #a0a0a0);
+}
+.monster {
+  color: var(--monster-color, var(--warn, #fb5d2d));
 }
 
 .thoughts {
-  color: #fff;
+  color: var(--thoughts-color, var(--text-color, white));
 }
-
 .speech {
-  color: limegreen;
+  color: var(--speech-color, #1ce21c);
 }
-
 .whisper {
-  color: #4f8b89;
+  color: var(--whisper-color, var(--speech-color, #00921f));
 }
 
-.clickable .d {
-  border-bottom: 2px solid #db238e;
-}
-
-.clickable .d:hover {
+.external-link {
   cursor: pointer;
-  border-color: #6f23db;
+  color: var(--link-color, #27a4fd);
+}
+.clickable .d {
+  border-bottom: 2px solid var(--link-color, #27a4fd);
 }
 
-.b,
-.monster {
-  color: #c4d428;
+.macro {
+  background: var(--macro-color, #de5aff);
+}
+
+ins {
+  text-decoration: none;
 }

@@ -5,6 +5,7 @@ $yellow: #ffd60a; // hsl(50, 100%, 52%)
 :root {
   --main-bg-color: #1a1a1d;
   --text-color: #f1f1f1;
+  --hilite-color: #ffd28e;
 
   --info: #484848;
 
@@ -13,7 +14,10 @@ $yellow: #ffd60a; // hsl(50, 100%, 52%)
   --warn: #ff5402;
   --danger: #ff0000;
 
+  --monster-color: #{$yellow};
+
   --icon-size: 1em;
+  --border-width: 0;
 
   --column-width: minmax(16em, 0.33fr);
 
@@ -26,56 +30,56 @@ body {
   font-family: "DutchMediaeval";
 }
 
+// Putting Hands by CLI
 #main {
   grid-auto-rows: 0 1fr 2em 4em;
+  padding-bottom: 1em;
+}
+#app {
+  background: linear-gradient(
+    45deg,
+    rgba(black, 0.9),
+    rgba(black, 0.1)
+  );
 }
 #app.streams-on #main {
   grid-auto-rows: var(--stream-height, 13em) 1fr 2em 4em;
 }
 
-#sessions,
-.panels {
-  background: rgba(black, 0.5);
+#sessions {
+  background: none;
 }
 .panels {
   padding: 1em;
 }
-
 #hands-wrapper {
-  background: rgba(black, 0.5);
+  padding-top: 0.5em;
   grid-row: 3;
 }
 #streams-wrapper,
 #feed-wrapper {
-  background: rgba(black, 0.5);
-  padding: 1em 1em 1em 0;
+  padding: 1em 1em 0 0;
 }
 #streams-wrapper {
-  border: 0;
-  padding-bottom: 0;
+  padding-bottom: 0.5em;
 }
 .streams,
-.feed {
+.feed,
+#cli-wrapper,
+.panel {
   border: 3px solid black;
   border-image: url(../../app/img/wooden-border.png) 25 /
     20px round;
   background: rgba(black, 0.9);
 }
 #cli-wrapper {
-  background: rgba(black, 0.7);
-}
-
-#panels-left {
-  border-right: 0;
+  margin: 0 1em 0 0;
 }
 
 .panel {
-  background: rgba(black, 0.5);
-  border: 5px solid transparent;
-  padding: 0.75em;
+  background: rgba(black, 0.6);
+  padding: 4px;
   margin: 0 0 20px 0;
-  border-image: url(../../app/img/wooden-border.png) 25 /
-    20px round;
   > summary {
     background: none;
     font-family: "DutchMediaevalBook-Bold";
@@ -92,31 +96,9 @@ body {
     );
     box-shadow: inset 0px -4px 6px 0px rgba(black, 0.5);
   }
-}
-
-.panel-list {
-  > li {
-    margin: 0 0 1px 0;
-    border-radius: 3px;
-    overflow: hidden;
-    .value {
-      font-family: "DutchMediaevalBook-Bold";
-    }
+  > div {
+    padding: 0 0.5em 0.5em 0.5em;
   }
-}
-
-.injury.severity-2 {
-  color: #ff3333;
-  font-weight: bold;
-}
-.injury.severity-3 {
-  color: #ff0000;
-  text-shadow: 0 0 16px red;
-  font-weight: bold;
-}
-
-a.monster {
-  color: $yellow;
 }
 
 .feed .roomName {

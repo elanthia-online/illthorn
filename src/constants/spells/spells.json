@@ -255,7 +255,7 @@
     "availability": "all",
     "name": "Silence",
     "number": "210",
-    "type": "attack' incant='no"
+    "type": "attack"
   },
   {
     "availability": "group",
@@ -304,7 +304,7 @@
     "availability": "all",
     "name": "Mass Interference",
     "number": "217",
-    "type": "attack' incant='no"
+    "type": "attack"
   },
   {
     "availability": "self-cast",
@@ -461,7 +461,7 @@
     "availability": "all",
     "name": "Censure",
     "number": "316",
-    "type": "attack' incant='no"
+    "type": "attack"
   },
   {
     "availability": "all",
@@ -495,7 +495,7 @@
     "availability": "all",
     "name": "Divine Wrath",
     "number": "335",
-    "type": "attack' incant='no"
+    "type": "attack"
   },
   {
     "availability": "all",
@@ -599,7 +599,7 @@
     "availability": "all",
     "name": "Elemental Wave",
     "number": "410",
-    "type": "attack/area' incant='no"
+    "type": "attack/area"
   },
   {
     "availability": "all",
@@ -690,7 +690,7 @@
     "availability": "all",
     "name": "Major Elemental Wave",
     "number": "435",
-    "type": "attack/area' incant='no"
+    "type": "attack/area"
   },
   {
     "availability": "all",
@@ -825,7 +825,7 @@
     "availability": "all",
     "name": "Cone of Lightning",
     "number": "518",
-    "type": "attack/area' incant='no"
+    "type": "attack/area"
   },
   {
     "availability": "all",
@@ -845,7 +845,7 @@
     "availability": "all",
     "name": "Meteor Swarm",
     "number": "525",
-    "type": "attack' incant='no"
+    "type": "attack"
   },
   {
     "availability": "all",
@@ -954,13 +954,13 @@
     "availability": "all",
     "name": "Sun Burst",
     "number": "609",
-    "type": "attack/utility' incant='no"
+    "type": "attack/utility"
   },
   {
     "availability": "all",
     "name": "Tangleweed",
     "number": "610",
-    "type": "attack' incant='no"
+    "type": "attack"
   },
   {
     "availability": "group",
@@ -1020,7 +1020,7 @@
     "availability": "all",
     "name": "Mass Calm",
     "number": "619",
-    "type": "attack' incant='no"
+    "type": "attack"
   },
   {
     "availability": "all",
@@ -1046,7 +1046,7 @@
     "availability": "all",
     "name": "Nature&apos;s Fury",
     "number": "635",
-    "type": "attack' incant='no"
+    "type": "attack"
   },
   {
     "availability": "self-cast",
@@ -1177,7 +1177,7 @@
     "availability": "all",
     "name": "Evil Eye",
     "number": "717",
-    "type": "attack' incant='no"
+    "type": "attack"
   },
   {
     "availability": "all",
@@ -1195,7 +1195,7 @@
     "availability": "all",
     "name": "Implosion",
     "number": "720",
-    "type": "attack' incant='no"
+    "type": "attack"
   },
   {
     "availability": "self-cast",
@@ -1306,7 +1306,7 @@
     "availability": "all",
     "name": "Call Wind",
     "number": "912",
-    "type": "attack/area' incant='no"
+    "type": "attack/area"
   },
   {
     "availability": "self-cast",

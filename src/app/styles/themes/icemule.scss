@@ -19,6 +19,7 @@ A humble, hardscrabble theme—with an arctic, north-blush color palette lifted 
   --base-padding: 3em;
   --column-width: 16em;
   --stream-channel-color: #d8dee9;
+  --whisper-color: #a3be8c;
 }
 
 //Local Variables
@@ -35,8 +36,10 @@ pre {
 }
 
 //Sessions
-#sessions ol li::before {
-  box-shadow: 0 0 0 85rem rgba(136, 192, 208, 1);
+#sessions ol li {
+  &::before {
+    box-shadow: 0 0 0 85rem rgba(136, 192, 208, 1);
+  }
 }
 
 //Hands
@@ -236,6 +239,62 @@ pre {
   border-radius: 3.5px;
 }
 #active-spells li {
+  &[data-spell-type="defense"] {
+    &:before {
+      content: "🛡️";
+      position: absolute;
+      left: -3px;
+      top: 0.1px;
+    }
+  }
+  &[data-spell-type="offense"] {
+    &:before {
+      content: "⚔️";
+      position: absolute;
+      left: -3px;
+      top: 0.1px;
+    }
+  }
+  &[data-spell-type="utility"] {
+    &:before {
+      content: "⚙️";
+      position: absolute;
+      left: -3px;
+      top: 0.1px;
+    }
+  }
+  &[data-spell-type="offense/utility"] {
+    &:before {
+      content: "💪";
+      position: absolute;
+      left: -3px;
+      top: 0.1px;
+    }
+  }
+  &[data-spell-type="defense/utility"] {
+    &:before {
+      content: "🤺";
+      position: absolute;
+      left: -3px;
+      top: 0.1px;
+    }
+  }
+  &[data-spell-type="offense/defense"] {
+    &:before {
+      content: "⚖️";
+      position: absolute;
+      left: -3px;
+      top: 0.1px;
+    }
+  }
+  &[data-spell-type="bonus"] {
+    &:before {
+      content: "🌟";
+      position: absolute;
+      left: -3px;
+      top: 0.1px;
+    }
+  }
   font-size: 0.8rem;
   padding: 0.1rem 0.2rem;
   &:nth-child(even) {
@@ -247,16 +306,17 @@ pre {
   &.low {
     color: var(--danger);
   }
+  .value span.spell {
+    text-align: left;
+    width: 80%;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 0 0 0.6rem;
+  }
 }
-span.spell {
-  text-align: left;
-  width: 75%;
-  display: block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  padding-right: 0.3rem;
-}
+
 .spells.scroll::-webkit-scrollbar-thumb {
   background-color: rgba(79, 98, 103, 0.35);
   box-shadow: none;

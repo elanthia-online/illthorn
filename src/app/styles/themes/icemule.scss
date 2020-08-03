@@ -54,15 +54,6 @@ pre {
   }
 }
 .panel {
-  background: linear-gradient(
-    160deg,
-    rgba(59, 66, 82, 1) 0%,
-    rgba(67, 76, 94, 1) 44%,
-    rgba(76, 86, 106, 1) 100%
-  );
-}
-
-.panel {
   padding: 4px;
   margin: 0 0 20px 0;
   margin: 10px;
@@ -73,11 +64,20 @@ pre {
     #81a1c1,
     #b48dac
   );
-}
-.panel h3 {
-  border-bottom: 1px solid black;
-  background: linear-gradient(to bottom, #332f2f, #111);
-  margin: 0 0 4px 0;
+  background: linear-gradient(
+    160deg,
+    rgba(59, 66, 82, 1) 0%,
+    rgba(67, 76, 94, 1) 44%,
+    rgba(76, 86, 106, 1) 100%
+  );
+  h3 {
+    border-bottom: 1px solid black;
+    background: linear-gradient(to bottom, #332f2f, #111);
+    margin: 0 0 4px 0;
+  }
+  li {
+    margin: 3px 0 3px 0;
+  }
 }
 
 //Vitals
@@ -93,20 +93,6 @@ pre {
   }
 }
 
-#vitals li {
-  font-size: 0.9rem;
-  .label {
-    text-transform: capitalize;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    overflow: hidden;
-    overflow: hidden;
-    overflow: hidden;
-    overflow: hidden;
-  }
-}
-
 .panel li.vital {
   padding: 5px;
   span.value,
@@ -114,19 +100,30 @@ pre {
   span.label {
     color: var(--text-color);
   }
+  font-size: 0.9rem;
+  .label {
+    text-transform: capitalize;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
 }
+
 //Spirit
 #vitals-spirit.vital {
   @include vital-colors(#b48ead);
 }
+
 //health
 #vitals-health.vital {
   @include vital-colors(#a3be8c);
 }
+
 //Mana
 #vitals-mana.vital {
   @include vital-colors(#5e81ac);
 }
+
 //Stamina
 #vitals-stamina.vital {
   @include vital-colors(#81a1c1);
@@ -147,11 +144,12 @@ pre {
     &::before {
       content: "Encumbrance";
       position: absolute;
-      left: 10px;
+      left: 5px;
       font-weight: 400;
     }
   }
 }
+
 // LevelUp
 #vitals-nextLvlPB.vital {
   @include vital-colors(#e5e9f0);
@@ -162,6 +160,7 @@ pre {
     font-size: 0.8rem;
   }
 }
+
 // Experience
 #vitals-mindState.vital {
   @include vital-colors(#d8dee9);
@@ -177,11 +176,12 @@ pre {
     &::before {
       content: "Experience";
       position: absolute;
-      left: 10px;
+      left: 5px;
       font-weight: 400;
     }
   }
 }
+
 // Stance
 #hud .panel li#vitals-stance.vital {
   margin-bottom: 0px;
@@ -358,10 +358,6 @@ details.panel summary {
   padding: 4px;
 }
 
-#hud .panel li {
-  margin: 3px 0 3px 0;
-}
-
 //stream
 #streams-wrapper {
   box-shadow: 3px 3px 7px -1px rgba(0, 0, 0, 0.61);
@@ -476,10 +472,11 @@ pre.prompt {
     rgba(67, 76, 94, 1) 44%,
     rgba(76, 86, 106, 1) 100%
   );
+  .prompt {
+    font-size: 1rem;
+  }
 }
-#cli-wrapper .prompt {
-  font-size: 1rem;
-}
+
 #cnc input#cli {
   font-family: "MonoLisa";
   font-weight: bold;

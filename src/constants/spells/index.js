@@ -16,5 +16,8 @@ module.exports = (spell) => {
       )
       break
   }
+  if (typeof spellDetail === "undefined") {
+    spellDetail = { name: spell.name }
+  }
   return spellDetail
 }

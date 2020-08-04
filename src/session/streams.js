@@ -1,7 +1,7 @@
 const StreamsSettings = require("../settings").of("streams")
 const Lens = require("../util/lens")
 const Storage = require("../storage")
-
+const Session = require("../session")
 module.exports = class Streams {
   // this class on the top-level application element
   // signals which layout to use
@@ -61,8 +61,6 @@ module.exports = class Streams {
    */
   insert(tag) {
     const was_scrolling = this._scrolling
-    // TODO: This doesn't handle multiple sessions.
-    // TODO: Namespace the storage to account ID?
     this.storeStreamMessage(tag)
     const el = this.createEl(tag)
     this._view.append(el)
@@ -79,7 +77,8 @@ module.exports = class Streams {
     return pre
   }
 
-  storeStreamMessage(message) {
+  async storeStreamMessage(message) {
+    // TODO: Is there an Electron helper method for this?
     let thoughts = Storage.get("thoughts")
     if (!thoughts) {
       thoughts = []
@@ -90,7 +89,7 @@ module.exports = class Streams {
     // TODO: Trim to STREAMS_STORAGE_LIMT
   }
 
-  loadStreamMessages() {
+  async loadStreamMessages() {
     const thoughts = Storage.get("thoughts")
     if (thoughts) {
       thoughts.forEach((tag) => {

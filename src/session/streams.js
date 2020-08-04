@@ -1,5 +1,6 @@
 const StreamsSettings = require("../settings").of("streams")
 const Lens = require("../util/lens")
+const Storage = require("../storage")
 
 module.exports = class Streams {
   // this class on the top-level application element
@@ -7,6 +8,7 @@ module.exports = class Streams {
   static STREAMS_ON = "streams-on"
 
   static STREAMS_BUFFER_LIMT = 1000
+  static STREAMS_STORAGE_LIMT = 1000
 
   static ENUM = {
     thoughts: 1,
@@ -26,6 +28,7 @@ module.exports = class Streams {
     this._view = document.createElement("div")
     this._view.classList.add("streams", "scroll")
     this._settings = StreamsSettings
+    this.loadStreamMessages()
   }
 
   get _scrolling() {
@@ -58,14 +61,43 @@ module.exports = class Streams {
    */
   insert(tag) {
     const was_scrolling = this._scrolling
+    // TODO: This doesn't handle multiple sessions.
+    // TODO: Namespace the storage to account ID?
+    this.storeStreamMessage(tag)
+    const el = this.createEl(tag)
+    this._view.append(el)
 
+    // scroll the feed to the HEAD position
+    if (!was_scrolling) this.advance_scroll()
+  }
+
+  createEl(tag) {
     const pre = document.createElement("pre")
     pre.classList.add(tag.id, tag.name)
     const parts = this.transformStreamMessage(tag)
     parts.forEach((ele) => pre.append(ele))
-    this._view.append(pre)
-    // scroll the feed to the HEAD position
-    if (!was_scrolling) this.advance_scroll()
+    return pre
+  }
+
+  storeStreamMessage(message) {
+    let thoughts = Storage.get("thoughts")
+    if (!thoughts) {
+      thoughts = []
+    }
+    thoughts.push(message)
+    Storage.set("thoughts", thoughts)
+
+    // TODO: Trim to STREAMS_STORAGE_LIMT
+  }
+
+  loadStreamMessages() {
+    const thoughts = Storage.get("thoughts")
+    if (thoughts) {
+      thoughts.forEach((tag) => {
+        const el = this.createEl(tag)
+        this._view.append(el)
+      })
+    }
   }
 
   transformStreamMessage(tag) {

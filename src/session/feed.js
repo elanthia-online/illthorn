@@ -28,7 +28,7 @@ module.exports = class Feed {
    * safely check if an HTMLElement is a prompt or not
    */
   static is_prompt(pre) {
-    return pre && pre.tagName == "prompt"
+    return pre && pre.tagName == "PROMPT"
   }
   /**
    * pure append method for Pipe interop
@@ -153,21 +153,18 @@ module.exports = class Feed {
    *   1. handle when detached from DOM tree
    *   2. re-render slices of pruned nodes when scrolling
    */
-  append(pre) {
+  append(ele) {
     const was_scrolling = this._scrolling
 
     // swap for the latest prompt
-    if (
-      Feed.is_prompt(pre.firstElementChild) &&
-      this.has_prompt()
-    ) {
+    if (Feed.is_prompt(ele) && this.has_prompt()) {
       return this.root.replaceChild(
-        pre,
+        ele,
         this.root.lastElementChild
       )
     }
     // append the tag to the actual HTML
-    this.root.append(pre)
+    this.root.append(ele)
     // if our pruned in-memory buffer has grown too long
     // we must prune it again.  These messages are lost forever
     // but that is what logs are for!
@@ -242,23 +239,22 @@ module.exports = class Feed {
   ingestDocument(parsed) {
     //console.log(parsed.body.innerHTML)
     this.ingestState(parsed)
+    const prompt = parsed.querySelector("prompt")
+    if (prompt) prompt.remove()
     setTimeout(() => {
       this.ingestTagBySelector(parsed, "pre")
       // order of operations is (somewhat) important here!
       this.ingestTagBySelector(parsed, "stream")
       this.ingestTagBySelector(parsed, "mono")
-
-      // top-level text elements
-      //this.ingestTagBySelector(parsed, "body > a")
-      // handle top-level text nodes
-      // example:
+      // handle top-level text nodes mixed with state tags
       // <dialogdata></dialogdata>Atone just arrived!
       this.ingestDocumentTextNodes(parsed.body)
       this.ingestDocumentTextNodes(parsed.head)
-      this.ingestTagBySelector(parsed, "prompt")
+      if (prompt) this.append(prompt)
       this.pruneIgnorableTags(parsed)
 
       if (!parsed.body.hasChildNodes()) return
+      // this is for debugging
       console.log(
         "parsed:unhandled(children: %s, %o)",
         parsed.body.hasChildNodes(),

@@ -13,7 +13,7 @@ exports.parse = function (incoming, cb) {
 
   // clear the buffer
   BUFFER = ""
-  console.log(doc.body.innerHTML)
+  //console.log(doc.body.innerHTML)
   cb(doc)
   //console.timeEnd("parser")
 }

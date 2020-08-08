@@ -7,9 +7,6 @@ const Feed = require("./feed")
 const Streams = require("./streams")
 const Bus = require("../bus")
 const History = require("./command-history")
-const { shell } = require("electron")
-
-const SessionEvents = { TAG: "session:tag" }
 
 module.exports = class Session extends events.EventEmitter {
   static Sessions = new Map()

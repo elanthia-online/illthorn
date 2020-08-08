@@ -7,8 +7,8 @@ module.exports = class Streams {
   // signals which layout to use
   static STREAMS_ON = "streams-on"
 
-  static STREAMS_BUFFER_LIMT = 1000
-  static STREAMS_STORAGE_LIMT = 1000
+  static STREAMS_BUFFER_LIMT = 250
+  static STREAMS_STORAGE_LIMT = 100
 
   static ENUM = {
     thoughts: 1,
@@ -78,20 +78,32 @@ module.exports = class Streams {
   }
 
   async storeStreamMessage(message) {
-    // TODO: Is there an Electron helper method for this?
     let thoughts = Storage.get("thoughts")
     if (!thoughts) {
       thoughts = []
     }
     thoughts.push(message)
-    Storage.set("thoughts", thoughts)
+    thoughts = this.trimMessages(thoughts)
 
-    // TODO: Trim to STREAMS_STORAGE_LIMT
+    Storage.set("thoughts", thoughts)
+  }
+
+  trimMessages(thoughts) {
+    // Only store and retrieve up to a maximum
+    if (thoughts.length > Streams.STREAMS_STORAGE_LIMT) {
+      thoughts = thoughts.slice(
+        thoughts.length - Streams.STREAMS_STORAGE_LIMT,
+        thoughts.length
+      )
+    }
+    return thoughts
   }
 
   async loadStreamMessages() {
-    const thoughts = Storage.get("thoughts")
+    let thoughts = Storage.get("thoughts")
     if (thoughts) {
+      thoughts = this.trimMessages(thoughts)
+      console.log(thoughts.length)
       thoughts.forEach((tag) => {
         const el = this.createEl(tag)
         this._view.append(el)

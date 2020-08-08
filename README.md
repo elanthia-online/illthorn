@@ -2,7 +2,7 @@
 
 A modern cross-platform front-end for [Gemstone IV](https://www.play.net/gs4/).
 
-![illthorn-fe](https://user-images.githubusercontent.com/1090434/81620486-0082e580-93ba-11ea-91ad-b526bb16ceac.png)
+![illthorn-fe](https://res.cloudinary.com/css-tricks/image/upload/f_auto,q_auto/v1596898391/illthorn-fe_skuvj2.png)
 
 ## Developer Installation
 
@@ -14,7 +14,7 @@ A modern cross-platform front-end for [Gemstone IV](https://www.play.net/gs4/).
 - You can then launch Illthorn with `yarn start`
 - Or make an app file with `yarn make` (look for the executable in `/out/`)
 
-## Connecting to the game
+## Connecting to the Game
 
 You need to have an active Lich session. So you'd connect something like...
 
@@ -27,12 +27,11 @@ Lich might also be `lich.rbw` on your setup. You can run multiple connections (f
 ## Current Features
 
 - Runs on macOS, Windows, and Linux ([Electron](https://www.electronjs.org/docs/tutorial/support))
-- Attempts to autostart sessions by detecting open lich processes started with `--without-frontend`
+- Attempts to autostart sessions by detecting open Lich processes started with `--without-frontend`
 - Runs multiple sessions in a single app (alt-# between them)
 - Highlights names/monsters/etc
 - Autocomplete command history
 - Multiple themes to choose from
-- User Themeable via CSS
 - Zoom in/out (like a web browser)
 - Optional Streams panel for LNet, ESP, and Deaths
 
@@ -51,11 +50,24 @@ Meta shortcuts are not customizable, as this project will general prefer sane de
 
 #### `alt+<n>`
 
-quick swap between sessions based on the numeric order on the left-hand session pane, similar to many modern terminals
+Quick swap between sessions based on the numeric order on the left-hand session pane, similar to many modern terminals
 
 ## CLI Commands (Vim prefixed)
 
 All FE commands are prefixed by the `:` character, ala `vim` or other common CLI utils.
+
+#### `:theme <name>`
+
+Change the active theme.
+
+- `original`
+- `rogue`
+- `dark-king`
+- `icemule`
+- `kobold`
+- `raging-thrak`
+
+![illthorn themes](https://res.cloudinary.com/css-tricks/image/upload/f_auto,q_auto/v1596907386/illthorn-themes_nnxevd.gif)
 
 #### `:connect <name> <port>`
 

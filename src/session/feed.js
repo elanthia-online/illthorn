@@ -28,12 +28,7 @@ module.exports = class Feed {
    * safely check if an HTMLElement is a prompt or not
    */
   static is_prompt(pre) {
-    return (
-      pre &&
-      pre.classList &&
-      pre.classList.contains("prompt") &&
-      !pre.classList.contains("cli")
-    )
+    return pre && pre.tagName == "prompt"
   }
   /**
    * pure append method for Pipe interop
@@ -213,7 +208,8 @@ module.exports = class Feed {
   ingestText(ele) {
     const body = document.body
     // skip double insertions
-    if (!ele.textContent) return ele.remove()
+    if (ele.textContent.trim().length == 0)
+      return ele.remove()
     if (body.contains(ele)) return
     this.append(ele)
   }
@@ -232,39 +228,51 @@ module.exports = class Feed {
   ingestDocumentTextNodes(bod) {
     if (!bod.hasChildNodes()) return
     const span = document.createElement("span")
-    Parser.each(bod.childNodes, (node) => {
-      if (document.contains(node)) return
-      if (node.constructor !== Text) return
-      span.innerText += node.textContent
-    })
+    // this must be a cloned reference!
+    const nodes = [].slice.call(bod.childNodes)
+    for (const ele of nodes) {
+      // <a>, <i>, <b>
+      if ((ele.tagName || "t").length == 1) {
+        span.appendChild(ele)
+      }
+    }
     this.ingestText(span)
   }
 
   ingestDocument(parsed) {
+    //console.log(parsed.body.innerHTML)
     this.ingestState(parsed)
     setTimeout(() => {
+      this.ingestTagBySelector(parsed, "pre")
       // order of operations is (somewhat) important here!
-      this.ingestTagBySelector(parsed, "prompt")
       this.ingestTagBySelector(parsed, "stream")
       this.ingestTagBySelector(parsed, "mono")
-      this.ingestTagBySelector(parsed, "pre")
+
       // top-level text elements
-      this.ingestTagBySelector(parsed, "body > a")
+      //this.ingestTagBySelector(parsed, "body > a")
       // handle top-level text nodes
       // example:
       // <dialogdata></dialogdata>Atone just arrived!
       this.ingestDocumentTextNodes(parsed.body)
+      this.ingestDocumentTextNodes(parsed.head)
+      this.ingestTagBySelector(parsed, "prompt")
+      this.pruneIgnorableTags(parsed)
 
-      const unhandledCases = parsed.body.querySelectorAll(
-        "*"
-      )
-      if (unhandledCases.length == 0) return
+      if (!parsed.body.hasChildNodes()) return
       console.log(
         "parsed:unhandled(children: %s, %o)",
-        parsed.hasChildNodes(),
-        unhandledCases
+        parsed.body.hasChildNodes(),
+        parsed.body.childNodes
       )
     }, 0)
+  }
+
+  pruneIgnorableTags(parsed) {
+    ;["resource"].forEach((selector) =>
+      Pipe.of(
+        parsed.querySelectorAll(selector)
+      ).fmap(Parser.each, (ele) => ele.remove())
+    )
   }
 
   ingestState(parsed) {
@@ -281,7 +289,13 @@ module.exports = class Feed {
       "opendialog",
       "component",
       "exposecontainer",
+      "deletecontainer",
+      "right",
+      "left",
+      "inv",
+      "clearcontainer",
       "stream#room",
+      "stream#inv",
     ].forEach((selector) => {
       Pipe.of(parsed.querySelectorAll(selector))
         .fmap(Parser.each, (ele) => ele.remove())

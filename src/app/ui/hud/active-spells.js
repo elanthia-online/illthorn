@@ -47,11 +47,14 @@ module.exports = class ActiveSpells {
   }
 
   static spells() {
-    return Lens.get(
-      Session.focused(),
-      "state.ActiveSpells.children",
-      []
-    )
+    return [].slice
+      .call(
+        Lens.get(
+          Session.focused(),
+          "state.ActiveSpells.children",
+          []
+        )
+      )
       .filter((_, i) => i % 2 == 1)
       .map(Attrs.get)
       .map((attrs) => ({

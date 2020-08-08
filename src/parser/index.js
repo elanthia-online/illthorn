@@ -1,13 +1,29 @@
 const parser = new DOMParser()
 
-exports.parse = function (buffer, cb) {
-  //console.log("raw:\n%s", buffer.toString())
+let BUFFER = (window.FEED_BUFFER = "")
+
+exports.parse = function (incoming, cb) {
+  BUFFER += incoming.toString()
+  //console.log("raw:\n%s", BUFFER)
+  // continue to buffer
+  if (isDanglingStream(BUFFER)) return
   //console.time("parser")
-  const string = normalize(buffer.toString())
+  const string = normalize(BUFFER)
   const doc = parser.parseFromString(string, "text/html")
-  //console.timeEnd("parser")
-  //console.log("normalized:\n%s", string)
+
+  // clear the buffer
+  BUFFER = ""
+  console.log(doc.body.innerHTML)
   cb(doc)
+  //console.timeEnd("parser")
+}
+
+function isDanglingStream(buffered) {
+  // todo: this should also match id= attribute
+  return (
+    buffered.includes("<pushStream") &&
+    !buffered.includes("<popStream")
+  )
 }
 
 function pre(string) {
@@ -22,7 +38,8 @@ function normalize(string) {
     .replace(/<push/, "<")
     .replace(/<pop/, "<")
     .replace(/<output/g, "<pre")
-    .replace(/<\/output>/, "</pre>")
+    .replace(/<\/output>/g, "</pre>")
+    .replace(/<clearContainer/g, "</clearcontainer")
 
   string = string.replace(
     /<style id="(\w+)"\s?\/>/g,

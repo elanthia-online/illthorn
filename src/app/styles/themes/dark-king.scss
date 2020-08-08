@@ -61,6 +61,7 @@ body {
   &::before {
     content: "";
     position: absolute;
+    z-index: 1;
     top: 0;
     left: 0;
     width: 100%;
@@ -256,7 +257,7 @@ li#vitals-stamina {
   color: #ff7c7c;
 }
 .injury.severity-2 {
-  .value::before {
+  .injury-name::before {
     content: "🩸";
   }
 }
@@ -266,7 +267,7 @@ li#vitals-stamina {
   font-weight: bold;
 }
 .injury.severity-3 {
-  .value::before {
+  .injury-name::before {
     content: "🩸";
   }
 }

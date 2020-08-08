@@ -282,11 +282,9 @@ li#vitals-stamina {
 .exist {
   color: #a7a7a7;
 }
-.monster {
-  color: $orange;
-}
+.monster,
 .b {
-  // e.g. enhanced stat
+  color: $orange;
 }
 
 @each $direction in $directions {
@@ -300,10 +298,12 @@ li#vitals-stamina {
     font-weight: bold;
   }
 }
+$start: 0;
 @each $gem in $gems {
   a.exist[data-noun="#{$gem}"] {
-    color: $blue;
+    color: adjust-hue($blue, $start);
   }
+  $start: $start + 1;
 }
 @each $magic in $magics {
   a.exist[data-noun="#{$magic}"] {

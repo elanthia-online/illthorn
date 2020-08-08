@@ -10,8 +10,10 @@ body {
   width: 4px;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: var(--info);
-  box-shadow: inset 0 0 6px rgba(black, 0.5);
+  background-color: var(
+    --scrollbar-thumb-color,
+    var(--info, #184f3f)
+  );
 }
 
 #feed-wrapper {

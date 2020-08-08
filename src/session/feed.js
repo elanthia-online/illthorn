@@ -1,6 +1,18 @@
 const Compiler = require("../compiler/compiler")
 const Settings = require("../settings")
 const Bus = require("../bus")
+const Parser = require("../parser")
+const Pipe = require("../util/pipe")
+const Lens = require("../util/lens")
+const SessionState = require("./state")
+
+const RENDERABLE_NODES = {
+  pre: 1,
+  pushstream: 1,
+  b: 1,
+  a: 1,
+  "#text": 1,
+}
 /**
  * a TCP Game feed -> DOM renderer
  */
@@ -195,6 +207,68 @@ module.exports = class Feed {
 
     Compiler.compile(tag, (compiled) => {
       Feed.consume(compiled, this)
+    })
+  }
+
+  ingestText(ele) {
+    const body = document.body
+    // skip double insertions
+    if (!ele.textContent) return
+    if (body.contains(ele)) return
+    this.append(ele)
+  }
+
+  ingestTagBySelector(parsed, selector) {
+    Pipe.of(parsed.querySelectorAll(selector))
+      .fmap(
+        Parser.each,
+        (ele) =>
+          Lens.get(ele, "parentElement.tagName") ==
+            ele.tagName && ele.remove()
+      )
+      .fmap(Parser.each, (ele) => this.ingestText(ele))
+  }
+
+  ingestDocument(parsed) {
+    this.ingestState(parsed)
+    setTimeout(() => {
+      this.ingestTagBySelector(parsed, "mono")
+      this.ingestTagBySelector(parsed, "pre")
+      this.ingestTagBySelector(parsed, "body > a")
+      console.log(parsed.body.innerHTML)
+    }, 0)
+  }
+
+  ingestState(parsed) {
+    Parser.visitAll(parsed, (ele) => {
+      const tagName = (ele.tagName || "").toLowerCase()
+      if (
+        tagName == "head" ||
+        tagName == "body" ||
+        tagName == "html"
+      )
+        return
+      switch (tagName) {
+        case "progressbar":
+        case "indicator":
+        case "container":
+        case "compass":
+        case "dialogdata":
+          ele.remove()
+
+          console.log(
+            "state(:prune):%s",
+            parsed.contains(ele),
+            tagName,
+            ele.innerText
+          )
+          return SessionState.consume(
+            this.session.state,
+            ele
+          )
+        default:
+        //console.log("state(:skip)", tagName, ele.innerText)
+      }
     })
   }
 }

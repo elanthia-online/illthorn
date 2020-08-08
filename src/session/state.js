@@ -12,14 +12,14 @@ const makeLookup = (keys) =>
   )
 
 module.exports = class SessionState {
-  static TAGS = [
+  static TAGS = makeLookup([
     "prompt",
     "right",
     "left",
     "spell",
     "compass",
     "style",
-  ]
+  ])
 
   static MODALS = ["commands"]
 
@@ -59,13 +59,17 @@ module.exports = class SessionState {
     return new SessionState(session)
   }
 
+  static wants(id) {
+    return id in SessionState.ID_TAGS
+  }
+
   static consume(state, tag) {
     if (tag.id && tag.id in SessionState.INJURY_IDS)
       return state.put("injuries." + tag.id, tag)
     if (tag.id && tag.id in SessionState.ID_TAGS)
       return state.put(tag.id, tag)
     if (tag.children && tag.children.length)
-      tag.children.forEach((child) =>
+      Array.from(tag.childNodes).forEach((child) =>
         SessionState.consume(state, child)
       )
   }
@@ -93,31 +97,6 @@ module.exports = class SessionState {
 
   wire_up() {
     const parser = this._session
-
-    parser.on("TAG", (tag) => {
-      SessionState.consume(this, tag)
-    })
-
-    parser.on("NOTIFICATION", (tag) => {
-      if (!tag.text || tag.text.length == 0) return
-
-      let silent = false
-      if ("sound" in tag.attrs)
-        silent = Settings.cast(tag.attrs.sound)
-      silent = Settings.get("mute", silent)
-
-      if (tag.text)
-        new Notification(
-          this._session.name +
-            " " +
-            Lens.get(tag, "attrs.title"),
-          { ...tag.attrs, silent, body: tag.text }
-        )
-    })
-
-    SessionState.TAGS.forEach((tag) =>
-      parser.on(tag, (val) => this.put(tag, val))
-    )
 
     SessionState.TIMERS.forEach((tag) => {
       parser.on(tag, (val) => this.spawn_timer(val))

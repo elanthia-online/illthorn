@@ -101,19 +101,9 @@ module.exports = class Session extends events.EventEmitter {
   }
 
   parse(string) {
-    Parser.parse(string, (tag) => {
-      const tagName = tag.nodeName.toLowerCase()
-      if (tagName == "pre") return this.feed.append(tag)
-      if (tagName == "b") return this.feed.append(tag)
-      if (tagName == "a") return this.feed.append(tag)
-      if (tagName == "#text") return this.feed.append(tag)
-      if (
-        tagName == "indicator" &&
-        tag.innerText.length > 0
-      )
-        return this.feed.append(tag)
-      console.log(tagName, tag)
-    })
+    Parser.parse(string, (doc) =>
+      this.feed.ingestDocument(doc)
+    )
   }
 
   handle_tag(tag) {

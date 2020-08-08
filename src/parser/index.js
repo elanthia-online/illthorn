@@ -1,17 +1,13 @@
 const parser = new DOMParser()
-// this is the private internal state of the parser
-const STACK = (exports.stack = [])
 
 exports.parse = function (buffer, cb) {
-  const string = normalize(buffer.toString())
-  console.log("original:\n%s", buffer.toString())
-  console.log("normalized:\n%s", string)
+  //console.log("raw:\n%s", buffer.toString())
   console.time("parser")
-
+  const string = normalize(buffer.toString())
   const doc = parser.parseFromString(string, "text/html")
-  each_shallow(doc.head, cb)
-  each_shallow(doc.body, cb)
   console.timeEnd("parser")
+  //console.log("normalized:\n%s", string)
+  cb(doc)
 }
 
 function pre(string) {
@@ -21,35 +17,44 @@ function pre(string) {
 function normalize(string) {
   string = string
     .replace(/<style id=""\/>/g, "")
-    .replace(/<pushBold\/>/g, "<b>")
+    .replace(/<pushBold\/>/g, `<b class="monster">`)
     .replace(/<popBold\/>/g, "</b>")
-    .replace(`<style `, `<pre `)
+    .replace(/<push/, "<")
+    .replace(/<pop/, "<")
+    .replace(/<output/g, "<pre")
+    .replace(/<\/output>/, "</pre>")
+
+  string = string.replace(
+    /<style id="(\w+)"\s?\/>/g,
+    (_, id) => `<pre class="${id}">`
+  )
+
+  string = string
     .replace(` id="`, ` class="`)
     .replace(` id='`, ` class='`)
 
   if (!string.startsWith("<")) return pre(string)
-  if (string.startsWith("<b>")) return pre(string)
+  if (string.startsWith("<b ")) return pre(string)
   if (string.startsWith("<a ")) return pre(string)
   return string
 }
-
-function each_shallow(ele, cb) {
-  for (const child of ele.childNodes) {
-    requestAnimationFrame(() => {
-      cb(child)
-    })
-  }
+/* recursive visitor */
+exports.visitAll = (root, cb) => {
+  cb(root)
+  if (!root.parentNode && !root.nodeName == "#document")
+    return
+  root.childNodes.forEach((child) =>
+    exports.visitAll(child, cb)
+  )
 }
 
-const EDGE_NODES = {
-  pre: 1,
-  compass: 1,
-  inv: 1,
-  clearcontainer: 1,
-  b: 1,
+exports.each = (nodelist, cb) => {
+  ;[].forEach.call(nodelist, cb)
+  return nodelist
 }
 
-function isEdgeNode(ele) {
-  if (!ele.tagName) return true
-  return EDGE_NODES[ele.tagName.toLowerCase()]
-}
+exports.allDocumentElements = (doc, cb) =>
+  [].slice
+    .call(doc.head.childNodes)
+    .concat(...doc.body.childNodes)
+    .forEach((ele) => requestAnimationFrame(() => cb(ele)))

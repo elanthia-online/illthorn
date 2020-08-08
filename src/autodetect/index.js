@@ -13,9 +13,7 @@ const is_lich_proc = (cmd) =>
   cmd.includes("--detachable-client=")
 
 const is_cabal_proc = (cmd) =>
-  cmd.includes("cabal.rb") &&
-  (cmd.includes("--port=") ||
-    cmd.includes("--detachable-client="))
+  cmd.includes("cabal") && cmd.includes("port=")
 
 const not_zero_port = ({ port }) => port > 0
 
@@ -23,10 +21,10 @@ const match = (string, regex) => string.match(regex) || []
 
 const extract_port = (cmd) =>
   match(cmd, /--detachable-client=(\d+)/)[1] ||
-  match(cmd, /--port=(\d+)/)[1]
+  match(cmd, /port=(\d+)/)[1]
 
 const extract_name = (cmd) =>
-  match(cmd, /--character=(\w+)\b/)[1] ||
+  match(cmd, /character=(\w+)\b/)[1] ||
   match(cmd, /--login\s(\w+)\s/)[1]
 
 const parse_lich_cmd = (proc) => ({

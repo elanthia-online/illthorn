@@ -1,7 +1,6 @@
 const StreamsSettings = require("../settings").of("streams")
 const Lens = require("../util/lens")
 const Storage = require("../storage")
-const Session = require("../session")
 module.exports = class Streams {
   // this class on the top-level application element
   // signals which layout to use
@@ -28,6 +27,7 @@ module.exports = class Streams {
     this._view = document.createElement("div")
     this._view.classList.add("streams", "scroll")
     this._settings = StreamsSettings
+    this.session = Session
     this.loadStreamMessages()
   }
 
@@ -85,6 +85,7 @@ module.exports = class Streams {
     thoughts.push(message)
     thoughts = this.trimMessages(thoughts)
 
+    // TODO: Would like to store messages from the character session name (e.g. Storage.set("thoughts.${character_name}")), not a global store. But I can't figure out how to have access to the correct session at this point.
     Storage.set("thoughts", thoughts)
   }
 
@@ -100,10 +101,14 @@ module.exports = class Streams {
   }
 
   async loadStreamMessages() {
+    // TODO: Would like to retrieve messages from the character session name, not a global store. But I can't figure out how to have access to the correct session at this point.
+    console.log(
+      "focused",
+      Lens.get(this.session.focused(), name)
+    )
     let thoughts = Storage.get("thoughts")
     if (thoughts) {
       thoughts = this.trimMessages(thoughts)
-      console.log(thoughts.length)
       thoughts.forEach((tag) => {
         const el = this.createEl(tag)
         this._view.append(el)

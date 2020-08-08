@@ -2,10 +2,10 @@ const parser = new DOMParser()
 
 exports.parse = function (buffer, cb) {
   //console.log("raw:\n%s", buffer.toString())
-  console.time("parser")
+  //console.time("parser")
   const string = normalize(buffer.toString())
   const doc = parser.parseFromString(string, "text/html")
-  console.timeEnd("parser")
+  //console.timeEnd("parser")
   //console.log("normalized:\n%s", string)
   cb(doc)
 }

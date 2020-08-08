@@ -213,7 +213,7 @@ module.exports = class Feed {
   ingestText(ele) {
     const body = document.body
     // skip double insertions
-    if (!ele.textContent) return
+    if (!ele.textContent) return ele.remove()
     if (body.contains(ele)) return
     this.append(ele)
   }
@@ -229,46 +229,65 @@ module.exports = class Feed {
       .fmap(Parser.each, (ele) => this.ingestText(ele))
   }
 
+  ingestDocumentTextNodes(bod) {
+    if (!bod.hasChildNodes()) return
+    const span = document.createElement("span")
+    Parser.each(bod.childNodes, (node) => {
+      if (document.contains(node)) return
+      if (node.constructor !== Text) return
+      span.innerText += node.textContent
+    })
+    this.ingestText(span)
+  }
+
   ingestDocument(parsed) {
     this.ingestState(parsed)
     setTimeout(() => {
+      // order of operations is (somewhat) important here!
+      this.ingestTagBySelector(parsed, "prompt")
+      this.ingestTagBySelector(parsed, "stream")
       this.ingestTagBySelector(parsed, "mono")
       this.ingestTagBySelector(parsed, "pre")
+      // top-level text elements
       this.ingestTagBySelector(parsed, "body > a")
-      console.log(parsed.body.innerHTML)
+      // handle top-level text nodes
+      // example:
+      // <dialogdata></dialogdata>Atone just arrived!
+      this.ingestDocumentTextNodes(parsed.body)
+
+      const unhandledCases = parsed.body.querySelectorAll(
+        "*"
+      )
+      if (unhandledCases.length == 0) return
+      console.log(
+        "parsed:unhandled(children: %s, %o)",
+        parsed.hasChildNodes(),
+        unhandledCases
+      )
     }, 0)
   }
 
   ingestState(parsed) {
-    Parser.visitAll(parsed, (ele) => {
-      const tagName = (ele.tagName || "").toLowerCase()
-      if (
-        tagName == "head" ||
-        tagName == "body" ||
-        tagName == "html"
-      )
-        return
-      switch (tagName) {
-        case "progressbar":
-        case "indicator":
-        case "container":
-        case "compass":
-        case "dialogdata":
-          ele.remove()
-
-          console.log(
-            "state(:prune):%s",
-            parsed.contains(ele),
-            tagName,
-            ele.innerText
-          )
-          return SessionState.consume(
-            this.session.state,
-            ele
-          )
-        default:
-        //console.log("state(:skip)", tagName, ele.innerText)
-      }
+    ;[
+      "progressbar",
+      "indicator",
+      "container",
+      "compass",
+      "dialogdata",
+      "compdef",
+      "streamwindow",
+      "clearstream",
+      "switchquickbar",
+      "opendialog",
+      "component",
+      "exposecontainer",
+      "stream#room",
+    ].forEach((selector) => {
+      Pipe.of(parsed.querySelectorAll(selector))
+        .fmap(Parser.each, (ele) => ele.remove())
+        .fmap(Parser.each, (ele) =>
+          SessionState.consume(this.session.state, ele)
+        )
     })
   }
 }

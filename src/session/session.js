@@ -174,17 +174,17 @@ module.exports = class Session extends events.EventEmitter {
   send_command(cmd, id = "cli") {
     cmd = cmd.toString().trim()
     if (cmd.length == 0) return
+    const client = document.createElement("pre")
 
-    this.emit(SessionEvents.TAG, {
-      id,
-      name: "sent",
-      text: this.state.get("prompt.text", ">") + cmd,
-    })
-
-    console.log(cmd)
-
+    m.render(
+      client,
+      m(
+        `span.${id}.sent`,
+        this.state.get("prompt.text", ">") + cmd
+      )
+    )
+    this.feed.append(client)
     this.sock.write(`${cmd}\r\n`)
-
     return this
   }
 }

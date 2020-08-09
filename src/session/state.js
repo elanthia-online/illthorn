@@ -64,14 +64,13 @@ module.exports = class SessionState {
   }
 
   static consume(state, tag) {
+    //console.log("state:consume(%o)", tag)
     if (tag.id && tag.id in SessionState.INJURY_IDS)
       return state.put("injuries." + tag.id, tag)
     if (tag.id && tag.id in SessionState.ID_TAGS)
       return state.put(tag.id, tag)
-    if (tag.children && tag.children.length)
-      Array.from(tag.childNodes).forEach((child) =>
-        SessionState.consume(state, child)
-      )
+    if (SessionState.TAGS[tag.tagName.toLowerCase()])
+      return state.put(tag.tagName.toLowerCase(), tag)
   }
 
   constructor(session) {

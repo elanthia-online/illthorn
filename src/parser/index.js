@@ -7,13 +7,14 @@ exports.parse = function (incoming, cb) {
   //console.log("raw:\n%s", BUFFER)
   // continue to buffer
   if (isDanglingStream(BUFFER)) return
+  if (BUFFER.includes("room"))
+    console.log("raw:\n%s", BUFFER)
   //console.time("parser")
   const string = normalize(BUFFER)
   const doc = parser.parseFromString(string, "text/html")
-
+  console.log("parsed:\n%s", doc.body.innerHTML)
   // clear the buffer
   BUFFER = ""
-  //console.log(doc.body.innerHTML)
   cb(doc)
   //console.timeEnd("parser")
 }
@@ -40,6 +41,7 @@ function normalize(string) {
     .replace(/<output/g, "<pre")
     .replace(/<\/output>/g, "</pre>")
     .replace(/<clearContainer/g, "</clearcontainer")
+    .replace(/<preset/g, "<pre")
 
   string = string.replace(
     /<style id="(\w+)"\s?\/>/g,
@@ -75,3 +77,14 @@ exports.allDocumentElements = (doc, cb) =>
     .call(doc.head.childNodes)
     .concat(...doc.body.childNodes)
     .forEach((ele) => requestAnimationFrame(() => cb(ele)))
+
+exports.map = (root, selector, cb) =>
+  [].map.call(root.querySelectorAll(selector), (ele) =>
+    cb(ele)
+  )
+
+exports.pop = (root, selector) =>
+  exports.map(root, selector, (ele) => {
+    ele.remove()
+    return ele
+  })

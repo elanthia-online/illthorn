@@ -5,14 +5,6 @@ const Parser = require("../parser")
 const Pipe = require("../util/pipe")
 const Lens = require("../util/lens")
 const SessionState = require("./state")
-
-const RENDERABLE_NODES = {
-  pre: 1,
-  pushstream: 1,
-  b: 1,
-  a: 1,
-  "#text": 1,
-}
 /**
  * a TCP Game feed -> DOM renderer
  */
@@ -237,12 +229,13 @@ module.exports = class Feed {
   }
 
   ingestDocument(parsed) {
-    //console.log(parsed.body.innerHTML)
     this.ingestState(parsed)
-    const prompt = parsed.querySelector("prompt")
-    if (prompt) prompt.remove()
+    const prompts = Parser.pop(parsed, "prompt")
+    const prompt =
+      prompts.length && prompts[prompts.length - 1]
+    const pres = Parser.pop(parsed, "pre")
     setTimeout(() => {
-      this.ingestTagBySelector(parsed, "pre")
+      ~[].forEach.call(pres, (pre) => this.append(pre))
       // order of operations is (somewhat) important here!
       this.ingestTagBySelector(parsed, "stream")
       this.ingestTagBySelector(parsed, "mono")
@@ -292,12 +285,13 @@ module.exports = class Feed {
       "clearcontainer",
       "stream#room",
       "stream#inv",
+      "stream.speech",
     ].forEach((selector) => {
       Pipe.of(parsed.querySelectorAll(selector))
         .fmap(Parser.each, (ele) => ele.remove())
-        .fmap(Parser.each, (ele) =>
+        .fmap(Parser.each, (ele) => {
           SessionState.consume(this.session.state, ele)
-        )
+        })
     })
   }
 }

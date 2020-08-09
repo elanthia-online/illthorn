@@ -26,14 +26,10 @@
   --column-width: 20em;
 }
 
-body {
-  font-family: system-ui, sans-serif;
-}
-
 .panel {
-  padding: 0px;
+  padding: 0;
   margin: 10px;
-  border-bottom: 0px;
+  border-bottom: 0;
   h3 {
     border-bottom: 1px solid var(--charcoal);
     background: var(--charcoal);
@@ -44,12 +40,8 @@ body {
   }
 }
 
-#hands-wrapper {
-  border-color: var(--info);
-}
-
 #sessions li {
-  border-radius: 0px;
+  border-radius: 0;
   &.on {
     box-shadow: 0 0 0 2px var(--ok);
   }

@@ -195,11 +195,14 @@ module.exports = class Feed {
   }
 
   ingestText(ele) {
+    this.ingestState(ele, Feed.LOOSELY_NESTED_TAGS)
+    this.ingestState(ele, Feed.TOP_LEVEL_STATUS_TAGS)
     const body = document.body
     // skip double insertions
     if (ele.textContent.trim().length == 0)
       return ele.remove()
     if (body.contains(ele)) return
+    // todo: hilites, linkify
     this.append(ele)
   }
 
@@ -228,14 +231,41 @@ module.exports = class Feed {
     this.ingestText(span)
   }
 
+  static TOP_LEVEL_STATUS_TAGS = [
+    "progressbar",
+    "indicator",
+    "container",
+    "compass",
+    "dialogdata",
+    "compdef",
+    "switchquickbar",
+    "opendialog",
+    "component",
+    "exposecontainer",
+    "deletecontainer",
+    "right",
+    "left",
+    "inv",
+    "stream.speech",
+    "clearcontainer",
+  ]
+
+  static LOOSELY_NESTED_TAGS = [
+    "streamwindow",
+    "clearstream",
+    "resource",
+    "nav",
+    "stream#room",
+    "stream#inv",
+  ]
+
   ingestDocument(parsed) {
-    this.ingestState(parsed)
+    this.ingestState(parsed, Feed.TOP_LEVEL_STATUS_TAGS)
     const prompts = Parser.pop(parsed, "prompt")
     const prompt =
       prompts.length && prompts[prompts.length - 1]
-    const pres = Parser.pop(parsed, "pre")
+    this.ingestTagBySelector(parsed, "pre")
     setTimeout(() => {
-      ~[].forEach.call(pres, (pre) => this.append(pre))
       // order of operations is (somewhat) important here!
       this.ingestTagBySelector(parsed, "stream")
       this.ingestTagBySelector(parsed, "mono")
@@ -264,29 +294,8 @@ module.exports = class Feed {
     )
   }
 
-  ingestState(parsed) {
-    ;[
-      "progressbar",
-      "indicator",
-      "container",
-      "compass",
-      "dialogdata",
-      "compdef",
-      "streamwindow",
-      "clearstream",
-      "switchquickbar",
-      "opendialog",
-      "component",
-      "exposecontainer",
-      "deletecontainer",
-      "right",
-      "left",
-      "inv",
-      "clearcontainer",
-      "stream#room",
-      "stream#inv",
-      "stream.speech",
-    ].forEach((selector) => {
+  ingestState(parsed, selectors) {
+    selectors.forEach((selector) => {
       Pipe.of(parsed.querySelectorAll(selector))
         .fmap(Parser.each, (ele) => ele.remove())
         .fmap(Parser.each, (ele) => {

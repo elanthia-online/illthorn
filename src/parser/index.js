@@ -7,12 +7,13 @@ exports.parse = function (incoming, cb) {
   //console.log("raw:\n%s", BUFFER)
   // continue to buffer
   if (isDanglingStream(BUFFER)) return
-  if (BUFFER.includes("room"))
+  if (BUFFER.match(/room(Name|Desc)/))
     console.log("raw:\n%s", BUFFER)
   //console.time("parser")
   const string = normalize(BUFFER)
   const doc = parser.parseFromString(string, "text/html")
-  console.log("parsed:\n%s", doc.body.innerHTML)
+  if (BUFFER.match(/room(Name|Desc)/))
+    console.log("parsed:\n%s", doc.body.innerHTML)
   // clear the buffer
   BUFFER = ""
   cb(doc)

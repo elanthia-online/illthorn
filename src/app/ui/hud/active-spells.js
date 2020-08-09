@@ -4,6 +4,7 @@ const Panel = require("./panel")
 const Lens = require("../../../util/lens")
 const Progress = require("../progress")
 const Attrs = Lens.of("attrs")
+const SpellDetails = require("../../../constants/spells")
 
 module.exports = class ActiveSpells {
   static MAX_DURATION = 4 * 60 + 10
@@ -23,11 +24,14 @@ module.exports = class ActiveSpells {
 
   static spell(spell) {
     const percent = ActiveSpells.percent_remaining(spell)
+    const spellDetails = SpellDetails(spell)
 
     return m(
       "li",
       {
-        ["data-spell-name"]: spell.name,
+        ["data-spell-name"]: spellDetails.name,
+        ["data-spell-type"]: spellDetails.type,
+        ["data-spell-number"]: spellDetails.number,
         class: `${Progress.classify(percent + 20)}`,
       },
       [

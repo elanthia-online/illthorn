@@ -18,6 +18,8 @@ $red: #d64e4e;
   --danger: #{$red};
 
   --icon-size: 1.4em;
+  --border-width: 0;
+  --stream-font-size: 13px;
 
   --column-width: minmax(16em, 0.33fr);
 
@@ -29,18 +31,17 @@ body {
 }
 
 #sessions,
-.panels,
+#panels-left,
+#panels-right,
 #hands-wrapper,
 #cli-wrapper {
   background: linear-gradient(
     261.75deg,
     #202224 35.86%,
-    #3e3c42 77.44%
+    #2b2e3a 77.44%
   );
 }
-#hands {
-  border: 0;
-}
+
 .hand#left::before {
   transform: rotate(22deg) scaleX(-1);
 }
@@ -55,35 +56,31 @@ body {
   font-family: "DutchMediaevalBook-Bold", serif;
 }
 
-#app.streams-on #streams-wrapper {
-  border: 0;
-  z-index: 1;
-  position: relative;
-  box-shadow: 0 20px 20px black;
-}
-.stream {
-  font-size: 0.85em;
+#feed-wrapper {
+  // under-shadow
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(black, 1),
+      rgba(black, 0)
+    );
+    height: 20px;
+  }
 }
 
-#feed-wrapper,
-#streams-wrapper {
-  background: radial-gradient(
-    60.67% 51% at 16.22% 84.45%,
-    #2b2e3a 0%,
-    #0a0606 100%
-  );
+.label {
+  text-transform: capitalize;
 }
 
-.panels {
-  border: 0;
-}
-#panels-left {
-  border: 0;
-}
 .panel {
-  position: relative;
   padding: 1px;
-  margin: 1em;
+  // Gradient border around panels
   &::before {
     content: "";
     position: absolute;
@@ -97,8 +94,8 @@ body {
   > div {
     position: relative;
     background: #191919;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
     overflow: hidden;
     padding: 1em;
   }
@@ -109,48 +106,25 @@ body {
     position: relative;
     font-size: 1.2em;
     background: #191919;
-    border-radius: 3px;
+    border-radius: 6px;
     border-bottom: 1px solid black;
-    box-shadow: 0 1px 1px 0 #282323;
     position: relative;
     z-index: 1;
     padding: 0.8em 0.5em 0.7em 0.8em;
     margin: 0;
   }
   &[open] > summary {
+    box-shadow: 0 1px 1px 0 #282323;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
   }
-}
-
-.panel-list {
   li {
-    &:not(:last-child) {
-      margin: 0 0 0.3em 0;
-    }
-    .label {
-      &::first-letter {
-        text-transform: capitalize;
-      }
-    }
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid black;
+    box-shadow: 0 1px 1px 0 #282323;
   }
-  .value span:nth-child(1) {
-    white-space: nowrap;
-    opacity: 0.9;
-  }
-  .value span:nth-child(2) {
-    font-family: "DutchMediaevalBook-Bold", serif;
-  }
-}
-
-@mixin barBG($color) {
-  background: linear-gradient(
-    to bottom,
-    $color,
-    darken($color, 33%)
-  );
 }
 
 @mixin panelRow($color) {
@@ -161,7 +135,26 @@ body {
   );
   margin-left: -1em;
   width: calc(100% + 2em);
-  padding: 0.5em 1em;
+  padding: 0.7em 1em 0.5em;
+
+  &.low {
+    background: linear-gradient(
+        5deg,
+        rgba($color, 0.2),
+        rgba($color, 0)
+      ),
+      radial-gradient(
+        ellipse at top right,
+        rgba(red, 0.5),
+        rgba(red, 0)
+      );
+    &::before {
+      content: "⚠️";
+      display: inline-block;
+      line-height: 1;
+    }
+  }
+
   .label,
   .value {
     color: $color;
@@ -169,7 +162,6 @@ body {
 }
 
 @mixin title($title) {
-  position: relative;
   margin-top: 28px;
   &::before {
     content: $title;
@@ -183,23 +175,22 @@ body {
   }
 }
 
-details#vitals {
+#vitals {
   > div {
-    padding-top: 0.5em;
+    padding-top: 0;
   }
 }
 
-.vitals {
-  > li#vitals-spirit,
-  > li#vitals-health,
-  > li#vitals-mana,
-  > li#vitals-stamina {
-    border: 0;
-    position: relative;
-    font-size: 1.2em;
-    .label {
-      font-family: "DutchMediaevalBook-Bold", serif;
-    }
+li#vitals-spirit,
+li#vitals-health,
+li#vitals-mana,
+li#vitals-stamina {
+  border: 0;
+  position: relative;
+  font-size: 1.2em;
+  margin-bottom: 0;
+  .label {
+    font-family: "DutchMediaevalBook-Bold", serif;
   }
 }
 
@@ -227,11 +218,6 @@ details#vitals {
 }
 #vitals-stance {
   @include title("Stance");
-  .stance-title {
-    &::first-letter {
-      text-transform: capitalize;
-    }
-  }
 }
 
 .spells {
@@ -246,28 +232,19 @@ details#vitals {
         overflow: hidden;
       }
     }
+    &:hover {
+      background: black;
+    }
   }
   li.low {
     .spell {
       color: #ff6e6e;
     }
-    .bar.low {
-      display: none;
-    }
   }
 }
 
-.bar.low {
-  @include barBG(#dc0d0d);
-}
-.bar.medium {
-  @include barBG(#de8e8e);
-}
-.bar.high {
-  @include barBG(#846e6e);
-}
-
-.injury.injury {
+.injury,
+.scar {
   background: none;
   border: 0;
   border-bottom: 1px solid black;
@@ -275,34 +252,39 @@ details#vitals {
   border-radius: 0;
   padding-bottom: 0.5em;
 }
-.injury.severity-1 {
+.injury.severity-1,
+.scar.severity-1 {
   color: #ff7c7c;
 }
 .injury.severity-2 {
-  color: #ff3333;
-  font-weight: bold;
-  .value::before {
+  .injury-name::before {
     content: "🩸";
   }
 }
+.injury.severity-2,
+.scar.severity-2 {
+  color: #ff3333;
+  font-weight: bold;
+}
 .injury.severity-3 {
+  .injury-name::before {
+    content: "🩸";
+  }
+}
+.injury.severity-3,
+.scar.severity-3 {
   color: #ff0000;
   text-shadow: 0 0 16px red;
   font-weight: bold;
-  .value::before {
-    content: "🩸";
-  }
 }
 
 // Highlighting
 .exist {
   color: #a7a7a7;
 }
-.monster {
-  color: $orange;
-}
+.monster,
 .b {
-  // e.g. enhanced stat
+  color: $orange;
 }
 
 @each $direction in $directions {
@@ -316,10 +298,12 @@ details#vitals {
     font-weight: bold;
   }
 }
+$start: 0;
 @each $gem in $gems {
   a.exist[data-noun="#{$gem}"] {
-    color: $blue;
+    color: adjust-hue($blue, $start);
   }
+  $start: $start + 1;
 }
 @each $magic in $magics {
   a.exist[data-noun="#{$magic}"] {

@@ -247,7 +247,7 @@ module.exports = class CLI {
             m("li.space-after", [
               m(
                 "code.command",
-                ":theme original|dark-king"
+                ":theme original|rogue|dark-king|icemule|kobold|raging-thrak"
               ),
               m("span", "Change Theme"),
             ]),

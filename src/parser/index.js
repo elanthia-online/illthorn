@@ -1,7 +1,6 @@
 const parser = new DOMParser()
 
 exports.parse = function (session, incoming, cb) {
-  console.time("parser")
   session.buffer += incoming.toString()
   //console.log("raw:\n%s", session.buffer)
   // continue to buffer
@@ -15,8 +14,7 @@ exports.parse = function (session, incoming, cb) {
   //console.log("parsed:\n%s", doc.body.innerHTML)
   // clear the buffer
   session.buffer = ""
-  cb(doc)
-  console.timeEnd("parser")
+  return cb(doc)
 }
 
 function isDanglingStream(buffered) {

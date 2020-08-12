@@ -4,6 +4,7 @@ const Bus = require("../bus")
 const Parser = require("../parser")
 const Pipe = require("../util/pipe")
 const Lens = require("../util/lens")
+const Url = require("../util/url")
 const SessionState = require("./state")
 /**
  * a TCP Game feed -> DOM renderer
@@ -233,7 +234,6 @@ module.exports = class Feed {
 
   static TOP_LEVEL_STATUS_TAGS = [
     "progressbar",
-    "indicator",
     "container",
     "compass",
     "dialogdata",
@@ -261,6 +261,7 @@ module.exports = class Feed {
     "stream#inv",
     "clearstream",
     "streamwindow",
+    "indicator",
   ]
 
   ingestDocument(parsed, cb) {
@@ -280,13 +281,27 @@ module.exports = class Feed {
         this.ingestDocumentTextNodes(parsed.head)
         if (prompt) this.append(prompt)
         this.pruneIgnorableTags(parsed)
+        // make sure we handled all state tags that might
+        // also contain renderable text
+        this.ingestState(parsed, Feed.LOOSELY_NESTED_TAGS)
+
+        const launch = parsed.querySelector("launchurl")
+        // handles goals, bbs commands
+        if (launch) {
+          console.log(launch)
+          launch.remove()
+          Url.open_external_link(
+            "https://www.play.net" +
+              launch.attributes.src.value
+          )
+        }
 
         if (parsed.body.hasChildNodes()) {
           // this is for debugging
           console.log(
             "parsed:unhandled(children: %s, %o)",
             parsed.body.hasChildNodes(),
-            parsed.body.childNodes
+            (window._temp = parsed)
           )
         }
         return ok()

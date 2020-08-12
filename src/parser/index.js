@@ -10,8 +10,13 @@ exports.parse = function (session, incoming, cb) {
   //console.time("parser")
   const string = normalize(session.buffer)
   const doc = parser.parseFromString(string, "text/html")
+  // indicators can contain text
+  exports.map(doc, "indicator", (indicator) => {
+    const text = indicator.innerText.slice(0)
+    if (text.length == 0) return
+    indicator.innerHTML = pre(text)
+  })
 
-  //console.log("parsed:\n%s", doc.body.innerHTML)
   // clear the buffer
   session.buffer = ""
   return cb(doc)

@@ -1,10 +1,11 @@
 const parser = new DOMParser()
 
-exports.parse = function (session, incoming, cb) {
+exports.parse = async function (session, incoming) {
   session.buffer += incoming.toString()
   //console.log("raw:\n%s", session.buffer)
   // continue to buffer
-  if (isDanglingStream(session.buffer)) return
+  if (isDanglingStream(session.buffer))
+    return { buffered: 1 }
   //if (session.buffer.match(/room(Name|Desc)/))
   //console.log("raw:\n%s", session.buffer)
   //console.time("parser")
@@ -19,7 +20,7 @@ exports.parse = function (session, incoming, cb) {
 
   // clear the buffer
   session.buffer = ""
-  return cb(doc)
+  return { parsed: doc }
 }
 
 function isDanglingStream(buffered) {

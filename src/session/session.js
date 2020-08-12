@@ -102,10 +102,12 @@ module.exports = class Session extends events.EventEmitter {
   }
 
   async parse(string) {
-    await this.io.fmap(() => {
-      return Parser.parse(this, string, (doc) =>
-        this.feed.ingestDocument(doc)
+    await this.io.fmap(async () => {
+      const { _pending, parsed } = await Parser.parse(
+        this,
+        string
       )
+      if (parsed) await this.feed.ingestDocument(parsed)
     })
   }
 

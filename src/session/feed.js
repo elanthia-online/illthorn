@@ -1,4 +1,3 @@
-const Compiler = require("../compiler/compiler")
 const Settings = require("../settings")
 const Bus = require("../bus")
 const Parser = require("../parser")
@@ -6,6 +5,9 @@ const Pipe = require("../util/pipe")
 const Lens = require("../util/lens")
 const Url = require("../util/url")
 const SessionState = require("./state")
+const Hilites = require("../hilites")
+const Mark = require("mark.js")
+const io = require("../util/io")
 /**
  * a TCP Game feed -> DOM renderer
  */
@@ -195,7 +197,7 @@ module.exports = class Feed {
     })
   }
 
-  ingestText(ele) {
+  async ingestText(ele) {
     this.ingestState(ele, Feed.LOOSELY_NESTED_TAGS)
     this.ingestState(ele, Feed.TOP_LEVEL_STATUS_TAGS)
     const body = document.body
@@ -203,8 +205,27 @@ module.exports = class Feed {
     if (ele.textContent.trim().length == 0)
       return ele.remove()
     if (body.contains(ele)) return
-    // todo: hilites, linkify
+    console.time("hilite")
+    await this.addHilites(ele)
+    console.timeEnd("hilite")
     this.append(ele)
+  }
+
+  async addHilites(ele) {
+    const hilites = Hilites.get()
+    if (hilites.length == 0) return 0
+    const mark = new Mark(ele)
+    return await hilites.reduce((io, [pattern, group]) => {
+      return io.then(
+        () =>
+          new Promise((ok) =>
+            mark.markRegExp(pattern, {
+              className: group,
+              done: ok,
+            })
+          )
+      )
+    }, Promise.resolve())
   }
 
   ingestTagBySelector(parsed, selector) {
@@ -264,7 +285,7 @@ module.exports = class Feed {
     "indicator",
   ]
 
-  ingestDocument(parsed, cb) {
+  async ingestDocument(parsed) {
     return new Promise((ok) => {
       this.ingestState(parsed, Feed.TOP_LEVEL_STATUS_TAGS)
       const prompts = Parser.pop(parsed, "prompt")

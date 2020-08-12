@@ -1,9 +1,7 @@
 const m = require("mithril")
 const Lens = require("../util/lens")
 const Bus = require("../bus")
-const { Tag } = require("@elanthia/koschei")
 const Settings = require("../settings")
-const TagUtil = require("../util/tag")
 
 const makeLookup = (keys) =>
   keys.reduce(
@@ -113,7 +111,6 @@ module.exports = class SessionState {
   }
 
   put(prop, val) {
-    if (val instanceof Tag) val = TagUtil.to_pojo(val)
     Lens.put(this, prop, val)
     Bus.emit(Bus.events.REDRAW)
     return this

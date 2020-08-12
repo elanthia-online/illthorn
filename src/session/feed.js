@@ -247,43 +247,51 @@ module.exports = class Feed {
     "left",
     "inv",
     "stream.speech",
+    "clearstream.inv",
     "clearcontainer",
+    "casttime",
+    "roundtime",
   ]
 
   static LOOSELY_NESTED_TAGS = [
     "streamwindow",
-    "clearstream",
     "resource",
     "nav",
     "stream#room",
     "stream#inv",
+    "clearstream",
+    "streamwindow",
   ]
 
-  ingestDocument(parsed) {
-    this.ingestState(parsed, Feed.TOP_LEVEL_STATUS_TAGS)
-    const prompts = Parser.pop(parsed, "prompt")
-    const prompt =
-      prompts.length && prompts[prompts.length - 1]
-    this.ingestTagBySelector(parsed, "pre")
-    setTimeout(() => {
-      // order of operations is (somewhat) important here!
-      this.ingestTagBySelector(parsed, "stream")
-      this.ingestTagBySelector(parsed, "mono")
-      // handle top-level text nodes mixed with state tags
-      // <dialogdata></dialogdata>Atone just arrived!
-      this.ingestDocumentTextNodes(parsed.body)
-      this.ingestDocumentTextNodes(parsed.head)
-      if (prompt) this.append(prompt)
-      this.pruneIgnorableTags(parsed)
+  ingestDocument(parsed, cb) {
+    return new Promise((ok) => {
+      this.ingestState(parsed, Feed.TOP_LEVEL_STATUS_TAGS)
+      const prompts = Parser.pop(parsed, "prompt")
+      const prompt =
+        prompts.length && prompts[prompts.length - 1]
+      this.ingestTagBySelector(parsed, "pre")
+      setTimeout(() => {
+        // order of operations is (somewhat) important here!
+        this.ingestTagBySelector(parsed, "stream")
+        this.ingestTagBySelector(parsed, "mono")
+        // handle top-level text nodes mixed with state tags
+        // <dialogdata></dialogdata>Atone just arrived!
+        this.ingestDocumentTextNodes(parsed.body)
+        this.ingestDocumentTextNodes(parsed.head)
+        if (prompt) this.append(prompt)
+        this.pruneIgnorableTags(parsed)
 
-      if (!parsed.body.hasChildNodes()) return
-      // this is for debugging
-      console.log(
-        "parsed:unhandled(children: %s, %o)",
-        parsed.body.hasChildNodes(),
-        parsed.body.childNodes
-      )
-    }, 0)
+        if (parsed.body.hasChildNodes()) {
+          // this is for debugging
+          console.log(
+            "parsed:unhandled(children: %s, %o)",
+            parsed.body.hasChildNodes(),
+            parsed.body.childNodes
+          )
+        }
+        return ok()
+      }, 0)
+    })
   }
 
   pruneIgnorableTags(parsed) {

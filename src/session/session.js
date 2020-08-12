@@ -7,6 +7,7 @@ const Feed = require("./feed")
 const Streams = require("./streams")
 const Bus = require("../bus")
 const History = require("./command-history")
+const IO = require("../util/io")
 
 module.exports = class Session extends events.EventEmitter {
   static Sessions = new Map()
@@ -95,12 +96,17 @@ module.exports = class Session extends events.EventEmitter {
     this.sock = net.connect({ port })
     this.sock.on("data", (data) => this.parse(data))
     this.sock.on("error", (err) => this.emit(err))
+    // buffer for incoming game lines
+    this.buffer = ""
+    this.io = IO(this.buffer)
   }
 
-  parse(string) {
-    Parser.parse(string, (doc) =>
-      this.feed.ingestDocument(doc)
-    )
+  async parse(string) {
+    await this.io.fmap(() => {
+      return Parser.parse(this, string, (doc) =>
+        this.feed.ingestDocument(doc)
+      )
+    })
   }
 
   handle_tag(tag) {

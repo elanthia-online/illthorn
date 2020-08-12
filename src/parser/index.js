@@ -1,23 +1,22 @@
 const parser = new DOMParser()
 
-let BUFFER = (window.FEED_BUFFER = "")
-
-exports.parse = function (incoming, cb) {
-  BUFFER += incoming.toString()
-  //console.log("raw:\n%s", BUFFER)
+exports.parse = function (session, incoming, cb) {
+  console.time("parser")
+  session.buffer += incoming.toString()
+  //console.log("raw:\n%s", session.buffer)
   // continue to buffer
-  if (isDanglingStream(BUFFER)) return
-  if (BUFFER.match(/room(Name|Desc)/))
-    console.log("raw:\n%s", BUFFER)
+  if (isDanglingStream(session.buffer)) return
+  //if (session.buffer.match(/room(Name|Desc)/))
+  //console.log("raw:\n%s", session.buffer)
   //console.time("parser")
-  const string = normalize(BUFFER)
+  const string = normalize(session.buffer)
   const doc = parser.parseFromString(string, "text/html")
-  if (BUFFER.match(/room(Name|Desc)/))
-    console.log("parsed:\n%s", doc.body.innerHTML)
+
+  //console.log("parsed:\n%s", doc.body.innerHTML)
   // clear the buffer
-  BUFFER = ""
+  session.buffer = ""
   cb(doc)
-  //console.timeEnd("parser")
+  console.timeEnd("parser")
 }
 
 function isDanglingStream(buffered) {

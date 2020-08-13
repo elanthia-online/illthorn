@@ -10,7 +10,10 @@ exports.parse = async function (session, incoming) {
   //console.log("raw:\n%s", session.buffer)
   //console.time("parser")
   const string = normalize(session.buffer)
-  const doc = parser.parseFromString(string, "text/html")
+  const doc = parser.parseFromString(
+    string.trimEnd(),
+    "text/html"
+  )
   // indicators can contain text
   exports.map(doc, "indicator", (indicator) => {
     const text = indicator.innerText.slice(0)
@@ -73,7 +76,7 @@ exports.visitAll = (root, cb) => {
 
 exports.each = (nodelist, cb) => {
   ;[].forEach.call(nodelist, cb)
-  return nodelist
+  return [].slice.call(nodelist)
 }
 
 exports.allDocumentElements = (doc, cb) =>

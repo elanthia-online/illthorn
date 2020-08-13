@@ -86,8 +86,11 @@ module.exports = class SessionState {
     return Object.keys(this)
       .filter(
         (key) =>
-          typeof this[key] == "object" &&
-          this[key].name == name
+          Lens.get(
+            this,
+            `${key}.tagName`,
+            ""
+          ).toLowerCase() == name.toLowerCase()
       )
       .map((key) => this[key])
   }

@@ -11,3 +11,7 @@
 .feed mark {
   background-color: transparent;
 }
+// all top-level elements
+.feed > * {
+  display: block; // should be blocks
+}

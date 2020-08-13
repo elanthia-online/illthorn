@@ -7,7 +7,8 @@ const Url = require("../util/url")
 const SessionState = require("./state")
 const Hilites = require("../hilites")
 const Mark = require("mark.js")
-const io = require("../util/io")
+const IO = require("../util/io")
+const linkifyElement = require("linkifyjs/element")
 /**
  * a TCP Game feed -> DOM renderer
  */
@@ -205,41 +206,66 @@ module.exports = class Feed {
     if (ele.textContent.trim().length == 0)
       return ele.remove()
     if (body.contains(ele)) return
-    console.time("hilite")
+    // clean up whitespace
+    if (ele.childNodes.length == 0) {
+      ele.innerText = ele.innerText.trimEnd()
+    }
+    //const now = Date.now()
+    //console.time("hilite:"+now)
+    await this.addLinks(ele)
     await this.addHilites(ele)
-    console.timeEnd("hilite")
+    //console.timeEnd("hilite:"+now)
     this.append(ele)
+  }
+
+  async addLinks(ele) {
+    linkifyElement(ele, {
+      className: (_, type) => "link " + type,
+      events: {
+        click: (e) =>
+          e.preventDefault() ||
+          Url.open_external_link(e.target.href),
+      },
+    })
   }
 
   async addHilites(ele) {
     const hilites = Hilites.get()
     if (hilites.length == 0) return 0
     const mark = new Mark(ele)
-    return await hilites.reduce((io, [pattern, group]) => {
-      return io.then(
-        () =>
-          new Promise((ok) =>
-            mark.markRegExp(pattern, {
-              className: group,
-              done: ok,
-            })
-          )
+    return await hilites
+      .reduce(
+        (io, [pattern, className]) =>
+          io.fmap(
+            () =>
+              new Promise((done) =>
+                mark.markRegExp(pattern, {
+                  className,
+                  done,
+                })
+              )
+          ),
+        new IO()
       )
-    }, Promise.resolve())
+      .unwrap()
   }
 
-  ingestTagBySelector(parsed, selector) {
-    Pipe.of(parsed.querySelectorAll(selector))
+  async ingestTagBySelector(parsed, selector) {
+    return Pipe.of(parsed.querySelectorAll(selector))
       .fmap(
         Parser.each,
         (ele) =>
           Lens.get(ele, "parentElement.tagName") ==
             ele.tagName && ele.remove()
       )
-      .fmap(Parser.each, (ele) => this.ingestText(ele))
+      .fmap((eles) =>
+        eles.map((ele) => this.ingestText(ele))
+      )
+      .fmap((eles) => Promise.all(eles))
+      .unwrap()
   }
 
-  ingestDocumentTextNodes(bod) {
+  async ingestDocumentTextNodes(bod) {
     if (!bod.hasChildNodes()) return
     const span = document.createElement("span")
     // this must be a cloned reference!
@@ -250,7 +276,7 @@ module.exports = class Feed {
         span.appendChild(ele)
       }
     }
-    this.ingestText(span)
+    return await this.ingestText(span)
   }
 
   static TOP_LEVEL_STATUS_TAGS = [
@@ -286,48 +312,40 @@ module.exports = class Feed {
   ]
 
   async ingestDocument(parsed) {
-    return new Promise((ok) => {
-      this.ingestState(parsed, Feed.TOP_LEVEL_STATUS_TAGS)
-      const prompts = Parser.pop(parsed, "prompt")
-      const prompt =
-        prompts.length && prompts[prompts.length - 1]
-      this.ingestTagBySelector(parsed, "pre")
-      setTimeout(() => {
-        // order of operations is (somewhat) important here!
-        this.ingestTagBySelector(parsed, "stream")
-        this.ingestTagBySelector(parsed, "mono")
-        // handle top-level text nodes mixed with state tags
-        // <dialogdata></dialogdata>Atone just arrived!
-        this.ingestDocumentTextNodes(parsed.body)
-        this.ingestDocumentTextNodes(parsed.head)
-        if (prompt) this.append(prompt)
-        this.pruneIgnorableTags(parsed)
-        // make sure we handled all state tags that might
-        // also contain renderable text
-        this.ingestState(parsed, Feed.LOOSELY_NESTED_TAGS)
+    this.ingestState(parsed, Feed.TOP_LEVEL_STATUS_TAGS)
+    const prompts = Parser.pop(parsed, "prompt")
+    const prompt =
+      prompts.length && prompts[prompts.length - 1]
+    await this.ingestTagBySelector(parsed, "pre")
+    // order of operations is (somewhat) important here!
+    await this.ingestTagBySelector(parsed, "stream")
+    await this.ingestTagBySelector(parsed, "mono")
+    // handle top-level text nodes mixed with state tags
+    // <dialogdata></dialogdata>Atone just arrived!
+    await this.ingestDocumentTextNodes(parsed.body)
+    await this.ingestDocumentTextNodes(parsed.head)
+    if (prompt) this.append(prompt)
+    this.pruneIgnorableTags(parsed)
+    // make sure we handled all state tags that might
+    // also contain renderable text
+    this.ingestState(parsed, Feed.LOOSELY_NESTED_TAGS)
 
-        const launch = parsed.querySelector("launchurl")
-        // handles goals, bbs commands
-        if (launch) {
-          console.log(launch)
-          launch.remove()
-          Url.open_external_link(
-            "https://www.play.net" +
-              launch.attributes.src.value
-          )
-        }
+    const launch = parsed.querySelector("launchurl")
+    // handles goals, bbs commands
+    if (launch) {
+      launch.remove()
+      Url.open_external_link(
+        "https://www.play.net" + launch.attributes.src.value
+      )
+    }
 
-        if (parsed.body.hasChildNodes()) {
-          // this is for debugging
-          console.log(
-            "parsed:unhandled(children: %s, %o)",
-            parsed.body.hasChildNodes(),
-            (window._temp = parsed)
-          )
-        }
-        return ok()
-      }, 0)
-    })
+    if (!parsed.body.hasChildNodes()) return
+    // this is for debugging
+    console.log(
+      "parsed:unhandled(children: %s, %o)",
+      parsed.body.hasChildNodes(),
+      parsed.body
+    )
   }
 
   pruneIgnorableTags(parsed) {

@@ -1,6 +1,7 @@
 const StreamsSettings = require("../settings").of("streams")
 const Lens = require("../util/lens")
 const Storage = require("../storage")
+
 module.exports = class Streams {
   // this class on the top-level application element
   // signals which layout to use
@@ -27,8 +28,6 @@ module.exports = class Streams {
     this._view = document.createElement("div")
     this._view.classList.add("streams", "scroll")
     this._settings = StreamsSettings
-    this.session = Session
-    this.loadStreamMessages()
   }
 
   get _scrolling() {
@@ -61,7 +60,10 @@ module.exports = class Streams {
    */
   insert(tag) {
     const was_scrolling = this._scrolling
-    this.storeStreamMessage(tag)
+    const name = this._view.getAttribute("data-name")
+    if (name) {
+      this.storeStreamMessage(tag, name)
+    }
     const el = this.createEl(tag)
     this._view.append(el)
 
@@ -77,16 +79,16 @@ module.exports = class Streams {
     return pre
   }
 
-  async storeStreamMessage(message) {
-    let thoughts = Storage.get("thoughts")
+  async storeStreamMessage(tag, name) {
+    let thoughts = Storage.get(`thoughts-${name}`)
     if (!thoughts) {
       thoughts = []
     }
-    thoughts.push(message)
+    thoughts.push(tag)
     thoughts = this.trimMessages(thoughts)
 
     // TODO: Would like to store messages from the character session name (e.g. Storage.set("thoughts.${character_name}")), not a global store. But I can't figure out how to have access to the correct session at this point.
-    Storage.set("thoughts", thoughts)
+    Storage.set(`thoughts-${name}`, thoughts)
   }
 
   trimMessages(thoughts) {
@@ -100,13 +102,8 @@ module.exports = class Streams {
     return thoughts
   }
 
-  async loadStreamMessages() {
-    // TODO: Would like to retrieve messages from the character session name, not a global store. But I can't figure out how to have access to the correct session at this point.
-    console.log(
-      "focused",
-      Lens.get(this.session.focused(), name)
-    )
-    let thoughts = Storage.get("thoughts")
+  async loadStreamMessages(name) {
+    let thoughts = Storage.get(`thoughts-${name}`)
     if (thoughts) {
       thoughts = this.trimMessages(thoughts)
       thoughts.forEach((tag) => {
@@ -168,7 +165,7 @@ module.exports = class Streams {
     )
   }
 
-  redraw() {
+  redraw(view) {
     const container = document.querySelector(
       "#streams-wrapper"
     )
@@ -193,7 +190,11 @@ module.exports = class Streams {
     // is attached to the DOM, not on subsequent redraws
     // this means it will preserve the current scroll state
     container.innerHTML = ""
+    let name = view.getAttribute("data-name")
+    this._view.setAttribute("data-name", name)
     container.appendChild(this._view)
     this.advance_scroll()
+
+    this.loadStreamMessages(name)
   }
 }

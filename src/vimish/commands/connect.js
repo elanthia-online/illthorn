@@ -19,7 +19,6 @@ exports.connect = exports.c = Command.of(
       return await Autodetect.connect_all()
     }
 
-    // console.log(argv)
     // attempt to autodetect what port to connect to
     if (!argv.port) {
       const running = await Autodetect.list()

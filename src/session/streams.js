@@ -87,7 +87,8 @@ module.exports = class Streams {
     thoughts.push(tag)
     thoughts = this.trimMessages(thoughts)
 
-    // TODO: Would like to store messages from the character session name (e.g. Storage.set("thoughts.${character_name}")), not a global store. But I can't figure out how to have access to the correct session at this point.
+    // TODO: The plan is not to use Storage for this but flat files.
+    // See: https://github.com/elanthia-online/illthorn/pull/103#issuecomment-668554830
     Storage.set(`thoughts-${name}`, thoughts)
   }
 

@@ -280,6 +280,7 @@ module.exports = class Feed {
   }
   // order of operations is important here!
   static TOP_LEVEL_STATUS_TAGS = [
+    "img",
     "right",
     "left",
     "spell",

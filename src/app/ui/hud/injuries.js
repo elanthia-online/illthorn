@@ -35,7 +35,7 @@ window.Injuries = module.exports = class Injuries {
         Object.assign(
           {},
           {
-            area: attr(injury, "id", ""),
+            area: attr(injury, "id", injury.className),
             type: attr(injury, "name", "")
               .replace(/\d+/, "")
               .toLowerCase(),
@@ -45,7 +45,7 @@ window.Injuries = module.exports = class Injuries {
                 .replace(/^[a-z]+/, ""),
               10
             ),
-            name: attr(injury, "id", "")
+            name: attr(injury, "id", injury.className)
               .replace(/([A-Z])/g, " $&")
               .toLowerCase(),
           }

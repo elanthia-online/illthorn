@@ -40,7 +40,7 @@ module.exports = class ActiveSpells {
     return m(
       "li",
       {
-        ["data-spell-name"]: spellDetails.name,
+        ["data-spell-name"]: spellDetails.name || name,
         ["data-spell-type"]: spellDetails.type,
         ["data-spell-number"]: spellDetails.number,
         class: Progress.classify(percent + 20).toString(),

@@ -6,6 +6,8 @@ exports.parse = async function (session, incoming) {
   if (isDanglingStream(session.buffer))
     return { buffered: 1 }
 
+  //console.log(session.buffer)
+
   const string = normalize(session.buffer)
   const doc = parser.parseFromString(
     string.trimEnd(),
@@ -17,6 +19,8 @@ exports.parse = async function (session, incoming) {
     if (text.length == 0) return
     indicator.innerHTML = pre(text)
   })
+
+  console.log(doc.body.innerHTML)
   // clear the buffer
   session.buffer = ""
   return { parsed: doc }

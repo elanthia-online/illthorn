@@ -63,9 +63,10 @@ module.exports = class SessionState {
 
   static consume(state, tag) {
     //console.log("state:consume(%o)", tag)
-    if (tag.id && tag.id in SessionState.INJURY_IDS)
+    const id = tag.id || tag.className || ""
+    if (id in SessionState.INJURY_IDS)
       return state.put("injuries." + tag.id, tag)
-    if (tag.id && tag.id in SessionState.ID_TAGS)
+    if (id in SessionState.ID_TAGS)
       return state.put(tag.id, tag)
     if (SessionState.TAGS[tag.tagName.toLowerCase()])
       return state.put(tag.tagName.toLowerCase(), tag)

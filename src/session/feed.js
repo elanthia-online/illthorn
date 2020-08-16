@@ -298,7 +298,6 @@ module.exports = class Feed {
     "stream.speech",
     "clearstream.inv",
     "clearcontainer",
-    "casttime",
     "roundtime",
   ]
 
@@ -313,6 +312,8 @@ module.exports = class Feed {
     "indicator",
   ]
 
+  static TEXT_AND_METADATA_TAGS = ["casttime"]
+
   async ingestDocument(parsed) {
     this.ingestState(parsed, Feed.TOP_LEVEL_STATUS_TAGS)
     const prompts = Parser.pop(parsed, "prompt")
@@ -322,6 +323,10 @@ module.exports = class Feed {
     // order of operations is (somewhat) important here!
     await this.ingestTagBySelector(parsed, "stream")
     await this.ingestTagBySelector(parsed, "mono")
+    await this.ingestTextAndMetadata(
+      parsed,
+      Feed.TEXT_AND_METADATA_TAGS
+    )
     // handle top-level text nodes mixed with state tags
     // <dialogdata></dialogdata>Atone just arrived!
     await this.ingestDocumentTextNodes(parsed.body)
@@ -355,6 +360,20 @@ module.exports = class Feed {
       Pipe.of(
         parsed.querySelectorAll(selector)
       ).fmap(Parser.each, (ele) => ele.remove())
+    )
+  }
+
+  async ingestTextAndMetadata(parsed, selectors) {
+    return Promise.all(
+      selectors.map((selector) =>
+        Pipe.of(parsed.querySelectorAll(selector))
+          .fmap(Parser.each, (ele) => ele.remove())
+          .fmap(Parser.each, (ele) => {
+            SessionState.consume(this.session.state, ele)
+            return this.ingestDocumentTextNodes(ele)
+          })
+          .unwrap()
+      )
     )
   }
 

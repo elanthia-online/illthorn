@@ -220,7 +220,7 @@ module.exports = class Feed {
 
   async addLinks(ele) {
     linkifyElement(ele, {
-      className: (_, type) => "link " + type,
+      className: (_, type) => "external-link " + type,
       events: {
         click: (e) =>
           e.preventDefault() ||

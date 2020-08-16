@@ -166,6 +166,7 @@ module.exports = class Feed {
     // but that is what logs are for!
     this.flush()
     // scroll the feed to the HEAD position
+    // TODO: Investigate pure CSS based pin-to-bottom scrolling: https://blog.eqrion.net/pin-to-bottom/ (may have better performance)
     if (!was_scrolling) this.reattach_head()
   }
   /**

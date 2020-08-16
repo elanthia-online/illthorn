@@ -2,7 +2,7 @@
  * String highligting via :hilite 
  */
 
-.exist {
+a[exist] {
   color: var(--hilite-color, #a0a0a0);
 }
 
@@ -28,7 +28,7 @@
   cursor: pointer;
   color: var(--link-color, #27a4fd);
 }
-.clickable .d {
+d {
   border-bottom: 2px solid var(--link-color, #27a4fd);
 }
 

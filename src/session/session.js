@@ -32,9 +32,10 @@ module.exports = class Session extends events.EventEmitter {
   }
 
   static list() {
-    return Array.from(Session.Sessions)
+    const list = Array.from(Session.Sessions)
       .map(([_, session]) => session)
       .sort((left, right) => left.port - right.port)
+    return list
   }
 
   static select(...args) {
@@ -177,7 +178,7 @@ module.exports = class Session extends events.EventEmitter {
   attach(view) {
     this.activate()
     this.feed.attach_to_dom(view)
-    this.streams.redraw()
+    this.streams.redraw(view)
     this.feed.reattach_head()
     return this
   }

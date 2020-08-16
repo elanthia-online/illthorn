@@ -1,0 +1,3389 @@
+[
+  {
+    "availability": "all",
+    "name": "Spirit Warding I",
+    "number": "101",
+    "type": "defense",
+    "duration": "20",
+    "bonus": {
+      "bolt-ds": "10",
+      "elemental-td": "5",
+      "spirit-td": "10"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Spirit Barrier",
+    "number": "102",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Spirit Defense",
+    "number": "103",
+    "type": "defense",
+    "duration": "20",
+    "bonus": {
+      "bolt-ds": "10",
+      "physical-ds": "10"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Disease Resistance",
+    "number": "104",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Poison Resistance",
+    "number": "105",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Spirit Fog",
+    "number": "106",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Spirit Warding II",
+    "number": "107",
+    "type": "defense",
+    "duration": "20",
+    "bonus": {
+      "bolt-ds": "25",
+      "elemental-td": "7",
+      "spirit-td": "15"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Stun Relief",
+    "number": "108",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Dispel Invisibility",
+    "number": "109",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Unbalance",
+    "number": "110",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Fire Spirit",
+    "number": "111",
+    "type": "attack/utility"
+  },
+  {
+    "availability": "all",
+    "name": "Water Walking",
+    "number": "112",
+    "type": "utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Undisease",
+    "number": "113",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Unpoison",
+    "number": "114",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Fasthr&apos;s Reward",
+    "number": "115",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Locate Person",
+    "number": "116",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Spirit Strike",
+    "number": "117",
+    "type": "offense",
+    "duration": "2",
+    "bonus": {
+      "bolt-as": "75",
+      "physical-as": "75"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Web",
+    "number": "118",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Spirit Dispel",
+    "number": "119",
+    "type": "attack/utility"
+  },
+  {
+    "availability": "all",
+    "name": "Lesser Shroud",
+    "number": "120",
+    "type": "defense",
+    "duration": "20",
+    "bonus": {
+      "elemental-td": "10",
+      "spirit-td": "20"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Call Lightning",
+    "number": "125",
+    "type": "attack/utility"
+  },
+  {
+    "availability": "all",
+    "name": "Spirit Guide",
+    "number": "130",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Searing Light",
+    "number": "135",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Wall of Force",
+    "number": "140",
+    "type": "defense",
+    "duration": "1",
+    "bonus": {
+      "bolt-ds": "100",
+      "physical-ds": "100"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Calm",
+    "number": "201",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Spirit Shield",
+    "number": "202",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Manna",
+    "number": "203",
+    "type": "utility",
+    "duration": "5",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Unpresence",
+    "number": "204",
+    "type": "utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Light",
+    "number": "205",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Darkness",
+    "number": "206",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Purify Air",
+    "number": "207",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Living Spell",
+    "number": "208",
+    "type": "attack/utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Untrammel",
+    "number": "209",
+    "type": "utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Silence",
+    "number": "210",
+    "type": "attack"
+  },
+  {
+    "availability": "group",
+    "name": "Bravery",
+    "number": "211",
+    "type": "offense",
+    "duration": "20",
+    "bonus": {
+      "bolt-as": "15",
+      "physical-as": "15"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Interference",
+    "number": "212",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Minor Sanctuary",
+    "number": "213",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Bind",
+    "number": "214",
+    "type": "attack"
+  },
+  {
+    "availability": "group",
+    "name": "Heroism",
+    "number": "215",
+    "type": "offense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Frenzy",
+    "number": "216",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Mass Interference",
+    "number": "217",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Spirit Servant",
+    "number": "218",
+    "type": "utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "group",
+    "name": "Spell Shield",
+    "number": "219",
+    "type": "defense",
+    "duration": "20",
+    "bonus": {
+      "bolt-ds": "40",
+      "elemental-td": "15",
+      "spirit-td": "30"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Major Sanctuary",
+    "number": "220",
+    "type": "utility",
+    "duration": "10",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Transference",
+    "number": "225",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Spiritual Abolition",
+    "number": "230",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Spirit Slayer",
+    "number": "240",
+    "type": "offense",
+    "duration": "0",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Prayer of Holding",
+    "number": "301",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Smite",
+    "number": "302",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Prayer of Protection",
+    "number": "303",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Bless Item",
+    "number": "304",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Preservation",
+    "number": "305",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Holy Bolt",
+    "number": "306",
+    "type": "attack"
+  },
+  {
+    "availability": "group",
+    "name": "Benediction",
+    "number": "307",
+    "type": "offense/defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Well of Life",
+    "number": "308",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Neutralize Curse",
+    "number": "309",
+    "type": "utility"
+  },
+  {
+    "availability": "group",
+    "name": "Warding Sphere",
+    "number": "310",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Blind",
+    "number": "311",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Fervent Reproach",
+    "number": "312",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Prayer",
+    "number": "313",
+    "type": "defense",
+    "duration": "20",
+    "bonus": {
+      "elemental-td": "5",
+      "spirit-td": "10"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Relieve Burden",
+    "number": "314",
+    "type": "utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Remove Curse",
+    "number": "315",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Censure",
+    "number": "316",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Divine Fury",
+    "number": "317",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Raise Dead",
+    "number": "318",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Soul Ward",
+    "number": "319",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Ethereal Censer",
+    "number": "320",
+    "type": "offensive/utility",
+    "duration": "0",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Divine Wrath",
+    "number": "335",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Holy Receptacle",
+    "number": "325",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Prayer of Communion",
+    "number": "330",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of the Proselyte",
+    "number": "340",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Miracle",
+    "number": "350",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Elemental Defense I",
+    "number": "401",
+    "type": "defense",
+    "duration": "20",
+    "bonus": {
+      "bolt-ds": "5",
+      "physical-ds": "5",
+      "elemental-td": "5",
+      "spirit-td": "2"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Presence",
+    "number": "402",
+    "type": "utility",
+    "duration": "5",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Lock Pick Enhancement",
+    "number": "403",
+    "type": "utility",
+    "duration": "0",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Disarm Enhancement",
+    "number": "404",
+    "type": "utility",
+    "duration": "0",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Elemental Detection",
+    "number": "405",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Elemental Defense II",
+    "number": "406",
+    "type": "defense",
+    "duration": "20",
+    "bonus": {
+      "bolt-ds": "10",
+      "physical-ds": "10",
+      "elemental-td": "10",
+      "spirit-td": "5"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Unlock",
+    "number": "407",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Disarm",
+    "number": "408",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Elemental Blast",
+    "number": "409",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Elemental Wave",
+    "number": "410",
+    "type": "attack/area"
+  },
+  {
+    "availability": "all",
+    "name": "Elemental Blade",
+    "number": "411",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Weapon Deflection",
+    "number": "412",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Elemental Saturation",
+    "number": "413",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Elemental Defense III",
+    "number": "414",
+    "type": "defense",
+    "duration": "20",
+    "bonus": {
+      "bolt-ds": "20",
+      "physical-ds": "20",
+      "elemental-td": "15",
+      "spirit-td": "7"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Elemental Strike",
+    "number": "415",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Piercing Gaze",
+    "number": "416",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Elemental Dispel",
+    "number": "417",
+    "type": "attack/utility"
+  },
+  {
+    "availability": "all",
+    "name": "Mana Focus",
+    "number": "418",
+    "type": "utility"
+  },
+  {
+    "availability": "group",
+    "name": "Mass Elemental Defense",
+    "number": "419",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Magic Item Creation",
+    "number": "420",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Elemental Targeting",
+    "number": "425",
+    "type": "offense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Elemental Barrier",
+    "number": "430",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Major Elemental Wave",
+    "number": "435",
+    "type": "attack/area"
+  },
+  {
+    "availability": "all",
+    "name": "Mana Focus Water Bonus",
+    "number": "499",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Sleep",
+    "number": "501",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Chromatic Circle",
+    "number": "502",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Thurfel&apos;s Ward",
+    "number": "503",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Slow",
+    "number": "504",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Hand of Tonis",
+    "number": "505",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Celerity",
+    "number": "506",
+    "type": "utility",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Elemental Deflection",
+    "number": "507",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Elemental Bias",
+    "number": "508",
+    "type": "defense",
+    "duration": "20",
+    "bonus": {
+      "elemental-td": "20",
+      "spirit-td": "10"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Strength",
+    "number": "509",
+    "type": "offense/utility",
+    "duration": "20",
+    "bonus": {
+      "strength": "15"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Hurl Boulder",
+    "number": "510",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Floating Disk",
+    "number": "511",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Cold Snap",
+    "number": "512",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Elemental Focus",
+    "number": "513",
+    "type": "offense",
+    "duration": "20",
+    "bonus": {
+      "physical-as": "-40"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Stone Fist",
+    "number": "514",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Rapid Fire",
+    "number": "515",
+    "type": "utility",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Mana Leech",
+    "number": "516",
+    "type": "attack/utility"
+  },
+  {
+    "availability": "all",
+    "name": "Charge Item",
+    "number": "517",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Cone of Lightning",
+    "number": "518",
+    "type": "attack/area"
+  },
+  {
+    "availability": "all",
+    "name": "Immolation",
+    "number": "519",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Mage Armor",
+    "number": "520",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Meteor Swarm",
+    "number": "525",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Elemental Disjunction",
+    "number": "530",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Haste",
+    "number": "535",
+    "type": "utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Temporal Reversion",
+    "number": "540",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Rapid Fire Penalty",
+    "number": "597",
+    "type": "timer",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Celerity Recovery",
+    "number": "598",
+    "duration": "3",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Rapid Fire Recovery",
+    "number": "599"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Natural Colors",
+    "number": "601",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Resist Elements",
+    "number": "602",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Foraging",
+    "number": "603",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Skinning",
+    "number": "604",
+    "type": "utility",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Whispering Willow",
+    "number": "605",
+    "type": "utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Phoen&apos;s Strength",
+    "number": "606",
+    "type": "offense",
+    "duration": "20",
+    "bonus": {
+      "physical-as": "10",
+      "strength": "10"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Sounds",
+    "number": "607",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Camouflage",
+    "number": "608",
+    "type": "offense"
+  },
+  {
+    "availability": "all",
+    "name": "Sun Burst",
+    "number": "609",
+    "type": "attack/utility"
+  },
+  {
+    "availability": "all",
+    "name": "Tangleweed",
+    "number": "610",
+    "type": "attack"
+  },
+  {
+    "availability": "group",
+    "name": "Mass Colors",
+    "number": "611",
+    "type": "defense"
+  },
+  {
+    "availability": "all",
+    "name": "Breeze",
+    "number": "612",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Self Control",
+    "number": "613",
+    "type": "defense/utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Imbue",
+    "number": "614",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Call Swarm",
+    "number": "615",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Spike Thorn",
+    "number": "616",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sneaking",
+    "number": "617",
+    "type": "utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Mobility",
+    "number": "618",
+    "type": "defense/utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Mass Calm",
+    "number": "619",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Resist Nature",
+    "number": "620",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Nature&apos;s Touch",
+    "number": "625",
+    "type": "defense/utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Animal Companion",
+    "number": "630",
+    "type": "attack/utility"
+  },
+  {
+    "availability": "all",
+    "name": "Nature&apos;s Fury",
+    "number": "635",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Wall of Thorns",
+    "number": "640",
+    "type": "defense",
+    "duration": "20",
+    "bonus": {
+      "bolt-ds": "20",
+      "physical-ds": "20"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Assume Aspect",
+    "number": "650",
+    "type": "utility",
+    "duration": "10",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Blood Burst",
+    "number": "701",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Mana Disruption",
+    "number": "702",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Corrupt Essence",
+    "number": "703",
+    "type": "attack",
+    "duration": "0",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Phase",
+    "number": "704",
+    "type": "utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Disintegrate",
+    "number": "705",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Mind Jolt",
+    "number": "706",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Eye Spy",
+    "number": "707",
+    "type": "utility",
+    "duration": "19",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Limb Disruption",
+    "number": "708",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Quake",
+    "number": "709",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Energy Maelstrom",
+    "number": "710",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Pain",
+    "number": "711",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Cloak of Shadows",
+    "number": "712",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Balefire",
+    "number": "713",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Scroll Infusion",
+    "number": "714",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Curse",
+    "number": "715",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Pestilence",
+    "number": "716",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Evil Eye",
+    "number": "717",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Torment",
+    "number": "718",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Dark Catalyst",
+    "number": "719",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Implosion",
+    "number": "720",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Minor Summoning",
+    "number": "725",
+    "type": "utility",
+    "duration": "10",
+    "bonus": null
+  },
+  {
+    "name": "Illusion - Demon",
+    "number": "9725",
+    "type": "timer",
+    "duration": "30",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Animate Dead",
+    "number": "730",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Ensorcell",
+    "number": "735",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Planar Shift",
+    "number": "740",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Minor Shock",
+    "number": "901",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Minor Elemental Edge",
+    "number": "902",
+    "type": "offense"
+  },
+  {
+    "availability": "all",
+    "name": "Minor Water",
+    "number": "903",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Minor Acid",
+    "number": "904",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Prismatic Guard",
+    "number": "905",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Minor Fire",
+    "number": "906",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Major Cold",
+    "number": "907",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Major Fire",
+    "number": "908",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Tremors",
+    "number": "909",
+    "type": "attack/area/utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Major Shock",
+    "number": "910",
+    "type": "attack"
+  },
+  {
+    "availability": "group",
+    "name": "Mass Blur",
+    "number": "911",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Call Wind",
+    "number": "912",
+    "type": "attack/area"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Melgorehn&apos;s Aura",
+    "number": "913",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Sandstorm",
+    "number": "914",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Weapon Fire",
+    "number": "915",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Invisibility",
+    "number": "916",
+    "type": "utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Boil Earth",
+    "number": "917",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Duplicate",
+    "number": "918",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Wizard&apos;s Shield",
+    "number": "919",
+    "type": "defense",
+    "duration": "1",
+    "bonus": {
+      "bolt-ds": "50",
+      "physical-ds": "50"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Call Familiar",
+    "number": "920",
+    "type": "utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Enchant Item",
+    "number": "925",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Familiar Gate",
+    "number": "930",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Core Tap",
+    "number": "950",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Core Tap Recovery (1 Charge)",
+    "number": "996",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Core Tap Recovery (2 Charges)",
+    "number": "997"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Core Tap Recovery (3 Charges)",
+    "number": "998"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Core Tap Recovery",
+    "number": "999"
+  },
+  {
+    "availability": "all",
+    "name": "Holding Song",
+    "number": "1001",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Vibration Chant",
+    "number": "1002",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Fortitude Song",
+    "number": "1003",
+    "type": "defense",
+    "bonus": {
+      "bolt-ds": "10",
+      "physical-ds": "10"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Purification Song",
+    "number": "1004",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Lullabye",
+    "number": "1005",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Song of Luck",
+    "number": "1006",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Kai&apos;s Triumph Song",
+    "number": "1007",
+    "type": "offense/bonus"
+  },
+  {
+    "availability": "all",
+    "name": "Stunning Shout",
+    "number": "1008",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sonic Shield Song",
+    "number": "1009",
+    "type": "defense"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Song of Valor",
+    "number": "1010",
+    "type": "defense"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Song of Peace",
+    "number": "1011",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sonic Weapon Song",
+    "number": "1012",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Song of Unravelling",
+    "number": "1013",
+    "type": "attack/utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sonic Armor",
+    "number": "1014",
+    "type": "defense"
+  },
+  {
+    "availability": "all",
+    "name": "Song of Depression",
+    "number": "1015",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Song of Rage",
+    "number": "1016",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Song of Noise",
+    "number": "1017",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Song of Power",
+    "number": "1018",
+    "type": "bonus"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Song of Mirrors",
+    "number": "1019",
+    "type": "defense"
+  },
+  {
+    "availability": "all",
+    "name": "Traveller&apos;s Song",
+    "number": "1020",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Singing Sword Song",
+    "number": "1025",
+    "type": "attack/utility"
+  },
+  {
+    "availability": "all",
+    "name": "Song of Sonic Disruption",
+    "number": "1030",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Song of Tonis",
+    "number": "1035",
+    "type": "defense/bonus"
+  },
+  {
+    "availability": "all",
+    "name": "Troubadour&apos;s Rally",
+    "number": "1040",
+    "type": "defense/utility"
+  },
+  {
+    "availability": "all",
+    "name": "Heal",
+    "number": "1101",
+    "type": "utility/attack"
+  },
+  {
+    "availability": "all",
+    "name": "Limb Repair",
+    "number": "1102",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "System Repair",
+    "number": "1103",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Head Repair",
+    "number": "1104",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Organ Repair",
+    "number": "1105",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Bone Shatter",
+    "number": "1106",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Adrenal Surge",
+    "number": "1107",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Empathy",
+    "number": "1108",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Empathic Focus",
+    "number": "1109",
+    "type": "offense/defense",
+    "duration": "20",
+    "bonus": {
+      "physical-as": "15",
+      "elemental-td": "7",
+      "spirit-td": "15"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Empathic Assault",
+    "number": "1110",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Limb Scar Repair",
+    "number": "1111",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "System Scar Repair",
+    "number": "1112",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Head Scar Repair",
+    "number": "1113",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Organ Scar Repair",
+    "number": "1114",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Wither",
+    "number": "1115",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Rapid Healing",
+    "number": "1116",
+    "type": "utility",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Empathic Link",
+    "number": "1117",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Herb Production",
+    "number": "1118",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Strength Of Will",
+    "number": "1119",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Sympathy",
+    "number": "1120",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Troll&apos;s Blood",
+    "number": "1125",
+    "type": "utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Intensity",
+    "number": "1130",
+    "type": "offense/defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Regeneration",
+    "number": "1150",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Rapid Healing Recovery",
+    "number": "1199",
+    "duration": "30",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Force Orb",
+    "number": "1201",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Iron Skin",
+    "number": "1202",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Powersink",
+    "number": "1203",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Foresight",
+    "number": "1204",
+    "type": "defense",
+    "duration": "20",
+    "bonus": {
+      "physical-ds": "10"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Soothing Word",
+    "number": "1205",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Telekinesis",
+    "number": "1206"
+  },
+  {
+    "availability": "all",
+    "name": "Force Projection",
+    "number": "1207",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Mindward",
+    "number": "1208",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Dragonclaw",
+    "number": "1209",
+    "type": "offense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Thought Lash",
+    "number": "1210",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Confusion",
+    "number": "1211",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Shroud of Deception",
+    "number": "1212"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Mind over Body",
+    "number": "1213",
+    "type": "utility",
+    "duration": "59"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Brace",
+    "number": "1214",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Blink",
+    "number": "1215",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Focus Barrier",
+    "number": "1216",
+    "type": "defense",
+    "duration": "59",
+    "bonus": {
+      "physical-ds": "30"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Vision",
+    "number": "1217",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Mental Dispel",
+    "number": "1218",
+    "type": "attack/utility"
+  },
+  {
+    "availability": "all",
+    "name": "Vertigo",
+    "number": "1219",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Premonition",
+    "number": "1220",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Mindwipe",
+    "number": "1225"
+  },
+  {
+    "availability": "all",
+    "name": "Provoke",
+    "number": "1235",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Mantle of Faith",
+    "number": "1601",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Pious Trial",
+    "number": "1602",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Faith&apos;s Clarity",
+    "number": "1603",
+    "type": "utility",
+    "duration": "0",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Consecrate",
+    "number": "1604",
+    "type": "utility"
+  },
+  {
+    "availability": "group",
+    "name": "Arm of the Arkati",
+    "number": "1605",
+    "type": "offense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Dauntless",
+    "number": "1606",
+    "type": "offense",
+    "duration": "20",
+    "bonus": {
+      "bolt-as": "10",
+      "physical-as": "10"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Rejuvenation",
+    "number": "1607",
+    "type": "utility",
+    "duration": "5",
+    "bonus": null
+  },
+  {
+    "availability": "group",
+    "name": "Beacon of Courage",
+    "number": "1608",
+    "type": "utility",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "group",
+    "name": "Divine Shield",
+    "number": "1609",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Higher Vision",
+    "number": "1610",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Patron&apos;s Blessing",
+    "number": "1611",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Champion&apos;s Might",
+    "number": "1612",
+    "type": "offense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "group",
+    "name": "Guard the Meek",
+    "number": "1613",
+    "type": "defense",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Aura of the Arkati",
+    "number": "1614",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Divine Strike",
+    "number": "1615",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Vigor",
+    "number": "1616",
+    "type": "utility",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Zealot",
+    "number": "1617",
+    "type": "offense",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "group",
+    "name": "Crusade",
+    "number": "1618",
+    "type": "offense",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Faith Shield",
+    "number": "1619",
+    "type": "defense"
+  },
+  {
+    "availability": "all",
+    "name": "Aid the Fallen",
+    "number": "1620",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Sanctify",
+    "number": "1625",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Judgment",
+    "number": "1630",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Divine Intervention",
+    "number": "1635",
+    "type": "utility/defense"
+  },
+  {
+    "availability": "all",
+    "name": "Divine Word",
+    "number": "1640",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Divine Incarnation",
+    "number": "1650",
+    "type": "utility",
+    "duration": "10",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Arcane Blast",
+    "number": "1700",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Arcane Decoy",
+    "number": "1701",
+    "type": "defense",
+    "duration": "15",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Stun Cloud",
+    "number": "1704",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Flaming Aura",
+    "number": "1706",
+    "type": "attack",
+    "duration": "4",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Minor Steam",
+    "number": "1707",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Mystic Impedance",
+    "number": "1708",
+    "type": "attack",
+    "duration": "3",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Minor Cold",
+    "number": "1709",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Major Acid",
+    "number": "1710",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Mystic Focus",
+    "number": "1711",
+    "type": "offense",
+    "duration": "5",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Spirit Guard",
+    "number": "1712",
+    "type": "defense",
+    "duration": "20",
+    "bonus": {
+      "bolt-ds": "25",
+      "physical-ds": "25"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Death Cloud",
+    "number": "1713",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Firestorm",
+    "number": "1715",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "V&apos;Tull&apos;s Fury",
+    "number": "1718",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Arcane Barrier",
+    "number": "1720",
+    "type": "defense",
+    "duration": "30",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Fash&apos;lo&apos;nae&apos;s Gift",
+    "number": "1750",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Decaying",
+    "number": "6666",
+    "type": "timer",
+    "duration": "16",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Tortoise Stance",
+    "number": "9401",
+    "type": "defense",
+    "duration": "24"
+  },
+  {
+    "availability": "all",
+    "name": "Slash Protection",
+    "number": "9501",
+    "type": "defense",
+    "duration": "24"
+  },
+  {
+    "availability": "all",
+    "name": "Crush Protection",
+    "number": "9502",
+    "type": "defense",
+    "duration": "24"
+  },
+  {
+    "availability": "all",
+    "name": "Puncture Protection",
+    "number": "9503",
+    "type": "defense",
+    "duration": "24"
+  },
+  {
+    "availability": "all",
+    "name": "Armor Support",
+    "number": "9504",
+    "type": "bonus",
+    "duration": "24"
+  },
+  {
+    "availability": "all",
+    "name": "Armored Evasion",
+    "number": "9505",
+    "type": "bonus",
+    "duration": "24"
+  },
+  {
+    "availability": "all",
+    "name": "Armored Casting",
+    "number": "9506",
+    "type": "bonus",
+    "duration": "24"
+  },
+  {
+    "availability": "all",
+    "name": "Armored Fluidity",
+    "number": "9507",
+    "type": "bonus",
+    "duration": "24"
+  },
+  {
+    "availability": "all",
+    "name": "Armored Stealth",
+    "number": "9508",
+    "type": "bonus",
+    "duration": "24"
+  },
+  {
+    "availability": "all",
+    "name": "Armor Reinforcement",
+    "number": "9509",
+    "type": "defense",
+    "duration": "24"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Combat Movement",
+    "number": "9601",
+    "type": "defense",
+    "duration": "3",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Combat Focus",
+    "number": "9602",
+    "type": "defense",
+    "duration": "3",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Shadow Mastery",
+    "number": "9603",
+    "type": "utility",
+    "duration": "3",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Shadow Mastery Cooldown",
+    "number": "9604",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Surge of Strength",
+    "number": "9605",
+    "type": "utility",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Surge of Strength Cooldown",
+    "number": "9606"
+  },
+  {
+    "availability": "all",
+    "name": "Berserk",
+    "number": "9607",
+    "type": "attack",
+    "duration": "5",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Rolling Krynch Stance",
+    "number": "9620",
+    "type": "timer",
+    "duration": "24"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Stance of the Mongoose",
+    "number": "9621",
+    "type": "timer",
+    "duration": "24"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Slippery Mind",
+    "number": "9622",
+    "type": "timer",
+    "duration": "24"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Flurry of Blows",
+    "number": "9623",
+    "type": "timer",
+    "duration": "24"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Inner Harmony",
+    "number": "9624",
+    "type": "timer",
+    "duration": "24"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Burst of Swiftness",
+    "number": "9625",
+    "type": "utility",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Ki Focus",
+    "number": "9626",
+    "type": "offense",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Duck and Weave",
+    "number": "9627",
+    "type": "utility",
+    "duration": "0",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "POPed muscles",
+    "number": "9699",
+    "duration": "10",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Recognition",
+    "number": "9701",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Location",
+    "number": "9702",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Contact",
+    "number": "9703",
+    "type": "utility",
+    "duration": "17",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Resolve",
+    "number": "9704",
+    "type": "utility",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Minor Bane",
+    "number": "9705",
+    "type": "offense",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Bandages",
+    "number": "9706",
+    "type": "utility",
+    "duration": "3",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Defense",
+    "number": "9707",
+    "type": "defense",
+    "duration": "5",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Offense",
+    "number": "9708",
+    "type": "offense",
+    "duration": "5",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Sigil of Distraction",
+    "number": "9709",
+    "type": "attack",
+    "duration": "5",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Minor Protection",
+    "number": "9710",
+    "type": "defense",
+    "duration": "1",
+    "bonus": {
+      "bolt-ds": "5",
+      "physical-ds": "5"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Focus",
+    "number": "9711",
+    "type": "defense",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Sigil of Intimidation",
+    "number": "9712",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Mending",
+    "number": "9713",
+    "type": "utility",
+    "duration": "10",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Concentration",
+    "number": "9714",
+    "type": "bonus",
+    "duration": "10",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Major Bane",
+    "number": "9715",
+    "type": "offense",
+    "duration": "1",
+    "bonus": {
+      "bolt-as": "10",
+      "physical-as": "10"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Determination",
+    "number": "9716",
+    "type": "utility",
+    "duration": "3",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Health",
+    "number": "9717",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Power",
+    "number": "9718",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Major Protection",
+    "number": "9719",
+    "type": "defense",
+    "duration": "1",
+    "bonus": {
+      "bolt-ds": "10",
+      "physical-ds": "10"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sigil of Escape",
+    "number": "9720",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Symbol of Recognition",
+    "number": "9801",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Symbol of Blessing",
+    "number": "9802",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Symbol of Thought",
+    "number": "9803",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Diminishment",
+    "number": "9804",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Symbol of Courage",
+    "number": "9805",
+    "type": "offense"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Symbol of Protection",
+    "number": "9806",
+    "type": "defense"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Submission",
+    "number": "9807",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Kai&apos;s Strike",
+    "number": "9808"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Holiness",
+    "number": "9809",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Recall",
+    "number": "9810",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Sleep",
+    "number": "9811",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Transcendence",
+    "number": "9812",
+    "type": "defense",
+    "duration": "0",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Mana",
+    "number": "9813",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Sight",
+    "number": "9814",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Retribution",
+    "number": "9815",
+    "type": "attack/utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Symbol of Supremacy",
+    "number": "9816",
+    "type": "offensive"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Restoration",
+    "number": "9817",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Need",
+    "number": "9818",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Renewal",
+    "number": "9819",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Disruption",
+    "number": "9820",
+    "type": "offensive"
+  },
+  {
+    "availability": "all",
+    "name": "Kai&apos;s Smite",
+    "number": "9821",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Turning",
+    "number": "9822",
+    "type": "attack"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Preservation",
+    "number": "9823",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Symbol of Dreams",
+    "number": "9824",
+    "type": "utility",
+    "duration": "24"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Return",
+    "number": "9825",
+    "type": "utility"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Seeking",
+    "number": "9826",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Recognition",
+    "number": "9901",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Warding",
+    "number": "9903",
+    "type": "defense",
+    "duration": "1",
+    "bonus": {
+      "bolt-ds": "5",
+      "physical-ds": "5"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Striking",
+    "number": "9904",
+    "type": "offense",
+    "duration": "1",
+    "bonus": {
+      "bolt-as": "5",
+      "physical-as": "5"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Clotting",
+    "number": "9905",
+    "type": "utility",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Thought",
+    "number": "9906",
+    "type": "utility",
+    "duration": "10",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Defending",
+    "number": "9907",
+    "type": "defense",
+    "duration": "1",
+    "bonus": {
+      "bolt-ds": "10",
+      "physical-ds": "10"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Smiting",
+    "number": "9908",
+    "type": "offense",
+    "duration": "1",
+    "bonus": {
+      "bolt-as": "10",
+      "physical-as": "10"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Staunching",
+    "number": "9909",
+    "type": "utility",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Deflection",
+    "number": "9910",
+    "type": "defense",
+    "duration": "1",
+    "bonus": {
+      "bolt-ds": "20"
+    }
+  },
+  {
+    "availability": "all",
+    "name": "Sign of Hypnosis",
+    "number": "9911",
+    "type": "attack"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Swords",
+    "number": "9912",
+    "type": "offense",
+    "duration": "1",
+    "bonus": {
+      "bolt-as": "20",
+      "physical-as": "20"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Shields",
+    "number": "9913",
+    "type": "defense",
+    "duration": "1",
+    "bonus": {
+      "bolt-ds": "20",
+      "physical-ds": "20"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Dissipation",
+    "number": "9914",
+    "type": "defense",
+    "duration": "1",
+    "bonus": {
+      "elemental-td": "15",
+      "mental-td": "15",
+      "spirit-td": "15"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Healing",
+    "number": "9915",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Madness",
+    "number": "9916",
+    "type": "offense",
+    "duration": "0",
+    "bonus": {
+      "bolt-as": "50",
+      "physical-as": "50"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Possession",
+    "number": "9917",
+    "type": "attack",
+    "bonus": {
+      "bolt-as": "50",
+      "physical-as": "50"
+    }
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Wracking",
+    "number": "9918",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Darkness",
+    "number": "9919",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Sign of Hopelessness",
+    "number": "9920",
+    "type": "utility"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Arcane Mobility",
+    "number": "9002",
+    "type": "offense",
+    "duration": "5",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Next Bounty",
+    "number": "9003",
+    "type": "timer",
+    "duration": "15",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Next Group Bounty",
+    "number": "9056",
+    "type": "timer",
+    "duration": "15",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Next GoS Task",
+    "number": "9004",
+    "type": "timer",
+    "duration": "15",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "MStrike Cooldown",
+    "number": "9005",
+    "type": "timer",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Lichbane",
+    "number": "9006",
+    "type": "defense",
+    "duration": "10",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Well of Life Cooldown",
+    "number": "9007",
+    "type": "timer"
+  },
+  {
+    "availability": "all",
+    "name": "Sacrifice Cooldown",
+    "number": "9008",
+    "type": "timer",
+    "duration": "10",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Raise Dead Cooldown",
+    "number": "9009",
+    "type": "timer"
+  },
+  {
+    "availability": "all",
+    "name": "Adrenal Surge Cooldown",
+    "number": "9010",
+    "type": "timer"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Council Task",
+    "number": "9011",
+    "type": "timer"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Council Punishment",
+    "number": "9012",
+    "type": "timer"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Fog Concealment",
+    "number": "9013",
+    "type": "timer",
+    "duration": "0",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Wolf",
+    "number": "9014",
+    "type": "timer",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Wolf Cooldown",
+    "number": "9015",
+    "type": "timer",
+    "duration": "4",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Jackal",
+    "number": "9016",
+    "type": "timer",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Jackal Cooldown",
+    "number": "9017",
+    "type": "timer",
+    "duration": "4",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Lion",
+    "number": "9018",
+    "type": "timer",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Lion Cooldown",
+    "number": "9019",
+    "type": "timer",
+    "duration": "4",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Panther",
+    "number": "9020",
+    "type": "timer",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Panther Cooldown",
+    "number": "9021",
+    "type": "timer",
+    "duration": "4",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Owl",
+    "number": "9022",
+    "type": "timer",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Owl Cooldown",
+    "number": "9023",
+    "type": "timer",
+    "duration": "4",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Hawk",
+    "number": "9024",
+    "type": "timer",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Hawk Cooldown",
+    "number": "9025",
+    "type": "timer",
+    "duration": "4",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Rat",
+    "number": "9026",
+    "type": "timer",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Rat Cooldown",
+    "number": "9027",
+    "type": "timer",
+    "duration": "4",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Porcupine",
+    "number": "9028",
+    "type": "timer",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Porcupine Cooldown",
+    "number": "9029",
+    "type": "timer",
+    "duration": "4",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Bear",
+    "number": "9030",
+    "type": "timer",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Bear Cooldown",
+    "number": "9031",
+    "type": "timer",
+    "duration": "4",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Serpent",
+    "number": "9032",
+    "type": "timer",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Serpent Cooldown",
+    "number": "9033",
+    "type": "timer",
+    "duration": "4",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Burgee",
+    "number": "9034",
+    "type": "timer",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Burgee Cooldown",
+    "number": "9035",
+    "type": "timer",
+    "duration": "4",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Mantis",
+    "number": "9036",
+    "type": "timer",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Mantis Cooldown",
+    "number": "9037",
+    "type": "timer",
+    "duration": "4",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Yierka",
+    "number": "9038",
+    "type": "timer",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Yierka Cooldown",
+    "number": "9039",
+    "type": "timer",
+    "duration": "4",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Spider",
+    "number": "9040",
+    "type": "timer",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "AA: Spider Cooldown",
+    "number": "9041",
+    "type": "timer",
+    "duration": "4",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Meditation",
+    "number": "9075",
+    "type": "timer",
+    "duration": "12",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Miracle Cooldown",
+    "number": "9044",
+    "type": "timer"
+  },
+  {
+    "availability": "all",
+    "name": "Sigil of Escape Cooldown",
+    "number": "9045",
+    "type": "timer",
+    "duration": "14"
+  },
+  {
+    "availability": "all",
+    "name": "Regeneration Cooldown",
+    "number": "9046",
+    "type": "timer",
+    "duration": "14"
+  },
+  {
+    "availability": "all",
+    "name": "Lantern Charm Cooldown",
+    "number": "9047",
+    "type": "timer",
+    "duration": "14"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Mana Cooldown",
+    "number": "9048",
+    "type": "timer",
+    "duration": "5",
+    "bonus": null
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Transcendence Cooldown",
+    "number": "9049",
+    "type": "timer"
+  },
+  {
+    "availability": "all",
+    "name": "Symbol of Renewal Cooldown",
+    "number": "9050",
+    "type": "timer",
+    "duration": "2",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Burst of Swiftness Cooldown",
+    "number": "9051",
+    "type": "timer"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Curse of the Star (bonus)",
+    "number": "9053",
+    "type": "timer",
+    "duration": "20",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Doomstone Curse",
+    "number": "9054",
+    "type": "timer",
+    "duration": "60",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Divine Word Cooldown",
+    "number": "9055",
+    "type": "timer"
+  },
+  {
+    "availability": "all",
+    "name": "Planar Fragment Cooldown",
+    "number": "9057",
+    "type": "timer",
+    "duration": "57"
+  },
+  {
+    "availability": "all",
+    "name": "Chronomage Teleport Staff Cooldown",
+    "number": "9058",
+    "type": "timer",
+    "duration": "14"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Meditative Resistance (acid)",
+    "number": "9060",
+    "type": "defense",
+    "duration": "25"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Meditative Resistance (cold)",
+    "number": "9061",
+    "type": "defense",
+    "duration": "25"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Meditative Resistance (crush)",
+    "number": "9062",
+    "type": "defense",
+    "duration": "25"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Meditative Resistance (disintegration)",
+    "number": "9063",
+    "type": "defense",
+    "duration": "25"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Meditative Resistance (disruption)",
+    "number": "9064",
+    "type": "defense",
+    "duration": "25"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Meditative Resistance (electrical)",
+    "number": "9065",
+    "type": "defense",
+    "duration": "25"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Meditative Resistance (grapple)",
+    "number": "9066",
+    "type": "defense",
+    "duration": "25"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Meditative Resistance (fire)",
+    "number": "9067",
+    "type": "defense",
+    "duration": "25"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Meditative Resistance (impact)",
+    "number": "9068",
+    "type": "defense",
+    "duration": "25"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Meditative Resistance (plasma)",
+    "number": "9069",
+    "type": "defense",
+    "duration": "25"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Meditative Resistance (puncture)",
+    "number": "9070",
+    "type": "defense",
+    "duration": "25"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Meditative Resistance (slash)",
+    "number": "9071",
+    "type": "defense",
+    "duration": "25"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Meditative Resistance (steam)",
+    "number": "9072",
+    "type": "defense",
+    "duration": "25"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Meditative Resistance (unbalance)",
+    "number": "9073",
+    "type": "defense",
+    "duration": "25"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Meditative Resistance (vacuum)",
+    "number": "9074",
+    "type": "defense",
+    "duration": "25"
+  },
+  {
+    "availability": "self-cast",
+    "name": "Major Loot Boost",
+    "number": "9100",
+    "type": "utility",
+    "duration": "15",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Minor Loot Boost",
+    "number": "9101",
+    "type": "utility",
+    "duration": "15",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Mana Leech Recovery",
+    "number": "9516",
+    "type": "timer",
+    "duration": "1",
+    "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Duck and Weave Cooldown",
+    "number": "9052",
+    "type": "timer",
+    "duration": "5",
+    "bonus": null
+  }
+]

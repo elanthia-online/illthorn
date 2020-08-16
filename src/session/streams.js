@@ -1,12 +1,14 @@
 const StreamsSettings = require("../settings").of("streams")
 const Lens = require("../util/lens")
+const Storage = require("../storage")
 
 module.exports = class Streams {
   // this class on the top-level application element
   // signals which layout to use
   static STREAMS_ON = "streams-on"
 
-  static STREAMS_BUFFER_LIMT = 1000
+  static STREAMS_BUFFER_LIMT = 250
+  static STREAMS_STORAGE_LIMT = 100
 
   static ENUM = {
     thoughts: 1,
@@ -58,14 +60,65 @@ module.exports = class Streams {
    */
   insert(tag) {
     const was_scrolling = this._scrolling
+    const name = this._view.getAttribute("data-name")
+    if (name) {
+      this.storeStreamMessage(tag, name)
+    }
+    const el = this.createEl(tag)
+    this._view.append(el)
 
+    // scroll the feed to the HEAD position
+    if (!was_scrolling) this.advance_scroll()
+  }
+
+  createEl(tag) {
     const pre = document.createElement("pre")
     pre.classList.add(tag.id, tag.name)
     const parts = this.transformStreamMessage(tag)
     parts.forEach((ele) => pre.append(ele))
-    this._view.append(pre)
-    // scroll the feed to the HEAD position
-    if (!was_scrolling) this.advance_scroll()
+    return pre
+  }
+
+  async storeStreamMessage(tag, name) {
+    let thoughts = Storage.get(`thoughts-${name}`)
+    if (!thoughts) {
+      thoughts = []
+    }
+    thoughts.push(tag)
+    thoughts = this.trimMessages(thoughts)
+
+    // TODO: The plan is not to use Storage for this but flat files.
+    // See: https://github.com/elanthia-online/illthorn/pull/103#issuecomment-668554830
+    Storage.set(`thoughts-${name}`, thoughts)
+  }
+
+  trimMessages(thoughts) {
+    // Only store and retrieve up to a maximum
+    if (thoughts.length > Streams.STREAMS_STORAGE_LIMT) {
+      thoughts = thoughts.slice(
+        thoughts.length - Streams.STREAMS_STORAGE_LIMT,
+        thoughts.length
+      )
+    }
+    return thoughts
+  }
+
+  async loadStreamMessages(name) {
+    let thoughts = Storage.get(`thoughts-${name}`)
+    if (thoughts) {
+      thoughts = this.trimMessages(thoughts)
+      thoughts.forEach((tag) => {
+        const el = this.createEl(tag)
+        this._view.append(el)
+      })
+      const pre = document.createElement("pre")
+      pre.classList.add(
+        "loaded-from-storage-message",
+        "stream"
+      )
+      pre.innerHTML = `<span>^ Loaded from Storage ^ </span>`
+      this._view.append(pre)
+    }
   }
 
   transformStreamMessage(tag) {
@@ -120,7 +173,7 @@ module.exports = class Streams {
     )
   }
 
-  redraw() {
+  redraw(view) {
     const container = document.querySelector(
       "#streams-wrapper"
     )
@@ -145,7 +198,12 @@ module.exports = class Streams {
     // is attached to the DOM, not on subsequent redraws
     // this means it will preserve the current scroll state
     container.innerHTML = ""
+    let name = view.getAttribute("data-name")
+    this._view.setAttribute("data-name", name)
     container.appendChild(this._view)
+
+    this.loadStreamMessages(name)
+
     this.advance_scroll()
   }
 }

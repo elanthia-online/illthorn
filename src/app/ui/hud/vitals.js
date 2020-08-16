@@ -23,6 +23,7 @@ module.exports = class Vitals {
     "encumlevel",
     "mindState",
     "nextLvlPB",
+    "pbarStance",
   ]
 
   static ID_TO_UI = {
@@ -30,10 +31,11 @@ module.exports = class Vitals {
     mindState: "mind",
     nextLevelPB: "exp",
     nextLvlPB: "exp",
+    pbarstance: "stance",
   }
 
   static parse(ele) {
-    const text = attr(ele, "text", "")
+    const text = attr(ele, "text", attr(ele, "id"))
     const [_0, title, value, max] =
       text.match(Vitals.PATTERN) || []
 
@@ -42,7 +44,13 @@ module.exports = class Vitals {
       max: parseInt(max || "100", 10),
       value: parseInt(value || attr(ele, "value", "0"), 10),
       text: text,
-      title: title || text,
+      title: (title || text).replace(/\s\(\d+\%\)/, ""),
+    }
+
+    if (parsed.id == "nextLvlPB") {
+      const exp = (parsed.title.match(/(\d+)/) || [])[1]
+      parsed.value = exp
+      parsed.title = parsed.title.replace(exp, "").trim()
     }
 
     if (typeof parsed.value == "number") {
@@ -91,7 +99,6 @@ module.exports = class Vitals {
           )
           .map(Vitals.parse)
           .map(Vitals.show)
-          .concat(m(Stance))
       )
     )
   }

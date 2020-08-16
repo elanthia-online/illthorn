@@ -278,12 +278,12 @@ module.exports = class Feed {
     }
     return await this.ingestText(span)
   }
-
+  // order of operations is important here!
   static TOP_LEVEL_STATUS_TAGS = [
+    "dialogdata",
     "progressbar",
     "container",
     "compass",
-    "dialogdata",
     "compdef",
     "switchquickbar",
     "opendialog",

@@ -7,7 +7,9 @@ exports.parse = async function (session, incoming) {
   if (isDanglingStream(session.buffer))
     return { buffered: 1 }
   //if (session.buffer.match(/room(Name|Desc)/))
-  //console.log("raw:\n%s", session.buffer)
+  if (session.buffer.includes("ActiveSpells")) {
+    //console.log("raw:\n%s", session.buffer)
+  }
   //console.time("parser")
   const string = normalize(session.buffer)
   const doc = parser.parseFromString(
@@ -20,6 +22,10 @@ exports.parse = async function (session, incoming) {
     if (text.length == 0) return
     indicator.innerHTML = pre(text)
   })
+
+  if (doc.body.innerHTML.includes("dialogdata")) {
+    //console.log(doc.body.innerHTML)
+  }
 
   // clear the buffer
   session.buffer = ""

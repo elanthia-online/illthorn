@@ -12,9 +12,10 @@ module.exports = class Stance {
   }
 
   view() {
-    const sess = Session.focused()
-    if (!sess) return
-    const stance = Lens.get(sess, "state.stance.text")
+    const stance = Lens.get(
+      Session.current,
+      "state.stance.text"
+    )
     if (!stance) return
 
     const [_, state, percent] = Stance.parse(stance)

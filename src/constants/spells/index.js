@@ -3,21 +3,7 @@
 const Spells = require("./spells.json")
 
 module.exports = (spell) => {
-  let spellDetail
-  switch (/^\d+$/.test(spell.name)) {
-    case true:
-      spellDetail = Spells.find(
-        (obj) => obj.number == spell.name
-      )
-      break
-    case false:
-      spellDetail = Spells.find(
-        (obj) => obj.name == spell.name
-      )
-      break
-  }
-  if (typeof spellDetail === "undefined") {
-    spellDetail = { name: spell.name }
-  }
-  return spellDetail
+  return /^\d+$/.test(spell.name)
+    ? Spells.find((obj) => obj.number == spell.name)
+    : Spells.find((obj) => obj.name == spell.name)
 }

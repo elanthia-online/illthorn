@@ -1,7 +1,6 @@
 const m = require("mithril")
 const Lens = require("../util/lens")
 const Bus = require("../bus")
-const Settings = require("../settings")
 
 const makeLookup = (keys) =>
   keys.reduce(
@@ -51,6 +50,7 @@ module.exports = class SessionState {
     "ActiveSpells",
     "nextLvlPB",
     "roomName",
+    "pbarStance",
   ])
 
   static of(session) {

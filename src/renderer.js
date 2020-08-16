@@ -49,7 +49,9 @@ Bus.on(Bus.events.REDRAW, () => {
 Bus.on(Bus.events.FOCUS, (session) => {
   //if (session.has_focus()) return session.idle()
   document.querySelector("title").innerText = session.name
-  session.attach(document.getElementById("feed-wrapper"))
+  const wrapper = document.getElementById("feed-wrapper")
+  wrapper.setAttribute("data-name", session.name)
+  session.attach(wrapper)
   m.redraw()
 })
 

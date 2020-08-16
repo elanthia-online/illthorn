@@ -315,11 +315,12 @@ module.exports = class Feed {
   static TEXT_AND_METADATA_TAGS = ["casttime"]
 
   async ingestDocument(parsed) {
+    await this.ingestTagBySelector(parsed, "pre")
     this.ingestState(parsed, Feed.TOP_LEVEL_STATUS_TAGS)
     const prompts = Parser.pop(parsed, "prompt")
     const prompt =
       prompts.length && prompts[prompts.length - 1]
-    await this.ingestTagBySelector(parsed, "pre")
+
     // order of operations is (somewhat) important here!
     await this.ingestTagBySelector(parsed, "stream")
     await this.ingestTagBySelector(parsed, "mono")

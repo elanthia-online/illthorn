@@ -44,7 +44,7 @@ function normalize(string) {
     .replace(/<pushBold\/>/g, `<b class="monster">`)
     .replace(/<popBold\/>/g, "</b>")
     .replace(/<push/, "<")
-    .replace(/<pop/, "<")
+    .replace(/<pop/, "</")
     .replace(/<output/g, "<pre")
     .replace(/<\/output>/g, "</pre>")
     .replace(/<clearContainer/g, "</clearcontainer")

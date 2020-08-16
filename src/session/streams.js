@@ -194,8 +194,9 @@ module.exports = class Streams {
     let name = view.getAttribute("data-name")
     this._view.setAttribute("data-name", name)
     container.appendChild(this._view)
-    this.advance_scroll()
 
     this.loadStreamMessages(name)
+
+    this.advance_scroll()
   }
 }

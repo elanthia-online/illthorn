@@ -280,6 +280,9 @@ module.exports = class Feed {
   }
   // order of operations is important here!
   static TOP_LEVEL_STATUS_TAGS = [
+    "right",
+    "left",
+    "spell",
     "dialogdata",
     "progressbar",
     "container",
@@ -290,8 +293,6 @@ module.exports = class Feed {
     "component",
     "exposecontainer",
     "deletecontainer",
-    "right",
-    "left",
     "inv",
     "stream.speech",
     "clearstream.inv",

@@ -111,6 +111,13 @@ module.exports = class Streams {
         const el = this.createEl(tag)
         this._view.append(el)
       })
+      const pre = document.createElement("pre")
+      pre.classList.add(
+        "loaded-from-storage-message",
+        "stream"
+      )
+      pre.innerHTML = `<span>^ Loaded from Storage ^ </span>`
+      this._view.append(pre)
     }
   }
 

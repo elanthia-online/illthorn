@@ -280,6 +280,7 @@ module.exports = class Feed {
   }
   // order of operations is important here!
   static TOP_LEVEL_STATUS_TAGS = [
+    "compass",
     "img",
     "right",
     "left",
@@ -287,7 +288,6 @@ module.exports = class Feed {
     "dialogdata",
     "progressbar",
     "container",
-    "compass",
     "compdef",
     "switchquickbar",
     "opendialog",

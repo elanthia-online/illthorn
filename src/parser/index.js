@@ -2,15 +2,10 @@ const parser = new DOMParser()
 
 exports.parse = async function (session, incoming) {
   session.buffer += incoming.toString()
-  //console.log("raw:\n%s", session.buffer)
   // continue to buffer
   if (isDanglingStream(session.buffer))
     return { buffered: 1 }
-  //if (session.buffer.match(/room(Name|Desc)/))
-  if (session.buffer) {
-    console.log("raw:\n%s", session.buffer)
-  }
-  //console.time("parser")
+
   const string = normalize(session.buffer)
   const doc = parser.parseFromString(
     string.trimEnd(),
@@ -22,11 +17,6 @@ exports.parse = async function (session, incoming) {
     if (text.length == 0) return
     indicator.innerHTML = pre(text)
   })
-
-  //if (doc.body.innerHTML.includes("dialogdata")) {
-  console.log(doc.body.innerHTML)
-  //}
-
   // clear the buffer
   session.buffer = ""
   return { parsed: doc }

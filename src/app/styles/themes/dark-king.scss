@@ -112,7 +112,7 @@ body {
 .feed .roomDesc {
   margin: 0 0 1em 0;
   padding: 0.5em 1em;
-  opacity: 0.66;
+  opacity: 0.9;
   background: linear-gradient(
     to right,
     rgba($purple, 0.2),
@@ -328,64 +328,63 @@ li#vitals-stamina {
 }
 
 // Highlighting
-.exist {
+[exist] {
   color: #a7a7a7;
 }
-.monster,
-.b {
+b [exist] {
   color: $orange;
 }
 
 @each $direction in $directions {
-  a.exist[data-noun="#{$direction}"] {
+  a[exist][noun="#{$direction}"] {
     color: $blue;
   }
 }
 @each $box in $boxes {
-  a.exist[data-noun="#{$box}"] {
+  a[exist][noun="#{$box}"] {
     color: $green;
     font-weight: bold;
   }
 }
 $start: 0;
 @each $gem in $gems {
-  a.exist[data-noun="#{$gem}"] {
+  a[exist][noun="#{$gem}"] {
     color: adjust-hue($blue, $start);
   }
   $start: $start + 1;
 }
 @each $magic in $magics {
-  a.exist[data-noun="#{$magic}"] {
+  a[exist][noun="#{$magic}"] {
     color: $purple;
   }
 }
 
-[data-noun="scarab"]::before {
+[noun="scarab"]::before {
   content: "🐞";
 }
-[data-noun="shell"]::before {
+[noun="shell"]::before {
   content: "🦪";
 }
-[data-noun="waraxe"]::before,
-[data-noun="axe"]::before {
+[noun="waraxe"]::before,
+[noun="axe"]::before {
   content: "🪓";
 }
-[data-noun="dagger"]::before {
+[noun="dagger"]::before {
   content: "🗡";
 }
-[data-noun="shield"]::before {
+[noun="shield"]::before {
   content: "🛡";
 }
-[data-noun="beer"]::before,
-[data-noun="ale"]::before {
+[noun="beer"]::before,
+[noun="ale"]::before {
   content: "🍺";
 }
-[data-noun="diamond"]::before {
+[noun="diamond"]::before {
   content: "🔹";
 }
-[data-noun="bone"]::before {
+[noun="bone"]::before {
   content: "🦴";
 }
-[data-noun="donut"]::before {
+[noun="donut"]::before {
   content: "🍩";
 }

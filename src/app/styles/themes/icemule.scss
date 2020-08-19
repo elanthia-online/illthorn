@@ -183,7 +183,8 @@ pre {
 }
 
 // Stance
-#hud .panel li#vitals-stance.vital {
+// TODO: These classes like "offensive" are missing now, can we bring them back?
+#hud .panel li#vitals-pbarStance.vital {
   margin-bottom: 0px;
   &.offensive,
   &.vital.advance {
@@ -407,10 +408,10 @@ details.panel summary {
 .feed .roomDesc {
   padding: 0.5rem;
 }
-a.exist {
+[exist] {
   color: #81a1c1;
 }
-pre.roomDesc a.exist {
+pre.roomDesc a[exist] {
   color: #8fbcbb;
 }
 pre.roomName {
@@ -424,28 +425,28 @@ pre.thoughts.stream {
 
 $start: 0;
 @each $direction in $directions {
-  a.exist[data-noun="#{$direction}"] {
+  a[exist][noun="#{$direction}"] {
     color: #8fbcbb;
   }
 }
 @each $box in $boxes {
-  a.exist[data-noun="#{$box}"] {
+  a[exist][noun="#{$box}"] {
     color: #d08770;
   }
 }
 @each $gem in $gems {
-  a.exist[data-noun="#{$gem}"] {
+  a[exist][noun="#{$gem}"] {
     color: adjust-hue($gemcolor, $start);
   }
   $start: $start + 3;
 }
 @each $magic in $magics {
-  a.exist[data-noun="#{$magic}"] {
+  a[exist][noun="#{$magic}"] {
     color: adjust-hue($magiccolor, $start);
   }
   $start: $start + 3;
 }
-a[data-noun="spell"] {
+a[noun="spell"] {
   color: #d08770;
 }
 a.monster {

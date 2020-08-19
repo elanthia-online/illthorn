@@ -306,8 +306,8 @@ module.exports = class Feed {
     "nav",
     "stream#room",
     "stream#inv",
+    "stream.familiar",
     "clearstream",
-    "streamwindow",
     "indicator",
   ]
 
@@ -319,13 +319,13 @@ module.exports = class Feed {
   ]
 
   async ingestDocument(parsed) {
+    const prompts = Parser.pop(parsed, "prompt")
+    const prompt =
+      prompts.length && prompts[prompts.length - 1]
     // prevent doubling of speech with internal `<pre>`
     this.ingestState(parsed, ["stream.speech"])
     await this.ingestTagBySelector(parsed, "pre")
     this.ingestState(parsed, Feed.TOP_LEVEL_STATUS_TAGS)
-    const prompts = Parser.pop(parsed, "prompt")
-    const prompt =
-      prompts.length && prompts[prompts.length - 1]
 
     // order of operations is (somewhat) important here!
     await this.ingestTagBySelector(parsed, "stream")

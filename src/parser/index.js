@@ -29,8 +29,8 @@ exports.parse = async function (session, incoming) {
 function isDanglingStream(buffered) {
   // todo: this should also match id= attribute
   return (
-    buffered.includes("<pushStream") &&
-    !buffered.includes("<popStream")
+    (buffered.match(/<pushStream/) || []).length >
+    (buffered.match(/<popStream/) || []).length
   )
 }
 
@@ -43,8 +43,8 @@ function normalize(string) {
     .replace(/<style id=""\/>/g, "")
     .replace(/<pushBold\/>/g, `<b class="monster">`)
     .replace(/<popBold\/>/g, "</b>")
-    .replace(/<push/, "<")
-    .replace(/<pop/, "</")
+    .replace(/<push/g, "<")
+    .replace(/<pop/g, "</")
     .replace(/<output/g, "<pre")
     .replace(/<\/output>/g, "</pre>")
     .replace(/<clearContainer/g, "</clearcontainer")

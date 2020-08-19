@@ -22,11 +22,26 @@ exports.parse = async function (session, incoming) {
     if (text.length == 0) return
     indicator.innerHTML = pre(text)
   })
+  // familiar streams are garbo and need to be compressed
+  flatten_familiars(doc.querySelectorAll(".familiar"))
 
   pp.parsed(doc.body.innerHTML)
   // clear the buffer
   session.buffer = ""
   return { parsed: doc }
+}
+
+function flatten_familiars(familiars, root) {
+  familiars = [].slice.call(familiars)
+  if (familiars.length == 0) return
+  if (!root) root = familiars.shift()
+  familiars.forEach((ele) => {
+    if (ele.className !== "familiar") {
+      return root.append(ele)
+    }
+    ele.remove()
+    return flatten_familiars(ele.childNodes, root)
+  })
 }
 
 function isDanglingStream(buffered) {
@@ -59,8 +74,8 @@ function normalize(string) {
   )
 
   string = string
-    .replace(` id="`, ` class="`)
-    .replace(` id='`, ` class='`)
+    .replace(/ id="/g, ` class="`)
+    .replace(/` id='/g, ` class='`)
 
   if (!string.startsWith("<")) return pre(string)
   if (string.startsWith("<b ")) return pre(string)

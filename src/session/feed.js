@@ -287,12 +287,10 @@ module.exports = class Feed {
     "spell",
     "dialogdata",
     "progressbar",
-    "container",
     "compdef",
     "switchquickbar",
     "opendialog",
     "component",
-    "exposecontainer",
     "deletecontainer",
     "inv",
     "stream.speech",
@@ -312,7 +310,11 @@ module.exports = class Feed {
     "indicator",
   ]
 
-  static TEXT_AND_METADATA_TAGS = ["casttime"]
+  static TEXT_AND_METADATA_TAGS = [
+    "casttime",
+    "container",
+    "exposecontainer",
+  ]
 
   async ingestDocument(parsed) {
     await this.ingestTagBySelector(parsed, "pre")

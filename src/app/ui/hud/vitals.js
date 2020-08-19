@@ -78,8 +78,9 @@ module.exports = class Vitals {
       `li#vitals-${attrs.id}.${attrs.threshold}.vital`,
       { key: attrs.id },
       [
-        attrs.title && span(attrs.title, ".label"),
-        attrs.value && m("span.value", attrs.value),
+        attrs.title !== "" && span(attrs.title, ".label"),
+        attrs.value !== "" &&
+          span(attrs.value.toString(), ".value"),
         isNaN(attrs.max)
           ? void 0
           : m("span.max", attrs.max),

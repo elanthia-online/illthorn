@@ -126,25 +126,3 @@ Example: `:stream thoughts on`
 ## Autocomplete
 
 Previous commands in a session are saved and will show a ghosted version as you type characters which you can autocomplete by pressing the **right arrow** key to complete the command.
-
-## Customization
-
-You can override default styles with a `user.css` file.
-
-On a Mac, this file goes in:
-
-```
-/Users/USERNAME/Library/Application%20Support/illthorn/user.css
-```
-
-On Linux (XDG specification):
-
-```
- ~/.config/illthorn/user.css
-```
-
-On Windows:
-
-```
-%APPDATA% environment variable
-```

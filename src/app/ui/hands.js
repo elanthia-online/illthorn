@@ -5,16 +5,19 @@ const Lens = require("../../util/lens")
 module.exports = class Hands {
   static KINDS = ["left", "right", "spell"]
 
-  static Lookup = Hands.KINDS.reduce(
-    (acc, hand) =>
-      Object.assign(acc, {
-        [hand]: Lens.of(
-          ["state", hand, "text"],
-          Hands.fallback(hand)
-        ),
-      }),
-    {}
-  )
+  static get_ui_text(hand, session) {
+    return (
+      Lens.get(session, ["state", hand, "innerText"]) ||
+      Lens.get(session, [
+        "state",
+        hand,
+        "attributes",
+        "noun",
+        "value",
+      ]) ||
+      Hands.fallback(hand)
+    )
+  }
 
   static fallback(hand) {
     switch (hand) {
@@ -26,7 +29,7 @@ module.exports = class Hands {
   }
 
   view() {
-    const session = Session.focused()
+    const session = Session.current
 
     return (
       session &&
@@ -36,7 +39,7 @@ module.exports = class Hands {
           m(
             `li.hand#${hand}`,
             { key: hand },
-            Hands.Lookup[hand].get(session)
+            Hands.get_ui_text(hand, session)
           )
         )
       )

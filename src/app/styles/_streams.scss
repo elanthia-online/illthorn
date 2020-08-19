@@ -1,6 +1,7 @@
 #app.streams-on #streams-wrapper {
-  border-bottom: var(--border-width, 3px) solid var(--info);
-  height: var(--stream-height);
+  border-bottom: var(--border-width, 3px) solid
+    var(--border-color, var(--info));
+  height: var(--stream-height, 13em);
 }
 
 .streams {
@@ -17,17 +18,22 @@
 .stream-channel {
   font-weight: bold;
   text-transform: uppercase;
-  color: var(--stream-channel-color);
+  color: var(--stream-channel-color, #91d686);
   &.death {
-    color: var(--danger);
+    color: var(--danger, #ff3b00);
   }
 }
 
 .stream-channel[data-stream-channel="[Dreavening]"] {
-  color: var(--warn);
+  color: var(--warn, #fb5d2d);
 }
 .stream-channel[data-stream-channel="[PrivateTo]"],
 .stream-channel[data-stream-channel="[Private]"] {
-  background: var(--danger);
+  background: var(--danger, #ff3b00);
   color: white;
+}
+
+.loaded-from-storage-message {
+  opacity: 0.5;
+  text-align: center;
 }

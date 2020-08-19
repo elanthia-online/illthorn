@@ -1,9 +1,18 @@
 .feed {
   padding: 0 1em 1em 1em;
   height: 100%;
+
+  // Force onto GPU for best rendering
+  transform: translate3d(0, 0, 0);
 }
 .feed pre {
   margin: 0;
   line-height: 1.4;
-  font-size: 16px;
+}
+.feed mark {
+  background-color: transparent;
+}
+// all top-level elements
+.feed > * {
+  display: block; // should be blocks
 }

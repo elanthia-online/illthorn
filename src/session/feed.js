@@ -191,14 +191,6 @@ module.exports = class Feed {
     return this
   }
 
-  add(tag) {
-    if (Compiler.cannot_compile(tag)) return void 0
-
-    Compiler.compile(tag, (compiled) => {
-      Feed.consume(compiled, this)
-    })
-  }
-
   async ingestText(ele) {
     this.ingestState(ele, Feed.LOOSELY_NESTED_TAGS)
     this.ingestState(ele, Feed.TOP_LEVEL_STATUS_TAGS)
@@ -208,17 +200,11 @@ module.exports = class Feed {
       return ele.remove()
     if (body.contains(ele)) return
     // clean up whitespace
-    if (
-      ele.childNodes.length == 1 &&
-      ele.firstChild.nodeName == "#text"
-    ) {
-      ele.innerText = ele.innerText.trimEnd()
+    if (ele.lastChild) {
+      ele.lastChild.textContent = ele.lastChild.textContent.trimEnd()
     }
-    //const now = Date.now()
-    //console.time("hilite:"+now)
     await this.addLinks(ele)
     await this.addHilites(ele)
-    //console.timeEnd("hilite:"+now)
     this.append(ele)
   }
 
@@ -331,7 +317,7 @@ module.exports = class Feed {
     this.ingestState(parsed, Feed.TOP_LEVEL_STATUS_TAGS)
 
     // order of operations is (somewhat) important here!
-    await this.ingestTagBySelector(parsed, "stream")
+    await this.ingestStreams(parsed)
     await this.ingestTagBySelector(parsed, "mono")
     await this.ingestTextAndMetadata(
       parsed,
@@ -363,6 +349,20 @@ module.exports = class Feed {
       parsed.body.hasChildNodes(),
       parsed.body
     )
+  }
+  /**
+    handles routing of streams to various UI components
+   */
+  async ingestStreams(parsed) {
+    return Pipe.of(parsed.querySelectorAll("stream"))
+      .fmap(Parser.each, (ele) => ele.remove())
+      .fmap(Parser.each, (ele) =>
+        this.session.streams.wants(ele.className)
+          ? this.session.streams.insert(ele)
+          : this.ingestText(ele)
+      )
+      .fmap((eles) => Promise.all(eles))
+      .unwrap()
   }
 
   pruneIgnorableTags(parsed) {

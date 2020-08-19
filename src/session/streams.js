@@ -62,7 +62,7 @@ module.exports = class Streams {
     const was_scrolling = this._scrolling
     const name = this._view.getAttribute("data-name")
     if (name) {
-      this.storeStreamMessage(tag, name)
+      this.storeStreamMessage(tag.textContent, name)
     }
     const el = this.createEl(tag)
     this._view.append(el)
@@ -72,9 +72,12 @@ module.exports = class Streams {
   }
 
   createEl(tag) {
+    const tagName = (tag.tagName || "").toLowerCase()
     const pre = document.createElement("pre")
-    pre.classList.add(tag.id, tag.name)
-    const parts = this.transformStreamMessage(tag)
+    pre.classList.add(tag.className, tagName)
+    const parts = this.transformStreamMessage(
+      tag.textContent
+    )
     parts.forEach((ele) => pre.append(ele))
     return pre
   }
@@ -104,34 +107,35 @@ module.exports = class Streams {
   }
 
   async loadStreamMessages(name) {
-    let thoughts = Storage.get(`thoughts-${name}`)
-    if (thoughts) {
-      thoughts = this.trimMessages(thoughts)
-      thoughts.forEach((tag) => {
-        const el = this.createEl(tag)
-        this._view.append(el)
-      })
-      const pre = document.createElement("pre")
-      pre.classList.add(
-        "loaded-from-storage-message",
-        "stream"
-      )
-      pre.innerHTML = `<span>^ Loaded from Storage ^ </span>`
-      this._view.append(pre)
-    }
+    const thoughts = Storage.get(`thoughts-${name}`)
+    if (!thoughts) return
+    thoughts.forEach((text) => {
+      const decoded = document.createElement("stream")
+      decoded.classList.add("thoughts")
+      decoded.textContent = text
+      const el = this.createEl(decoded)
+      this._view.append(el)
+    })
+    const pre = document.createElement("pre")
+    pre.classList.add(
+      "loaded-from-storage-message",
+      "stream"
+    )
+    pre.innerHTML = `<span>^ Loaded from Storage ^ </span>`
+    this._view.append(pre)
   }
 
-  transformStreamMessage(tag) {
+  transformStreamMessage(text) {
     const streamChannel = document.createElement("span")
     streamChannel.classList.add("stream-channel")
 
     const streamText = document.createElement("span")
     streamText.classList.add("stream-text")
 
-    if (tag.text.trim().startsWith("[")) {
+    if (text.trim().startsWith("[")) {
       // This is a chat message
       const messageRegEx = /^(\[.*?\])(.*)/
-      const messageParts = messageRegEx.exec(tag.text)
+      const messageParts = messageRegEx.exec(text)
       // [help]-GSIV:Gilderan: "ahh good to know"
       // [0] = [help]-GSIV:Gilderan: "ahh good to know"
       // [1] = [help]
@@ -142,16 +146,16 @@ module.exports = class Streams {
       )
       streamChannel.innerText = Lens.get(messageParts, "1")
       streamText.innerText = Lens.get(messageParts, "2")
-    } else if (tag.text.trim().startsWith("*")) {
+    } else if (text.trim().startsWith("*")) {
       // This is a death message
       streamChannel.innerText = "* "
       // For styling the *
       streamChannel.classList.add("death")
       // Remove the "* " from the rest of message so it doesn't repeat
-      streamText.innerText = tag.text.trim().substring(2)
+      streamText.innerText = text.trim().substring(2)
     } else {
       // Unknown stream message, just dump it in with empty channel
-      streamText.innerText = tag.text
+      streamText.innerText = text
     }
 
     return [streamChannel, streamText]

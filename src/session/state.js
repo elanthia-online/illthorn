@@ -73,7 +73,7 @@ module.exports = class SessionState {
       return state.put(tagName, tag)
 
     if (tagName in SessionState.TIMERS) {
-      state.spawn_timer({
+      return state.spawn_timer({
         name: tagName,
         end: Lens.get(tag, "attributes.value.value"),
       })

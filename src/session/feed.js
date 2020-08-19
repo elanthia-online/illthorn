@@ -204,9 +204,7 @@ module.exports = class Feed {
       return ele.remove()
     if (body.contains(ele)) return
     // clean up whitespace
-    if (ele.lastChild) {
-      ele.lastChild.textContent = ele.lastChild.textContent.trimEnd()
-    }
+    ele.innerHTML = Parser.trimLineBreaks(ele.innerHTML)
     await this.addLinks(ele)
     await this.addHilites(ele)
     this.append(ele)

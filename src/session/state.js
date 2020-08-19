@@ -21,7 +21,7 @@ module.exports = class SessionState {
 
   static MODALS = ["commands"]
 
-  static TIMERS = ["roundtime", "casttime"]
+  static TIMERS = makeLookup(["roundtime", "casttime"])
 
   static INJURY_IDS = makeLookup([
     "head",
@@ -64,12 +64,20 @@ module.exports = class SessionState {
 
   static consume(state, tag) {
     const id = tag.id || tag.className || ""
+    const tagName = (tag.tagName || "").toLowerCase()
     if (id in SessionState.INJURY_IDS)
       return state.put("injuries." + tag.id, tag)
     if (id in SessionState.ID_TAGS)
       return state.put(tag.id, tag)
-    if (SessionState.TAGS[tag.tagName.toLowerCase()])
-      return state.put(tag.tagName.toLowerCase(), tag)
+    if (tagName in SessionState.TAGS)
+      return state.put(tagName, tag)
+
+    if (tagName in SessionState.TIMERS) {
+      state.spawn_timer({
+        name: tagName,
+        end: Lens.get(tag, "attributes.value.value"),
+      })
+    }
 
     ~[].forEach.call(tag.childNodes, (node) =>
       SessionState.consume(state, node)
@@ -83,8 +91,6 @@ module.exports = class SessionState {
     SessionState.MODALS.forEach(
       (modal) => (this._modals[modal] = false)
     )
-
-    this.wire_up()
   }
 
   by_name(name) {
@@ -98,14 +104,6 @@ module.exports = class SessionState {
           ).toLowerCase() == name.toLowerCase()
       )
       .map((key) => this[key])
-  }
-
-  wire_up() {
-    const parser = this._session
-
-    SessionState.TIMERS.forEach((tag) => {
-      parser.on(tag, (val) => this.spawn_timer(val))
-    })
   }
 
   get(prop, fallback) {
@@ -132,11 +130,12 @@ module.exports = class SessionState {
    *   2. State.roundtime -> {remaining: 6}
    * @param {Tag} param0
    */
-  spawn_timer({ name, attrs }) {
+  spawn_timer({ name, end }) {
+    pp("spawn_timer::", { name, end })
     this._timers[name] = this._timers[name] || {}
     // gs timers are second precision vs millisecond
     this._timers[name].end_epoc_time =
-      parseInt(attrs.value, 10) * 1000
+      parseInt(end, 10) * 1000
 
     this._timers[name].interval =
       this._timers[name].interval ||

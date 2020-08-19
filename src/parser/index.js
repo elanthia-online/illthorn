@@ -11,6 +11,8 @@ exports.parse = async function (session, incoming) {
     return { buffered: 1 }
 
   pp.raw(session.buffer)
+  // https://github.com/elanthia-online/illthorn/issues/113
+  trimLineBreaks(session.buffer)
   const string = normalize(session.buffer)
   const doc = parser.parseFromString(
     string.trimEnd(),
@@ -50,6 +52,12 @@ function isDanglingStream(buffered) {
     (buffered.match(/<pushStream/) || []).length >
     (buffered.match(/<popStream/) || []).length
   )
+}
+
+function trimLineBreaks(string) {
+  return string
+    .replace(/^(\r|\n)/g, "")
+    .replace(/(\r|\n)$/g, "")
 }
 
 function pre(string) {

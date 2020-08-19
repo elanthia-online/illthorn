@@ -284,19 +284,18 @@ module.exports = class Feed {
     "deletecontainer",
     "inv",
     "stream.speech",
-    "streamwindow.inv",
-    "clearstream.inv",
+    "streamwindow#inv",
     "clearcontainer",
+    "stream#inv",
+    "clearstream stream",
   ]
 
   static LOOSELY_NESTED_TAGS = [
     "streamwindow",
     "resource",
     "nav",
-    "stream#room",
-    "stream#inv",
+    "stream.room",
     "stream.familiar",
-    "clearstream",
     "indicator",
   ]
 
@@ -305,6 +304,7 @@ module.exports = class Feed {
     "container",
     "exposecontainer",
     "roundtime",
+    "clearstream",
   ]
 
   async ingestDocument(parsed) {
@@ -315,10 +315,10 @@ module.exports = class Feed {
     this.ingestState(parsed, ["stream.speech"])
     await this.ingestTagBySelector(parsed, "pre")
     this.ingestState(parsed, Feed.TOP_LEVEL_STATUS_TAGS)
-
     // order of operations is (somewhat) important here!
     await this.ingestStreams(parsed)
     await this.ingestTagBySelector(parsed, "mono")
+
     await this.ingestTextAndMetadata(
       parsed,
       Feed.TEXT_AND_METADATA_TAGS
@@ -327,7 +327,10 @@ module.exports = class Feed {
     // <dialogdata></dialogdata>Atone just arrived!
     await this.ingestDocumentTextNodes(parsed.body)
     await this.ingestDocumentTextNodes(parsed.head)
-    if (prompt) this.append(prompt)
+    if (prompt) {
+      prompt.classList.add("game")
+      this.append(prompt)
+    }
     this.pruneIgnorableTags(parsed)
     // make sure we handled all state tags that might
     // also contain renderable text

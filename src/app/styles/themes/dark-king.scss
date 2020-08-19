@@ -1,3 +1,5 @@
+@import "../vars";
+
 $blue: #6cadd0;
 $green: #91d686;
 $purple: #a990ef;
@@ -7,40 +9,49 @@ $red: #d64e4e;
 :root {
   --main-bg-color: #1a1a1d;
   --text-color: #f1f1f1;
+  --info: purple;
 
-  --info: #484848;
-
-  --ok: #396820;
-  --gentle-warn: rgb(122, 96, 28);
-  --warn: #784225;
-  --danger: #6f2232;
+  --ok: #{$green};
+  --gentle-warn: #{$orange};
+  --warn: #{$red};
+  --danger: #{$red};
 
   --icon-size: 1.4em;
+  --border-width: 2px;
+  --border-color: #570275;
+  --base-font-size: 15px;
+  --stream-font-size: 12px;
 
   --column-width: minmax(16em, 0.33fr);
 
-  --stream-height: 13em;
-  --stream-channel-color: #91d686;
+  --stream-channel-color: #{$green};
+
+  --scrollbar-thumb-color: black;
 }
 
-#main {
-  box-shadow: 0 35px 25px -8px black;
+// Global
+body {
+  font-family: "DutchMediaeval", serif;
 }
 
 #sessions,
-.panels,
+#panels-left,
+#panels-right,
 #hands-wrapper,
 #cli-wrapper {
   background: linear-gradient(
     261.75deg,
     #202224 35.86%,
-    #3e3c42 77.44%
+    #352f48 77.44%
   );
 }
-#hands {
-  font-family: "PTSerif", Serif;
-  border: 0;
+
+// Sessions
+.session-name {
+  font-family: "DutchMediaevalBook-Bold", serif;
 }
+
+// Hands
 .hand#left::before {
   transform: rotate(22deg) scaleX(-1);
 }
@@ -51,52 +62,74 @@ $red: #d64e4e;
   margin-left: 1em;
 }
 
-#app.streams-on .streams {
-  border: 0;
+// Streams
+.streams {
+  padding: 1em;
 }
-#streams-wrapper {
-  z-index: 1;
-  position: relative;
-  box-shadow: 0 20px 20px black;
+.stream.thoughts {
+  background: linear-gradient(182deg, #202224, #2b2e3a);
+  padding: 0.5em;
+  border-radius: 5px;
+  margin: 0 0 0.5em 0;
 }
-.stream {
-  font-size: 0.85em;
-}
-.stream-channel[data-stream-channel="[Dreavening]"] {
-  color: $red;
-}
-.stream-channel[data-stream-channel="[help]"] {
-  color: $blue;
-}
-.stream-channel[data-stream-channel="[PrivateTo]"],
-.stream-channel[data-stream-channel="[Private]"] {
-  background: #f30000;
-  color: white;
-}
-.stream-channel.death {
-  color: #f30000;
+.stream.death {
+  padding: 0.5em;
+  margin: 0 0 0.5em 0;
 }
 
-.feed,
-.streams {
-  background: radial-gradient(
-    60.67% 51% at 16.22% 84.45%,
-    #2b2e3a 0%,
-    #0a0606 100%
+// Feed
+#feed-wrapper {
+  padding: 0 0 0 1em;
+  // under-shadow
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(black, 1),
+      rgba(black, 0)
+    );
+    height: 20px;
+  }
+  pre {
+    line-height: 1.6;
+  }
+}
+.feed .roomName {
+  margin: 1em 0 0 0;
+  background: linear-gradient(
+    to right,
+    rgba($purple, 0.35),
+    transparent
+  );
+  color: white;
+  padding: 0.5em 1em;
+}
+.feed .roomDesc {
+  margin: 0 0 1em 0;
+  padding: 0.5em 1em;
+  opacity: 0.66;
+  background: linear-gradient(
+    to right,
+    rgba($purple, 0.2),
+    transparent
   );
 }
+.feed prompt {
+  visibility: hidden;
+}
 
-.panels {
-  border: 0;
+.label {
+  text-transform: capitalize;
 }
-#panels-left {
-  border: 0;
-}
+
 .panel {
-  font-family: "PTSerif", Serif;
-  position: relative;
   padding: 1px;
-  margin: 1em;
+  // Gradient border around panels
   &::before {
     content: "";
     position: absolute;
@@ -113,7 +146,7 @@ $red: #d64e4e;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     overflow: hidden;
-    padding: 0.6em;
+    padding: 1em;
   }
   > summary {
     text-transform: capitalize;
@@ -124,57 +157,89 @@ $red: #d64e4e;
     background: #191919;
     border-radius: 6px;
     border-bottom: 1px solid black;
-    box-shadow: 0 1px 1px 0 #282323;
     position: relative;
     z-index: 1;
+    padding: 0.8em 0.5em 0.7em 0.8em;
+    margin: 0;
   }
   &[open] > summary {
+    box-shadow: 0 1px 1px 0 #282323;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
   }
-}
-
-.panel-list {
   li {
-    padding: 0.2em;
-    border-radius: 4px;
-    text-shadow: 0 1px 1px rgba(black, 0.55);
-    border: 1px solid #2e2b33;
-    background: linear-gradient(#25222d, #444);
-    &:not(:last-child) {
-      margin: 0 0 0.3em 0;
-    }
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid black;
+    box-shadow: 0 1px 1px 0 #282323;
   }
-  .value span:nth-child(1) {
-    white-space: nowrap;
-    opacity: 0.9;
-    &::first-letter {
-      text-transform: capitalize;
-    }
-  }
-  .value span:nth-child(2) {
-    min-width: 3.5em;
-    transform: scale(1.5);
-    transform-origin: center left;
-  }
-  .bar {
-    border-radius: 4px;
-  }
-}
-
-@mixin barBG($color) {
-  background: linear-gradient(
-    to bottom,
-    $color,
-    darken($color, 33%)
-  );
 }
 
 @mixin panelRow($color) {
-  .bar {
-    @include barBG($color);
+  background: linear-gradient(
+    5deg,
+    rgba($color, 0.2),
+    rgba($color, 0)
+  );
+  margin-left: -1em;
+  width: calc(100% + 2em);
+  padding: 0.7em 1em 0.5em;
+
+  &.low {
+    background: linear-gradient(
+        5deg,
+        rgba($color, 0.2),
+        rgba($color, 0)
+      ),
+      radial-gradient(
+        ellipse at top right,
+        rgba(red, 0.5),
+        rgba(red, 0)
+      );
+    &::before {
+      content: "⚠️";
+      display: inline-block;
+      line-height: 1;
+    }
+  }
+
+  .label,
+  .value {
+    color: $color;
+  }
+}
+
+@mixin title($title) {
+  margin-top: 28px;
+  &::before {
+    content: $title;
+    display: block;
+    position: absolute;
+    top: -10px;
+    left: 0;
+    font-size: 0.65em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+}
+
+#vitals {
+  > div {
+    padding-top: 0;
+  }
+}
+
+li#vitals-spirit,
+li#vitals-health,
+li#vitals-mana,
+li#vitals-stamina {
+  border: 0;
+  position: relative;
+  font-size: 1.2em;
+  margin-bottom: 0;
+  .label {
+    font-family: "DutchMediaevalBook-Bold", serif;
   }
 }
 
@@ -191,6 +256,19 @@ $red: #d64e4e;
   @include panelRow($orange);
 }
 
+#vitals-encumlevel {
+  @include title("Encumbrance");
+}
+#vitals-mindState {
+  @include title("Mind");
+}
+#vitals-nextLvlPB {
+  @include title("Experience");
+}
+#vitals-pbarStance {
+  @include title("Stance");
+}
+
 .spells {
   li {
     .value {
@@ -203,27 +281,19 @@ $red: #d64e4e;
         overflow: hidden;
       }
     }
+    &:hover {
+      background: black;
+    }
   }
   li.low {
     .spell {
       color: #ff6e6e;
     }
-    .bar.low {
-      display: none;
-    }
   }
 }
 
-.bar.low {
-  @include barBG(#dc0d0d);
-}
-.bar.medium {
-  @include barBG(#de8e8e);
-}
-.bar.high {
-  @include barBG(#846e6e);
-}
-.injury.injury {
+.injury,
+.scar {
   background: none;
   border: 0;
   border-bottom: 1px solid black;
@@ -231,69 +301,63 @@ $red: #d64e4e;
   border-radius: 0;
   padding-bottom: 0.5em;
 }
-.injury.severity-1 {
+.injury.severity-1,
+.scar.severity-1 {
   color: #ff7c7c;
 }
 .injury.severity-2 {
-  // 🩸
+  .injury-name::before {
+    content: "🩸";
+  }
+}
+.injury.severity-2,
+.scar.severity-2 {
   color: #ff3333;
   font-weight: bold;
 }
 .injury.severity-3 {
-  // 🩸
+  .injury-name::before {
+    content: "🩸";
+  }
+}
+.injury.severity-3,
+.scar.severity-3 {
   color: #ff0000;
   text-shadow: 0 0 16px red;
   font-weight: bold;
 }
 
-@mixin title($title) {
-  margin-top: 28px;
-  &::before {
-    content: $title;
-    display: block;
-    position: absolute;
-    top: -14px;
-    left: 0;
-    font-size: 0.65em;
-    text-transform: uppercase;
-    opacity: 0.6;
-  }
-}
-
-#vitals-encumlevel {
-  @include title("Encumbrance");
-  .bar[style="width: 0%;"] {
-    @include barBG(#484848);
-    width: 100% !important;
-  }
-}
-#vitals-mindState {
-  @include title("Mind");
-}
-#vitals-nextLvlPB {
-  @include title("Experience");
-}
-#vitals-stance {
-  @include title("Stance");
-}
-
 // Highlighting
-a.exist {
+.exist {
   color: #a7a7a7;
 }
-.monster {
+.monster,
+.b {
   color: $orange;
 }
-.b {
-  // e.g. enhanced stat
+
+@each $direction in $directions {
+  a.exist[data-noun="#{$direction}"] {
+    color: $blue;
+  }
 }
-[data-noun="trunk"],
-[data-noun="chest"],
-[data-noun="box"],
-[data-noun="coffer"],
-[data-noun="strongbox"] {
-  color: $green;
-  font-weight: bold;
+@each $box in $boxes {
+  a.exist[data-noun="#{$box}"] {
+    color: $green;
+    font-weight: bold;
+  }
+}
+$start: 0;
+@each $gem in $gems {
+  a.exist[data-noun="#{$gem}"] {
+    color: adjust-hue($blue, $start);
+  }
+  $start: $start + 1;
+}
+@each $magic in $magics {
+  a.exist[data-noun="#{$magic}"] {
+    color: $purple;
+  }
 }
 
 [data-noun="scarab"]::before {
@@ -305,9 +369,6 @@ a.exist {
 [data-noun="waraxe"]::before,
 [data-noun="axe"]::before {
   content: "🪓";
-}
-[data-noun="coin"]::before {
-  content: "🟡";
 }
 [data-noun="dagger"]::before {
   content: "🗡";
@@ -322,24 +383,9 @@ a.exist {
 [data-noun="diamond"]::before {
   content: "🔹";
 }
-
-.feed .roomName {
-  margin: 10px 0 0 0;
-  background: linear-gradient(
-    to right,
-    rgba($purple, 0.35),
-    transparent
-  );
-  color: white;
-  padding: 2px;
+[data-noun="bone"]::before {
+  content: "🦴";
 }
-.feed .roomDesc {
-  margin: 0 0 10px 0;
-  padding: 6px;
-  opacity: 0.75;
-  background: linear-gradient(
-    to right,
-    rgba($purple, 0.2),
-    transparent
-  );
+[data-noun="donut"]::before {
+  content: "🍩";
 }

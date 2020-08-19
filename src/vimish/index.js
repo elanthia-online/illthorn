@@ -8,10 +8,6 @@ commands.set("hilite", require("./commands/hilite.js"))
 commands.set("launch", require("./commands/launch.js"))
 commands.set("macros", require("./commands/macros.js"))
 commands.set("quit", require("./commands/quit.js"))
-commands.set(
-  "reload-skin",
-  require("./commands/reload-skin.js")
-)
 commands.set("rename", require("./commands/rename.js"))
 commands.set("set", require("./commands/set.js"))
 commands.set("stream", require("./commands/stream.js"))

@@ -1,11 +1,17 @@
+#hands-wrapper {
+  border-bottom: var(--border-width, 3px) solid
+    var(--border-color, var(--info));
+  -webkit-app-region: drag;
+}
+
 #hands {
   display: flex;
   align-items: center;
   height: 100%;
-  border-bottom: 3px solid var(--info);
 }
 
 .hand {
+  -webkit-app-region: no-drag;
   padding: 0 1em;
   flex: 1;
   display: flex;
@@ -15,11 +21,18 @@
   &::before {
     content: "";
     display: inline-block;
-    height: var(--icon-size);
-    width: var(--icon-size);
+    height: var(--icon-size, 1em);
+    width: var(--icon-size, 1em);
     -webkit-mask: url(../app/svg/hand.svg) no-repeat 50% 50%;
     -webkit-mask-size: cover;
     margin-right: 1em;
     background-color: var(--text-color);
+  }
+}
+
+.hand#spell {
+  &::before {
+    -webkit-mask: url(../app/svg/magic.svg) no-repeat 50%
+      50%;
   }
 }

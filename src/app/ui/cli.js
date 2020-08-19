@@ -66,13 +66,16 @@ module.exports = class CLI {
 
   static exec_macro(cli, macro) {
     const replacement = macro.indexOf("?")
+    if (!Session.current) return
+
     if (!~replacement) {
       return macro
         .trim()
         .split(/\r|\n/g)
         .map((cmd) => cmd.trim())
-        .forEach(
-          (cmd) => cmd.length && CLI.game_cmd(cmd, "macro")
+        .filter((cmd) => cmd.length)
+        .forEach((cmd) =>
+          Session.current.send_command(cmd, "macro")
         )
     }
     cli.value = macro
@@ -128,8 +131,6 @@ module.exports = class CLI {
   }
 
   view({ attrs }) {
-    // TODO: Probably move this roundtime stuff to it's own component
-
     const sess = Session.focused()
 
     const roundTime = Lens.get(
@@ -191,7 +192,7 @@ module.exports = class CLI {
         "span.prompt",
         Lens.get(
           Session.focused(),
-          "state.prompt.text",
+          "state.prompt.innerText",
           ">"
         )
       ),
@@ -247,7 +248,7 @@ module.exports = class CLI {
             m("li.space-after", [
               m(
                 "code.command",
-                ":theme original|dark-king"
+                ":theme original|rogue|dark-king|icemule|kobold|raging-thrak"
               ),
               m("span", "Change Theme"),
             ]),

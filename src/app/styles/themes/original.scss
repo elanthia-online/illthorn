@@ -1,12 +1,17 @@
+@import "../vars";
+
 :root {
   --main-bg-color: #1a1a1d;
   --text-color: #f1f1f1;
+  --hilite-color: #a0a0a0;
+  --link-color: #27a4fd;
 
-  --ok: #396820;
   --info: #184f3f;
-  --gentle-warn: rgb(122, 96, 28);
-  --warn: #784225;
-  --danger: #6f2232;
+
+  --ok: #8dce73;
+  --gentle-warn: #efca6a;
+  --warn: #fb5d2d;
+  --danger: #ff3b00;
 
   --icon-size: 1em;
 

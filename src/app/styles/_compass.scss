@@ -12,8 +12,10 @@
     width: 30px;
     padding: 0;
     line-height: 30px;
+    align-content: center;
+    justify-content: center;
     &.on {
-      background: var(--info);
+      background: var(--ok);
     }
     &.off {
       background: var(--info);

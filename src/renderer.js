@@ -4,18 +4,18 @@ const Bus = require("./bus")
 const Autodect = require("./autodetect")
 const Session = require("./session")
 const Macros = require("./macros")
-const CustomCSS = require("./storage/custom-css")
 const Theme = require("./storage/theme")
 const Settings = require("./settings")
 
 window.messages = window.messages || []
 
-CustomCSS.injectCSS().then(() =>
-  document.body.classList.remove("loading")
-)
+const theme = Settings.get("theme")
 
-Bus.on(Bus.events.CHANGE_THEME, (data) => {
-  Theme.changeTheme(data)
+theme && Theme.changeTheme({ theme }).then(() => {})
+
+Bus.on(Bus.events.CHANGE_THEME, async (data) => {
+  await Theme.changeTheme(data)
+  document.body.classList.remove("loading")
 })
 
 m.mount(document.getElementById("sessions"), UI.Sessions)
@@ -49,13 +49,10 @@ Bus.on(Bus.events.REDRAW, () => {
 Bus.on(Bus.events.FOCUS, (session) => {
   //if (session.has_focus()) return session.idle()
   document.querySelector("title").innerText = session.name
-  session.attach(document.getElementById("feed-wrapper"))
+  const wrapper = document.getElementById("feed-wrapper")
+  wrapper.setAttribute("data-name", session.name)
+  session.attach(wrapper)
   m.redraw()
-
-  // Set theme from settings
-  // TODO: flashes original theme
-  const theme = Settings.get("theme")
-  Theme.changeTheme({ theme: theme })
 })
 
 Bus.on("macro", (macro) => {

@@ -1,10 +1,16 @@
-#app.streams-on .streams {
-  border-bottom: 3px solid var(--info);
+#app.streams-on #streams-wrapper {
+  border-bottom: var(--border-width, 3px) solid
+    var(--border-color, var(--info));
+  height: var(--stream-height, 13em);
 }
 
 .streams {
+  font-size: var(
+    --stream-font-size,
+    var(--base-font-size, 15px)
+  );
+  height: 100%;
   padding: 0 1em;
-  height: var(--stream-height);
 }
 .streams pre {
   margin: 0.2em 0;
@@ -12,5 +18,22 @@
 .stream-channel {
   font-weight: bold;
   text-transform: uppercase;
-  color: var(--stream-channel-color);
+  color: var(--stream-channel-color, #91d686);
+  &.death {
+    color: var(--danger, #ff3b00);
+  }
+}
+
+.stream-channel[data-stream-channel="[Dreavening]"] {
+  color: var(--warn, #fb5d2d);
+}
+.stream-channel[data-stream-channel="[PrivateTo]"],
+.stream-channel[data-stream-channel="[Private]"] {
+  background: var(--danger, #ff3b00);
+  color: white;
+}
+
+.loaded-from-storage-message {
+  opacity: 0.5;
+  text-align: center;
 }

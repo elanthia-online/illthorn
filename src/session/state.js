@@ -1,9 +1,7 @@
 const m = require("mithril")
 const Lens = require("../util/lens")
 const Bus = require("../bus")
-const { Tag } = require("@elanthia/koschei")
-const Settings = require("../settings")
-const TagUtil = require("../util/tag")
+const pp = require("debug")("illthorn:state")
 
 const makeLookup = (keys) =>
   keys.reduce(
@@ -12,18 +10,18 @@ const makeLookup = (keys) =>
   )
 
 module.exports = class SessionState {
-  static TAGS = [
+  static TAGS = makeLookup([
     "prompt",
     "right",
     "left",
     "spell",
     "compass",
     "style",
-  ]
+  ])
 
   static MODALS = ["commands"]
 
-  static TIMERS = ["roundtime", "casttime"]
+  static TIMERS = makeLookup(["roundtime", "casttime"])
 
   static INJURY_IDS = makeLookup([
     "head",
@@ -33,7 +31,7 @@ module.exports = class SessionState {
     "chest",
     "back",
     "abdomen",
-    "legArm",
+    "leftArm",
     "rightArm",
     "leftHand",
     "rightHand",
@@ -53,21 +51,37 @@ module.exports = class SessionState {
     "ActiveSpells",
     "nextLvlPB",
     "roomName",
+    "pbarStance",
   ])
 
   static of(session) {
     return new SessionState(session)
   }
 
+  static wants(id) {
+    return id in SessionState.ID_TAGS
+  }
+
   static consume(state, tag) {
-    if (tag.id && tag.id in SessionState.INJURY_IDS)
-      return state.put("injuries." + tag.id, tag)
-    if (tag.id && tag.id in SessionState.ID_TAGS)
-      return state.put(tag.id, tag)
-    if (tag.children && tag.children.length)
-      tag.children.forEach((child) =>
-        SessionState.consume(state, child)
-      )
+    const id = tag.id || tag.className || ""
+    const tagName = (tag.tagName || "").toLowerCase()
+    if (id in SessionState.INJURY_IDS)
+      return state.put("injuries." + id, tag)
+    if (id in SessionState.ID_TAGS)
+      return state.put(id, tag)
+    if (tagName in SessionState.TAGS)
+      return state.put(tagName, tag)
+
+    if (tagName in SessionState.TIMERS) {
+      return state.spawn_timer({
+        name: tagName,
+        end: Lens.get(tag, "attributes.value.value"),
+      })
+    }
+
+    ~[].forEach.call(tag.childNodes, (node) =>
+      SessionState.consume(state, node)
+    )
   }
 
   constructor(session) {
@@ -77,51 +91,19 @@ module.exports = class SessionState {
     SessionState.MODALS.forEach(
       (modal) => (this._modals[modal] = false)
     )
-
-    this.wire_up()
   }
 
   by_name(name) {
     return Object.keys(this)
       .filter(
         (key) =>
-          typeof this[key] == "object" &&
-          this[key].name == name
+          Lens.get(
+            this,
+            `${key}.tagName`,
+            ""
+          ).toLowerCase() == name.toLowerCase()
       )
       .map((key) => this[key])
-  }
-
-  wire_up() {
-    const parser = this._session
-
-    parser.on("TAG", (tag) => {
-      SessionState.consume(this, tag)
-    })
-
-    parser.on("NOTIFICATION", (tag) => {
-      if (!tag.text || tag.text.length == 0) return
-
-      let silent = false
-      if ("sound" in tag.attrs)
-        silent = Settings.cast(tag.attrs.sound)
-      silent = Settings.get("mute", silent)
-
-      if (tag.text)
-        new Notification(
-          this._session.name +
-            " " +
-            Lens.get(tag, "attrs.title"),
-          { ...tag.attrs, silent, body: tag.text }
-        )
-    })
-
-    SessionState.TAGS.forEach((tag) =>
-      parser.on(tag, (val) => this.put(tag, val))
-    )
-
-    SessionState.TIMERS.forEach((tag) => {
-      parser.on(tag, (val) => this.spawn_timer(val))
-    })
   }
 
   get(prop, fallback) {
@@ -135,7 +117,6 @@ module.exports = class SessionState {
   }
 
   put(prop, val) {
-    if (val instanceof Tag) val = TagUtil.to_pojo(val)
     Lens.put(this, prop, val)
     Bus.emit(Bus.events.REDRAW)
     return this
@@ -149,11 +130,12 @@ module.exports = class SessionState {
    *   2. State.roundtime -> {remaining: 6}
    * @param {Tag} param0
    */
-  spawn_timer({ name, attrs }) {
+  spawn_timer({ name, end }) {
+    pp("spawn_timer::", { name, end })
     this._timers[name] = this._timers[name] || {}
     // gs timers are second precision vs millisecond
     this._timers[name].end_epoc_time =
-      parseInt(attrs.value, 10) * 1000
+      parseInt(end, 10) * 1000
 
     this._timers[name].interval =
       this._timers[name].interval ||

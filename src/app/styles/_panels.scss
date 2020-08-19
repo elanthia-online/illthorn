@@ -1,8 +1,6 @@
-.panels {
-}
-
 #panels-left {
-  border-right: 3px solid var(--info);
+  border-right: var(--border-width, 3px) solid
+    var(--border-color, var(--info));
 }
 
 .panel {
@@ -10,6 +8,9 @@
   position: relative;
   padding: 4px;
   margin: 10px;
+  // If we start saving panel heights to storage, let's do this
+  // overflow-x: hidden;
+  // overflow-y: auto;
   resize: vertical;
   summary {
     margin: 0;
@@ -22,38 +23,28 @@
       /* TODO: Strategy for focus styles */
       outline: 0;
     }
-  }
-  ol {
-    // max-height: 300px;
+    &:hover {
+      cursor: pointer;
+    }
   }
   li {
-    padding: 0.5em;
     position: relative;
-  }
-
-  .bar {
-    position: absolute;
-    height: 100%;
-    left: 0;
-    top: 0;
-  }
-
-  .value {
-    position: relative;
-    text-align: right;
+    padding: 0.4em 0 0.2em;
     display: flex;
-    span {
-      display: inline-block;
-      &:first-child {
-        margin-right: 1em;
-        flex: 1;
-      }
-      &:nth-child(2) {
-        font-weight: bold;
-        min-width: 3em;
-        text-align: left;
-      }
+    align-items: center;
+  }
+  .value {
+    margin-left: auto;
+    font-weight: bold;
+  }
+  .max {
+    opacity: 0.5;
+    &::before {
+      content: "/";
+      margin: 0 0.2em;
     }
+  }
+  .value {
     &.center {
       text-align: center;
       span {
@@ -67,14 +58,51 @@
   }
 }
 
-.bar.high {
-  background: var(--ok);
+.high .label {
+  color: var(--ok);
 }
 
-.bar.medium {
-  background: var(--warn);
+.medium .label {
+  color: var(--warn);
 }
 
-.bar.low {
-  background: var(--danger);
+.low .label,
+.low .spell {
+  color: var(--danger);
+  font-weight: bold;
+}
+
+#vitals-encumlevel,
+#vitals-mindState {
+  .max {
+    display: none;
+  }
+  .value::after {
+    content: "%";
+  }
+}
+
+.injury-name {
+  padding-right: 1em;
+  margin-right: auto;
+}
+
+#vitals-nextLvlPB {
+  text-align: center;
+  .label {
+    color: white;
+  }
+}
+
+#active-spells {
+  .value {
+    margin-left: 0;
+    display: flex;
+    width: 100%;
+    .spell {
+      font-weight: normal;
+      padding-right: 1em;
+      margin-right: auto;
+    }
+  }
 }

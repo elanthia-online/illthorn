@@ -3,13 +3,21 @@ const Session = require("../../../session")
 const Panel = require("./panel")
 const Lens = require("../../../util/lens")
 const Progress = require("../progress")
-const Attrs = Lens.of("attrs")
+const SpellDetails = require("../../../constants/spells")
+const Pipe = require("../../../util/pipe")
+const Empty = document.createElement("div")
+
+const selector = (ele, selector) =>
+  ele.querySelectorAll(selector)
+
+const attr = (ele, attr, fallback) =>
+  Lens.get(ele, `attributes.${attr}.value`, fallback)
 
 module.exports = class ActiveSpells {
   static MAX_DURATION = 4 * 60 + 10
 
-  static minutes_left(spell) {
-    const [hours, minutes] = spell.remaining.split(":")
+  static minutes_left(remaining) {
+    const [hours, minutes] = remaining.split(":")
     return parseInt(hours, 10) * 60 + parseInt(minutes, 10)
   }
 
@@ -22,18 +30,25 @@ module.exports = class ActiveSpells {
   }
 
   static spell(spell) {
-    const percent = ActiveSpells.percent_remaining(spell)
+    const name = attr(spell, "anchor_right", "")
+    const remaining = attr(spell, "value", "")
+    const percent = ActiveSpells.percent_remaining(
+      remaining
+    )
+    const spellDetails = SpellDetails({ name }) || {}
 
     return m(
       "li",
       {
-        ["data-spell-name"]: spell.name,
-        class: `${Progress.classify(percent + 20)}`,
+        ["data-spell-name"]: spellDetails.name || name,
+        ["data-spell-type"]: spellDetails.type,
+        ["data-spell-number"]: spellDetails.number,
+        class: Progress.classify(percent + 20).toString(),
       },
       [
         m(".value", [
-          m("span.spell", spell.name),
-          m("span.remaining", spell.remaining),
+          m("span.spell", name),
+          m("span.remaining", remaining),
         ]),
       ]
     )
@@ -47,17 +62,11 @@ module.exports = class ActiveSpells {
   }
 
   static spells() {
-    return Lens.get(
-      Session.focused(),
-      "state.ActiveSpells.children",
-      []
-    )
-      .filter((_, i) => i % 2 == 1)
-      .map(Attrs.get)
-      .map((attrs) => ({
-        name: attrs.anchor_right,
-        remaining: attrs.value,
-      }))
+    return Pipe.of(Session.current)
+      .fmap(Lens.get, "state.ActiveSpells", Empty)
+      .fmap(selector, "label")
+      .fmap(Array.from)
+      .unwrap()
   }
 
   view() {

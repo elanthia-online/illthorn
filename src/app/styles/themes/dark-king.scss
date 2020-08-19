@@ -9,8 +9,7 @@ $red: #d64e4e;
 :root {
   --main-bg-color: #1a1a1d;
   --text-color: #f1f1f1;
-
-  --info: #484848;
+  --info: purple;
 
   --ok: #{$green};
   --gentle-warn: #{$orange};
@@ -18,14 +17,19 @@ $red: #d64e4e;
   --danger: #{$red};
 
   --icon-size: 1.4em;
-  --border-width: 0;
-  --stream-font-size: 13px;
+  --border-width: 2px;
+  --border-color: #570275;
+  --base-font-size: 15px;
+  --stream-font-size: 12px;
 
   --column-width: minmax(16em, 0.33fr);
 
   --stream-channel-color: #{$green};
+
+  --scrollbar-thumb-color: black;
 }
 
+// Global
 body {
   font-family: "DutchMediaeval", serif;
 }
@@ -38,10 +42,16 @@ body {
   background: linear-gradient(
     261.75deg,
     #202224 35.86%,
-    #2b2e3a 77.44%
+    #352f48 77.44%
   );
 }
 
+// Sessions
+.session-name {
+  font-family: "DutchMediaevalBook-Bold", serif;
+}
+
+// Hands
 .hand#left::before {
   transform: rotate(22deg) scaleX(-1);
 }
@@ -52,15 +62,29 @@ body {
   margin-left: 1em;
 }
 
-.session-name {
-  font-family: "DutchMediaevalBook-Bold", serif;
+// Streams
+.streams {
+  padding: 1em;
+}
+.stream.thoughts {
+  background: linear-gradient(182deg, #202224, #2b2e3a);
+  padding: 0.5em;
+  border-radius: 5px;
+  margin: 0 0 0.5em 0;
+}
+.stream.death {
+  padding: 0.5em;
+  margin: 0 0 0.5em 0;
 }
 
+// Feed
 #feed-wrapper {
+  padding: 0 0 0 1em;
   // under-shadow
   &::before {
     content: "";
     position: absolute;
+    z-index: 1;
     top: 0;
     left: 0;
     width: 100%;
@@ -71,6 +95,32 @@ body {
     );
     height: 20px;
   }
+  pre {
+    line-height: 1.6;
+  }
+}
+.feed .roomName {
+  margin: 1em 0 0 0;
+  background: linear-gradient(
+    to right,
+    rgba($purple, 0.35),
+    transparent
+  );
+  color: white;
+  padding: 0.5em 1em;
+}
+.feed .roomDesc {
+  margin: 0 0 1em 0;
+  padding: 0.5em 1em;
+  opacity: 0.66;
+  background: linear-gradient(
+    to right,
+    rgba($purple, 0.2),
+    transparent
+  );
+}
+.feed prompt {
+  visibility: hidden;
 }
 
 .label {
@@ -215,7 +265,7 @@ li#vitals-stamina {
 #vitals-nextLvlPB {
   @include title("Experience");
 }
-#vitals-stance {
+#vitals-pbarStance {
   @include title("Stance");
 }
 
@@ -256,7 +306,7 @@ li#vitals-stamina {
   color: #ff7c7c;
 }
 .injury.severity-2 {
-  .value::before {
+  .injury-name::before {
     content: "🩸";
   }
 }
@@ -266,7 +316,7 @@ li#vitals-stamina {
   font-weight: bold;
 }
 .injury.severity-3 {
-  .value::before {
+  .injury-name::before {
     content: "🩸";
   }
 }
@@ -281,11 +331,9 @@ li#vitals-stamina {
 .exist {
   color: #a7a7a7;
 }
-.monster {
-  color: $orange;
-}
+.monster,
 .b {
-  // e.g. enhanced stat
+  color: $orange;
 }
 
 @each $direction in $directions {
@@ -299,10 +347,12 @@ li#vitals-stamina {
     font-weight: bold;
   }
 }
+$start: 0;
 @each $gem in $gems {
   a.exist[data-noun="#{$gem}"] {
-    color: $blue;
+    color: adjust-hue($blue, $start);
   }
+  $start: $start + 1;
 }
 @each $magic in $magics {
   a.exist[data-noun="#{$magic}"] {
@@ -338,25 +388,4 @@ li#vitals-stamina {
 }
 [data-noun="donut"]::before {
   content: "🍩";
-}
-
-.feed .roomName {
-  margin: 10px 0 0 0;
-  background: linear-gradient(
-    to right,
-    rgba($purple, 0.35),
-    transparent
-  );
-  color: white;
-  padding: 2px;
-}
-.feed .roomDesc {
-  margin: 0 0 10px 0;
-  padding: 6px;
-  opacity: 0.75;
-  background: linear-gradient(
-    to right,
-    rgba($purple, 0.2),
-    transparent
-  );
 }

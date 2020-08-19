@@ -1,5 +1,6 @@
 #hands-wrapper {
-  border-bottom: var(--border-width, 3px) solid var(--info);
+  border-bottom: var(--border-width, 3px) solid
+    var(--border-color, var(--info));
   -webkit-app-region: drag;
 }
 

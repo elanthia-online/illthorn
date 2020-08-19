@@ -19,6 +19,7 @@ A humble, hardscrabble theme—with an arctic, north-blush color palette lifted 
   --base-padding: 3em;
   --column-width: 16em;
   --stream-channel-color: #d8dee9;
+  --whisper-color: #a3be8c;
 }
 
 //Local Variables
@@ -35,8 +36,10 @@ pre {
 }
 
 //Sessions
-#sessions ol li::before {
-  box-shadow: 0 0 0 85rem rgba(136, 192, 208, 1);
+#sessions ol li {
+  &::before {
+    box-shadow: 0 0 0 85rem rgba(136, 192, 208, 1);
+  }
 }
 
 //Hands
@@ -51,15 +54,6 @@ pre {
   }
 }
 .panel {
-  background: linear-gradient(
-    160deg,
-    rgba(59, 66, 82, 1) 0%,
-    rgba(67, 76, 94, 1) 44%,
-    rgba(76, 86, 106, 1) 100%
-  );
-}
-
-.panel {
   padding: 4px;
   margin: 0 0 20px 0;
   margin: 10px;
@@ -70,159 +64,143 @@ pre {
     #81a1c1,
     #b48dac
   );
-}
-.panel h3 {
-  border-bottom: 1px solid black;
-  background: linear-gradient(to bottom, #332f2f, #111);
-  margin: 0 0 4px 0;
+  background: linear-gradient(
+    160deg,
+    rgba(59, 66, 82, 1) 0%,
+    rgba(67, 76, 94, 1) 44%,
+    rgba(76, 86, 106, 1) 100%
+  );
+  h3 {
+    border-bottom: 1px solid black;
+    background: linear-gradient(to bottom, #332f2f, #111);
+    margin: 0 0 4px 0;
+  }
+  li {
+    margin: 3px 0 3px 0;
+  }
 }
 
 //Vitals
+@mixin vital-colors($color) {
+  &.high {
+    background-color: #{$color};
+  }
+  &.medium {
+    background-color: var(--warn);
+  }
+  &.low {
+    background-color: var(--danger);
+  }
+}
 
-#vitals li {
+.panel li.vital {
+  padding: 5px;
+  span.value,
+  span.max,
+  span.label {
+    color: var(--text-color);
+  }
   font-size: 0.9rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  border-radius: 3.5px;
-  background: rgb(48, 53, 66);
-  background: linear-gradient(
-    160deg,
-    rgba(48, 53, 66, 1) 0%,
-    rgba(56, 64, 79, 1) 50%,
-    rgba(64, 72, 89, 1) 100%
-  );
-  box-shadow: inset 3px 3px 5px -5px rgba(0, 0, 0, 1);
-  div.value {
-    z-index: 100;
-    padding: 0 0.3rem 0.2rem 0.3rem;
+  .label {
+    text-transform: capitalize;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
-  div.bar {
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-}
-#vitals .value span:first-child {
-  text-transform: capitalize;
-  text-align: left;
-  font-weight: bold;
-}
-
-//Stance
-#vitals-stance .bar.high {
-  background: #81a1c1;
-}
-#vitals-stance {
-  div.value span:first-child {
-    display: none;
-  }
-  div.value span:nth-child(2) {
-    display: flex;
-    &::before {
-      display: flex;
-      flex: 1;
-      width: 129.05px;
-      margin-right: 1em;
-      content: "Stance";
-      font-size: 0.9rem;
-      visibility: visible;
-    }
-  }
-}
-
-//Mana
-#vitals-mana .bar.high {
-  background: #5e81ac;
-}
-#vitals-mana .bar.medium {
-  background: #374c66;
-}
-#vitals-mana .bar.low {
-  background: #212d3c;
 }
 
 //Spirit
-#vitals-spirit .bar.high {
-  background: #b48ead;
+#vitals-spirit.vital {
+  @include vital-colors(#b48ead);
 }
-#vitals-spirit .bar.medium {
-  background: #715a6d;
+
+//health
+#vitals-health.vital {
+  @include vital-colors(#a3be8c);
 }
-#vitals-spirit .bar.low {
-  background: #2e252d;
+
+//Mana
+#vitals-mana.vital {
+  @include vital-colors(#5e81ac);
 }
 
 //Stamina
-#vitals-stamina .bar.high {
-  background: #ebcb8b;
-}
-#vitals-stamina .bar.medium {
-  background: #937f57;
-}
-#vitals-stamina .bar.low {
-  background: #393121;
+#vitals-stamina.vital {
+  @include vital-colors(#81a1c1);
 }
 
-//Mind/Encumberance
-#vitals-mindState .bar.high,
-#vitals-encumlevel .bar.high {
-  background: #2f181a;
-}
-#vitals-mindState .bar.medium,
-#vitals-encumlevel .bar.medium {
-  background: #743b40;
-}
-#vitals-mindState .bar.low,
-#vitals-encumlevel .bar.low {
-  background: #bf616a;
-}
-#vitals-encumlevel {
-  div.value span:first-child {
+//Encumberance
+#vitals-encumlevel.vital {
+  @include vital-colors(#e5e9f0);
+  span.label,
+  span.max,
+  span.value {
+    color: #3b4252;
+  }
+  span.label {
     display: none;
   }
-  div.value span:nth-child(2) {
-    display: flex;
+  span.value {
     &::before {
-      display: flex;
-      flex: 1;
-      width: 129.05px;
-      margin-right: 1em;
-      content: "Encumberance";
-      font-size: 0.9rem;
-      visibility: visible;
+      content: "Encumbrance";
+      position: absolute;
+      left: 5px;
+      font-weight: 400;
     }
   }
 }
-#vitals-mindState {
-  div.value span:first-child {
+
+// LevelUp
+#vitals-nextLvlPB.vital {
+  @include vital-colors(#e5e9f0);
+  span.label,
+  span.max,
+  span.value {
+    color: #3b4252;
+    font-size: 0.8rem;
+  }
+}
+
+// Experience
+#vitals-mindState.vital {
+  @include vital-colors(#d8dee9);
+  span.label,
+  span.max,
+  span.value {
+    color: #3b4252;
+  }
+  span.label {
     display: none;
   }
-  div.value span:nth-child(2) {
-    display: flex;
+  span.value {
     &::before {
-      display: flex;
-      flex: 1;
-      width: 129.05px;
-      margin-right: 1em;
       content: "Experience";
-      font-size: 0.9rem;
-      visibility: visible;
+      position: absolute;
+      left: 5px;
+      font-weight: 400;
     }
   }
 }
 
-//LevelUp
-#vitals-nextLvlPB div.value {
-  &::after {
-    content: "Level Up";
-    display: flex;
-    font-size: 0.9rem;
-    font-weight: bold;
+// Stance
+#hud .panel li#vitals-pbarStance.vital {
+  margin-bottom: 0px;
+  &.offensive,
+  &.vital.advance {
+    background-color: var(--danger);
   }
-  span:first-child {
-    display: none;
+  &.forward,
+  &.vital.neutral {
+    background-color: var(--warn);
+  }
+  &.guarded,
+  &.vital.defensive {
+    background-color: #d8dee9;
+  }
+  span.label,
+  span.max,
+  span.value {
+    color: #3b4252;
   }
 }
 
@@ -231,6 +209,7 @@ pre {
   font-size: 0.8rem;
   text-transform: capitalize;
   box-shadow: none;
+  padding: 5px;
   &.severity-1 {
     border: 1px solid var(--gentle-warn);
   }
@@ -260,21 +239,84 @@ pre {
   border-radius: 3.5px;
 }
 #active-spells li {
+  &[data-spell-type="defense"] {
+    &:before {
+      content: "🛡️";
+      position: absolute;
+      left: -3px;
+      top: 0.1px;
+    }
+  }
+  &[data-spell-type="offense"] {
+    &:before {
+      content: "⚔️";
+      position: absolute;
+      left: -3px;
+      top: 0.1px;
+    }
+  }
+  &[data-spell-type="utility"] {
+    &:before {
+      content: "⚙️";
+      position: absolute;
+      left: -3px;
+      top: 0.1px;
+    }
+  }
+  &[data-spell-type="offense/utility"] {
+    &:before {
+      content: "💪";
+      position: absolute;
+      left: -3px;
+      top: 0.1px;
+    }
+  }
+  &[data-spell-type="defense/utility"] {
+    &:before {
+      content: "🤺";
+      position: absolute;
+      left: -3px;
+      top: 0.1px;
+    }
+  }
+  &[data-spell-type="offense/defense"] {
+    &:before {
+      content: "⚖️";
+      position: absolute;
+      left: -3px;
+      top: 0.1px;
+    }
+  }
+  &[data-spell-type="bonus"] {
+    &:before {
+      content: "🌟";
+      position: absolute;
+      left: -3px;
+      top: 0.1px;
+    }
+  }
   font-size: 0.8rem;
   padding: 0.1rem 0.2rem;
   &:nth-child(even) {
     background-color: rgba(#e5e9f0, 0.1);
   }
+  &.medium {
+    color: var(--warn);
+  }
+  &.low {
+    color: var(--danger);
+  }
+  .value span.spell {
+    text-align: left;
+    width: 80%;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 0 0 0.6rem;
+  }
 }
-span.spell {
-  text-align: left;
-  width: 75%;
-  display: block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  padding-right: 0.3rem;
-}
+
 .spells.scroll::-webkit-scrollbar-thumb {
   background-color: rgba(79, 98, 103, 0.35);
   box-shadow: none;
@@ -316,10 +358,6 @@ details.panel summary {
   padding: 4px;
 }
 
-#hud .panel li {
-  margin: 3px 0 3px 0;
-}
-
 //stream
 #streams-wrapper {
   box-shadow: 3px 3px 7px -1px rgba(0, 0, 0, 0.61);
@@ -330,7 +368,9 @@ details.panel summary {
   resize: vertical;
 }
 #streams-wrapper::-webkit-resizer {
-  background-color: rgba(46, 52, 64, 0.85);
+  background-image: url("data:image/svg+xml,%3Csvg id='svg10654' height='512' viewBox='0 0 6.3499999 6.3500002' width='512' xmlns='http://www.w3.org/2000/svg' xmlns:svg='http://www.w3.org/2000/svg'%3E%3Cg id='layer1' transform='translate(0 -290.65)'%3E%3Cpath id='path13002' d='m3.0029248 290.97809-1.8515676 1.5875c-.26837478.22945.07579.63201.3441648.40256l1.6794851-1.44125 1.6794851 1.44125c.2683748.22945.6125395-.17311.3441647-.40256l-1.8515674-1.5875c-.047405-.0406-.1076219-.0631-.1826763-.063-.067572.005-.1196023.0272-.1614884.063zm.1715664 2.31976c-.1360276-.00004-.2718885.0508-.3741394.15296-.2044965.20437-.2043775.54429 0 .74879.2043801.2045.5437796.20438.7482761 0 .2044991-.20437.2048933-.54377.0005292-.74827-.1021874-.10225-.2386278-.15344-.3746527-.15348zm1.8691357 1.30793c-.070808-.00079-.1389327.0271-.1891347.077l-1.6794851 1.4397-1.6794851-1.4397c-.053486-.0476-.1239573-.0714-.1953366-.0661-.2360824.0189-.33040112.31458-.1488282.46664l1.8515676 1.58802c.099052.0848.2451126.0848.3441647 0l1.8515674-1.58802c.2045467-.15099.0992-.47545-.15503-.47749z' font-variant-ligatures='normal' font-variant-position='normal' font-variant-caps='normal' font-variant-numeric='normal' font-variant-alternates='normal' font-feature-settings='normal' text-indent='0' text-align='start' text-decoration-line='none' text-decoration-style='solid' text-decoration-color='rgb(136, 192, 208)' text-transform='none' text-orientation='mixed' white-space='normal' shape-padding='0' isolation='auto' mix-blend-mode='normal' solid-color='rgb(136, 192, 208)' fill='%2388C0D0' opacity='0.4' vector-effect='none'/%3E%3C/g%3E%3C/svg%3E");
+  background-position: center;
+  background-size: cover;
 }
 #streams-wrapper::-webkit-scrollbar {
   width: 8px;
@@ -351,7 +391,7 @@ details.panel summary {
 .stream-channel[data-stream-channel="[PrivateTo]"],
 .stream-channel[data-stream-channel="[Private]"] {
   color: #a3be8c;
-  background-color: nonem;
+  background: none;
 }
 .stream-channel[data-stream-channel="[Merchant]"],
 .stream-channel[data-stream-channel="[Dreavening]"] {
@@ -432,10 +472,11 @@ pre.prompt {
     rgba(67, 76, 94, 1) 44%,
     rgba(76, 86, 106, 1) 100%
   );
+  .prompt {
+    font-size: 1rem;
+  }
 }
-#cli-wrapper .prompt {
-  font-size: 1rem;
-}
+
 #cnc input#cli {
   font-family: "MonoLisa";
   font-weight: bold;

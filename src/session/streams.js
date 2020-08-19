@@ -1,12 +1,14 @@
 const StreamsSettings = require("../settings").of("streams")
 const Lens = require("../util/lens")
+const Storage = require("../storage")
 
 module.exports = class Streams {
   // this class on the top-level application element
   // signals which layout to use
   static STREAMS_ON = "streams-on"
 
-  static STREAMS_BUFFER_LIMT = 1000
+  static STREAMS_BUFFER_LIMT = 250
+  static STREAMS_STORAGE_LIMT = 100
 
   static ENUM = {
     thoughts: 1,
@@ -26,6 +28,7 @@ module.exports = class Streams {
     this._view = document.createElement("div")
     this._view.classList.add("streams", "scroll")
     this._settings = StreamsSettings
+    this._firstRun = true
   }
 
   get _scrolling() {
@@ -58,27 +61,82 @@ module.exports = class Streams {
    */
   insert(tag) {
     const was_scrolling = this._scrolling
+    const name = this._view.getAttribute("data-name")
+    if (name) {
+      this.storeStreamMessage(tag.textContent, name)
+    }
+    const el = this.createEl(tag)
+    this._view.append(el)
 
-    const pre = document.createElement("pre")
-    pre.classList.add(tag.id, tag.name)
-    const parts = this.transformStreamMessage(tag)
-    parts.forEach((ele) => pre.append(ele))
-    this._view.append(pre)
     // scroll the feed to the HEAD position
     if (!was_scrolling) this.advance_scroll()
   }
 
-  transformStreamMessage(tag) {
+  createEl(tag) {
+    const tagName = (tag.tagName || "").toLowerCase()
+    const pre = document.createElement("pre")
+    pre.classList.add(tag.className, tagName)
+    const parts = this.transformStreamMessage(
+      tag.textContent
+    )
+    parts.forEach((ele) => pre.append(ele))
+    return pre
+  }
+
+  async storeStreamMessage(tag, name) {
+    let thoughts = Storage.get(`thoughts-${name}`)
+    if (!thoughts) {
+      thoughts = []
+    }
+    thoughts.push(tag)
+    thoughts = this.trimMessages(thoughts)
+
+    // TODO: The plan is not to use Storage for this but flat files.
+    // See: https://github.com/elanthia-online/illthorn/pull/103#issuecomment-668554830
+    Storage.set(`thoughts-${name}`, thoughts)
+  }
+
+  trimMessages(thoughts) {
+    // Only store and retrieve up to a maximum
+    if (thoughts.length > Streams.STREAMS_STORAGE_LIMT) {
+      thoughts = thoughts.slice(
+        thoughts.length - Streams.STREAMS_STORAGE_LIMT,
+        thoughts.length
+      )
+    }
+    return thoughts
+  }
+
+  async loadStreamMessages(name) {
+    const thoughts = Storage.get(`thoughts-${name}`)
+    if (!thoughts) return
+    thoughts.forEach((text) => {
+      const decoded = document.createElement("stream")
+      decoded.classList.add("thoughts")
+      decoded.textContent = text
+      const el = this.createEl(decoded)
+      this._view.append(el)
+    })
+    const pre = document.createElement("pre")
+    pre.classList.add(
+      "loaded-from-storage-message",
+      "stream"
+    )
+    pre.innerHTML = `<span>^ Loaded from Storage ^ </span>`
+    this._view.append(pre)
+  }
+
+  transformStreamMessage(text) {
     const streamChannel = document.createElement("span")
     streamChannel.classList.add("stream-channel")
 
     const streamText = document.createElement("span")
     streamText.classList.add("stream-text")
 
-    if (tag.text.trim().startsWith("[")) {
+    if (text.trim().startsWith("[")) {
       // This is a chat message
       const messageRegEx = /^(\[.*?\])(.*)/
-      const messageParts = messageRegEx.exec(tag.text)
+      const messageParts = messageRegEx.exec(text)
       // [help]-GSIV:Gilderan: "ahh good to know"
       // [0] = [help]-GSIV:Gilderan: "ahh good to know"
       // [1] = [help]
@@ -89,16 +147,16 @@ module.exports = class Streams {
       )
       streamChannel.innerText = Lens.get(messageParts, "1")
       streamText.innerText = Lens.get(messageParts, "2")
-    } else if (tag.text.trim().startsWith("*")) {
+    } else if (text.trim().startsWith("*")) {
       // This is a death message
       streamChannel.innerText = "* "
       // For styling the *
       streamChannel.classList.add("death")
       // Remove the "* " from the rest of message so it doesn't repeat
-      streamText.innerText = tag.text.trim().substring(2)
+      streamText.innerText = text.trim().substring(2)
     } else {
       // Unknown stream message, just dump it in with empty channel
-      streamText.innerText = tag.text
+      streamText.innerText = text
     }
 
     return [streamChannel, streamText]
@@ -120,7 +178,7 @@ module.exports = class Streams {
     )
   }
 
-  redraw() {
+  redraw(view) {
     const container = document.querySelector(
       "#streams-wrapper"
     )
@@ -145,7 +203,15 @@ module.exports = class Streams {
     // is attached to the DOM, not on subsequent redraws
     // this means it will preserve the current scroll state
     container.innerHTML = ""
+    let name = view.getAttribute("data-name")
+    this._view.setAttribute("data-name", name)
     container.appendChild(this._view)
+
+    if (this._firstRun) {
+      this.loadStreamMessages(name)
+      this._firstRun = false
+    }
+
     this.advance_scroll()
   }
 }

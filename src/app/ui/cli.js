@@ -128,8 +128,6 @@ module.exports = class CLI {
   }
 
   view({ attrs }) {
-    // TODO: Probably move this roundtime stuff to it's own component
-
     const sess = Session.focused()
 
     const roundTime = Lens.get(
@@ -247,7 +245,7 @@ module.exports = class CLI {
             m("li.space-after", [
               m(
                 "code.command",
-                ":theme original|dark-king"
+                ":theme original|rogue|dark-king|icemule|kobold|raging-thrak"
               ),
               m("span", "Change Theme"),
             ]),

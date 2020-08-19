@@ -1,6 +1,7 @@
 const m = require("mithril")
 const Lens = require("../util/lens")
 const Bus = require("../bus")
+const pp = require("debug")("illthorn:state")
 
 const makeLookup = (keys) =>
   keys.reduce(
@@ -62,7 +63,6 @@ module.exports = class SessionState {
   }
 
   static consume(state, tag) {
-    //console.log("state:consume(%o)", tag)
     const id = tag.id || tag.className || ""
     if (id in SessionState.INJURY_IDS)
       return state.put("injuries." + tag.id, tag)
@@ -70,6 +70,10 @@ module.exports = class SessionState {
       return state.put(tag.id, tag)
     if (SessionState.TAGS[tag.tagName.toLowerCase()])
       return state.put(tag.tagName.toLowerCase(), tag)
+
+    ~[].forEach.call(tag.childNodes, (node) =>
+      SessionState.consume(state, node)
+    )
   }
 
   constructor(session) {

@@ -208,7 +208,10 @@ module.exports = class Feed {
       return ele.remove()
     if (body.contains(ele)) return
     // clean up whitespace
-    if (ele.childNodes.length == 0) {
+    if (
+      ele.childNodes.length == 1 &&
+      ele.firstChild.nodeName == "#text"
+    ) {
       ele.innerText = ele.innerText.trimEnd()
     }
     //const now = Date.now()

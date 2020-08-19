@@ -3,7 +3,7 @@ const Session = require("../../../session")
 const Lens = require("../../../util/lens")
 const Progress = require("../progress")
 const Panel = require("./panel")
-const Stance = require("./stance")
+const pp = require("debug")("illthorn:vitals")
 
 const span = (text, klass = "") =>
   m(`span.${klass}`, (text || "").toString().toLowerCase())
@@ -46,6 +46,8 @@ module.exports = class Vitals {
       text: text,
       title: (title || text).replace(/\s\(\d+\%\)/, ""),
     }
+
+    pp("%s -> %o -> %o", parsed.id, ele, parsed)
 
     if (parsed.id == "nextLvlPB") {
       const exp = (parsed.title.match(/(\d+)/) || [])[1]

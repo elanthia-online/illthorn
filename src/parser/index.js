@@ -1,5 +1,8 @@
 const parser = new DOMParser()
-const pp = require("debug")("illthorn:parser")
+const pp = {
+  parsed: require("debug")("illthorn:parser:parsed"),
+  raw: require("debug")("illthorn:parser:raw"),
+}
 
 exports.parse = async function (session, incoming) {
   session.buffer += incoming.toString()
@@ -7,7 +10,7 @@ exports.parse = async function (session, incoming) {
   if (isDanglingStream(session.buffer))
     return { buffered: 1 }
 
-  pp("buffer::\n", session.buffer)
+  pp.raw(session.buffer)
   const string = normalize(session.buffer)
   const doc = parser.parseFromString(
     string.trimEnd(),
@@ -20,7 +23,7 @@ exports.parse = async function (session, incoming) {
     indicator.innerHTML = pre(text)
   })
 
-  pp("parsed::\n", doc.body.innerHTML)
+  pp.parsed(doc.body.innerHTML)
   // clear the buffer
   session.buffer = ""
   return { parsed: doc }

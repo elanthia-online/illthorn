@@ -76,6 +76,9 @@
   .max {
     display: none;
   }
+  .value::after {
+    content: "%";
+  }
 }
 
 .injury-name {

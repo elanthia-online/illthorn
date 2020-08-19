@@ -60,6 +60,8 @@ function trimLineBreaks(string) {
     .replace(/(\r|\n)$/g, "")
 }
 
+exports.trimLineBreaks = trimLineBreaks
+
 function pre(string) {
   return `<pre>${string}</pre>`
 }

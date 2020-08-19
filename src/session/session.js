@@ -95,7 +95,8 @@ module.exports = class Session extends events.EventEmitter {
     this.state = State.of(this)
     this.sock = net.connect({ port })
     this.sock.on("data", (data) => this.parse(data))
-    this.sock.on("error", (err) => this.emit(err))
+    this.sock.on("error", (err) => this.emit("error", err))
+    this.sock.on("close", (_) => this.close())
     // buffer for incoming game lines
     this.buffer = ""
     this.io = IO(this.buffer)
@@ -103,27 +104,12 @@ module.exports = class Session extends events.EventEmitter {
 
   async parse(string) {
     await this.io.fmap(async () => {
-      const { _pending, parsed } = await Parser.parse(
-        this,
-        string
-      )
+      const {
+        pending: _pending,
+        parsed,
+      } = await Parser.parse(this, string)
       if (parsed) await this.feed.ingestDocument(parsed)
     })
-  }
-
-  handle_tag(tag) {
-    //if (this.has_focus()) console.log("tag:%o", tag)
-    // broadcast individual tags
-    this.emit(tag.name, tag)
-    // route streams
-    if (
-      tag.name == "stream" &&
-      this.streams.wants(tag.id)
-    ) {
-      return this.streams.insert(tag)
-    }
-    // route main feed
-    this.feed.add(tag)
   }
 
   close() {

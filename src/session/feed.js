@@ -298,7 +298,6 @@ module.exports = class Feed {
     "streamwindow.inv",
     "clearstream.inv",
     "clearcontainer",
-    "roundtime",
   ]
 
   static LOOSELY_NESTED_TAGS = [
@@ -316,6 +315,7 @@ module.exports = class Feed {
     "casttime",
     "container",
     "exposecontainer",
+    "roundtime",
   ]
 
   async ingestDocument(parsed) {

@@ -9,7 +9,7 @@ $red: #d64e4e;
 :root {
   --main-bg-color: #1a1a1d;
   --text-color: #f1f1f1;
-  --info: #484848;
+  --info: purple;
 
   --ok: #{$green};
   --gentle-warn: #{$orange};
@@ -17,13 +17,16 @@ $red: #d64e4e;
   --danger: #{$red};
 
   --icon-size: 1.4em;
-  --border-width: 0;
+  --border-width: 2px;
+  --border-color: #570275;
   --base-font-size: 15px;
   --stream-font-size: 12px;
 
   --column-width: minmax(16em, 0.33fr);
 
   --stream-channel-color: #{$green};
+
+  --scrollbar-thumb-color: black;
 }
 
 // Global
@@ -76,7 +79,7 @@ body {
 
 // Feed
 #feed-wrapper {
-  padding: 0 1em;
+  padding: 0 0 0 1em;
   // under-shadow
   &::before {
     content: "";

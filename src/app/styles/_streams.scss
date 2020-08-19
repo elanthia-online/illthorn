@@ -1,6 +1,6 @@
 #app.streams-on #streams-wrapper {
   border-bottom: var(--border-width, 3px) solid
-    var(--info, #184f3f);
+    var(--border-color, var(--info));
   height: var(--stream-height, 13em);
 }
 

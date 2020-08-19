@@ -1,5 +1,6 @@
 #panels-left {
-  border-right: var(--border-width, 3px) solid var(--info);
+  border-right: var(--border-width, 3px) solid
+    var(--border-color, var(--info));
 }
 
 .panel {

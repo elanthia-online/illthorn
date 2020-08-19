@@ -11,4 +11,11 @@ module.exports = {
       properties: { keys: string, command: string },
     },
   },
+  thoughts: {
+    type: array,
+    items: {
+      type: object,
+      properties: { thought: string },
+    },
+  },
 }

@@ -1,6 +1,4 @@
 const m = require("mithril")
-const Session = require("../../session")
-const Lens = require("../../util/lens")
 
 module.exports = class FlashMessage {
   view() {

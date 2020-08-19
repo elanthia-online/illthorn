@@ -32,3 +32,8 @@
   background: var(--danger, #ff3b00);
   color: white;
 }
+
+.loaded-from-storage-message {
+  opacity: 0.5;
+  text-align: center;
+}

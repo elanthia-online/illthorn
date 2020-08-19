@@ -66,9 +66,9 @@ module.exports = class SessionState {
     const id = tag.id || tag.className || ""
     const tagName = (tag.tagName || "").toLowerCase()
     if (id in SessionState.INJURY_IDS)
-      return state.put("injuries." + tag.id, tag)
+      return state.put("injuries." + id, tag)
     if (id in SessionState.ID_TAGS)
-      return state.put(tag.id, tag)
+      return state.put(id, tag)
     if (tagName in SessionState.TAGS)
       return state.put(tagName, tag)
 

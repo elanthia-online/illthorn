@@ -51,7 +51,16 @@ ul {
   list-style-type: none;
 }
 
-.feed,
-.feed pre {
+pre {
   font-family: "MonoLisa", system-ui, sans-serif;
+}
+
+.feed,
+.feed > *,
+.stream,
+.stream > * {
+  font-family: "MonoLisa", system-ui, sans-serif;
+  white-space: pre-wrap;
+  line-height: 1.4;
+  word-break: break-word;
 }

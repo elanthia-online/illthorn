@@ -166,14 +166,17 @@ module.exports = class Session extends events.EventEmitter {
   send_command(cmd, id = "cli") {
     cmd = cmd.toString().trim()
     if (cmd.length == 0) return
-    const prompt =
-      document.querySelector("prompt.game") ||
-      document.createElement("prompt")
+    const prompt = this.feed.has_prompt()
+      ? this.feed.root.lastElementChild
+      : document.createElement("prompt")
     prompt.className = ""
     prompt.classList.add(id, "sent")
     prompt.innerText =
-      this.state.get("prompt.text", ">") + cmd
-    if (!prompt.parentNode) this.feed.append(prompt)
+      this.state.get("prompt.innerText", ">") + cmd
+    if (!prompt.parentNode) {
+      this.feed.append(prompt)
+    }
+
     this.sock.write(`${cmd}\r\n`)
     return this
   }

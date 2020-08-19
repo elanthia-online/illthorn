@@ -28,6 +28,7 @@ module.exports = class Streams {
     this._view = document.createElement("div")
     this._view.classList.add("streams", "scroll")
     this._settings = StreamsSettings
+    this._firstRun = true
   }
 
   get _scrolling() {
@@ -206,7 +207,10 @@ module.exports = class Streams {
     this._view.setAttribute("data-name", name)
     container.appendChild(this._view)
 
-    this.loadStreamMessages(name)
+    if (this._firstRun) {
+      this.loadStreamMessages(name)
+      this._firstRun = false
+    }
 
     this.advance_scroll()
   }

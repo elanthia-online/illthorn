@@ -139,7 +139,11 @@ module.exports = class Feed {
    */
   has_prompt() {
     if (this.root.children.length === 0) return false
-    return Feed.is_prompt(this.root.lastElementChild)
+    return (
+      this.root.lastElementChild &&
+      Feed.is_prompt(this.root.lastElementChild) &&
+      this.root.lastElementChild.className == "game"
+    )
   }
   /**
    * appends a single <pre> element to the HEAD
@@ -329,6 +333,7 @@ module.exports = class Feed {
     await this.ingestDocumentTextNodes(parsed.head)
     if (prompt) {
       prompt.classList.add("game")
+      SessionState.consume(this.session.state, prompt)
       this.append(prompt)
     }
     this.pruneIgnorableTags(parsed)

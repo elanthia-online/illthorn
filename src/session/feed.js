@@ -317,6 +317,8 @@ module.exports = class Feed {
   ]
 
   async ingestDocument(parsed) {
+    // prevent doubling of speech with internal `<pre>`
+    this.ingestState(parsed, ["stream.speech"])
     await this.ingestTagBySelector(parsed, "pre")
     this.ingestState(parsed, Feed.TOP_LEVEL_STATUS_TAGS)
     const prompts = Parser.pop(parsed, "prompt")

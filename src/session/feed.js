@@ -295,6 +295,7 @@ module.exports = class Feed {
     "deletecontainer",
     "inv",
     "stream.speech",
+    "streamwindow.inv",
     "clearstream.inv",
     "clearcontainer",
     "roundtime",

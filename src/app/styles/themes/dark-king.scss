@@ -119,7 +119,7 @@ body {
     transparent
   );
 }
-.feed .prompt {
+.feed prompt {
   visibility: hidden;
 }
 
@@ -265,7 +265,7 @@ li#vitals-stamina {
 #vitals-nextLvlPB {
   @include title("Experience");
 }
-#vitals-stance {
+#vitals-pbarStance {
   @include title("Stance");
 }
 

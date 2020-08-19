@@ -128,8 +128,6 @@ module.exports = class CLI {
   }
 
   view({ attrs }) {
-    // TODO: Probably move this roundtime stuff to it's own component
-
     const sess = Session.focused()
 
     const roundTime = Lens.get(

@@ -2,7 +2,7 @@
  * String highligting via :hilite 
  */
 
-.exist {
+a[exist] {
   color: var(--hilite-color, #a0a0a0);
 }
 
@@ -10,7 +10,9 @@
   // e.g. bigshot script output
   color: var(--hilite-color, #a0a0a0);
 }
-.monster {
+
+b,
+b a[exist] {
   color: var(--monster-color, var(--warn, #fb5d2d));
 }
 

@@ -3,8 +3,9 @@ const Session = require("../../../session")
 const Panel = require("./panel")
 const Lens = require("../../../util/lens")
 const Pipe = require("../../../util/pipe")
-const Progress = require("../progress")
-const Attrs = Lens.of("attrs")
+
+const attr = (ele, attr, fallback) =>
+  Lens.get(ele, `attributes.${attr}.value`, fallback)
 
 window.Injuries = module.exports = class Injuries {
   static list() {
@@ -18,7 +19,7 @@ window.Injuries = module.exports = class Injuries {
               "span.injury-name",
               injury.name + " / " + injury.type
             ),
-            m("span.invlue-severity", injury.severity),
+            m("span.injury-severity", injury.severity),
           ]
         )
       })
@@ -29,22 +30,22 @@ window.Injuries = module.exports = class Injuries {
     return Pipe.of(Session.current)
       .fmap(Lens.get, "state.injuries", {})
       .fmap(Object.values)
-      .data.map(Attrs.get)
+      .unwrap()
       .map((injury) =>
         Object.assign(
           {},
           {
-            area: injury.id,
-            type: injury.name
+            area: attr(injury, "id", injury.className),
+            type: attr(injury, "name", "")
               .replace(/\d+/, "")
               .toLowerCase(),
             severity: parseInt(
-              injury.name
+              attr(injury, "name", "")
                 .toLowerCase()
                 .replace(/^[a-z]+/, ""),
               10
             ),
-            name: injury.id
+            name: attr(injury, "id", injury.className)
               .replace(/([A-Z])/g, " $&")
               .toLowerCase(),
           }

@@ -112,15 +112,21 @@ body {
 .feed .roomDesc {
   margin: 0 0 1em 0;
   padding: 0.5em 1em;
-  opacity: 0.9;
+  opacity: 0.66;
   background: linear-gradient(
     to right,
     rgba($purple, 0.2),
     transparent
   );
 }
-.feed .prompt {
-  visibility: hidden;
+.feed {
+  .sent {
+    margin: 1.2em 0 0.5em -1em;
+    opacity: 0.75;
+  }
+  .prompt {
+    visibility: hidden;
+  }
 }
 
 .label {
@@ -265,7 +271,7 @@ li#vitals-stamina {
 #vitals-nextLvlPB {
   @include title("Experience");
 }
-#vitals-stance {
+#vitals-pbarStance {
   @include title("Stance");
 }
 
@@ -330,9 +336,6 @@ li#vitals-stamina {
 // Highlighting
 [exist] {
   color: #a7a7a7;
-}
-b [exist] {
-  color: $orange;
 }
 
 @each $direction in $directions {

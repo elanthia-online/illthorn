@@ -9,7 +9,9 @@ const Settings = require("./settings")
 
 window.messages = window.messages || []
 
-const theme = Settings.get("theme")
+let theme = Settings.get("theme")
+// TODO: Validate theme name
+if (!theme) theme = "original"
 
 theme && Theme.changeTheme({ theme }).then(() => {})
 

@@ -95,9 +95,6 @@ body {
     );
     height: 20px;
   }
-  pre {
-    line-height: 1.6;
-  }
 }
 .feed .roomName {
   margin: 1em 0 0 0;
@@ -120,11 +117,11 @@ body {
   );
 }
 .feed {
-  .sent {
-    margin: 1.2em 0 0.5em -1em;
+  prompt.sent {
+    padding: 1.2em 0 0.5em -1em;
     opacity: 0.75;
   }
-  .prompt {
+  prompt.game {
     visibility: hidden;
   }
 }

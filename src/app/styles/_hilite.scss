@@ -2,12 +2,8 @@
  * String highligting via :hilite 
  */
 
-a[exist] {
-  color: var(--hilite-color, #a0a0a0);
-}
-
+a[exist],
 .b {
-  // e.g. bigshot script output
   color: var(--hilite-color, #a0a0a0);
 }
 

@@ -66,11 +66,14 @@ module.exports = class SessionState {
     const id = tag.id || tag.className || ""
     const tagName = (tag.tagName || "").toLowerCase()
     if (id in SessionState.INJURY_IDS)
-      return state.put("injuries." + id, tag)
+      return state.put(
+        "injuries." + id,
+        tag.cloneNode(true)
+      )
     if (id in SessionState.ID_TAGS)
-      return state.put(id, tag)
+      return state.put(id, tag.cloneNode(true))
     if (tagName in SessionState.TAGS)
-      return state.put(tagName, tag)
+      return state.put(tagName, tag.cloneNode(true))
 
     if (tagName in SessionState.TIMERS) {
       return state.spawn_timer({
@@ -80,7 +83,7 @@ module.exports = class SessionState {
     }
 
     ~[].forEach.call(tag.childNodes, (node) =>
-      SessionState.consume(state, node)
+      SessionState.consume(state, node.cloneNode(true))
     )
   }
 

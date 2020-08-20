@@ -3,11 +3,13 @@ const Session = require("../../../session")
 const Lens = require("../../../util/lens")
 const Progress = require("../progress")
 const Panel = require("./panel")
-const Attrs = Lens.of("attrs")
-const Stance = require("./stance")
+const pp = require("debug")("illthorn:vitals")
 
 const span = (text, klass = "") =>
   m(`span.${klass}`, (text || "").toString().toLowerCase())
+
+const attr = (ele, attr, fallback) =>
+  Lens.get(ele, `attributes.${attr}.value`, fallback)
 
 module.exports = class Vitals {
   // https://rubular.com/r/ydjHinB5kdvw8l
@@ -21,6 +23,7 @@ module.exports = class Vitals {
     "encumlevel",
     "mindState",
     "nextLvlPB",
+    "pbarStance",
   ]
 
   static ID_TO_UI = {
@@ -28,65 +31,56 @@ module.exports = class Vitals {
     mindState: "mind",
     nextLevelPB: "exp",
     nextLvlPB: "exp",
+    pbarstance: "stance",
   }
 
-  static parse(attrs) {
-    const percent = attrs.width
-      ? parseInt(attrs.value, 10)
-      : Progress.parse_percentage({
-          text: attrs.text,
-          attrs,
-        })
+  static parse(ele) {
+    const text = attr(ele, "text", attr(ele, "id"))
+    const [_0, title, value, max] =
+      text.match(Vitals.PATTERN) || []
 
-    if (attrs.id == "nextLvlPB") {
-      return {
-        id: attrs.id,
-        text: [
-          attrs.text
-            .split("\n")
-            .shift()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-        ],
-        percent,
-      }
+    const parsed = {
+      id: attr(ele, "id"),
+      max: parseInt(max || "100", 10),
+      value: parseInt(value || attr(ele, "value", "0"), 10),
+      text: text,
+      title: (title || text).replace(/\s\(\d+\%\)/, ""),
     }
 
-    let text = attrs.text
-    let max = 0
+    pp("%s -> %o -> %o", parsed.id, ele, parsed)
 
-    // e.g. health 170/170
-    if (text.match(Vitals.PATTERN)) {
-      text = Array.from(
-        attrs.text.match(Vitals.PATTERN)
-      ).slice(1, 3)
-      max = Array.from(attrs.text.match(Vitals.PATTERN))[3]
-    }
-    // turns into ["health", "170"]
-
-    if (!Array.isArray(text)) {
-      text = [
-        Vitals.ID_TO_UI[attrs.id] ? attrs.text : "",
-        percent.toString(),
-      ]
+    if (parsed.id == "nextLvlPB") {
+      const exp = (parsed.title.match(/(\d+)/) || [])[1]
+      parsed.value = exp
+      parsed.title = parsed.title.replace(exp, "").trim()
     }
 
-    return { percent, text, max, id: attrs.id }
+    if (typeof parsed.value == "number") {
+      parsed.percent = Math.round(
+        (Math.max(parsed.value, 0) / parsed.max) * 100
+      )
+      return Vitals.classify(parsed)
+    }
+    return {}
+  }
+
+  static classify(vital) {
+    return Object.assign(vital, {
+      threshold: (vital.threshold =
+        vital.id == "encumlevel" || vital.id == "mindState"
+          ? Progress.classify_down(vital.percent)
+          : Progress.classify(vital.percent)),
+    })
   }
 
   static show(attrs) {
-    const bar_klass =
-      attrs.id == "encumlevel" || attrs.id == "mindState"
-        ? Progress.classify_down(attrs.percent)
-        : Progress.classify(attrs.percent)
-
-    const [text, value] = attrs.text
-
     return m(
-      `li#vitals-${attrs.id}.${bar_klass}.vital`,
+      `li#vitals-${attrs.id}.${attrs.threshold}.vital`,
       { key: attrs.id },
       [
-        text && span(text, ".label"),
-        value && m("span.value", value),
+        attrs.title !== "" && span(attrs.title, ".label"),
+        attrs.value !== "" &&
+          span(attrs.value.toString(), ".value"),
         isNaN(attrs.max)
           ? void 0
           : m("span.max", attrs.max),
@@ -101,15 +95,13 @@ module.exports = class Vitals {
         `ol.vitals.panel-list`,
         state
           .by_name("progressbar")
-          .map(Attrs.get)
           .sort(
             (a, b) =>
-              Vitals.SORT_ORDER.indexOf(a.id) -
-              Vitals.SORT_ORDER.indexOf(b.id)
+              Vitals.SORT_ORDER.indexOf(attr(a, "id")) -
+              Vitals.SORT_ORDER.indexOf(attr(b, "id"))
           )
           .map(Vitals.parse)
           .map(Vitals.show)
-          .concat(m(Stance))
       )
     )
   }
@@ -118,7 +110,7 @@ module.exports = class Vitals {
     return m(
       Panel,
       { id: "vitals", title: "vitals" },
-      Vitals.bars(Lens.get(Session.focused(), "state"))
+      Vitals.bars(Lens.get(Session.current, "state"))
     )
   }
 }

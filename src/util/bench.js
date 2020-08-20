@@ -1,11 +1,6 @@
-exports.async_task = async function (label, code) {
+exports.mark = async function (label, code) {
   console.time(label)
-  await code()
+  const value = await code()
   console.timeEnd(label)
-}
-
-exports.task = exports.mark = function (label, code) {
-  console.time(label)
-  code()
-  console.timeEnd(label)
+  return value
 }

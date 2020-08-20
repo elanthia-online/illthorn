@@ -1,12 +1,13 @@
 const events = require("events")
+const m = require("mithril")
+const net = require("net")
+const Parser = require("../parser")
 const State = require("./state")
 const Feed = require("./feed")
 const Streams = require("./streams")
 const Bus = require("../bus")
 const History = require("./command-history")
-const { shell } = require("electron")
-const path = require("path")
-const m = require("mithril")
+const IO = require("../util/io")
 
 module.exports = class Session extends events.EventEmitter {
   static Sessions = new Map()
@@ -68,7 +69,6 @@ module.exports = class Session extends events.EventEmitter {
 
   static async of(opts) {
     const char = new Session(opts)
-    await char.connect()
     char.rename(char.name || char.port)
     return char
   }
@@ -94,48 +94,23 @@ module.exports = class Session extends events.EventEmitter {
     this.feed = Feed.of({ session: this })
     this.streams = Streams.of({ session: this })
     this.state = State.of(this)
-    this.worker = new Worker(
-      path.resolve(__dirname, "worker.js")
-    )
-    this.worker.onerror = (err) =>
-      Bus.emit(Bus.events.ERR, err)
-    this.worker.onmessage = ({ data }) => {
-      if (data.topic == "CLOSE") return this.close()
-      if (data.topic == "OPEN") {
-        // console.log(data)
-        return shell.openExternal(data.link)
-      }
-      if (data.topic)
-        return this.emit(data.topic, data.gram)
-      console.warn(
-        "Message(%o) was passed without a topic",
-        data
-      )
-    }
+    this.sock = net.connect({ port })
+    this.sock.on("data", (data) => this.parse(data))
+    this.sock.on("error", (err) => this.emit("error", err))
+    this.sock.on("close", (_) => this.close())
+    // buffer for incoming game lines
+    this.buffer = ""
+    this.io = IO(this.buffer)
+  }
 
-    this.on("TAG", (tag) => {
-      this.handle_tag(tag)
-      m.redraw()
+  async parse(string) {
+    await this.io.fmap(async () => {
+      const {
+        pending: _pending,
+        parsed,
+      } = await Parser.parse(this, string)
+      if (parsed) await this.feed.ingestDocument(parsed)
     })
-  }
-
-  handle_tag(tag) {
-    //if (this.has_focus()) console.log("tag:%o", tag)
-    // broadcast individual tags
-    this.emit(tag.name, tag)
-    // route streams
-    if (
-      tag.name == "stream" &&
-      this.streams.wants(tag.id)
-    ) {
-      return this.streams.insert(tag)
-    }
-    // route main feed
-    this.feed.add(tag)
-  }
-
-  get pending() {
-    return !this.worker
   }
 
   close() {
@@ -152,14 +127,11 @@ module.exports = class Session extends events.EventEmitter {
     Session.delete(this.name)
     this.quit()
     this.feed.destroy()
-    this.feed = this.worker = this.state = void 0
+    this.feed = this.state = void 0
     Bus.emit(Bus.events.REDRAW)
   }
 
-  quit() {
-    this.worker && this.worker.terminate()
-    this.worker = void 0
-  }
+  quit() {}
 
   has_focus() {
     return this.feed.has_focus()
@@ -191,31 +163,21 @@ module.exports = class Session extends events.EventEmitter {
     Bus.emit(Bus.events.REDRAW)
   }
 
-  async connect() {
-    this.worker.postMessage({
-      topic: "CONNECT",
-      port: this.port,
-    })
-  }
-
   send_command(cmd, id = "cli") {
     cmd = cmd.toString().trim()
     if (cmd.length == 0) return
+    const prompt = this.feed.has_prompt()
+      ? this.feed.root.lastElementChild
+      : document.createElement("prompt")
+    prompt.className = ""
+    prompt.classList.add(id, "sent")
+    prompt.innerText =
+      this.state.get("prompt.innerText", ">") + cmd
+    if (!prompt.parentNode) {
+      this.feed.append(prompt)
+    }
 
-    const prompt = this.worker ? ">" : "closed>"
-
-    this.emit("TAG", {
-      id,
-      name: "sent",
-      text: this.state.get("prompt.text", prompt) + cmd,
-    })
-
-    this.worker &&
-      this.worker.postMessage({
-        topic: "COMMAND",
-        command: cmd,
-      })
-
+    this.sock.write(`${cmd}\r\n`)
     return this
   }
 }

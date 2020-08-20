@@ -313,6 +313,7 @@ module.exports = class Feed {
     const prompts = Parser.pop(parsed, "prompt")
     const prompt =
       prompts.length && prompts[prompts.length - 1]
+    if (prompt) prompt.remove()
     // prevent doubling of speech with internal `<pre>`
     this.ingestState(parsed, ["stream.speech"])
     await this.ingestTagBySelector(parsed, "pre")

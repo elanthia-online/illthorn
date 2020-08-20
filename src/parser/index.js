@@ -20,9 +20,12 @@ exports.parse = async function (session, incoming) {
   )
   // indicators can contain text
   exports.map(doc, "indicator", (indicator) => {
+    const prompt = indicator.querySelector("prompt")
+    prompt && prompt.remove()
     const text = indicator.innerText.slice(0)
     if (text.length == 0) return
     indicator.innerHTML = pre(text)
+    prompt && indicator.append(prompt)
   })
   // familiar streams are garbo and need to be compressed
   flatten_familiars(doc.querySelectorAll(".familiar"))

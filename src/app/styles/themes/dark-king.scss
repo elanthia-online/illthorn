@@ -18,7 +18,7 @@ $red: #d64e4e;
 
   --icon-size: 1.4em;
   --border-width: 2px;
-  --border-color: #570275;
+  --border-color: #2f2733;
   --base-font-size: 15px;
   --stream-font-size: 12px;
 
@@ -77,9 +77,9 @@ body {
   margin: 0 0 0.5em 0;
 }
 
-// Feed
-#feed-wrapper {
-  padding: 0 0 0 1em;
+#feed-wrapper,
+#streams-wrapper {
+  position: relative;
   // under-shadow
   &::before {
     content: "";
@@ -90,11 +90,16 @@ body {
     width: 100%;
     background: linear-gradient(
       to bottom,
-      rgba(black, 1),
+      rgba(black, 0.75),
       rgba(black, 0)
     );
-    height: 20px;
+    height: 2em;
   }
+}
+
+// Feed
+#feed-wrapper {
+  padding: 0 0 0 1em;
 }
 .feed .roomName {
   margin: 1em 0 0 0;
@@ -118,7 +123,7 @@ body {
 }
 .feed {
   prompt.sent {
-    padding: 1.2em 0 0.5em -1em;
+    margin-left: -1em;
     opacity: 0.75;
   }
   prompt.game {

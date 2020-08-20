@@ -128,7 +128,7 @@ module.exports = class Streams {
       "stream"
     )
     pre.innerHTML = `<span>^ Loaded from Storage ^ </span>`
-    this._view.append(pre)
+    return this._view.append(pre)
   }
 
   transformStreamMessage(text) {
@@ -183,7 +183,7 @@ module.exports = class Streams {
     )
   }
 
-  redraw(view) {
+  async redraw(view) {
     const container = document.querySelector(
       "#streams-wrapper"
     )
@@ -213,7 +213,7 @@ module.exports = class Streams {
     container.appendChild(this._view)
 
     if (this._firstRun) {
-      this.loadStreamMessages(name)
+      await this.loadStreamMessages(name)
       this._firstRun = false
     }
 

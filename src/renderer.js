@@ -75,6 +75,19 @@ document.addEventListener(
   UI.CLI.autocomplete_right
 )
 
+document.addEventListener("click", (e) => {
+  const target = e.target
+  if (!target || target.tagName !== "D") return
+  const cmd = target.getAttribute("cmd")
+  if (
+    cmd &&
+    Session.current &&
+    Settings.get("clickable", false)
+  ) {
+    Session.current.send_command(cmd, "click")
+  }
+})
+
 Autodect.connect_all().catch((err) =>
   Bus.emit(Bus.events.ERR, err)
 )

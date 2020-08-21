@@ -180,6 +180,7 @@ pre {
 }
 
 // Stance
+// TODO: These classes like "offensive" are missing now, can we bring them back?
 #hud .panel li#vitals-pbarStance.vital {
   margin-bottom: 0px;
   &.low {
@@ -401,6 +402,7 @@ details.panel summary {
 .feed .roomDesc {
   padding: 0.5rem;
 }
+
 a[noun] {
   color: #81a1c1;
 }
@@ -430,7 +432,6 @@ pre.thoughts.stream {
     color: adjust-hue(#a3be8c, -15);
   }
 }
-$start: 0;
 @each $direction in $directions {
   a[noun="#{$direction}"] {
     color: #8fbcbb;

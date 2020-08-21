@@ -12,6 +12,11 @@
   height: 100%;
   padding: 0 1em;
 }
+
+.streams mark {
+  background: transparent;
+}
+
 .streams pre {
   margin: 0.2em 0;
 }
@@ -33,7 +38,8 @@
   color: white;
 }
 
-.loaded-from-storage-message {
+pre.loaded-from-storage-message {
   opacity: 0.5;
+  margin: 1.5em 0;
   text-align: center;
 }

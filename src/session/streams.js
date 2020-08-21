@@ -1,6 +1,7 @@
 const StreamsSettings = require("../settings").of("streams")
 const Lens = require("../util/lens")
 const Storage = require("../storage")
+const Feed = require("./feed")
 
 module.exports = class Streams {
   // this class on the top-level application element
@@ -59,20 +60,20 @@ module.exports = class Streams {
    *
    * @param {string} stream_name
    */
-  insert(tag) {
+  async insert(tag) {
     const was_scrolling = this._scrolling
     const name = this._view.getAttribute("data-name")
     if (name) {
       this.storeStreamMessage(tag.textContent, name)
     }
-    const el = this.createEl(tag)
+    const el = await this.createEl(tag)
     this._view.append(el)
 
     // scroll the feed to the HEAD position
     if (!was_scrolling) this.advance_scroll()
   }
 
-  createEl(tag) {
+  async createEl(tag) {
     const tagName = (tag.tagName || "").toLowerCase()
     const pre = document.createElement("pre")
     pre.classList.add(tag.className, tagName)
@@ -80,6 +81,8 @@ module.exports = class Streams {
       tag.textContent
     )
     parts.forEach((ele) => pre.append(ele))
+    Feed.prototype.addLinks.call(this, pre)
+    Feed.prototype.addHilites.call(this, pre)
     return pre
   }
 
@@ -110,20 +113,22 @@ module.exports = class Streams {
   async loadStreamMessages(name) {
     const thoughts = Storage.get(`thoughts-${name}`)
     if (!thoughts) return
-    thoughts.forEach((text) => {
-      const decoded = document.createElement("stream")
-      decoded.classList.add("thoughts")
-      decoded.textContent = text
-      const el = this.createEl(decoded)
-      this._view.append(el)
-    })
+    await Promise.all(
+      thoughts.map(async (text) => {
+        const decoded = document.createElement("stream")
+        decoded.classList.add("thoughts")
+        decoded.textContent = text
+        const el = await this.createEl(decoded)
+        this._view.append(el)
+      })
+    )
     const pre = document.createElement("pre")
     pre.classList.add(
       "loaded-from-storage-message",
       "stream"
     )
     pre.innerHTML = `<span>^ Loaded from Storage ^ </span>`
-    this._view.append(pre)
+    return this._view.append(pre)
   }
 
   transformStreamMessage(text) {
@@ -178,7 +183,7 @@ module.exports = class Streams {
     )
   }
 
-  redraw(view) {
+  async redraw(view) {
     const container = document.querySelector(
       "#streams-wrapper"
     )
@@ -208,7 +213,7 @@ module.exports = class Streams {
     container.appendChild(this._view)
 
     if (this._firstRun) {
-      this.loadStreamMessages(name)
+      await this.loadStreamMessages(name)
       this._firstRun = false
     }
 

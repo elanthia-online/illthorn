@@ -11,6 +11,8 @@ exports.parse = async function (session, incoming) {
     return { buffered: 1 }
 
   pp.raw(session.buffer)
+  // https://github.com/elanthia-online/illthorn/issues/113
+  trimLineBreaks(session.buffer)
   const string = normalize(session.buffer)
   const doc = parser.parseFromString(
     string.trimEnd(),
@@ -18,9 +20,12 @@ exports.parse = async function (session, incoming) {
   )
   // indicators can contain text
   exports.map(doc, "indicator", (indicator) => {
+    const prompt = indicator.querySelector("prompt")
+    prompt && prompt.remove()
     const text = indicator.innerText.slice(0)
     if (text.length == 0) return
     indicator.innerHTML = pre(text)
+    prompt && indicator.append(prompt)
   })
   // familiar streams are garbo and need to be compressed
   flatten_familiars(doc.querySelectorAll(".familiar"))
@@ -51,6 +56,14 @@ function isDanglingStream(buffered) {
     (buffered.match(/<popStream/) || []).length
   )
 }
+
+function trimLineBreaks(string) {
+  return string
+    .replace(/^(\r|\n)/g, "")
+    .replace(/(\r|\n)$/g, "")
+}
+
+exports.trimLineBreaks = trimLineBreaks
 
 function pre(string) {
   return `<pre>${string}</pre>`

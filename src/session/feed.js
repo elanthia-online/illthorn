@@ -139,7 +139,11 @@ module.exports = class Feed {
    */
   has_prompt() {
     if (this.root.children.length === 0) return false
-    return Feed.is_prompt(this.root.lastElementChild)
+    return (
+      this.root.lastElementChild &&
+      Feed.is_prompt(this.root.lastElementChild) &&
+      this.root.lastElementChild.className == "game"
+    )
   }
   /**
    * appends a single <pre> element to the HEAD
@@ -200,9 +204,7 @@ module.exports = class Feed {
       return ele.remove()
     if (body.contains(ele)) return
     // clean up whitespace
-    if (ele.lastChild) {
-      ele.lastChild.textContent = ele.lastChild.textContent.trimEnd()
-    }
+    ele.innerHTML = Parser.trimLineBreaks(ele.innerHTML)
     await this.addLinks(ele)
     await this.addHilites(ele)
     this.append(ele)
@@ -284,19 +286,18 @@ module.exports = class Feed {
     "deletecontainer",
     "inv",
     "stream.speech",
-    "streamwindow.inv",
-    "clearstream.inv",
+    "streamwindow#inv",
     "clearcontainer",
+    "stream#inv",
+    "clearstream stream",
   ]
 
   static LOOSELY_NESTED_TAGS = [
     "streamwindow",
     "resource",
     "nav",
-    "stream#room",
-    "stream#inv",
+    "stream.room",
     "stream.familiar",
-    "clearstream",
     "indicator",
   ]
 
@@ -305,20 +306,22 @@ module.exports = class Feed {
     "container",
     "exposecontainer",
     "roundtime",
+    "clearstream",
   ]
 
   async ingestDocument(parsed) {
     const prompts = Parser.pop(parsed, "prompt")
     const prompt =
       prompts.length && prompts[prompts.length - 1]
+    if (prompt) prompt.remove()
     // prevent doubling of speech with internal `<pre>`
     this.ingestState(parsed, ["stream.speech"])
     await this.ingestTagBySelector(parsed, "pre")
     this.ingestState(parsed, Feed.TOP_LEVEL_STATUS_TAGS)
-
     // order of operations is (somewhat) important here!
     await this.ingestStreams(parsed)
     await this.ingestTagBySelector(parsed, "mono")
+
     await this.ingestTextAndMetadata(
       parsed,
       Feed.TEXT_AND_METADATA_TAGS
@@ -327,7 +330,11 @@ module.exports = class Feed {
     // <dialogdata></dialogdata>Atone just arrived!
     await this.ingestDocumentTextNodes(parsed.body)
     await this.ingestDocumentTextNodes(parsed.head)
-    if (prompt) this.append(prompt)
+    if (prompt) {
+      prompt.classList.add("game")
+      SessionState.consume(this.session.state, prompt)
+      this.append(prompt)
+    }
     this.pruneIgnorableTags(parsed)
     // make sure we handled all state tags that might
     // also contain renderable text

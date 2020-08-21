@@ -79,9 +79,9 @@ button.ui-help-button:hover {
 .cast-time-current {
   background: linear-gradient(to right, #008a83, #03b9cc);
 }
+// TODO: This is a cool idea for a tick-by-second timer that still animates the segments: https://codepen.io/berky93/pen/yLOazVv
 @keyframes roundtime {
   to {
-    /* TODO: Width isn't the most performant thing to animate. Could switch to a transform that moves the bar to hidden overflow or something. */
-    width: 0;
+    transform: scaleX(0);
   }
 }

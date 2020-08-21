@@ -57,10 +57,11 @@ pre {
 
 .feed,
 .feed > *,
-.stream,
-.stream > * {
+.stream {
+  display: block;
   font-family: "MonoLisa", system-ui, sans-serif;
   white-space: pre-wrap;
-  line-height: 1.4;
+  line-height: 1.6;
   word-break: break-word;
+  margin: 0;
 }

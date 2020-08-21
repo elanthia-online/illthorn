@@ -5,14 +5,7 @@
   // Force onto GPU for best rendering
   transform: translate3d(0, 0, 0);
 }
-.feed pre {
-  margin: 0;
-  line-height: 1.4;
-}
+
 .feed mark {
   background-color: transparent;
-}
-// all top-level elements
-.feed > * {
-  display: block; // should be blocks
 }

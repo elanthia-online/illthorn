@@ -9,7 +9,9 @@ const Settings = require("./settings")
 
 window.messages = window.messages || []
 
-const theme = Settings.get("theme")
+let theme = Settings.get("theme")
+// TODO: Validate theme name
+if (!theme) theme = "original"
 
 theme && Theme.changeTheme({ theme }).then(() => {})
 
@@ -74,6 +76,19 @@ document.addEventListener(
   "autocomplete/right",
   UI.CLI.autocomplete_right
 )
+
+document.addEventListener("click", (e) => {
+  const target = e.target
+  if (!target || target.tagName !== "D") return
+  const cmd = target.getAttribute("cmd")
+  if (
+    cmd &&
+    Session.current &&
+    Settings.get("clickable", false)
+  ) {
+    Session.current.send_command(cmd, "click")
+  }
+})
 
 Autodect.connect_all().catch((err) =>
   Bus.emit(Bus.events.ERR, err)

@@ -2,12 +2,8 @@
  * String highligting via :hilite 
  */
 
-a[exist] {
-  color: var(--hilite-color, #a0a0a0);
-}
-
+a[exist],
 .b {
-  // e.g. bigshot script output
   color: var(--hilite-color, #a0a0a0);
 }
 
@@ -30,8 +26,13 @@ b a[exist] {
   cursor: pointer;
   color: var(--link-color, #27a4fd);
 }
-.clickable .d {
+
+.clickable d[cmd] {
   border-bottom: 2px solid var(--link-color, #27a4fd);
+}
+
+.clickable d[cmd]:hover {
+  cursor: pointer;
 }
 
 .macro {

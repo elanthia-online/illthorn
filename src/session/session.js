@@ -1,5 +1,4 @@
 const events = require("events")
-const m = require("mithril")
 const net = require("net")
 const Parser = require("../parser")
 const State = require("./state")
@@ -8,6 +7,7 @@ const Streams = require("./streams")
 const Bus = require("../bus")
 const History = require("./command-history")
 const IO = require("../util/io")
+const SessionState = require("./state")
 
 module.exports = class Session extends events.EventEmitter {
   static Sessions = new Map()
@@ -91,6 +91,9 @@ module.exports = class Session extends events.EventEmitter {
     this.sock = void 0
     this.history = History.of()
     this.name = name || port
+    this.log = require("debug")(
+      "illthorn:session:" + this.name
+    )
     this.feed = Feed.of({ session: this })
     this.streams = Streams.of({ session: this })
     this.state = State.of(this)
@@ -104,23 +107,37 @@ module.exports = class Session extends events.EventEmitter {
   }
 
   async parse(string) {
+    const t0 = performance.now()
     await this.io.fmap(async () => {
-      const {
-        pending: _pending,
-        parsed,
-      } = await Parser.parse(this, string)
-      if (parsed) await this.feed.ingestDocument(parsed)
+      const { parsed } = await Parser.parse(this, string)
+      if (parsed) {
+        this.feed.ingest(parsed.text, parsed.prompt)
+        ~[...parsed.metadata.childNodes].forEach(
+          (update) => {
+            SessionState.consume(this.state, update)
+          }
+        )
+      }
     })
+    const t1 = performance.now()
+    this.log(
+      `parsed ${string.length} characters in ${Math.round(
+        (t1 - t0) * 1000
+      )}μs`
+    )
   }
 
   close() {
     this.quit()
     if (!this.feed) return
     const pre = document.createElement("pre")
-    pre.innerText = "\n*** Connection Closed ***\n"
+    pre.classList.add("session-closed")
+    pre.innerText = `\n*** ${this.name} / Connection Closed ***`
     const frag = document.createDocumentFragment()
     frag.appendChild(pre)
     this.feed.append(frag)
+    Session.Sessions.delete(this.name)
+    Bus.emit(Bus.events.REDRAW)
   }
 
   destroy() {

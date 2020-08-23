@@ -1,7 +1,16 @@
+const Mark = require("mark.js")
+const linkifyElement = require("linkifyjs/element")
+
+const Lookup = require("../util/lookup")
+const Hilites = require("../hilites")
+const Url = require("../util/url")
+const IO = require("../util/io")
+
 const parser = new DOMParser()
 const pp = {
   parsed: require("debug")("illthorn:parser:parsed"),
   raw: require("debug")("illthorn:parser:raw"),
+  node: require("debug")("illthorn:parser:sort"),
 }
 
 exports.parse = async function (session, incoming) {
@@ -12,41 +21,28 @@ exports.parse = async function (session, incoming) {
 
   pp.raw(session.buffer)
   // https://github.com/elanthia-online/illthorn/issues/113
-  trimLineBreaks(session.buffer)
   const string = normalize(session.buffer)
   const doc = parser.parseFromString(
     string.trimEnd(),
     "text/html"
   )
-  // indicators can contain text
-  exports.map(doc, "indicator", (indicator) => {
-    const prompt = indicator.querySelector("prompt")
-    prompt && prompt.remove()
-    const text = indicator.innerText.slice(0)
-    if (text.length == 0) return
-    indicator.innerHTML = pre(text)
-    prompt && indicator.append(prompt)
-  })
-  // familiar streams are garbo and need to be compressed
-  flatten_familiars(doc.querySelectorAll(".familiar"))
+
+  merge(doc.head, doc.body)
 
   pp.parsed(doc.body.innerHTML)
+
+  const parsed = sortByNodeType(doc.body)
+
+  await addHilites(parsed.text)
+  // linkify doesn't work on documentfragment, ugh
+  await Promise.all(
+    [...parsed.text.childNodes].map((child) =>
+      addLinks(child)
+    )
+  )
   // clear the buffer
   session.buffer = ""
-  return { parsed: doc }
-}
-
-function flatten_familiars(familiars, root) {
-  familiars = [].slice.call(familiars)
-  if (familiars.length == 0) return
-  if (!root) root = familiars.shift()
-  familiars.forEach((ele) => {
-    if (ele.className !== "familiar") {
-      return root.append(ele)
-    }
-    ele.remove()
-    return flatten_familiars(ele.childNodes, root)
-  })
+  return { parsed }
 }
 
 function isDanglingStream(buffered) {
@@ -57,17 +53,243 @@ function isDanglingStream(buffered) {
   )
 }
 
-function trimLineBreaks(string) {
-  return string
-    .replace(/^(\r|\n)/g, "")
-    .replace(/(\r|\n)$/g, "")
+const merge = (left, right) => {
+  right.append(...left.childNodes)
+  return right
 }
 
-exports.trimLineBreaks = trimLineBreaks
+const TOP_LEVEL_STATUS_TAGS_WITH_TEXT = (exports.TOP_LEVEL_STATUS_TAGS_WITH_TEXT = Lookup(
+  ["right", "left", "spell"]
+))
 
-function pre(string) {
-  return `<pre>${string}</pre>`
+const TOP_LEVEL_STATUS_TAGS = (exports.TOP_LEVEL_STATUS_TAGS = Lookup(
+  [
+    "compass",
+    "img",
+    "dialogdata",
+    "nav",
+    "#inv",
+    "progressbar",
+    "compdef",
+    "switchquickbar",
+    "dropdownbox",
+    "opendialog",
+    "component",
+    "deletecontainer",
+    "inv",
+    "streamwindow",
+    "clearcontainer",
+    "clearstream",
+    "roundtime",
+    "casttime",
+  ]
+))
+
+const match_any = (node, selectors) =>
+  typeof node.matches == "function" &&
+  selectors.find((selector) => node.matches(selector))
+
+const is_status_tag = (node) =>
+  match_any(node, Object.keys(TOP_LEVEL_STATUS_TAGS))
+
+const is_status_with_text = (node) =>
+  match_any(
+    node,
+    Object.keys(TOP_LEVEL_STATUS_TAGS_WITH_TEXT)
+  )
+
+const is_text_node = (node) =>
+  node.nodeType == Node.TEXT_NODE ||
+  node.tagName == "PRE" ||
+  node.tagName == "PROMPT" ||
+  (node.tagName || "").length == 1 ||
+  (node.matches && node.matches("stream.thoughts"))
+
+const is_skippable_text = (node) =>
+  node.parentNode &&
+  node.nodeType == Node.TEXT_NODE &&
+  (is_status_with_text(node.parentNode) ||
+    is_status_tag(node.parentNode))
+
+const is_nested_text = (node) =>
+  node.parentNode && is_text_node(node.parentNode)
+
+const already_will_render = (parsed, node) =>
+  parsed.text.contains(node)
+
+const flatTree = (ele) => {
+  const treeWalker = document.createTreeWalker(
+    ele,
+    NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT,
+    { acceptNode: (_) => NodeFilter.FILTER_ACCEPT },
+    false
+  )
+
+  const nodes = []
+
+  let currentNode = treeWalker.currentNode
+  while (currentNode) {
+    currentNode = treeWalker.nextNode()
+    if (!currentNode) return nodes
+    nodes.push(currentNode)
+  }
 }
+
+function pruneLastRecursiveNode(ele) {
+  if (ele.lastChild)
+    return pruneLastRecursiveNode(ele.lastChild)
+  ele.innerText
+    ? (ele.innerText = ele.innerText.trimEnd())
+    : (ele.textContent = ele.textContent.trimEnd())
+  return ele
+}
+
+function sortByNodeType(ele) {
+  const nodes = flatTree(ele)
+
+  const parsed = {
+    metadata: document.createDocumentFragment(),
+    text: document.createDocumentFragment(),
+    prompt: void 0,
+  }
+  // first pass prunes and flattens oddly nested elements
+  // example:
+  // <pre><pre>content</pre>some other content</pre>
+  const writes = []
+  for (const node of nodes) {
+    if (is_status_tag(node)) node.remove()
+    if (is_status_with_text(node)) node.remove()
+    if (node.tagName == "PROMPT") {
+      node.remove()
+      node.classList.add("game")
+      parsed.prompt = node
+      continue
+    }
+    // always lift
+    if (node.tagName == "PRE") {
+      node.remove()
+    }
+    if (node.tagName == "CASTTIME") {
+      const pre = document.createElement("pre")
+      pre.append(...node.childNodes)
+      writes.push([node, pre])
+    }
+  }
+  // todo: https://github.com/elanthia-online/illthorn/issues/118
+  for (const [before, write] of writes) {
+    const position = nodes.indexOf(before)
+    ~position && nodes.splice(position, 0, write)
+  }
+
+  for (const node of nodes) {
+    if (!node.tagName && node.textContent.trimEnd() == "") {
+      continue
+    }
+
+    if (node.tagName == "PROMPT") {
+      continue
+    }
+
+    if (is_nested_text(node)) {
+      continue // <a>#text</a>
+    }
+
+    if (is_skippable_text(node)) {
+      //pp.node(node, "skippable-text")
+      continue // <right>#text</right>
+    }
+
+    if (already_will_render(parsed, node)) {
+      continue
+    }
+
+    if (parsed.metadata.contains(node)) {
+      continue
+    }
+
+    if (is_status_tag(node) || is_status_with_text(node)) {
+      pp.node(
+        `:metadata`,
+        node.parentElement
+          ? "parent=" + inspect(node.parentElement)
+          : "",
+        inspect(node),
+        node.innerHTML || node.textContent
+      )
+      node.remove()
+      parsed.metadata.append(node)
+      continue
+    }
+
+    if (is_text_node(node)) {
+      pp.node(
+        `:text`,
+        node.parentElement
+          ? "parent=" + inspect(node.parentElement)
+          : "",
+        inspect(node),
+        node.innerHTML || node.textContent
+      )
+      node.remove()
+      parsed.text.append(node)
+      continue
+    }
+  }
+
+  const renderableNodes = [...parsed.text.childNodes]
+
+  /* 
+    handle top-level text elements that should be collapsed into a <pre>
+    example:
+      #fragment    ->    #fragment
+        #text              pre
+        a.exist             #text
+        #text               a.exist
+                            #text
+  */
+  if (
+    renderableNodes.find((node) => node.tagName !== "pre")
+  ) {
+    let wrapper = document.createElement("pre")
+    renderableNodes.forEach((child) => {
+      // insert them correctly in the document stream
+      if (child.tagName == "PRE") {
+        if (wrapper.hasChildNodes()) {
+          parsed.text.insertBefore(wrapper, child)
+          wrapper = document.createElement("pre")
+        }
+        return void 0
+      }
+      // collect them onto a block element
+      child.remove()
+      if (child.textContent.trim().length)
+        wrapper.append(child)
+    })
+
+    if (
+      wrapper.hasChildNodes() &&
+      !parsed.text.contains(wrapper)
+    ) {
+      parsed.text.append(wrapper)
+    }
+  }
+
+  pruneLastRecursiveNode(parsed.text)
+
+  return parsed
+}
+
+exports.map = (root, selector, cb) =>
+  [].map.call(root.querySelectorAll(selector), (ele) =>
+    cb(ele)
+  )
+
+exports.each = (nodelist, cb) => {
+  ;[].forEach.call(nodelist, cb)
+  return [].slice.call(nodelist)
+}
+
+const pre = (string) => `<pre>${string}</pre>`
 
 function normalize(string) {
   string = string
@@ -80,6 +302,7 @@ function normalize(string) {
     .replace(/<\/output>/g, "</pre>")
     .replace(/<clearContainer/g, "</clearcontainer")
     .replace(/<preset/g, "<pre")
+    .replace(/<clearStream id='inv' ifClosed=''\/>/, "")
 
   string = string.replace(
     /<style id="(\w+)"\s?\/>/g,
@@ -95,34 +318,43 @@ function normalize(string) {
   if (string.startsWith("<a ")) return pre(string)
   return string
 }
-/* recursive visitor */
-exports.visitAll = (root, cb) => {
-  cb(root)
-  if (!root.parentNode && !root.nodeName == "#document")
-    return
-  root.childNodes.forEach((child) =>
-    exports.visitAll(child, cb)
-  )
-}
+// util to inspect a Node in a compact, meaningful manner
+const inspect = (node) =>
+  (node.tagName || "#text") +
+  (node.id ? "#" + node.id : "") +
+  (node.className ? "." + node.className : "")
 
-exports.each = (nodelist, cb) => {
-  ;[].forEach.call(nodelist, cb)
-  return [].slice.call(nodelist)
-}
-
-exports.allDocumentElements = (doc, cb) =>
-  [].slice
-    .call(doc.head.childNodes)
-    .concat(...doc.body.childNodes)
-    .forEach((ele) => requestAnimationFrame(() => cb(ele)))
-
-exports.map = (root, selector, cb) =>
-  [].map.call(root.querySelectorAll(selector), (ele) =>
-    cb(ele)
-  )
-
-exports.pop = (root, selector) =>
-  exports.map(root, selector, (ele) => {
-    ele.remove()
-    return ele
+async function addLinks(ele) {
+  linkifyElement(ele, {
+    className: (_, type) => "external-link " + type,
+    validate: {
+      url: (value) => /^(http)s?:\/\//i.test(value),
+    },
+    events: {
+      click: (e) =>
+        e.preventDefault() ||
+        Url.open_external_link(e.target.href),
+    },
   })
+}
+
+async function addHilites(ele) {
+  const hilites = Hilites.get()
+  if (hilites.length == 0) return 0
+  const mark = new Mark(ele)
+  return await hilites
+    .reduce(
+      (io, [pattern, className]) =>
+        io.fmap(
+          () =>
+            new Promise((done) =>
+              mark.markRegExp(pattern, {
+                className,
+                done,
+              })
+            )
+        ),
+      new IO()
+    )
+    .unwrap()
+}

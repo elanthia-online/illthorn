@@ -1,4 +1,5 @@
 const m = require("mithril")
+const util = require("util")
 const Session = require("../../../session")
 const Lens = require("../../../util/lens")
 const Progress = require("../progress")
@@ -51,8 +52,9 @@ module.exports = class Vitals {
 
     if (parsed.id == "nextLvlPB") {
       const exp = (parsed.title.match(/(\d+)/) || [])[1]
-      parsed.value = exp
+      parsed.value = parseInt(exp, 10)
       parsed.title = parsed.title.replace(exp, "").trim()
+      return parsed
     }
 
     if (typeof parsed.value == "number") {
@@ -61,7 +63,8 @@ module.exports = class Vitals {
       )
       return Vitals.classify(parsed)
     }
-    return {}
+
+    return parsed
   }
 
   static classify(vital) {
@@ -79,8 +82,7 @@ module.exports = class Vitals {
       { key: attrs.id },
       [
         attrs.title !== "" && span(attrs.title, ".label"),
-        attrs.value !== "" &&
-          span(attrs.value.toString(), ".value"),
+        attrs.value !== "" && span(attrs.value, ".value"),
         isNaN(attrs.max)
           ? void 0
           : m("span.max", attrs.max),

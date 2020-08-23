@@ -1,10 +1,13 @@
 const path = require("path")
 const { format } = require("util")
+const Session = require("../session")
 const LauncherSettings = require("../settings").of(
   "launcher"
 )
 const { spawn } = require("child_process")
 const Bus = require("../bus")
+// example: /cabal UP {...info}
+const TCP_LISTENING_MSG = /^\/(\w+) UP/
 
 exports.launch = async function ({ char, port }) {
   const bin = LauncherSettings.get("bin", false)
@@ -40,6 +43,11 @@ function spawn_launcher(bin, { char, port }) {
   launcher.stdout.on("data", (data) => {
     data = data.toString().trim()
     if (data.length == 0) return
+
+    if (data.match(TCP_LISTENING_MSG)) {
+      return listen(data)
+    }
+
     Bus.emit(Bus.events.FLASH, {
       kind: "info",
       message: format("%s> %s", char, data),
@@ -65,4 +73,20 @@ function spawn_launcher(bin, { char, port }) {
       ),
     })
   })
+}
+
+async function listen(msg) {
+  const { character: name, port } = JSON.parse(
+    msg.replace(TCP_LISTENING_MSG, "").trim()
+  )
+  Bus.emit(Bus.events.FLASH, {
+    kind: "info",
+    message: format("%s> listening on %s", name, port),
+  })
+
+  const sess = await Session.of({ name, port })
+  // auto-focus
+  if (!Session.current) {
+    Bus.emit(Bus.events.FOCUS, sess)
+  }
 }

@@ -1,16 +1,11 @@
+const pp = require("debug")("illthorn:state")
 const m = require("mithril")
 const Lens = require("../util/lens")
 const Bus = require("../bus")
-const pp = require("debug")("illthorn:state")
-
-const makeLookup = (keys) =>
-  keys.reduce(
-    (acc, id) => Object.assign(acc, { [id]: 1 }),
-    {}
-  )
+const Lookup = require("../util/lookup")
 
 module.exports = class SessionState {
-  static TAGS = makeLookup([
+  static TAGS = Lookup([
     "prompt",
     "right",
     "left",
@@ -21,9 +16,9 @@ module.exports = class SessionState {
 
   static MODALS = ["commands"]
 
-  static TIMERS = makeLookup(["roundtime", "casttime"])
+  static TIMERS = Lookup(["roundtime", "casttime"])
 
-  static INJURY_IDS = makeLookup([
+  static INJURY_IDS = Lookup([
     "head",
     "leftEye",
     "rightEye",
@@ -40,7 +35,7 @@ module.exports = class SessionState {
     "nsys",
   ])
 
-  static ID_TAGS = makeLookup([
+  static ID_TAGS = Lookup([
     "mana",
     "health",
     "stamina",
@@ -63,6 +58,7 @@ module.exports = class SessionState {
   }
 
   static consume(state, tag) {
+    pp(tag)
     const id = tag.id || tag.className || ""
     const tagName = (tag.tagName || "").toLowerCase()
     if (id in SessionState.INJURY_IDS)

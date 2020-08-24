@@ -439,7 +439,7 @@ pre.thoughts.stream {
 }
 @each $box in $boxes {
   a[noun="#{$box}"] {
-    color: adjust-hue(#d08770, -15);
+    color: adjust-hue(#d08770, 0);
   }
 }
 @each $gem in $gems {
@@ -449,7 +449,7 @@ pre.thoughts.stream {
 }
 @each $magic in $magics {
   a[noun="#{$magic}"] {
-    color: adjust-hue(#b48ead, -15);
+    color: adjust-hue(#b48ead, 0);
   }
 }
 a[noun="spell"] {
@@ -462,9 +462,13 @@ a.monster {
 .speech {
   color: #5e81ad;
   font-weight: bold;
+  padding: 4px 4px;
+  background-color: lighten(#2e3440, 2);
 }
 .whisper {
   font-weight: bold;
+  padding: 4px 4px;
+  background-color: lighten(#2e3440, 2);
 }
 b a,
 stream#society {

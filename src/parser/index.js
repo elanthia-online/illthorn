@@ -66,10 +66,10 @@ const TOP_LEVEL_STATUS_TAGS = (exports.TOP_LEVEL_STATUS_TAGS = Lookup(
   [
     "compass",
     "img",
-    "dialogdata",
     "nav",
     "#inv",
     "progressbar",
+    "dialogdata",
     "compdef",
     "switchquickbar",
     "dropdownbox",
@@ -144,6 +144,17 @@ function pruneLastRecursiveNode(ele) {
   return ele
 }
 
+function fixCompass(compass) {
+  const children = flatTree(compass)
+  const pre = document.createElement("pre")
+  children.forEach((child) => {
+    if (is_text_node(child) && child.tagName !== "PRE") {
+      pre.append(child)
+    }
+  })
+  return pre
+}
+
 function sortByNodeType(ele) {
   const nodes = flatTree(ele)
 
@@ -157,7 +168,31 @@ function sortByNodeType(ele) {
   // <pre><pre>content</pre>some other content</pre>
   const writes = []
   for (const node of nodes) {
-    if (is_status_tag(node)) node.remove()
+    if (node.tagName == "LABEL") {
+      continue
+    }
+
+    if (node.tagName == "COMPASS") {
+      const pre = fixCompass(node)
+      if (pre.hasChildNodes()) {
+        writes.push([node, pre])
+      }
+    }
+
+    // active spell html structure must be retained
+    if (
+      node.parentElement &&
+      node.tagName == "PROGRESSBAR" &&
+      (node.parentElement.tagName == "DIALOGDATA" ||
+        node.parentElement.tagName == "LABEL")
+    ) {
+      continue
+    }
+
+    if (is_status_tag(node)) {
+      node.remove()
+    }
+
     if (is_status_with_text(node)) node.remove()
     if (node.tagName == "PROMPT") {
       node.remove()
@@ -169,6 +204,7 @@ function sortByNodeType(ele) {
     if (node.tagName == "PRE") {
       node.remove()
     }
+
     if (node.tagName == "CASTTIME") {
       const pre = document.createElement("pre")
       pre.append(...node.childNodes)
@@ -183,6 +219,18 @@ function sortByNodeType(ele) {
 
   for (const node of nodes) {
     if (!node.tagName && node.textContent.trimEnd() == "") {
+      continue
+    }
+
+    if (node.tagName == "LABEL") {
+      continue
+    }
+
+    if (
+      node.parentElement &&
+      node.tagName == "PROGRESSBAR" &&
+      node.parentElement.tagName == "DIALOGDATA"
+    ) {
       continue
     }
 
@@ -236,8 +284,6 @@ function sortByNodeType(ele) {
     }
   }
 
-  const renderableNodes = [...parsed.text.childNodes]
-
   /* 
     handle top-level text elements that should be collapsed into a <pre>
     example:
@@ -247,8 +293,11 @@ function sortByNodeType(ele) {
         #text               a.exist
                             #text
   */
+  const renderableNodes = [...parsed.text.childNodes]
   if (
-    renderableNodes.find((node) => node.tagName !== "pre")
+    renderableNodes.find(
+      (node) => !node.tagName || node.tagName.length == 1
+    )
   ) {
     let wrapper = document.createElement("pre")
     renderableNodes.forEach((child) => {
@@ -274,7 +323,7 @@ function sortByNodeType(ele) {
     }
   }
 
-  pruneLastRecursiveNode(parsed.text)
+  //pruneLastRecursiveNode(parsed.text)
 
   return parsed
 }
@@ -324,7 +373,9 @@ const inspect = (node) =>
   (node.id ? "#" + node.id : "") +
   (node.className ? "." + node.className : "")
 
-async function addLinks(ele) {
+const addLinks = (exports.addLinks = async function addLinks(
+  ele
+) {
   linkifyElement(ele, {
     className: (_, type) => "external-link " + type,
     validate: {
@@ -336,9 +387,11 @@ async function addLinks(ele) {
         Url.open_external_link(e.target.href),
     },
   })
-}
+})
 
-async function addHilites(ele) {
+const addHilites = (exports.addHilites = async function addHilites(
+  ele
+) {
   const hilites = Hilites.get()
   if (hilites.length == 0) return 0
   const mark = new Mark(ele)
@@ -357,4 +410,4 @@ async function addHilites(ele) {
       new IO()
     )
     .unwrap()
-}
+})

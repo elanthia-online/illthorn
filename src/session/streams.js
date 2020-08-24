@@ -1,7 +1,7 @@
 const StreamsSettings = require("../settings").of("streams")
 const Lens = require("../util/lens")
 const Storage = require("../storage")
-const Feed = require("./feed")
+const Parser = require("../parser")
 
 module.exports = class Streams {
   // this class on the top-level application element
@@ -67,6 +67,7 @@ module.exports = class Streams {
       this.storeStreamMessage(tag.textContent, name)
     }
     const el = await this.createEl(tag)
+
     this._view.append(el)
 
     // scroll the feed to the HEAD position
@@ -81,8 +82,8 @@ module.exports = class Streams {
       tag.textContent
     )
     parts.forEach((ele) => pre.append(ele))
-    Feed.prototype.addLinks.call(this, pre)
-    Feed.prototype.addHilites.call(this, pre)
+    await Parser.addHilites(pre)
+    await Parser.addLinks(pre)
     return pre
   }
 

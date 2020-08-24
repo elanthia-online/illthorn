@@ -177,7 +177,8 @@ module.exports = class Feed {
   }
 
   ingest(text, prompt) {
-    text.hasChildNodes() && this.append(text)
+    if (!text.hasChildNodes()) return
+    this.append(text)
     prompt && this.append(prompt)
   }
 }

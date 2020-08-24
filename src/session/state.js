@@ -58,7 +58,6 @@ module.exports = class SessionState {
   }
 
   static consume(state, tag) {
-    pp(tag)
     const id = tag.id || tag.className || ""
     const tagName = (tag.tagName || "").toLowerCase()
     if (id in SessionState.INJURY_IDS)
@@ -77,10 +76,11 @@ module.exports = class SessionState {
         end: Lens.get(tag, "attributes.value.value"),
       })
     }
-
+    /*
     ~[].forEach.call(tag.childNodes, (node) =>
       SessionState.consume(state, node.cloneNode(true))
     )
+    */
   }
 
   constructor(session) {
@@ -117,7 +117,6 @@ module.exports = class SessionState {
 
   put(prop, val) {
     Lens.put(this, prop, val)
-    Bus.emit(Bus.events.REDRAW)
     return this
   }
   /**

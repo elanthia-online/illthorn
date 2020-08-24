@@ -48,7 +48,7 @@ module.exports = class Vitals {
       title: (title || text).replace(/\s\(\d+\%\)/, ""),
     }
 
-    pp("%s -> %o -> %o", parsed.id, ele, parsed)
+    //pp("%s -> %o -> %o", parsed.id, ele, parsed)
 
     if (parsed.id == "nextLvlPB") {
       const exp = (parsed.title.match(/(\d+)/) || [])[1]

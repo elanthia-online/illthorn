@@ -111,12 +111,23 @@ module.exports = class Session extends events.EventEmitter {
     await this.io.fmap(async () => {
       const { parsed } = await Parser.parse(this, string)
       if (parsed) {
-        this.feed.ingest(parsed.text, parsed.prompt)
-        ~[...parsed.metadata.childNodes].forEach(
-          (update) => {
-            SessionState.consume(this.state, update)
+        const streams = [
+          ...parsed.text.querySelectorAll("stream"),
+        ]
+        streams.forEach((stream) => {
+          if (this.streams.wants(stream.className)) {
+            stream.remove()
+            this.streams.insert(stream)
           }
-        )
+        })
+
+        this.feed.ingest(parsed.text, parsed.prompt)
+        const updates = [...parsed.metadata.childNodes]
+        this.log(":updates", updates)
+        updates.forEach((update) => {
+          SessionState.consume(this.state, update)
+        })
+        Bus.emit(Bus.events.REDRAW)
       }
     })
     const t1 = performance.now()

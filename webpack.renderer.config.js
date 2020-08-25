@@ -3,7 +3,10 @@ const rules = require("./webpack.rules")
 rules.push({
   test: /\.scss$/,
   use: [
-    { loader: "style-loader" },
+    {
+      loader: "style-loader",
+      // options: { attributes: { id: "id" } },
+    },
     { loader: "css-loader" },
     { loader: "sass-loader" },
   ],

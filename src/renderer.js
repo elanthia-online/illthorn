@@ -1,6 +1,3 @@
-import "./app/styles/app.scss"
-import "./app/styles/themes/dark-king.scss"
-
 const m = require("mithril")
 const UI = require("./app/ui")
 const Bus = require("./bus")

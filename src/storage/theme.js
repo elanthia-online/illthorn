@@ -5,10 +5,12 @@ exports.changeTheme = async function (data) {
     return Promise.reject({ err: "invalid-theme" })
   }
 
-  return await exports.upsertCSS(
-    "#theme-stylesheet",
-    `./dist/themes/${data.theme}.css`
-  )
+  // TODO: Implement theme switching
+
+  // return await exports.upsertCSS(
+  //   "#theme-stylesheet",
+  //   `./dist/themes/${data.theme}.css`
+  // )
 }
 
 exports.upsertCSS = function (id, fileName) {

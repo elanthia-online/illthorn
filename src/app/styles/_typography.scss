@@ -1,39 +1,40 @@
 @font-face {
   font-family: "MonoLisa";
   font-weight: 400;
-  src: url("../app/fonts/MonoLisa/MonoLisa-Regular.woff2")
+  src: url("../fonts/MonoLisa/MonoLisa-Regular.woff2")
     format("woff2");
 }
 @font-face {
   font-family: "MonoLisa";
   font-weight: 700;
-  src: url("../app/fonts/MonoLisa/MonoLisa-Bold.woff2")
+  src: url("../fonts/MonoLisa/MonoLisa-Bold.woff2")
     format("woff2");
 }
 @font-face {
   font-family: "MonoLisa";
   font-weight: 400;
   font-style: italic;
-  src: url("../app/fonts/MonoLisa/MonoLisa-RegularItalic.woff2")
+  src: url("../fonts/MonoLisa/MonoLisa-RegularItalic.woff2")
     format("woff2");
 }
 @font-face {
   font-family: "MonoLisa";
   font-weight: 700;
   font-style: italic;
-  src: url("../app/fonts/MonoLisa/MonoLisa-BoldItalic.woff2")
+  src: url("../fonts/MonoLisa/MonoLisa-BoldItalic.woff2")
     format("woff2");
 }
 
 @font-face {
   font-family: "DutchMediaeval";
   font-weight: 400;
-  src: url("../app/fonts/DutchMediaeval/DutchMediaeval/font.woff2")
+  src: url("../fonts/DutchMediaeval/DutchMediaeval/font.woff2")
     format("woff2");
 }
 @font-face {
   font-family: "DutchMediaevalBook-Bold";
-  src: url("../app/fonts/DutchMediaeval/DutchMediaevalBook-Bold/font.woff2")
+  font-weight: 700;
+  src: url("../fonts/DutchMediaeval/DutchMediaevalBook-Bold/font.woff2")
     format("woff2");
 }
 

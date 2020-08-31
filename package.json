@@ -2,16 +2,13 @@
   "name": "illthorn",
   "productName": "illthorn",
   "version": "1.0.0",
-  "description": "modern front-end for Gemstone IV",
+  "description": "A modern front-end for Gemstone IV",
   "main": ".webpack/main",
   "scripts": {
-    "dev": "sass --watch src/app/styles/:src/dist",
     "start": "ENV=dev electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\"",
-    "test": "echo \"No testing configured\""
+    "publish": "electron-forge publish"
   },
   "husky": {
     "hooks": {

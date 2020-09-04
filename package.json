@@ -60,7 +60,7 @@
     "keyboardjs": "^2.5.1",
     "linkifyjs": "^2.1.9",
     "mark.js": "^8.11.1",
-    "mithril": "^1.1.6",
+    "mithril": "^1.1.7",
     "ps-list": "^6.3.0",
     "sass": "^1.26.10"
   },

@@ -23,7 +23,9 @@
   "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "src/app/img/app-icon.icns"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
@@ -40,13 +42,13 @@
         {
           "name": "@electron-forge/maker-deb",
           "config": {
-            "icon": "build/icons/64x64.png"
+            "icon": "src/app/img/app-icon.png"
           }
         },
         {
           "name": "@electron-forge/maker-rpm",
           "config": {
-            "icon": "build/icons/64x64.png"
+            "icon": "src/app/img/app-icon.png"
           }
         }
       ]

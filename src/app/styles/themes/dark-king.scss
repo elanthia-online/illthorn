@@ -1,3 +1,5 @@
+/*! THEME: dark-king */
+
 @import "../vars";
 
 $blue: #6cadd0;
@@ -32,6 +34,7 @@ $red: #d64e4e;
 // Global
 body {
   font-family: "DutchMediaeval", serif;
+  font-weight: 400;
 }
 
 #sessions,
@@ -48,7 +51,7 @@ body {
 
 // Sessions
 .session-name {
-  font-family: "DutchMediaevalBook-Bold", serif;
+  font-family: "DutchMediaeval", serif;
 }
 
 // Hands
@@ -241,7 +244,7 @@ li#vitals-stamina {
   font-size: 1.2em;
   margin-bottom: 0;
   .label {
-    font-family: "DutchMediaevalBook-Bold", serif;
+    font-family: "DutchMediaeval", serif;
   }
 }
 

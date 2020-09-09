@@ -11,7 +11,6 @@ A modern cross-platform front-end for [Gemstone IV](https://www.play.net/gs4/).
 - Have Node
 - Clone the repository or download the [.zip](https://github.com/elanthia-online/illthorn/archive/master.zip).
 - Navigate to the directory and install dependencies with `yarn install`.
-- Compile the stylesheets by running `yarn dev`
 - You can then launch Illthorn with `yarn start`
 - Or make an app file with `yarn make` (look for the executable in `/out/`)
 

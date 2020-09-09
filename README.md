@@ -1,4 +1,4 @@
-# Illthorn
+![Illthorn, a modern client for Gemstone IV](https://res.cloudinary.com/css-tricks/image/upload/f_auto,q_auto/v1599683949/readme-header_rwaeqy.png)
 
 A modern cross-platform front-end for [Gemstone IV](https://www.play.net/gs4/).
 

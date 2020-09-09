@@ -8,6 +8,8 @@
     "start": "ENV=dev electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
+    "lint": "echo \"No linting configured\"",
+    "test": "echo \"No testing configured\"",
     "publish": "electron-forge publish"
   },
   "husky": {

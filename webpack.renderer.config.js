@@ -3,12 +3,20 @@ const rules = require("./webpack.rules")
 rules.push({
   test: /\.scss$/,
   use: [
+    // Creates `style` nodes from JS strings
     {
       loader: "style-loader",
-      // options: { attributes: { id: "id" } },
+      options: {
+        attributes: {
+          media: "all",
+          class: "style",
+        },
+      },
     },
-    { loader: "css-loader" },
-    { loader: "sass-loader" },
+    // Translates CSS into CommonJS
+    "css-loader",
+    // Compiles Sass to CSS
+    "sass-loader",
   ],
 })
 

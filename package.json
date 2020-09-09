@@ -84,7 +84,7 @@
     "mithril": "^1.1.6",
     "ps-list": "^6.3.0",
     "sass": "^1.26.10",
-    "sass-loader": "^10.0.1",
+    "sass-loader": "^10.0.2",
     "webpack": "^4.44.1"
   },
   "devDependencies": {
@@ -96,14 +96,14 @@
     "@electron-forge/maker-zip": "6.0.0-beta.52",
     "@electron-forge/plugin-webpack": "^6.0.0-beta.52",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
-    "css-loader": "^3.0.0",
+    "css-loader": "^4.3.0",
     "electron": "5.0.6",
     "file-loader": "^6.0.0",
     "husky": "^4.2.5",
     "node-loader": "^0.6.0",
     "prettier": "2.0.5",
     "pretty-quick": "^2.0.1",
-    "style-loader": "^0.23.1"
+    "style-loader": "^1.2.1"
   },
   "babel": {
     "sourceType": "unambiguous",

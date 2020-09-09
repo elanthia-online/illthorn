@@ -8,11 +8,6 @@ exports.changeTheme = async function (data) {
   const styleTags = document.querySelectorAll(
     "style:not(#hilites)"
   )
-  styleTags.forEach((tag) => {
-    tag.remove()
-  })
-
-  require(`../app/styles/app.scss`)
 
   // You'd think you could do like
   // `../app/styles/themes/${data.theme}.scss`
@@ -31,4 +26,13 @@ exports.changeTheme = async function (data) {
   } else if (data.theme == "raging-thrak") {
     require(`../app/styles/themes/raging-thrak.scss`)
   }
+
+  styleTags.forEach((tag) => {
+    if (!tag.innerText.includes("App styles")) {
+      tag.setAttribute("media", "none")
+    }
+    if (tag.innerText.includes("THEME: " + data.theme)) {
+      tag.setAttribute("media", "all")
+    }
+  })
 }

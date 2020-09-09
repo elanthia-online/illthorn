@@ -33,7 +33,7 @@ const createWindow = () => {
       webSecurity: false,
     },
     titleBarStyle: "hidden",
-    icon: "/src/app/png/64x64.png",
+    icon: "/src/app/img/app-icon.png",
   })
   mainWindowState.manage(mainWindow)
 

@@ -5,26 +5,34 @@ exports.changeTheme = async function (data) {
     return Promise.reject({ err: "invalid-theme" })
   }
 
-  return await exports.upsertCSS(
-    "#theme-stylesheet",
-    `./dist/themes/${data.theme}.css`
+  const styleTags = document.querySelectorAll(
+    "style:not(#hilites)"
   )
-}
 
-exports.upsertCSS = function (id, fileName) {
-  return new Promise((ok) => {
-    const previous_node = document.getElementById(id)
-    const head = document.head
-    const link = document.createElement("link")
-    link.id = id
-    link.type = "text/css"
-    link.rel = "stylesheet"
-    link.href = fileName
-    link.onload = link.onerror = link.onabort = function () {
-      // remove it after, so there is less blink!
-      if (previous_node) previous_node.remove()
-      ok()
+  // You'd think you could do like
+  // `../app/styles/themes/${data.theme}.scss`
+  // But it fails??
+
+  if (data.theme == "dark-king") {
+    require(`../app/styles/themes/dark-king.scss`)
+  } else if (data.theme == "original") {
+    require(`../app/styles/themes/original.scss`)
+  } else if (data.theme == "icemule") {
+    require(`../app/styles/themes/icemule.scss`)
+  } else if (data.theme == "kobold") {
+    require(`../app/styles/themes/kobold.scss`)
+  } else if (data.theme == "rogue") {
+    require(`../app/styles/themes/rogue.scss`)
+  } else if (data.theme == "raging-thrak") {
+    require(`../app/styles/themes/raging-thrak.scss`)
+  }
+
+  styleTags.forEach((tag) => {
+    if (!tag.innerText.includes("App styles")) {
+      tag.setAttribute("media", "none")
     }
-    head.appendChild(link)
+    if (tag.innerText.includes("THEME: " + data.theme)) {
+      tag.setAttribute("media", "all")
+    }
   })
 }

@@ -2,16 +2,15 @@
   "name": "illthorn",
   "productName": "illthorn",
   "version": "1.0.0",
-  "description": "modern front-end for Gemstone IV",
-  "main": "./src/main.js",
+  "description": "A modern front-end for Gemstone IV",
+  "main": ".webpack/main",
   "scripts": {
-    "dev": "sass --watch src/app/styles/:src/dist",
     "start": "ENV=dev electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\"",
-    "test": "echo \"No testing configured\""
+    "test": "echo \"No testing configured\"",
+    "publish": "electron-forge publish"
   },
   "husky": {
     "hooks": {
@@ -49,10 +48,34 @@
             "icon": "build/icons/64x64.png"
           }
         }
+      ],
+      "plugins": [
+        [
+          "@electron-forge/plugin-webpack",
+          {
+            "mainConfig": "./webpack.main.config.js",
+            "renderer": {
+              "config": "./webpack.renderer.config.js",
+              "entryPoints": [
+                {
+                  "html": "./src/index.html",
+                  "js": "./src/renderer.js",
+                  "name": "main_window"
+                }
+              ]
+            },
+            "port": "3010",
+            "loggerPort": "9002"
+          }
+        ]
       ]
     }
   },
   "dependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/runtime": "^7.11.2",
+    "babel-loader": "^8.1.0",
     "debug": "^4.1.1",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^4.0.0",
@@ -62,19 +85,41 @@
     "mark.js": "^8.11.1",
     "mithril": "^1.1.6",
     "ps-list": "^6.3.0",
-    "sass": "^1.26.10"
+    "sass": "^1.26.10",
+    "sass-loader": "^10.0.2",
+    "webpack": "^4.44.1"
   },
   "devDependencies": {
-    "@electron-forge/cli": "6.0.0-beta.39",
-    "@electron-forge/maker-deb": "6.0.0-beta.39",
-    "@electron-forge/maker-rpm": "6.0.0-beta.39",
-    "@electron-forge/maker-squirrel": "6.0.0-beta.39",
-    "@electron-forge/maker-zip": "6.0.0-beta.39",
-    "@electron-forge/plugin-webpack": "^6.0.0-beta.39",
+    "@babel/plugin-transform-runtime": "^7.11.0",
+    "@electron-forge/cli": "6.0.0-beta.52",
+    "@electron-forge/maker-deb": "6.0.0-beta.52",
+    "@electron-forge/maker-rpm": "6.0.0-beta.52",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.52",
+    "@electron-forge/maker-zip": "6.0.0-beta.52",
+    "@electron-forge/plugin-webpack": "^6.0.0-beta.52",
+    "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "css-loader": "^4.3.0",
     "electron": "5.0.6",
+    "file-loader": "^6.0.0",
     "husky": "^4.2.5",
+    "node-loader": "^0.6.0",
     "prettier": "2.0.5",
     "pretty-quick": "^2.0.1",
-    "typescript": "^3.5.3"
+    "style-loader": "^1.2.1"
+  },
+  "babel": {
+    "sourceType": "unambiguous",
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties",
+      [
+        "@babel/plugin-transform-runtime",
+        {
+          "regenerator": true
+        }
+      ]
+    ]
   }
 }

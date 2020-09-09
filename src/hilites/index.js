@@ -61,7 +61,7 @@ module.exports = class Hilites {
     ]))
   }
 
-  static _CACHE = Hilites.reload()
+  static _CACHE = this.reload()
 
   static get() {
     return Hilites._CACHE

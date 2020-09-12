@@ -48,6 +48,7 @@ module.exports = class Macros {
     "1 2 3 4 5 6 7 8 9".split(" ").forEach((sess_idx) => {
       const idx = parseInt(sess_idx, 10) - 1
       KeyboardJS.on(`alt+${sess_idx}`, (e) => {
+        e.preventDefault()
         const sess = Session.list()[idx]
         if (sess && sess !== Session.focused()) {
           Bus.emit(Bus.events.FOCUS, sess)

@@ -42,7 +42,7 @@ Lich might also be `lich.rbw` on your setup. You can run multiple connections (f
 - [ ] Macros
 - [ ] Saved Logging
 - [ ] Download Public Themes
-- [ ] Clickable links
+- [x] Clickable links in game feed and ESP/LNet
 
 ## Meta Shortcuts
 

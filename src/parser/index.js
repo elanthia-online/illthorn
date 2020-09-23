@@ -1,10 +1,11 @@
 const Mark = require("mark.js")
 const linkifyElement = require("linkifyjs/element")
-
-const Lookup = require("../util/lookup")
 const Hilites = require("../hilites")
 const Url = require("../util/url")
 const IO = require("../util/io")
+
+const Selectors = require("./selectors")
+const { normalize } = require("./normalize")
 
 const parser = new DOMParser()
 const pp = {
@@ -14,35 +15,38 @@ const pp = {
 }
 
 exports.parse = async function (session, incoming) {
-  session.buffer += incoming.toString()
-  // continue to buffer
-  if (isDanglingStream(session.buffer))
-    return { buffered: 1 }
+  try {
+    session.buffer += incoming.toString()
+    // continue to buffer
+    if (isDanglingStream(session.buffer))
+      return { buffered: 1 }
 
-  pp.raw(session.buffer)
-  // https://github.com/elanthia-online/illthorn/issues/113
-  const string = normalize(session.buffer)
-  const doc = parser.parseFromString(
-    string.trimEnd(),
-    "text/html"
-  )
-
-  merge(doc.head, doc.body)
-
-  pp.parsed(doc.body.innerHTML)
-
-  const parsed = sortByNodeType(doc.body)
-
-  await addHilites(parsed.text)
-  // linkify doesn't work on documentfragment, ugh
-  await Promise.all(
-    [...parsed.text.childNodes].map((child) =>
-      addLinks(child)
+    pp.raw(session.buffer)
+    // https://github.com/elanthia-online/illthorn/issues/113
+    const string = normalize(session.buffer)
+    const doc = parser.parseFromString(
+      string.trimEnd(),
+      "text/html"
     )
-  )
-  // clear the buffer
-  session.buffer = ""
-  return { parsed }
+
+    doc.body.append(...doc.head.childNodes)
+
+    const parsed = sortByNodeType(doc.body)
+
+    //await addHilites(parsed.text)
+    // linkify doesn't work on documentfragment, ugh
+    /*await Promise.all(
+      [...parsed.text.childNodes].map((child) =>
+        addLinks(child)
+      )
+    )*/
+    // clear the buffer
+    session.buffer = ""
+    return { parsed }
+  } catch (err) {
+    console.error(err)
+    return {}
+  }
 }
 
 function isDanglingStream(buffered) {
@@ -53,69 +57,13 @@ function isDanglingStream(buffered) {
   )
 }
 
-const merge = (left, right) => {
-  right.append(...left.childNodes)
-  return right
-}
-
-const TOP_LEVEL_STATUS_TAGS_WITH_TEXT = (exports.TOP_LEVEL_STATUS_TAGS_WITH_TEXT = Lookup(
-  ["right", "left", "spell"]
-))
-
-const TOP_LEVEL_STATUS_TAGS = (exports.TOP_LEVEL_STATUS_TAGS = Lookup(
-  [
-    "compass",
-    "img",
-    "nav",
-    "#inv",
-    "progressbar",
-    "dialogdata",
-    "compdef",
-    "switchquickbar",
-    "dropdownbox",
-    "opendialog",
-    "component",
-    "deletecontainer",
-    "inv",
-    "streamwindow",
-    "clearcontainer",
-    "clearstream",
-    "roundtime",
-    "casttime",
-  ]
-))
-
 const match_any = (node, selectors) =>
   typeof node.matches == "function" &&
   selectors.find((selector) => node.matches(selector))
 
-const is_status_tag = (node) =>
-  match_any(node, Object.keys(TOP_LEVEL_STATUS_TAGS))
-
-const is_status_with_text = (node) =>
-  match_any(
-    node,
-    Object.keys(TOP_LEVEL_STATUS_TAGS_WITH_TEXT)
-  )
-
-const is_text_node = (node) =>
-  node.nodeType == Node.TEXT_NODE ||
-  node.tagName == "PRE" ||
-  node.tagName == "PROMPT" ||
-  (node.tagName || "").length == 1 ||
-  (node.matches && node.matches("stream.thoughts"))
-
-const is_skippable_text = (node) =>
-  node.parentNode &&
-  node.nodeType == Node.TEXT_NODE &&
-  (is_status_with_text(node.parentNode) ||
-    is_status_tag(node.parentNode))
-
-const is_nested_text = (node) =>
-  node.parentNode && is_text_node(node.parentNode)
-
-const already_will_render = (parsed, node) =>
-  parsed.text.contains(node)
+const match = (node, selector) =>
+  typeof node.matches == "function" &&
+  node.matches(selector)
 
 const flatTree = (ele) => {
   const treeWalker = document.createTreeWalker(
@@ -135,195 +83,79 @@ const flatTree = (ele) => {
   }
 }
 
-function pruneLastRecursiveNode(ele) {
-  if (ele.lastChild)
-    return pruneLastRecursiveNode(ele.lastChild)
-  ele.innerText
-    ? (ele.innerText = ele.innerText.trimEnd())
-    : (ele.textContent = ele.textContent.trimEnd())
-  return ele
-}
-
-function fixCompass(compass) {
-  const children = flatTree(compass)
-  const pre = document.createElement("pre")
-  children.forEach((child) => {
-    if (is_text_node(child) && child.tagName !== "PRE") {
-      pre.append(child)
-    }
-  })
-  return pre
-}
-
-function sortByNodeType(ele) {
+sortByNodeType = (ele) => {
   const nodes = flatTree(ele)
 
   const parsed = {
-    metadata: document.createDocumentFragment(),
-    text: document.createDocumentFragment(),
-    prompt: void 0,
-  }
-  // first pass prunes and flattens oddly nested elements
-  // example:
-  // <pre><pre>content</pre>some other content</pre>
-  const writes = []
-  for (const node of nodes) {
-    if (node.tagName == "LABEL") {
-      continue
-    }
-
-    if (node.tagName == "COMPASS") {
-      const pre = fixCompass(node)
-      if (pre.hasChildNodes()) {
-        writes.push([node, pre])
-      }
-    }
-
-    // active spell html structure must be retained
-    if (
-      node.parentElement &&
-      node.tagName == "PROGRESSBAR" &&
-      (node.parentElement.tagName == "DIALOGDATA" ||
-        node.parentElement.tagName == "LABEL")
-    ) {
-      continue
-    }
-
-    if (is_status_tag(node)) {
-      node.remove()
-    }
-
-    if (is_status_with_text(node)) node.remove()
-    if (node.tagName == "PROMPT") {
-      node.remove()
-      node.classList.add("game")
-      parsed.prompt = node
-      continue
-    }
-    // always lift
-    if (node.tagName == "PRE") {
-      node.remove()
-    }
-
-    if (node.tagName == "CASTTIME") {
-      const pre = document.createElement("pre")
-      pre.append(...node.childNodes)
-      writes.push([node, pre])
-    }
-  }
-  // todo: https://github.com/elanthia-online/illthorn/issues/118
-  for (const [before, write] of writes) {
-    const position = nodes.indexOf(before)
-    ~position && nodes.splice(position, 0, write)
+    metadata: document.createElement("div"),
+    text: document.createElement("div"),
+    prompt: document.createElement("div"),
+    streams: document.createElement("div"),
   }
 
-  for (const node of nodes) {
-    if (!node.tagName && node.textContent.trimEnd() == "") {
-      continue
-    }
+  //console.log(nodes)
 
-    if (node.tagName == "LABEL") {
-      continue
+  nodes.forEach((node) => {
+    if (match(node, "prompt")) {
+      node.remove()
+      return (parsed.prompt = node)
     }
 
     if (
-      node.parentElement &&
-      node.tagName == "PROGRESSBAR" &&
-      node.parentElement.tagName == "DIALOGDATA"
-    ) {
-      continue
-    }
-
-    if (node.tagName == "PROMPT") {
-      continue
-    }
-
-    if (is_nested_text(node)) {
-      continue // <a>#text</a>
-    }
-
-    if (is_skippable_text(node)) {
-      //pp.node(node, "skippable-text")
-      continue // <right>#text</right>
-    }
-
-    if (already_will_render(parsed, node)) {
-      continue
-    }
-
-    if (parsed.metadata.contains(node)) {
-      continue
-    }
-
-    if (is_status_tag(node) || is_status_with_text(node)) {
-      pp.node(
-        `:metadata`,
-        node.parentElement
-          ? "parent=" + inspect(node.parentElement)
-          : "",
-        inspect(node),
-        node.innerHTML || node.textContent
-      )
-      node.remove()
-      parsed.metadata.append(node)
-      continue
-    }
-
-    if (is_text_node(node)) {
-      pp.node(
-        `:text`,
-        node.parentElement
-          ? "parent=" + inspect(node.parentElement)
-          : "",
-        inspect(node),
-        node.innerHTML || node.textContent
-      )
-      node.remove()
-      parsed.text.append(node)
-      continue
-    }
-  }
-
-  /* 
-    handle top-level text elements that should be collapsed into a <pre>
-    example:
-      #fragment    ->    #fragment
-        #text              pre
-        a.exist             #text
-        #text               a.exist
-                            #text
-  */
-  const renderableNodes = [...parsed.text.childNodes]
-  if (
-    renderableNodes.find(
-      (node) => !node.tagName || node.tagName.length == 1
+      parsed.metadata.contains(node) ||
+      parsed.text.contains(node) ||
+      parsed.prompt.contains(node) ||
+      parsed.streams.contains(node)
     )
-  ) {
-    let wrapper = document.createElement("pre")
-    renderableNodes.forEach((child) => {
-      // insert them correctly in the document stream
-      if (child.tagName == "PRE") {
-        if (wrapper.hasChildNodes()) {
-          parsed.text.insertBefore(wrapper, child)
-          wrapper = document.createElement("pre")
-        }
-        return void 0
-      }
-      // collect them onto a block element
-      child.remove()
-      if (child.textContent.trim().length)
-        wrapper.append(child)
-    })
+      return
+
+    if (match(node, "stream")) {
+      console.log({ stream: node })
+      return parsed.streams.append(node)
+    }
 
     if (
-      wrapper.hasChildNodes() &&
-      !parsed.text.contains(wrapper)
+      match_any(node, Selectors.TEXT) ||
+      node.nodeType == Node.TEXT_NODE
     ) {
-      parsed.text.append(wrapper)
+      //if (node.textContent.trim().length == 0) return
+      if (match(node, "pre")) {
+        ;[].forEach.call(node.children, (child) => {
+          if (child.tagName.length == 1) return
+          if (match(child, "pre")) return child.remove()
+          child.remove()
+        })
+      }
+      /*const maybeDanglingWhitespace = node.lastChild
+      if (maybeDanglingWhitespace && maybeDanglingWhitespace.nodeType == Node.TEXT_NODE) {
+        if (maybeDanglingWhitespace.textContent.trimEnd().length == 0) {
+          maybeDanglingWhitespace.remove()
+        }
+      }*/
+      console.log({ text: node })
+      return parsed.text.append(node)
     }
-  }
 
-  //pruneLastRecursiveNode(parsed.text)
+    if (
+      match_any(node, Selectors.STATUS_TAGS_WITH_CHILDREN)
+    ) {
+      console.log({ status_children: node })
+      return parsed.metadata.append(node)
+    }
+
+    if (match_any(node, Selectors.STATUS_TAGS)) {
+      node.childNodes.forEach((node) => node.remove())
+      console.log({ status_solo: node })
+      return parsed.metadata.append(node)
+    }
+
+    if (match_any(node, Selectors.STATUS_TAGS_WITH_TEXT)) {
+      console.log({ status_text: node })
+      return parsed.metadata.append(node)
+    }
+
+    console.log({ unmatched: node })
+  })
 
   return parsed
 }
@@ -338,76 +170,8 @@ exports.each = (nodelist, cb) => {
   return [].slice.call(nodelist)
 }
 
-const pre = (string) => `<pre>${string}</pre>`
-
-function normalize(string) {
-  string = string
-    .replace(/<style id=""\/>/g, "")
-    .replace(/<pushBold\/>/g, `<b class="monster">`)
-    .replace(/<popBold\/>/g, "</b>")
-    .replace(/<push/g, "<")
-    .replace(/<pop/g, "</")
-    .replace(/<output/g, "<pre")
-    .replace(/<\/output>/g, "</pre>")
-    .replace(/<clearContainer/g, "</clearcontainer")
-    .replace(/<preset/g, "<pre")
-    .replace(/<clearStream id='inv' ifClosed=''\/>/, "")
-
-  string = string.replace(
-    /<style id="(\w+)"\s?\/>/g,
-    (_, id) => `<pre class="${id}">`
-  )
-
-  string = string
-    .replace(/ id="/g, ` class="`)
-    .replace(/` id='/g, ` class='`)
-
-  if (!string.startsWith("<")) return pre(string)
-  if (string.startsWith("<b ")) return pre(string)
-  if (string.startsWith("<a ")) return pre(string)
-  return string
-}
 // util to inspect a Node in a compact, meaningful manner
 const inspect = (node) =>
   (node.tagName || "#text") +
   (node.id ? "#" + node.id : "") +
   (node.className ? "." + node.className : "")
-
-const addLinks = (exports.addLinks = async function addLinks(
-  ele
-) {
-  linkifyElement(ele, {
-    className: (_, type) => "external-link " + type,
-    validate: {
-      url: (value) => /^(http)s?:\/\//i.test(value),
-    },
-    events: {
-      click: (e) =>
-        e.preventDefault() ||
-        Url.open_external_link(e.target.href),
-    },
-  })
-})
-
-const addHilites = (exports.addHilites = async function addHilites(
-  ele
-) {
-  const hilites = Hilites.get()
-  if (hilites.length == 0) return 0
-  const mark = new Mark(ele)
-  return await hilites
-    .reduce(
-      (io, [pattern, className]) =>
-        io.fmap(
-          () =>
-            new Promise((done) =>
-              mark.markRegExp(pattern, {
-                className,
-                done,
-              })
-            )
-        ),
-      new IO()
-    )
-    .unwrap()
-})

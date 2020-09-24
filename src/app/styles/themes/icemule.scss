@@ -1,3 +1,5 @@
+/*! THEME: icemule */
+
 /*
 A humble, hardscrabble theme—with an arctic, north-blush color palette lifted from https://nordtheme.com
 */
@@ -20,11 +22,8 @@ A humble, hardscrabble theme—with an arctic, north-blush color palette lifted 
   --column-width: 16em;
   --stream-channel-color: #d8dee9;
   --whisper-color: #a3be8c;
+  --monster-color: #ebcb8b;
 }
-
-//Local Variables
-$gemcolor: hsl(0, 20%, 63%);
-$magiccolor: hsl(283, 20%, 63%);
 
 .modal {
   background-color: var(--info);
@@ -183,18 +182,16 @@ pre {
 }
 
 // Stance
+// TODO: These classes like "offensive" are missing now, can we bring them back?
 #hud .panel li#vitals-pbarStance.vital {
   margin-bottom: 0px;
-  &.offensive,
-  &.vital.advance {
+  &.low {
     background-color: var(--danger);
   }
-  &.forward,
-  &.vital.neutral {
+  &.medium {
     background-color: var(--warn);
   }
-  &.guarded,
-  &.vital.defensive {
+  &.high {
     background-color: #d8dee9;
   }
   span.label,
@@ -407,10 +404,11 @@ details.panel summary {
 .feed .roomDesc {
   padding: 0.5rem;
 }
-a.exist {
+
+a[noun] {
   color: #81a1c1;
 }
-pre.roomDesc a.exist {
+a[exist^="-"] {
   color: #8fbcbb;
 }
 pre.roomName {
@@ -421,45 +419,66 @@ pre.thoughts.stream {
 }
 
 //Hilites
-
-$start: 0;
+@each $weapon in $weapons {
+  a[noun="#{$weapon}"] {
+    color: adjust-hue(#bf616a, -15);
+  }
+}
+@each $herbal in $herbals {
+  a[noun="#{$herbal}"] {
+    color: adjust-hue(#a3be8c, -15);
+  }
+}
+@each $forageable in $forageables {
+  a[noun="#{$forageable}"] {
+    color: adjust-hue(#a3be8c, -15);
+  }
+}
 @each $direction in $directions {
-  a.exist[data-noun="#{$direction}"] {
+  a[noun="#{$direction}"] {
     color: #8fbcbb;
   }
 }
 @each $box in $boxes {
-  a.exist[data-noun="#{$box}"] {
-    color: #d08770;
+  a[noun="#{$box}"] {
+    color: adjust-hue(#d08770, 0);
   }
 }
 @each $gem in $gems {
-  a.exist[data-noun="#{$gem}"] {
-    color: adjust-hue($gemcolor, $start);
+  a[noun="#{$gem}"] {
+    color: adjust-hue(#ebcb8b, -15);
   }
-  $start: $start + 3;
 }
 @each $magic in $magics {
-  a.exist[data-noun="#{$magic}"] {
-    color: adjust-hue($magiccolor, $start);
+  a[noun="#{$magic}"] {
+    color: adjust-hue(#b48ead, 0);
   }
-  $start: $start + 3;
 }
-a[data-noun="spell"] {
+a[noun="spell"] {
   color: #d08770;
 }
 a.monster {
   color: #ebcb8b;
 }
-a.speech {
-  color: #a3be8c;
+#speech,
+.speech {
+  color: #5e81ad;
+  font-weight: bold;
+  padding: 4px 4px;
+  background-color: lighten(#2e3440, 2);
 }
-a.b,
-pre.stream.society {
+.whisper {
+  font-weight: bold;
+  padding: 4px 4px;
+  background-color: lighten(#2e3440, 2);
+}
+b a,
+stream#society {
   color: #b48ead;
 }
-pre.sent.cli,
-pre.prompt {
+
+span.sent.cli,
+prompt {
   color: rgba(216, 222, 233, 0.5);
 }
 

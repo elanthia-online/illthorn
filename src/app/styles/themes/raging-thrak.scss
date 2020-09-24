@@ -1,3 +1,5 @@
+/*! THEME: raging-thrak */
+
 @import "../vars";
 
 $yellow: #ffd60a; // hsl(50, 100%, 52%)
@@ -24,7 +26,7 @@ $yellow: #ffd60a; // hsl(50, 100%, 52%)
 }
 
 body {
-  background-image: url(../../app/img/city.jpg);
+  background-image: url(../../img/city.jpg);
   background-size: cover;
   font-family: "DutchMediaeval";
 }
@@ -67,8 +69,8 @@ body {
 #cli-wrapper,
 .panel {
   border: 3px solid black;
-  border-image: url(../../app/img/wooden-border.png) 25 /
-    20px round;
+  border-image: url(../../img/wooden-border.png) 25 / 20px
+    round;
   background: rgba(black, 0.9);
 }
 #cli-wrapper {
@@ -81,7 +83,7 @@ body {
   margin: 0 0 20px 0;
   > summary {
     background: none;
-    font-family: "DutchMediaevalBook-Bold";
+    font-family: "DutchMediaeval";
     font-weight: bold;
     padding: 1em;
     font-size: 1.1em;

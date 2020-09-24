@@ -1,9 +1,5 @@
-const Mark = require("mark.js")
-const linkifyElement = require("linkifyjs/element")
-const Hilites = require("../hilites")
-const Url = require("../util/url")
-const IO = require("../util/io")
-
+const { addLinks } = require("./add-links")
+const { addHilites } = require("./add-hilites")
 const Selectors = require("./selectors")
 const { normalize } = require("./normalize")
 
@@ -33,13 +29,13 @@ exports.parse = async (session, incoming) => {
 
     const parsed = sortByNodeType(doc.body)
 
-    //await addHilites(parsed.text)
+    await addHilites(parsed.text)
     // linkify doesn't work on documentfragment, ugh
-    /*await Promise.all(
+    await Promise.all(
       [...parsed.text.childNodes].map((child) =>
         addLinks(child)
       )
-    )*/
+    )
     // clear the buffer
     session.buffer = ""
     return { parsed }

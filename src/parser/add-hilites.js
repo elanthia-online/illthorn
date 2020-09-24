@@ -1,3 +1,7 @@
+const Hilites = require("../hilites")
+const Mark = require("mark.js")
+const IO = require("../util/io")
+
 exports.addHilites = async (ele) => {
   const hilites = Hilites.get()
   if (hilites.length == 0) return 0

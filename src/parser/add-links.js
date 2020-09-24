@@ -1,3 +1,6 @@
+const linkifyElement = require("linkifyjs/element")
+const Url = require("../util/url")
+
 exports.addLinks = async (ele) => {
   linkifyElement(ele, {
     className: (_, type) => "external-link " + type,

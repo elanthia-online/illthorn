@@ -135,6 +135,10 @@ module.exports = class Feed {
    *   2. re-render slices of pruned nodes when scrolling
    */
   append(ele) {
+    if (!ele.hasChildNodes()) {
+      return console.trace("{error: %o}", ele)
+    }
+
     const was_scrolling = this._scrolling
 
     // swap for the latest prompt

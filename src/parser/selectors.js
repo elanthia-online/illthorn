@@ -7,6 +7,7 @@ exports.STATUS_TAGS_WITH_TEXT = [
   "inv",
   "compdef",
   "component",
+  "stream.inv",
 ]
 
 exports.STATUS_TAGS_WITH_CHILDREN = [

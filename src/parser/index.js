@@ -79,83 +79,147 @@ const flatTree = (ele) => {
   while (currentNode) {
     currentNode = treeWalker.nextNode()
     if (!currentNode) return nodes
+    if (
+      currentNode.nodeType == Node.TEXT_NODE &&
+      currentNode.textContent == "\n"
+    ) {
+      continue // \n control character from a TCP stream
+    }
     nodes.push(currentNode)
   }
 }
 
+const has_ancestor = (ele, selectors) => {
+  if (ele.nodeType == Node.TEXT_NODE)
+    ele = ele.parentElement
+  return (
+    ele &&
+    !!selectors.find((selector) => ele.closest(selector))
+  )
+}
+
+const is_text_node = (node) =>
+  node && node.nodeType == Node.TEXT_NODE
+
 sortByNodeType = (ele) => {
-  const nodes = flatTree(ele)
+  const nodes = flatTree(ele).filter((node) => {
+    if (
+      is_text_node(node) &&
+      node.parentElement.tagName.length == 1
+    ) {
+      return false
+    }
+
+    if (node.parentElement.tagName == 1) {
+      return false
+    }
+
+    if (
+      match_any(
+        node.parentElement,
+        Selectors.STATUS_TAGS_WITH_TEXT
+      )
+    ) {
+      return false
+    }
+
+    if (
+      is_text_node(node) &&
+      match(node.parentElement, "prompt")
+    ) {
+      return false
+    }
+
+    return true
+  })
 
   const parsed = {
     metadata: document.createElement("div"),
     text: document.createElement("div"),
-    prompt: document.createElement("div"),
+    prompt: void 0,
     streams: document.createElement("div"),
   }
 
   //console.log(nodes)
 
   nodes.forEach((node) => {
-    if (match(node, "prompt")) {
+    if (match(node, "pre")) {
       node.remove()
-      return (parsed.prompt = node)
     }
 
     if (
-      parsed.metadata.contains(node) ||
-      parsed.text.contains(node) ||
-      parsed.prompt.contains(node) ||
-      parsed.streams.contains(node)
-    )
-      return
+      node.tagName &&
+      node.parentElement &&
+      node.parentElement.tagName == node.tagName &&
+      node.tagName.length == 1
+    ) {
+      // handle <b><b></b</b> garbage
+      node.parentElement.replaceWith(node)
+    }
+
+    if (parsed.text.contains(node)) return
+
+    //console.log(node.outerHTML || `text(${node.textContent})`)
 
     if (match(node, "stream")) {
-      console.log({ stream: node })
+      //console.log({ stream: node.innerHTML })
       return parsed.streams.append(node)
+    }
+
+    if (
+      match_any(node, Selectors.STATUS_TAGS_WITH_CHILDREN)
+    ) {
+      //console.log({ status_children: node.outerHTML })
+      return parsed.metadata.append(node)
+    }
+
+    if (match_any(node, Selectors.STATUS_TAGS)) {
+      node.childNodes.forEach((node) => node.remove())
+      //console.log({ status_solo: node.outerHTML })
+      return parsed.metadata.append(node)
+    }
+
+    if (match_any(node, Selectors.STATUS_TAGS_WITH_TEXT)) {
+      //console.log({ status_text: node.outerHTML })
+      return parsed.metadata.append(node)
     }
 
     if (
       match_any(node, Selectors.TEXT) ||
       node.nodeType == Node.TEXT_NODE
     ) {
+      if (
+        node.parentElement &&
+        has_ancestor(node, Selectors.STATUS_TAGS_WITH_TEXT)
+      ) {
+        return // <comdef class="room objs"
+      }
+      console.log(node, node.parentElement)
       //if (node.textContent.trim().length == 0) return
       if (match(node, "pre")) {
         ;[].forEach.call(node.children, (child) => {
           if (child.tagName.length == 1) return
-          if (match(child, "pre")) return child.remove()
           child.remove()
         })
       }
-      /*const maybeDanglingWhitespace = node.lastChild
-      if (maybeDanglingWhitespace && maybeDanglingWhitespace.nodeType == Node.TEXT_NODE) {
-        if (maybeDanglingWhitespace.textContent.trimEnd().length == 0) {
-          maybeDanglingWhitespace.remove()
-        }
-      }*/
-      console.log({ text: node })
+      //console.log({ text: node.outerHTML || node.textContent })
       return parsed.text.append(node)
     }
 
-    if (
-      match_any(node, Selectors.STATUS_TAGS_WITH_CHILDREN)
-    ) {
-      console.log({ status_children: node })
-      return parsed.metadata.append(node)
+    if (match(node, "prompt")) {
+      return parsed.text.append(node)
     }
 
-    if (match_any(node, Selectors.STATUS_TAGS)) {
-      node.childNodes.forEach((node) => node.remove())
-      console.log({ status_solo: node })
-      return parsed.metadata.append(node)
-    }
-
-    if (match_any(node, Selectors.STATUS_TAGS_WITH_TEXT)) {
-      console.log({ status_text: node })
-      return parsed.metadata.append(node)
-    }
-
-    console.log({ unmatched: node })
+    console.log({ unmatched: node.outerHTML })
   })
+
+  if (
+    parsed.text.childNodes.length == 1 &&
+    parsed.text.firstElementChild &&
+    parsed.text.firstElementChild.tagName == "PROMPT"
+  ) {
+    parsed.text.innerHTML = ""
+  }
 
   return parsed
 }

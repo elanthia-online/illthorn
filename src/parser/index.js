@@ -79,12 +79,12 @@ const flatTree = (ele) => {
   while (currentNode) {
     currentNode = treeWalker.nextNode()
     if (!currentNode) return nodes
-    if (
+    /*if (
       currentNode.nodeType == Node.TEXT_NODE &&
       currentNode.textContent == "\n"
     ) {
       continue // \n control character from a TCP stream
-    }
+    }*/
     nodes.push(currentNode)
   }
 }
@@ -105,7 +105,15 @@ sortByNodeType = (ele) => {
   const nodes = flatTree(ele).filter((node) => {
     if (
       is_text_node(node) &&
-      node.parentElement.tagName.length == 1
+      (node.parentElement.tagName.length == 1 ||
+        node.parentElement.tagName == "PRE")
+    ) {
+      return false
+    }
+
+    if (
+      is_text_node(node) &&
+      match(node.parentElement, "prompt")
     ) {
       return false
     }
@@ -137,21 +145,16 @@ sortByNodeType = (ele) => {
     metadata: document.createElement("div"),
     text: document.createElement("div"),
     prompt: void 0,
-    streams: document.createElement("div"),
   }
 
-  //console.log(nodes)
-
   nodes.forEach((node) => {
-    if (match(node, "pre")) {
-      node.remove()
-    }
+    //console.log(node.parentNode, { html: node.outerHTML || node.textContent })
 
     if (
       node.tagName &&
       node.parentElement &&
       node.parentElement.tagName == node.tagName &&
-      node.tagName.length == 1
+      (node.tagName.length == 1 || node.tagName == "PRE")
     ) {
       // handle <b><b></b</b> garbage
       node.parentElement.replaceWith(node)
@@ -161,27 +164,23 @@ sortByNodeType = (ele) => {
 
     //console.log(node.outerHTML || `text(${node.textContent})`)
 
-    if (match(node, "stream")) {
-      //console.log({ stream: node.innerHTML })
-      return parsed.streams.append(node)
-    }
-
     if (
       match_any(node, Selectors.STATUS_TAGS_WITH_CHILDREN)
     ) {
-      //console.log({ status_children: node.outerHTML })
       return parsed.metadata.append(node)
     }
 
     if (match_any(node, Selectors.STATUS_TAGS)) {
       node.childNodes.forEach((node) => node.remove())
-      //console.log({ status_solo: node.outerHTML })
       return parsed.metadata.append(node)
     }
 
     if (match_any(node, Selectors.STATUS_TAGS_WITH_TEXT)) {
-      //console.log({ status_text: node.outerHTML })
       return parsed.metadata.append(node)
+    }
+
+    if (match(node, "stream")) {
+      return parsed.text.append(node)
     }
 
     if (
@@ -194,19 +193,14 @@ sortByNodeType = (ele) => {
       ) {
         return // <comdef class="room objs"
       }
-      console.log(node, node.parentElement)
-      //if (node.textContent.trim().length == 0) return
+
       if (match(node, "pre")) {
         ;[].forEach.call(node.children, (child) => {
           if (child.tagName.length == 1) return
           child.remove()
         })
       }
-      //console.log({ text: node.outerHTML || node.textContent })
-      return parsed.text.append(node)
-    }
 
-    if (match(node, "prompt")) {
       return parsed.text.append(node)
     }
 

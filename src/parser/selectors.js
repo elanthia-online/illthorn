@@ -15,13 +15,15 @@ exports.STATUS_TAGS_WITH_TEXT = [
 exports.STATUS_TAGS_WITH_CHILDREN = [
   "dialogdata",
   "compass",
+  "progressbar",
 ]
 
 exports.STATUS_TAGS = [
   "img",
   "nav",
+  "link",
+  "sep",
   "resource",
-  "progressbar",
   "container",
   "exposecontainer",
   "switchquickbar",

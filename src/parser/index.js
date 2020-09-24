@@ -68,6 +68,7 @@ const isDanglingStream = (buffered) => {
 }
 
 const match_any = (node, selectors) =>
+  node &&
   typeof node.matches == "function" &&
   selectors.find((selector) => node.matches(selector))
 
@@ -198,6 +199,15 @@ const sortByNodeType = (ele) => {
     if (parsed.text.contains(node)) return
 
     if (
+      has_ancestor(
+        node,
+        Selectors.STATUS_TAGS_WITH_CHILDREN
+      )
+    ) {
+      return
+    }
+
+    if (
       match_any(node, Selectors.STATUS_TAGS_WITH_CHILDREN)
     ) {
       return parsed.metadata.append(node)
@@ -243,7 +253,10 @@ const sortByNodeType = (ele) => {
       return parsed.text.append(node)
     }
 
-    console.log({ unmatched: node.outerHTML })
+    console.log({
+      unmatched: node.outerHTML,
+      parent: node.parentNode,
+    })
   })
 
   return parsed

@@ -8,6 +8,8 @@ exports.STATUS_TAGS_WITH_TEXT = [
   "compdef",
   "component",
   "stream.inv",
+  "stream.room",
+  "stream.bounty",
 ]
 
 exports.STATUS_TAGS_WITH_CHILDREN = [

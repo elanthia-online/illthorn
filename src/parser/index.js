@@ -14,7 +14,7 @@ const pp = {
   node: require("debug")("illthorn:parser:sort"),
 }
 
-exports.parse = async function (session, incoming) {
+exports.parse = async (session, incoming) => {
   try {
     session.buffer += incoming.toString()
     // continue to buffer
@@ -49,7 +49,17 @@ exports.parse = async function (session, incoming) {
   }
 }
 
-function isDanglingStream(buffered) {
+exports.map = (root, selector, cb) =>
+  [].map.call(root.querySelectorAll(selector), (ele) =>
+    cb(ele)
+  )
+
+exports.each = (nodelist, cb) => {
+  ;[].forEach.call(nodelist, cb)
+  return [].slice.call(nodelist)
+}
+
+const isDanglingStream = (buffered) => {
   // todo: this should also match id= attribute
   return (
     (buffered.match(/<pushStream/) || []).length >
@@ -62,6 +72,7 @@ const match_any = (node, selectors) =>
   selectors.find((selector) => node.matches(selector))
 
 const match = (node, selector) =>
+  node &&
   typeof node.matches == "function" &&
   node.matches(selector)
 
@@ -79,15 +90,24 @@ const flatTree = (ele) => {
   while (currentNode) {
     currentNode = treeWalker.nextNode()
     if (!currentNode) return nodes
-    /*if (
-      currentNode.nodeType == Node.TEXT_NODE &&
-      currentNode.textContent == "\n"
+    // skip extra whitespace
+    if (
+      is_line_break(currentNode) &&
+      is_line_break(nodes[nodes.length - 1])
     ) {
-      continue // \n control character from a TCP stream
-    }*/
-    nodes.push(currentNode)
+      continue
+    }
+
+    if (is_meaningful_tag(currentNode)) {
+      nodes.push(currentNode)
+    }
   }
 }
+
+const is_line_break = (node) =>
+  node &&
+  node.nodeType == Node.TEXT_NODE &&
+  node.textContent == "\n"
 
 const has_ancestor = (ele, selectors) => {
   if (ele.nodeType == Node.TEXT_NODE)
@@ -101,68 +121,81 @@ const has_ancestor = (ele, selectors) => {
 const is_text_node = (node) =>
   node && node.nodeType == Node.TEXT_NODE
 
-sortByNodeType = (ele) => {
-  const nodes = flatTree(ele).filter((node) => {
-    if (
-      is_text_node(node) &&
-      (node.parentElement.tagName.length == 1 ||
-        node.parentElement.tagName == "PRE")
-    ) {
-      return false
-    }
+const is_meaningful_tag = (node) => {
+  if (
+    is_text_node(node) &&
+    (node.parentElement.tagName.length == 1 ||
+      node.parentElement.tagName == "PRE")
+  ) {
+    return false
+  }
+  // <comdef class="room objs">...children
+  if (
+    node.parentElement &&
+    has_ancestor(node, Selectors.STATUS_TAGS_WITH_TEXT)
+  ) {
+    return false
+  }
 
-    if (
-      is_text_node(node) &&
-      match(node.parentElement, "prompt")
-    ) {
-      return false
-    }
+  if (is_line_break(node)) {
+    return false
+  }
 
-    if (node.parentElement.tagName == 1) {
-      return false
-    }
+  if (
+    is_text_node(node) &&
+    match(node.parentElement, "prompt")
+  ) {
+    return false
+  }
 
-    if (
-      match_any(
-        node.parentElement,
-        Selectors.STATUS_TAGS_WITH_TEXT
-      )
-    ) {
-      return false
-    }
+  if (node.parentElement.tagName == 1) {
+    return false
+  }
 
-    if (
-      is_text_node(node) &&
-      match(node.parentElement, "prompt")
-    ) {
-      return false
-    }
+  if (
+    match_any(
+      node.parentElement,
+      Selectors.STATUS_TAGS_WITH_TEXT
+    )
+  ) {
+    return false
+  }
 
-    return true
-  })
+  if (
+    is_text_node(node) &&
+    match(node.parentElement, "prompt")
+  ) {
+    return false
+  }
+
+  return true
+}
+
+const sortByNodeType = (ele) => {
+  const nodes = flatTree(ele)
 
   const parsed = {
-    metadata: document.createElement("div"),
-    text: document.createElement("div"),
+    metadata: document.createDocumentFragment(),
+    text: document.createDocumentFragment(),
     prompt: void 0,
   }
 
   nodes.forEach((node) => {
+    if (match(node, "prompt")) {
+      return // todo: fix prompt handling
+    }
     //console.log(node.parentNode, { html: node.outerHTML || node.textContent })
-
+    // handle <b><b></b</b> garbage
     if (
       node.tagName &&
       node.parentElement &&
       node.parentElement.tagName == node.tagName &&
       (node.tagName.length == 1 || node.tagName == "PRE")
     ) {
-      // handle <b><b></b</b> garbage
       node.parentElement.replaceWith(node)
     }
 
     if (parsed.text.contains(node)) return
-
-    //console.log(node.outerHTML || `text(${node.textContent})`)
 
     if (
       match_any(node, Selectors.STATUS_TAGS_WITH_CHILDREN)
@@ -187,11 +220,17 @@ sortByNodeType = (ele) => {
       match_any(node, Selectors.TEXT) ||
       node.nodeType == Node.TEXT_NODE
     ) {
-      if (
-        node.parentElement &&
-        has_ancestor(node, Selectors.STATUS_TAGS_WITH_TEXT)
-      ) {
-        return // <comdef class="room objs"
+      // handled naked text tags by always wrapping in a <pre>
+      if (!has_ancestor(node, ["pre"])) {
+        if (match(parsed.text.lastElementChild, "pre")) {
+          return parsed.text.lastElementChild.appendChild(
+            node
+          )
+        }
+
+        const pre = document.createElement("pre")
+        pre.appendChild(node)
+        return parsed.text.appendChild(pre)
       }
 
       if (match(node, "pre")) {
@@ -207,29 +246,5 @@ sortByNodeType = (ele) => {
     console.log({ unmatched: node.outerHTML })
   })
 
-  if (
-    parsed.text.childNodes.length == 1 &&
-    parsed.text.firstElementChild &&
-    parsed.text.firstElementChild.tagName == "PROMPT"
-  ) {
-    parsed.text.innerHTML = ""
-  }
-
   return parsed
 }
-
-exports.map = (root, selector, cb) =>
-  [].map.call(root.querySelectorAll(selector), (ele) =>
-    cb(ele)
-  )
-
-exports.each = (nodelist, cb) => {
-  ;[].forEach.call(nodelist, cb)
-  return [].slice.call(nodelist)
-}
-
-// util to inspect a Node in a compact, meaningful manner
-const inspect = (node) =>
-  (node.tagName || "#text") +
-  (node.id ? "#" + node.id : "") +
-  (node.className ? "." + node.className : "")

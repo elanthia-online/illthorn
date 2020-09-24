@@ -182,7 +182,7 @@ const sortByNodeType = (ele) => {
 
   nodes.forEach((node) => {
     if (match(node, "prompt")) {
-      return // todo: fix prompt handling
+      return node.remove() // todo: fix prompt handling
     }
     //console.log(node.parentNode, { html: node.outerHTML || node.textContent })
     // handle <b><b></b</b> garbage

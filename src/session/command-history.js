@@ -11,19 +11,13 @@ module.exports = class CommandHistory {
   constructor() {
     this.index = 0
 
-    setTimeout(() => {
-      const name = document
-        .querySelector("#feed-wrapper")
-        .getAttribute("data-name")
-
-      const commandsFromStorage = Storage.get(
-        `commands-${name}`
-      )
-
-      this.buffer = LimitedList.of(commandsFromStorage, {
+    // Load commands from storage
+    this.buffer = LimitedList.of(
+      Storage.get(`commandHistory`),
+      {
         limit: 100,
-      })
-    }, 500)
+      }
+    )
   }
 
   add(command) {
@@ -32,12 +26,8 @@ module.exports = class CommandHistory {
     }
     this.buffer.lpush(command)
 
-    // Save command list to Storage
-    const name = document
-      .querySelector("#feed-wrapper")
-      .getAttribute("data-name")
-
-    Storage.set(`commands-${name}`, this.buffer.members)
+    // Save commands into storage
+    Storage.set(`commandHistory`, this.buffer.members)
   }
 
   get last_index() {

@@ -1,4 +1,5 @@
 const LimitedList = require("../util/limited-list")
+const Storage = require("../storage")
 
 module.exports = class CommandHistory {
   static of() {
@@ -9,7 +10,14 @@ module.exports = class CommandHistory {
    */
   constructor() {
     this.index = 0
-    this.buffer = LimitedList.of([], { limit: 100 })
+
+    // Load commands from storage
+    this.buffer = LimitedList.of(
+      Storage.get(`commandHistory`),
+      {
+        limit: 100,
+      }
+    )
   }
 
   add(command) {
@@ -17,6 +25,9 @@ module.exports = class CommandHistory {
       return (this.buffer.members[0] = command)
     }
     this.buffer.lpush(command)
+
+    // Save commands into storage
+    Storage.set(`commandHistory`, this.buffer.members)
   }
 
   get last_index() {

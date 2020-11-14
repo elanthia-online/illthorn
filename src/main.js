@@ -30,16 +30,17 @@ const createWindow = () => {
     webPreferences: {
       nodeIntegration: true,
       nodeIntegrationInWorker: true,
+      webSecurity: false,
     },
     titleBarStyle: "hidden",
-    icon: "/src/app/png/64x64.png",
+    icon: "/src/app/img/app-icon.png",
   })
   mainWindowState.manage(mainWindow)
 
   mainWindow.show()
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/index.html`)
+  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
 
   // Open the DevTools.
   if (process.env.ENV == "dev")

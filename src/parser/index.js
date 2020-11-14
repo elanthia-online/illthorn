@@ -8,6 +8,9 @@ const pp = {
   parsed: require("debug")("illthorn:parser:parsed"),
   raw: require("debug")("illthorn:parser:raw"),
   node: require("debug")("illthorn:parser:sort"),
+  normalized: require("debug")(
+    "illthorn:parser:normalized"
+  ),
 }
 
 exports.parse = async (session, incoming) => {
@@ -20,13 +23,14 @@ exports.parse = async (session, incoming) => {
     pp.raw(session.buffer)
     // https://github.com/elanthia-online/illthorn/issues/113
     const string = normalize(session.buffer)
+    pp.normalized(string)
     const doc = parser.parseFromString(
       string.trimEnd(),
       "text/html"
     )
 
     doc.body.append(...doc.head.childNodes)
-
+    pp.parsed(doc.body.innerHTML)
     const parsed = sortByNodeType(doc.body)
 
     await addHilites(parsed.text)
@@ -89,6 +93,16 @@ const flatTree = (ele) => {
     if (!currentNode) return nodes
     // skip extra whitespace
     if (
+      currentNode.nodeType == Node.TEXT_NODE &&
+      currentNode.textContent.match(/^\n+$/)
+    ) {
+      currentNode.textContent = currentNode.textContent.replace(
+        /^\n+$/,
+        "\n"
+      )
+    }
+
+    if (
       is_line_break(currentNode) &&
       is_line_break(nodes[nodes.length - 1])
     ) {
@@ -120,6 +134,13 @@ const is_text_node = (node) =>
 
 const is_meaningful_tag = (node) => {
   if (
+    node.tagName == "PRE" &&
+    !has_ancestor(node, Selectors.STATUS_WITH_TEXT)
+  ) {
+    return true
+  }
+
+  if (
     is_text_node(node) &&
     (node.parentElement.tagName.length == 1 ||
       node.parentElement.tagName == "PRE")
@@ -129,7 +150,7 @@ const is_meaningful_tag = (node) => {
   // <comdef class="room objs">...children
   if (
     node.parentElement &&
-    has_ancestor(node, Selectors.STATUS_TAGS_WITH_TEXT)
+    has_ancestor(node, Selectors.STATUS_WITH_TEXT)
   ) {
     return false
   }
@@ -150,15 +171,6 @@ const is_meaningful_tag = (node) => {
   }
 
   if (
-    match_any(
-      node.parentElement,
-      Selectors.STATUS_TAGS_WITH_TEXT
-    )
-  ) {
-    return false
-  }
-
-  if (
     is_text_node(node) &&
     match(node.parentElement, "prompt")
   ) {
@@ -169,17 +181,19 @@ const is_meaningful_tag = (node) => {
 }
 
 const sortByNodeType = (ele) => {
+  //console.log("incoming: \n%s", ele.outerHTML)
   const nodes = flatTree(ele)
 
   const parsed = {
-    metadata: document.createDocumentFragment(),
+    metadata: document.createElement("div"),
     text: document.createDocumentFragment(),
     prompt: void 0,
   }
 
   nodes.forEach((node) => {
     if (match(node, "prompt")) {
-      return node.remove() // todo: fix prompt handling
+      node.remove() // todo: fix prompt handling
+      return (parsed.prompt = node)
     }
     //console.log(node.parentNode, { html: node.outerHTML || node.textContent })
     // handle <b><b></b</b> garbage
@@ -187,36 +201,33 @@ const sortByNodeType = (ele) => {
       node.tagName &&
       node.parentElement &&
       node.parentElement.tagName == node.tagName &&
-      (node.tagName.length == 1 || node.tagName == "PRE")
+      node.tagName.length == 1
     ) {
-      node.parentElement.replaceWith(node)
+      node.tagName == "PRE"
+        ? node.remove()
+        : node.parentElement.replaceWith(node)
     }
 
-    if (parsed.text.contains(node)) return
-
     if (
-      has_ancestor(
-        node,
-        Selectors.STATUS_TAGS_WITH_CHILDREN
-      )
+      has_ancestor(node, Selectors.STATUS_WITH_CHILDREN)
     ) {
       return
     }
 
-    if (
-      match_any(node, Selectors.STATUS_TAGS_WITH_CHILDREN)
-    ) {
+    if (match_any(node, Selectors.STATUS_WITH_CHILDREN)) {
       return parsed.metadata.append(node)
     }
 
-    if (match_any(node, Selectors.STATUS_TAGS)) {
+    if (match_any(node, Selectors.STATUS_WITH_TEXT)) {
+      return parsed.metadata.append(node)
+    }
+
+    if (match_any(node, Selectors.STATUS)) {
       node.childNodes.forEach((node) => node.remove())
       return parsed.metadata.append(node)
     }
 
-    if (match_any(node, Selectors.STATUS_TAGS_WITH_TEXT)) {
-      return parsed.metadata.append(node)
-    }
+    if (parsed.text.contains(node)) return
 
     if (match(node, "stream")) {
       return parsed.text.append(node)
@@ -228,6 +239,8 @@ const sortByNodeType = (ele) => {
     ) {
       // handled naked text tags by always wrapping in a <pre>
       if (!has_ancestor(node, ["pre"])) {
+        console.log({ naked_text: node })
+
         if (match(parsed.text.lastElementChild, "pre")) {
           return parsed.text.lastElementChild.appendChild(
             node

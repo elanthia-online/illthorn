@@ -1,6 +1,6 @@
 exports.TEXT = ["a", "b", "d", "pre"]
 
-exports.STATUS_TAGS_WITH_TEXT = [
+exports.STATUS_WITH_TEXT = [
   "right",
   "left",
   "spell",
@@ -10,15 +10,16 @@ exports.STATUS_TAGS_WITH_TEXT = [
   "stream.inv",
   "stream.room",
   "stream.bounty",
+  "stream.speech",
 ]
 
-exports.STATUS_TAGS_WITH_CHILDREN = [
+exports.STATUS_WITH_CHILDREN = [
   "dialogdata",
   "compass",
   "progressbar",
 ]
 
-exports.STATUS_TAGS = [
+exports.STATUS = [
   "img",
   "nav",
   "link",

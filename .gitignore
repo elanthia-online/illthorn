@@ -4,3 +4,4 @@ out
 src/dist
 .sass-cache
 .webpack
+*.log

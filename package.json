@@ -8,13 +8,13 @@
     "start": "ENV=dev electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "lint": "echo \"No linting configured\"",
+    "lint": "eslint --ext *.js",
     "test": "echo \"No testing configured\"",
     "publish": "electron-forge publish"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "pretty-quick --staged && yarn run lint"
     }
   },
   "keywords": [],
@@ -102,6 +102,9 @@
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "css-loader": "^4.3.0",
     "electron": "5.0.6",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "file-loader": "^6.0.0",
     "husky": "^4.2.5",
     "node-loader": "^0.6.0",

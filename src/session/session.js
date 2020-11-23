@@ -1,3 +1,5 @@
+const console = require("console")
+const dns = require("dns")
 const events = require("events")
 const m = require("mithril")
 const net = require("net")
@@ -68,6 +70,17 @@ module.exports = class Session extends events.EventEmitter {
   }
 
   static async of(opts) {
+    let addr = "127.0.0.1"
+    try {
+      addr = (await dns.promises.lookup("localhost"))
+        .address
+    } catch {
+      console.log(
+        "Could not resolve localhost, defaulting to %j",
+        addr
+      )
+    }
+    opts.addr = addr
     const char = new Session(opts)
     char.rename(char.name || char.port)
     return char
@@ -85,7 +98,7 @@ module.exports = class Session extends events.EventEmitter {
     return sess.send_command(command)
   }
 
-  constructor({ port, name }) {
+  constructor({ port, name, addr }) {
     super()
     this.port = port
     this.sock = void 0
@@ -94,7 +107,7 @@ module.exports = class Session extends events.EventEmitter {
     this.feed = Feed.of({ session: this })
     this.streams = Streams.of({ session: this })
     this.state = State.of(this)
-    this.sock = net.connect({ port })
+    this.sock = net.connect({ port: port, host: addr })
     this.sock.on("data", (data) => this.parse(data))
     this.sock.on("error", (err) => this.emit("error", err))
     this.sock.on("close", (_) => this.close())

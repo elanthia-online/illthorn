@@ -5,7 +5,9 @@ node_js:
 before_install:
   - sudo apt-get -y install fakeroot rpm
 
-script: yarn run test
+script:
+  - yarn lint
+  - yarn test
 
 before_deploy:
   - npx electron-forge publish --dry-run --platform=linux

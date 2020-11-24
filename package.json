@@ -11,7 +11,7 @@
     "lint": "pretty-quick --check && eslint src",
     "fix": "pretty-quick && eslint src --fix",
     "commit": "commit",
-    "test": "echo \"No testing configured\"",
+    "test": "jest",
     "publish": "electron-forge publish"
   },
   "husky": {
@@ -115,6 +115,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "file-loader": "^6.0.0",
     "husky": "^4.2.5",
+    "jest": "^26.6.3",
     "node-loader": "^0.6.0",
     "prettier": "2.0.5",
     "pretty-quick": "^2.0.1",

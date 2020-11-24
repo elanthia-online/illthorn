@@ -1,5 +1,4 @@
 const array = "array"
-const number = "number"
 const string = "string"
 const object = "string"
 

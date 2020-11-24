@@ -1,4 +1,3 @@
-const m = require("mithril")
 const Lens = require("../../util/lens")
 
 module.exports = class Progress {
@@ -37,7 +36,7 @@ module.exports = class Progress {
       bar.attrs.text ||
       bar.id.toString().replace("pbar", "").toLowerCase() +
         " " +
-        percent
+        Progress.parse_percentage(bar)
     )
   }
 }

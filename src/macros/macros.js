@@ -39,7 +39,7 @@ module.exports = class Macros {
       // console.log(e)
     })
 
-    KeyboardJS.on("right", (e) => {
+    KeyboardJS.on("right", (_) => {
       document.dispatchEvent(
         new Event("autocomplete/right")
       )
@@ -73,7 +73,7 @@ module.exports = class Macros {
       sess.history.write(cli, { forward: 1 })
     })
 
-    KeyboardJS.on("ctrl+pagedown", (e) => {
+    KeyboardJS.on("ctrl+pagedown", (_) => {
       const sess = Session.focused()
       sess && sess.feed.reattach_head()
     })
@@ -104,7 +104,7 @@ module.exports = class Macros {
     const macros = Macros.get(profile)
     Macros.bind_meta_macros()
     Object.entries(macros).forEach(([combo, macro]) =>
-      KeyboardJS.bind(combo.toLowerCase(), (e) =>
+      KeyboardJS.bind(combo.toLowerCase(), (_) =>
         Bus.emit("macro", macro)
       )
     )

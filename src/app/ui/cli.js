@@ -94,7 +94,7 @@ module.exports = class CLI {
     cli.focus()
   }
 
-  static autocomplete_right(e) {
+  static autocomplete_right(_) {
     requestAnimationFrame(function () {
       const cli = document.getElementById("cli")
       const suggestion = document.getElementById(
@@ -125,7 +125,7 @@ module.exports = class CLI {
     suggestions.placeholder = most_recent || ""
   }
 
-  static onclick(e) {
+  static onclick(_) {
     Session.focused().state._modals.commands = !Session.focused()
       .state._modals.commands
   }

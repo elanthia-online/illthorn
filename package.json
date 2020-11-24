@@ -8,7 +8,7 @@
     "start": "ENV=dev electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "lint": "eslint --ext *.js",
+    "lint": "eslint src",
     "test": "echo \"No testing configured\"",
     "publish": "electron-forge publish"
   },
@@ -100,6 +100,7 @@
     "@electron-forge/maker-zip": "6.0.0-beta.52",
     "@electron-forge/plugin-webpack": "^6.0.0-beta.52",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "babel-eslint": "^10.1.0",
     "css-loader": "^4.3.0",
     "electron": "5.0.6",
     "eslint": "^7.14.0",

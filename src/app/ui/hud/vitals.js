@@ -44,7 +44,7 @@ module.exports = class Vitals {
       max: parseInt(max || "100", 10),
       value: parseInt(value || attr(ele, "value", "0"), 10),
       text: text,
-      title: (title || text).replace(/\s\(\d+\%\)/, ""),
+      title: (title || text).replace(/\s\(\d+%\)/, ""),
     }
 
     pp("%s -> %o -> %o", parsed.id, ele, parsed)

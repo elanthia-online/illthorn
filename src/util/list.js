@@ -15,7 +15,7 @@ module.exports = class List {
     if (list.length < 2) return []
     const [first, ...rest] = list,
       pairs = rest.map((x, idx) => [first, x, idx + depth])
-    return pairs.concat(uniq_pairs(rest, depth + 1))
+    return pairs.concat(List.uniq_pairs(rest, depth + 1))
   }
 
   static flatten(...args) {

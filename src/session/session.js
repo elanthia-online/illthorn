@@ -1,7 +1,6 @@
 const console = require("console")
 const dns = require("dns")
 const events = require("events")
-const m = require("mithril")
 const net = require("net")
 const Parser = require("../parser")
 const State = require("./state")

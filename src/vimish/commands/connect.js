@@ -1,12 +1,7 @@
 const Command = require("../command")
-const Bus = require("../../bus")
 const Autodetect = require("../../autodetect")
+const { redraw } = require("../../util/redraw")
 const Session = require("../../session")
-
-const redraw = (session) => {
-  Bus.emit(Bus.events.FOCUS, session)
-  Bus.emit(Bus.events.REDRAW)
-}
 
 /**
  * connect to a session

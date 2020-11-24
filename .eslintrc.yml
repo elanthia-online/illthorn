@@ -1,12 +1,24 @@
+parser: babel-eslint
 env:
   browser: true
+  node: true
   commonjs: true
   es2021: true
+ignorePatterns:
+  - build/**
 extends:
-  - "eslint:recommended"
-  - "plugin:prettier/recommended"
+  - prettier
+  - eslint:recommended
+  - plugin:prettier/recommended
 plugins:
-  - "prettier"
+  - prettier
 parserOptions:
   ecmaVersion: 12
-rules: {}
+globals:
+  MAIN_WINDOW_WEBPACK_ENTRY: readonly
+rules:
+  prettier/prettier: ["error"]
+  no-unused-vars:
+    - error
+    - varsIgnorePattern: "_[A-Za-z0-9]*"
+      argsIgnorePattern: "_[A-Za-z0-9]*"

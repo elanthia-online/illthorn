@@ -15,6 +15,7 @@ install:
 
 script:
   - yarn lint
+  - yarn package
   - yarn test
 
 before_deploy:

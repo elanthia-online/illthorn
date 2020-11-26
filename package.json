@@ -11,7 +11,7 @@
     "lint": "pretty-quick --check && eslint src",
     "fix": "pretty-quick && eslint src --fix",
     "commit": "commit",
-    "test": "echo \"No testing configured\"",
+    "test": "jest",
     "publish": "electron-forge publish"
   },
   "husky": {
@@ -106,6 +106,7 @@
     "@electron-forge/maker-squirrel": "6.0.0-beta.52",
     "@electron-forge/maker-zip": "6.0.0-beta.52",
     "@electron-forge/plugin-webpack": "^6.0.0-beta.52",
+    "@jest-runner/electron": "^3.0.0",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "babel-eslint": "^10.1.0",
     "css-loader": "^4.3.0",
@@ -115,6 +116,8 @@
     "eslint-plugin-prettier": "^3.1.4",
     "file-loader": "^6.0.0",
     "husky": "^4.2.5",
+    "jest": "^26.6.3",
+    "jest-cli": "^26.6.3",
     "node-loader": "^0.6.0",
     "prettier": "2.0.5",
     "pretty-quick": "^2.0.1",
@@ -134,5 +137,9 @@
         }
       ]
     ]
+  },
+  "jest": {
+    "runner": "@jest-runner/electron/main",
+    "testEnvironment": "node"
   }
 }

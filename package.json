@@ -10,12 +10,15 @@
     "make": "electron-forge make",
     "lint": "pretty-quick --check && eslint src",
     "fix": "pretty-quick && eslint src --fix",
+    "commit": "commit",
     "test": "echo \"No testing configured\"",
     "publish": "electron-forge publish"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "pretty-quick --staged",
+      "post-merge": "yarn",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "keywords": [],
@@ -94,6 +97,9 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.11.0",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@commitlint/prompt-cli": "^11.0.0",
     "@electron-forge/cli": "6.0.0-beta.52",
     "@electron-forge/maker-deb": "6.0.0-beta.52",
     "@electron-forge/maker-rpm": "6.0.0-beta.52",

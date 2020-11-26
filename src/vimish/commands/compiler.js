@@ -1,4 +1,5 @@
 const Command = require("../command")
+const Settings = require("../../settings")
 
 exports.compiler = Command.of(
   ["option", "value"],

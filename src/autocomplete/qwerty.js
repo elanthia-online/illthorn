@@ -1,5 +1,5 @@
-import List from "../util/list"
-import Pipe from "../util/pipe"
+const List = require("../util/list")
+const Pipe = require("../util/pipe")
 /**
  * util for building distance in an XYZ coordinate plane
  * with relation to Qwerty keyboards

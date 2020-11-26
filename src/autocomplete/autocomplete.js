@@ -1,5 +1,6 @@
 const List = require("../util/list")
 const Pipe = require("../util/pipe")
+const qwerty = require("qwerty")
 
 module.exports = class Autocomplete {
   static MIN_CLOSENESS_SCORE = 25
@@ -24,7 +25,7 @@ module.exports = class Autocomplete {
       )
       .map((suggestion) => [
         suggestion,
-        _qwerty2.default.word_distance(command, suggestion),
+        qwerty.default.word_distance(command, suggestion),
       ])
       .sort(([, a], [, b]) => a - b)
       .filter(

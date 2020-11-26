@@ -35,7 +35,7 @@ module.exports = class Feed {
     this.middleware = middleware
     this.root = document.createElement("div")
 
-    Bus.on(Bus.events.REDRAW, (e) => {
+    Bus.on(Bus.events.REDRAW, (_) => {
       if (!this.root || !this.root.classList) return
 
       if (Settings.get("clickable")) {

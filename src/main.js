@@ -1,5 +1,4 @@
 const { app, BrowserWindow } = require("electron")
-const path = require("path")
 const windowStateKeeper = require("electron-window-state")
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.

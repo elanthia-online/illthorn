@@ -1,4 +1,6 @@
 const Command = require("../command")
+const { redraw } = require("../../util/redraw")
+const Session = require("../../session")
 const Settings = require("../../settings")
 
 /**

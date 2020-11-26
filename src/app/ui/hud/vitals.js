@@ -27,6 +27,17 @@ module.exports = class Vitals {
     "pbarStance",
   ]
 
+  // List of stances in percentage order.
+  // Used for fixing the title on startup.
+  static STANCE_ORDER = [
+    "offensive",
+    "advance",
+    "forward",
+    "neutral",
+    "guarded",
+    "defensive",
+  ]
+
   static ID_TO_UI = {
     encumlevel: "encumbrance",
     mindState: "mind",
@@ -45,7 +56,7 @@ module.exports = class Vitals {
       max: parseInt(max || "100", 10),
       value: parseInt(value || attr(ele, "value", "0"), 10),
       text: text,
-      title: (title || text).replace(/\s\(\d+\%\)/, ""),
+      title: (title || text).replace(/\s\(\d+%\)/, ""),
     }
 
     //pp("%s -> %o -> %o", parsed.id, ele, parsed)
@@ -55,6 +66,13 @@ module.exports = class Vitals {
       parsed.value = parseInt(exp, 10)
       parsed.title = parsed.title.replace(exp, "").trim()
       return parsed
+    }
+
+    // At startup, the text may not be present. This fixes the title in that case.
+    if (parsed.title == "pbarStance") {
+      // Make sure that finer stance gradations don't produce incorrect indices.
+      const index = Math.floor(parsed.value / 20)
+      parsed.title = Vitals.STANCE_ORDER[index]
     }
 
     if (typeof parsed.value == "number") {

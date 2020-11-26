@@ -8,13 +8,17 @@
     "start": "ENV=dev electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "lint": "echo \"No linting configured\"",
+    "lint": "pretty-quick --check && eslint src",
+    "fix": "pretty-quick && eslint src --fix",
+    "commit": "commit",
     "test": "echo \"No testing configured\"",
     "publish": "electron-forge publish"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "pretty-quick --staged",
+      "post-merge": "yarn",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "keywords": [],
@@ -93,6 +97,9 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.11.0",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@commitlint/prompt-cli": "^11.0.0",
     "@electron-forge/cli": "6.0.0-beta.52",
     "@electron-forge/maker-deb": "6.0.0-beta.52",
     "@electron-forge/maker-rpm": "6.0.0-beta.52",
@@ -100,8 +107,12 @@
     "@electron-forge/maker-zip": "6.0.0-beta.52",
     "@electron-forge/plugin-webpack": "^6.0.0-beta.52",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "babel-eslint": "^10.1.0",
     "css-loader": "^4.3.0",
     "electron": "5.0.6",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "file-loader": "^6.0.0",
     "husky": "^4.2.5",
     "node-loader": "^0.6.0",

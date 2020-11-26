@@ -8,13 +8,14 @@
     "start": "ENV=dev electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "lint": "eslint src",
+    "lint": "pretty-quick --check && eslint src",
+    "fix": "pretty-quick && eslint src --fix",
     "test": "echo \"No testing configured\"",
     "publish": "electron-forge publish"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && yarn run lint"
+      "pre-commit": "pretty-quick --staged"
     }
   },
   "keywords": [],

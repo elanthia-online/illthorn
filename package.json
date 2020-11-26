@@ -106,6 +106,7 @@
     "@electron-forge/maker-squirrel": "6.0.0-beta.52",
     "@electron-forge/maker-zip": "6.0.0-beta.52",
     "@electron-forge/plugin-webpack": "^6.0.0-beta.52",
+    "@jest-runner/electron": "^3.0.0",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "babel-eslint": "^10.1.0",
     "css-loader": "^4.3.0",
@@ -135,5 +136,9 @@
         }
       ]
     ]
+  },
+  "jest": {
+    "runner": "@jest-runner/electron/main",
+    "testEnvironment": "node"
   }
 }

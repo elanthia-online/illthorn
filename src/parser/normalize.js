@@ -28,6 +28,7 @@ exports.normalize = (string) => {
     .replace(/\sid="/g, ` class="`)
     .replace(/\sid='/g, ` class='`)
     .replace(/\/>/g, ">")
+    .replace(">\n", ">")
 
   if (!string.startsWith("<")) return pre(string)
   if (string.startsWith("<b ")) return pre(string)

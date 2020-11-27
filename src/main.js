@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require("electron")
 const windowStateKeeper = require("electron-window-state")
+const contextMenu = require("electron-context-menu")
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -12,6 +13,7 @@ if (require("electron-squirrel-startup")) {
 let mainWindow
 
 const createWindow = () => {
+  contextMenu()
   //define default window state
   let mainWindowState = windowStateKeeper({
     defaultWidth: 1500,

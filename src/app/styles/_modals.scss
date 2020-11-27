@@ -31,9 +31,9 @@
   right: 1em;
   background: linear-gradient(-25deg, black, #012554);
   padding: 1em;
-  border: 2px solid var(--info);
   width: 50vw;
   font-size: 0.75em;
+  box-shadow: 0 0 40px black;
 
   visibility: hidden;
   opacity: 0;

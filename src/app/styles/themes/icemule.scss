@@ -30,7 +30,8 @@ A humble, hardscrabble theme—with an arctic, north-blush color palette lifted 
 }
 //Globalish
 body,
-pre {
+pre,
+.command {
   font-family: "MonoLisa", system-ui, sans-serif;
 }
 
@@ -358,7 +359,6 @@ details.panel summary {
 //stream
 #streams-wrapper {
   box-shadow: 3px 3px 7px -1px rgba(0, 0, 0, 0.61);
-  z-index: 100;
   background-color: #2e3440;
   border-bottom: 3px solid var(--info);
   overflow: hidden;

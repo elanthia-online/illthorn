@@ -4,6 +4,8 @@ const Vimish = require("../../vimish")
 const Lens = require("../../util/lens")
 const Bus = require("../../bus")
 
+const Logo = require("../img/illthorn-icon-large-transparent.png")
+
 module.exports = class CLI {
   static CONTROL_CHAR = ":"
 
@@ -219,43 +221,51 @@ module.exports = class CLI {
           class: commandsModalClass,
         },
         [
-          m("h2", "Illthorn UI Commands"),
-          m("ul.command-list", [
-            m("li", [
-              m("code.command", ":ui vitals on|off"),
-              m("span", "Show/Hide Vitals Panel"),
-            ]),
-            m("li", [
-              m("code.command", ":ui injuries on|off"),
-              m("span", "Show/Hide Injuries Panel"),
-            ]),
-            m("li", [
-              m("code.command", ":ui active-spells on|off"),
-              m("span", "Show/Hide Active Spells Panel"),
-            ]),
-            m("li.space-after", [
-              m("code.command", ":ui compass on|off"),
-              m("span", "Show/Hide Compass Panel"),
-            ]),
-            m("li", [
-              m("code.command", ":stream death on|off"),
-              m("span", "Show/Hide Death Stream"),
-            ]),
-            m("li.space-after", [
-              m("code.command", ":stream thoughts on|off"),
-              m("span", "Show/Hide Thoughts/Chat Stream"),
-            ]),
-            m("li.space-after", [
-              m(
-                "code.command",
-                ":theme original|rogue|dark-king|icemule|kobold|raging-thrak"
-              ),
-              m("span", "Change Theme"),
-            ]),
-            m("li", [
-              m("code.command", ":explain"),
-              m("span", "Show/Hide This Modal"),
-            ]),
+          m("header", [
+            m("img.logo", {
+              src: Logo.default,
+            }),
+            m("h2", "Illthorn"),
+            m("a.contribute", {
+              href:
+                "https://github.com/elanthia-online/illthorn",
+              text: "Contribute on GitHub",
+            }),
+          ]),
+          m("div.command-wrap", [
+            m("code.command", ":ui vitals on|off"),
+            m("span", "Show/Hide Vitals Panel"),
+          ]),
+          m("div.command-wrap", [
+            m("code.command", ":ui injuries on|off"),
+            m("span", "Show/Hide Injuries Panel"),
+          ]),
+          m("div.command-wrap", [
+            m("code.command", ":ui active-spells on|off"),
+            m("span", "Show/Hide Spells Panel"),
+          ]),
+          m("div.command-wrap.space-after", [
+            m("code.command", ":ui compass on|off"),
+            m("span", "Show/Hide Compass Panel"),
+          ]),
+          m("div.command-wrap", [
+            m("code.command", ":stream death on|off"),
+            m("span", "Show/Hide Death Stream"),
+          ]),
+          m("div.command-wrap.space-after", [
+            m("code.command", ":stream thoughts on|off"),
+            m("span", "Show/Hide Thoughts Stream"),
+          ]),
+          m("div.command-wrap.space-after", [
+            m(
+              "code.command",
+              ":theme original|rogue|dark-king|icemule|kobold|raging-thrak"
+            ),
+            m("span", "Change Theme"),
+          ]),
+          m("div.command-wrap", [
+            m("code.command", ":explain"),
+            m("span", "Show/Hide This Modal"),
           ]),
         ]
       ),

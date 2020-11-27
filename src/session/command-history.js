@@ -13,13 +13,17 @@ module.exports = class CommandHistory {
 
     // Load commands from storage
     this.buffer = LimitedList.of(
-      Storage.get(`commandHistory`),
+      Storage.get("commandHistory"),
       {
         limit: 100,
       }
     )
   }
 
+  /**
+   * Add a new command to the history.
+   * @param {string} command to add to the history
+   */
   add(command) {
     if (this.head().length == 0) {
       return (this.buffer.members[0] = command)
@@ -30,6 +34,9 @@ module.exports = class CommandHistory {
     Storage.set(`commandHistory`, this.buffer.members)
   }
 
+  /**
+   * Returns the largest valid index available.
+   */
   get last_index() {
     return Math.max(this.buffer.length - 1, 0)
   }
@@ -51,7 +58,7 @@ module.exports = class CommandHistory {
   }
 
   update(value) {
-    this.buffer[this.index] = value
+    this.buffer.members[this.index] = value
   }
 
   match(input) {
@@ -78,5 +85,12 @@ module.exports = class CommandHistory {
     if (this.index < 0) this.index = this.last_index
     if (this.index > this.last_index) this.index = 0
     return this
+  }
+
+  /**
+   * Access length of the command history.
+   */
+  get length() {
+    return this.buffer.length
   }
 }

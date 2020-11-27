@@ -13,11 +13,9 @@ exports.STATUS_WITH_TEXT = [
   "stream.speech",
 ]
 
-exports.STATUS_WITH_CHILDREN = [
-  "dialogdata",
-  "compass",
-  "progressbar",
-]
+exports.STATUS_WITH_CHILDREN = ["dialogdata", "compass", "progressbar"]
+
+exports.ALLOWED_CHILDREN = { compass: ["dir"] }
 
 exports.STATUS = [
   "img",

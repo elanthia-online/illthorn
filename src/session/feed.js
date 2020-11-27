@@ -1,8 +1,5 @@
 const Settings = require("../settings")
 const Bus = require("../bus")
-const SessionState = require("./state")
-
-const clone = (arr) => [].slice.call(arr)
 /**
  * a TCP Game feed -> DOM renderer
  */

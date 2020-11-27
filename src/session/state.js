@@ -1,7 +1,6 @@
 const pp = require("debug")("illthorn:state")
 const m = require("mithril")
 const Lens = require("../util/lens")
-const Bus = require("../bus")
 const Lookup = require("../util/lookup")
 
 module.exports = class SessionState {

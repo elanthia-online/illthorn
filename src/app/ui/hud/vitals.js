@@ -1,10 +1,9 @@
 const m = require("mithril")
-const util = require("util")
 const Session = require("../../../session")
 const Lens = require("../../../util/lens")
 const Progress = require("../progress")
 const Panel = require("./panel")
-const pp = require("debug")("illthorn:vitals")
+const _pp = require("debug")("illthorn:vitals")
 
 const span = (text, klass = "") =>
   m(`span.${klass}`, (text || "").toString().toLowerCase())

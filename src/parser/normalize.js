@@ -9,11 +9,11 @@ exports.normalize = (string) => {
     )
     .replace(
       /<streamWindow id="(\w+)(.*)\/>/g,
-      (_, id) => ``
+      (_, _id) => ``
     )
     .replace(
       /<resource picture="(\w+)(.*)\/>/g,
-      (_, id) => ``
+      (_, _id) => ``
     )
     .replace(/<pushBold\/>/g, `<b class="monster">`)
     .replace(/<popBold\/>/g, "</b>")

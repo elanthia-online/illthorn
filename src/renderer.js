@@ -7,6 +7,8 @@ const Macros = require("./macros")
 const Theme = require("./storage/theme")
 const Settings = require("./settings")
 
+window.Session = Session
+
 window.messages = window.messages || []
 
 let theme = Settings.get("theme")
@@ -24,10 +26,7 @@ m.mount(document.getElementById("sessions"), UI.Sessions)
 m.mount(document.getElementById("hands-wrapper"), UI.Hands)
 m.mount(document.getElementById("cli-wrapper"), UI.CLI)
 m.mount(document.getElementById("hud"), UI.HUD)
-m.mount(
-  document.getElementById("flash-container"),
-  UI.FlashMessage
-)
+m.mount(document.getElementById("flash-container"), UI.FlashMessage)
 
 Bus.on(Bus.events.FLASH, (message) => {
   message.ttl = message.ttl || Date.now() + 5000 // seconds
@@ -68,30 +67,18 @@ window.addEventListener("resize", function () {
   session.feed.reattach_head()
 })
 
-document.addEventListener(
-  "keypress",
-  UI.CLI.global_handlekeypress
-)
-document.addEventListener(
-  "autocomplete/right",
-  UI.CLI.autocomplete_right
-)
+document.addEventListener("keypress", UI.CLI.global_handlekeypress)
+document.addEventListener("autocomplete/right", UI.CLI.autocomplete_right)
 
 document.addEventListener("click", (e) => {
   const target = e.target
   if (!target || target.tagName !== "D") return
   const cmd = target.getAttribute("cmd")
-  if (
-    cmd &&
-    Session.current &&
-    Settings.get("clickable", false)
-  ) {
+  if (cmd && Session.current && Settings.get("clickable", false)) {
     Session.current.send_command(cmd, "click")
   }
 })
 
-Autodect.connect_all().catch((err) =>
-  Bus.emit(Bus.events.ERR, err)
-)
+Autodect.connect_all().catch((err) => Bus.emit(Bus.events.ERR, err))
 
 Macros.set_context()

@@ -12,16 +12,10 @@ window.Injuries = module.exports = class Injuries {
     return m(
       "ol.panel-list",
       Injuries.injuries().map((injury) => {
-        return m(
-          `li.${injury.type}.severity-${injury.severity}`,
-          [
-            m(
-              "span.injury-name",
-              injury.name + " / " + injury.type
-            ),
-            m("span.injury-severity", injury.severity),
-          ]
-        )
+        return m(`li.${injury.type}.severity-${injury.severity}`, [
+          m("span.injury-name", injury.name + " / " + injury.type),
+          m("span.injury-severity", injury.severity),
+        ])
       })
     )
   }
@@ -55,10 +49,6 @@ window.Injuries = module.exports = class Injuries {
   }
 
   view() {
-    return m(
-      Panel,
-      { id: "injuries", title: "injuries" },
-      Injuries.list()
-    )
+    return m(Panel, { id: "injuries", title: "injuries" }, Injuries.list())
   }
 }

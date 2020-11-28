@@ -16,10 +16,8 @@ module.exports = function IO(value) {
   if (!(this instanceof IO)) return new IO(value)
   const io = this
   io._work = Promise.resolve(value)
-  io.fmap = (fx) => {
-    io._work = io._work
-      .then(fx)
-      .catch((err) => console.error(err))
+  io.fmap = (onOk, onErr = console.error) => {
+    io._work = io._work.then(onOk).catch(onErr)
     return io
   }
   // make it await-able when unwrapped

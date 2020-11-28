@@ -12,13 +12,9 @@ module.exports = class Panel {
     const state = Lens.get(Session.focused(), "state")
 
     if (state)
-      return m(
-        `details.panel#${attrs.id}`,
-        { open: true },
-        [
-          m("summary", {}, attrs.title, []),
-          m("div", [children]),
-        ]
-      )
+      return m(`details.panel#${attrs.id}`, { open: true }, [
+        m("summary", {}, attrs.title, []),
+        m("div", [children]),
+      ])
   }
 }

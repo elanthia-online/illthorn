@@ -1,7 +1,7 @@
 const StreamsSettings = require("../settings").of("streams")
 const Lens = require("../util/lens")
 const Storage = require("../storage")
-const Feed = require("./feed")
+const Parser = require("../parser")
 
 module.exports = class Streams {
   // this class on the top-level application element
@@ -34,8 +34,7 @@ module.exports = class Streams {
 
   get _scrolling() {
     // no content scrollable
-    if (this._view.scrollHeight == this._view.clientHeight)
-      return false
+    if (this._view.scrollHeight == this._view.clientHeight) return false
     // check the relative scroll offset from the head
     return (
       this._view.scrollHeight - this._view.scrollTop !==
@@ -44,13 +43,8 @@ module.exports = class Streams {
   }
 
   flush() {
-    while (
-      this._view.childElementCount >
-      Streams.STREAMS_BUFFER_LIMT
-    ) {
-      this._view &&
-        this._view.firstChild &&
-        this._view.firstChild.remove()
+    while (this._view.childElementCount > Streams.STREAMS_BUFFER_LIMT) {
+      this._view && this._view.firstChild && this._view.firstChild.remove()
     }
     return this
   }
@@ -67,6 +61,7 @@ module.exports = class Streams {
       this.storeStreamMessage(tag.textContent, name)
     }
     const el = await this.createEl(tag)
+
     this._view.append(el)
 
     // scroll the feed to the HEAD position
@@ -77,12 +72,10 @@ module.exports = class Streams {
     const tagName = (tag.tagName || "").toLowerCase()
     const pre = document.createElement("pre")
     pre.classList.add(tag.className, tagName)
-    const parts = this.transformStreamMessage(
-      tag.textContent
-    )
+    const parts = this.transformStreamMessage(tag.textContent)
     parts.forEach((ele) => pre.append(ele))
-    Feed.prototype.addLinks.call(this, pre)
-    Feed.prototype.addHilites.call(this, pre)
+    await Parser.addHilites(pre)
+    await Parser.addLinks(pre)
     return pre
   }
 
@@ -123,10 +116,7 @@ module.exports = class Streams {
       })
     )
     const pre = document.createElement("pre")
-    pre.classList.add(
-      "loaded-from-storage-message",
-      "stream"
-    )
+    pre.classList.add("loaded-from-storage-message", "stream")
     pre.innerHTML = `<span>^ Loaded from Storage ^ </span>`
     return this._view.append(pre)
   }
@@ -146,10 +136,7 @@ module.exports = class Streams {
       // [0] = [help]-GSIV:Gilderan: "ahh good to know"
       // [1] = [help]
       // [2] = -GSIV:Gilderan: "ahh good to know"
-      streamChannel.setAttribute(
-        "data-stream-channel",
-        messageParts[1]
-      )
+      streamChannel.setAttribute("data-stream-channel", messageParts[1])
       streamChannel.innerText = Lens.get(messageParts, "1")
       streamText.innerText = Lens.get(messageParts, "2")
     } else if (text.trim().startsWith("*")) {
@@ -177,16 +164,11 @@ module.exports = class Streams {
   }
 
   wants(stream_name) {
-    return StreamsSettings.get(
-      `active.${stream_name}`,
-      false
-    )
+    return StreamsSettings.get(`active.${stream_name}`, false)
   }
 
   async redraw(view) {
-    const container = document.querySelector(
-      "#streams-wrapper"
-    )
+    const container = document.querySelector("#streams-wrapper")
     if (!container) return // todo: maybe warn?
 
     const active_streams = Object.entries(
@@ -197,9 +179,7 @@ module.exports = class Streams {
       return window.app.classList.remove(Streams.STREAMS_ON)
     }
 
-    active_streams.forEach(([active]) =>
-      this._view.classList.add(active)
-    )
+    active_streams.forEach(([active]) => this._view.classList.add(active))
 
     window.app.classList.add(Streams.STREAMS_ON)
 

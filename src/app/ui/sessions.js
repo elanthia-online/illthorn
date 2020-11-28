@@ -8,11 +8,7 @@ module.exports = class SessionsList {
       `li.${session.has_focus() ? "on" : "off"}`,
       {
         key: name,
-        onclick: Bus.emit.bind(
-          Bus,
-          Bus.events.FOCUS,
-          session
-        ),
+        onclick: Bus.emit.bind(Bus, Bus.events.FOCUS, session),
         title: session.name,
       },
       m("span.alt-numeric", { data: idx }, idx + 1),

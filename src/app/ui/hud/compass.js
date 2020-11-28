@@ -2,7 +2,7 @@ const m = require("mithril")
 const Session = require("../../../session")
 const Panel = require("./panel")
 const Lens = require("../../../util/lens")
-const Parser = require("../../../parser")
+const DOM = require("../../../util/dom")
 const Pipe = require("../../../util/pipe")
 const Empty = document.createElement("pre")
 
@@ -30,16 +30,9 @@ module.exports = class Compass {
   static current() {
     return Pipe.of(Session.current)
       .fmap(Lens.get, "state.compass", Empty)
-      .fmap(
-        Parser.map,
-        "dir",
-        (dir) => dir.attributes.value.textContent
-      )
+      .fmap(DOM.map, "dir", (dir) => dir.attributes.value.textContent)
       .fmap((dirs) =>
-        dirs.reduce(
-          (acc, dir) => Object.assign(acc, { [dir]: 1 }),
-          {}
-        )
+        dirs.reduce((acc, dir) => Object.assign(acc, { [dir]: 1 }), {})
       ).data
   }
 

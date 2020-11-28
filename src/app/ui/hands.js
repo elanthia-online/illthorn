@@ -8,13 +8,7 @@ module.exports = class Hands {
   static get_ui_text(hand, session) {
     return (
       Lens.get(session, ["state", hand, "innerText"]) ||
-      Lens.get(session, [
-        "state",
-        hand,
-        "attributes",
-        "noun",
-        "value",
-      ]) ||
+      Lens.get(session, ["state", hand, "attributes", "noun", "value"]) ||
       Hands.fallback(hand)
     )
   }

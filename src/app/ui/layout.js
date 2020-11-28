@@ -5,10 +5,7 @@ module.exports = function () {
 
   const RIGHT_PANELS_ON_CLASS = "right-panels-on"
 
-  const rightPanels = LayoutSettings.get(
-    "right-panels",
-    false
-  )
+  const rightPanels = LayoutSettings.get("right-panels", false)
   if (rightPanels) {
     window.app.classList.add(RIGHT_PANELS_ON_CLASS)
   }

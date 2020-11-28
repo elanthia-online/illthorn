@@ -13,15 +13,9 @@ module.exports = class Occlusion {
    */
   static prune(
     ele,
-    {
-      retain,
-      min_length,
-      start = performance.now(),
-      depth = 1,
-    }
+    { retain, min_length, start = performance.now(), depth = 1 }
   ) {
-    if (Occlusion.CONTEXT && Occlusion.CONTEXT !== start)
-      return
+    if (Occlusion.CONTEXT && Occlusion.CONTEXT !== start) return
     // reentrant lock
     Occlusion.CONTEXT = start
     // recursion should always have an upper frame limit

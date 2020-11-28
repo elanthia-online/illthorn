@@ -9,18 +9,11 @@ module.exports = class Command {
   }
 
   run(argv, sudo = false) {
-    const named_args = argv.slice(
-      0,
-      this.named_arg_tuple.length
-    )
-    const rest = argv.slice(
-      this.named_arg_tuple.length,
-      argv.length
-    )
+    const named_args = argv.slice(0, this.named_arg_tuple.length)
+    const rest = argv.slice(this.named_arg_tuple.length, argv.length)
 
     const argument = this.named_arg_tuple.reduce(
-      (acc, prop, i) =>
-        Object.assign(acc, { [prop]: named_args[i] }),
+      (acc, prop, i) => Object.assign(acc, { [prop]: named_args[i] }),
       {}
     )
     return this.impl(argument, rest, sudo)

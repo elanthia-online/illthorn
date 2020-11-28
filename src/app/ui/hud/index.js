@@ -10,8 +10,7 @@ module.exports = class HUD {
     return [
       Settings.get("vitals", true) && m(Vitals),
       Settings.get("injuries", true) && m(Injuries),
-      Settings.get("active-spells", true) &&
-        m(ActiveSpells),
+      Settings.get("active-spells", true) && m(ActiveSpells),
       Settings.get("compass", true) && m(Compass),
     ]
   }

@@ -1,16 +1,10 @@
+const pp = require("debug")("illthorn:state")
 const m = require("mithril")
 const Lens = require("../util/lens")
-const Bus = require("../bus")
-const pp = require("debug")("illthorn:state")
-
-const makeLookup = (keys) =>
-  keys.reduce(
-    (acc, id) => Object.assign(acc, { [id]: 1 }),
-    {}
-  )
+const Lookup = require("../util/lookup")
 
 module.exports = class SessionState {
-  static TAGS = makeLookup([
+  static TAGS = Lookup([
     "prompt",
     "right",
     "left",
@@ -21,9 +15,9 @@ module.exports = class SessionState {
 
   static MODALS = ["commands"]
 
-  static TIMERS = makeLookup(["roundtime", "casttime"])
+  static TIMERS = Lookup(["roundtime", "casttime"])
 
-  static INJURY_IDS = makeLookup([
+  static INJURY_IDS = Lookup([
     "head",
     "leftEye",
     "rightEye",
@@ -40,7 +34,7 @@ module.exports = class SessionState {
     "nsys",
   ])
 
-  static ID_TAGS = makeLookup([
+  static ID_TAGS = Lookup([
     "mana",
     "health",
     "stamina",
@@ -66,10 +60,7 @@ module.exports = class SessionState {
     const id = tag.id || tag.className || ""
     const tagName = (tag.tagName || "").toLowerCase()
     if (id in SessionState.INJURY_IDS)
-      return state.put(
-        "injuries." + id,
-        tag.cloneNode(true)
-      )
+      return state.put("injuries." + id, tag.cloneNode(true))
     if (id in SessionState.ID_TAGS)
       return state.put(id, tag.cloneNode(true))
     if (tagName in SessionState.TAGS)
@@ -91,29 +82,22 @@ module.exports = class SessionState {
     this._session = session
     this._timers = {}
     this._modals = {}
-    SessionState.MODALS.forEach(
-      (modal) => (this._modals[modal] = false)
-    )
+    SessionState.MODALS.forEach((modal) => (this._modals[modal] = false))
   }
 
   by_name(name) {
     return Object.keys(this)
       .filter(
         (key) =>
-          Lens.get(
-            this,
-            `${key}.tagName`,
-            ""
-          ).toLowerCase() == name.toLowerCase()
+          Lens.get(this, `${key}.tagName`, "").toLowerCase() ==
+          name.toLowerCase()
       )
       .map((key) => this[key])
   }
 
   get(prop, fallback) {
     if (prop.toString()[0] == "_") {
-      throw new Error(
-        `cannot change private Property(${prop})`
-      )
+      throw new Error(`cannot change private Property(${prop})`)
     }
 
     return Lens.get(this, prop, fallback)
@@ -121,7 +105,6 @@ module.exports = class SessionState {
 
   put(prop, val) {
     Lens.put(this, prop, val)
-    Bus.emit(Bus.events.REDRAW)
     return this
   }
   /**
@@ -137,14 +120,12 @@ module.exports = class SessionState {
     pp("spawn_timer::", { name, end })
     this._timers[name] = this._timers[name] || {}
     // gs timers are second precision vs millisecond
-    this._timers[name].end_epoc_time =
-      parseInt(end, 10) * 1000
+    this._timers[name].end_epoc_time = parseInt(end, 10) * 1000
 
     this._timers[name].interval =
       this._timers[name].interval ||
       setInterval(() => {
-        const end_epoc_time = this._timers[name]
-          .end_epoc_time
+        const end_epoc_time = this._timers[name].end_epoc_time
         // dispose of the timer
         if (Date.now() > end_epoc_time) {
           clearInterval(this._timers[name].interval)

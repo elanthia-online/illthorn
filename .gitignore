@@ -4,4 +4,5 @@ out
 src/dist
 .sass-cache
 .webpack
-yarn-error.log
+*.log
+

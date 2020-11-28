@@ -9,6 +9,7 @@ const Streams = require("./streams")
 const Bus = require("../bus")
 const History = require("./command-history")
 const IO = require("../util/io")
+const SessionState = require("./state")
 
 module.exports = class Session extends events.EventEmitter {
   static Sessions = new Map()
@@ -57,8 +58,7 @@ module.exports = class Session extends events.EventEmitter {
 
     return Session.select(
       (sess) =>
-        sess.name &&
-        ~sess.name.toLowerCase().indexOf(name.toLowerCase())
+        sess.name && ~sess.name.toLowerCase().indexOf(name.toLowerCase())
     )
   }
 
@@ -71,13 +71,9 @@ module.exports = class Session extends events.EventEmitter {
   static async of(opts) {
     let addr = "127.0.0.1"
     try {
-      addr = (await dns.promises.lookup("localhost"))
-        .address
+      addr = (await dns.promises.lookup("localhost")).address
     } catch {
-      console.log(
-        "Could not resolve localhost, defaulting to %j",
-        addr
-      )
+      console.log("Could not resolve localhost, defaulting to %j", addr)
     }
     opts.addr = addr
     const char = new Session(opts)
@@ -103,6 +99,7 @@ module.exports = class Session extends events.EventEmitter {
     this.sock = void 0
     this.history = History.of()
     this.name = name || port
+    this.log = require("debug")("illthorn:session:" + this.name)
     this.feed = Feed.of({ session: this })
     this.streams = Streams.of({ session: this })
     this.state = State.of(this)
@@ -116,12 +113,33 @@ module.exports = class Session extends events.EventEmitter {
   }
 
   async parse(string) {
+    const t0 = performance.now()
     await this.io.fmap(async () => {
-      const {
-        pending: _pending,
-        parsed,
-      } = await Parser.parse(this, string)
-      if (parsed) await this.feed.ingestDocument(parsed)
+      const { parsed } = await Parser.parse(this, string)
+      if (!parsed) return
+      const streams = [...parsed.text.querySelectorAll("stream")]
+      streams.forEach((stream) => {
+        if (this.streams.wants(stream.className)) {
+          stream.remove()
+          this.streams.insert(stream)
+        }
+      })
+
+      this.feed.ingest(parsed.text, parsed.prompt)
+      const updates = [...parsed.metadata.childNodes]
+      this.log(":updates", updates)
+      updates.forEach((update) => {
+        SessionState.consume(this.state, update)
+      })
+      Bus.emit(Bus.events.REDRAW)
+    })
+    const t1 = performance.now()
+    setTimeout(() => {
+      this.log(
+        `parsed ${string.length} characters in ${Math.round(
+          (t1 - t0) * 1000
+        )}μs`
+      )
     })
   }
 
@@ -129,10 +147,13 @@ module.exports = class Session extends events.EventEmitter {
     this.quit()
     if (!this.feed) return
     const pre = document.createElement("pre")
-    pre.innerText = "\n*** Connection Closed ***\n"
+    pre.classList.add("session-closed")
+    pre.innerText = `\n*** ${this.name} / Connection Closed ***`
     const frag = document.createDocumentFragment()
     frag.appendChild(pre)
     this.feed.append(frag)
+    Session.Sessions.delete(this.name)
+    Bus.emit(Bus.events.REDRAW)
   }
 
   destroy() {
@@ -146,7 +167,7 @@ module.exports = class Session extends events.EventEmitter {
   quit() {}
 
   has_focus() {
-    return this.feed.has_focus()
+    return this.feed && this.feed.has_focus()
   }
 
   activate() {
@@ -168,8 +189,7 @@ module.exports = class Session extends events.EventEmitter {
   }
 
   rename(name) {
-    if (this.name && Session.has(this.name))
-      Session.delete(this.name)
+    if (this.name && Session.has(this.name)) Session.delete(this.name)
     this.name = name
     Session.set(this.name, this)
     Bus.emit(Bus.events.REDRAW)
@@ -183,8 +203,7 @@ module.exports = class Session extends events.EventEmitter {
       : document.createElement("prompt")
     prompt.className = ""
     prompt.classList.add(id, "sent")
-    prompt.innerText =
-      this.state.get("prompt.innerText", ">") + cmd
+    prompt.innerText = this.state.get("prompt.innerText", ">") + cmd
     if (!prompt.parentNode) {
       this.feed.append(prompt)
     }

@@ -32,21 +32,15 @@ exports.connect = exports.c = Command.of(
     }
 
     if (Session.has(argv.name)) {
-      throw new Error(
-        `Session(name: ${argv.name}) already exists`
-      )
+      throw new Error(`Session(name: ${argv.name}) already exists`)
     }
 
     if (
       Session.find(
-        (sess) =>
-          sess.port.toString() ==
-          (argv.port || "").toString()
+        (sess) => sess.port.toString() == (argv.port || "").toString()
       )
     ) {
-      throw new Error(
-        `Session(port: ${argv.port}) already exists`
-      )
+      throw new Error(`Session(port: ${argv.port}) already exists`)
     }
 
     const session = await Session.of(argv)

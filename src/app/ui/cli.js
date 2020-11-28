@@ -10,21 +10,16 @@ module.exports = class CLI {
   static CONTROL_CHAR = ":"
 
   static parse({ value }) {
-    if (value[0] == CLI.CONTROL_CHAR)
-      return CLI.fe_cmd(value)
+    if (value[0] == CLI.CONTROL_CHAR) return CLI.fe_cmd(value)
     CLI.game_cmd(value)
   }
 
   static async fe_cmd(raw) {
     const [command, ...argv] = raw.slice(1).split(" ")
-    const impl = Vimish.commands.get(command.toLowerCase())[
-      command
-    ]
+    const impl = Vimish.commands.get(command.toLowerCase())[command]
     try {
       if (!impl) {
-        throw new Error(
-          `:${command} is not a valid command`
-        )
+        throw new Error(`:${command} is not a valid command`)
       }
 
       await impl.run(argv)
@@ -46,9 +41,7 @@ module.exports = class CLI {
   }
 
   static on_enter(cli, val) {
-    const suggestion = document.getElementById(
-      "cli-suggestions"
-    )
+    const suggestion = document.getElementById("cli-suggestions")
     if (suggestion) suggestion.placeholder = ""
     cli.value = ""
     const session = Session.focused()
@@ -76,32 +69,24 @@ module.exports = class CLI {
         .split(/\r|\n/g)
         .map((cmd) => cmd.trim())
         .filter((cmd) => cmd.length)
-        .forEach((cmd) =>
-          Session.current.send_command(cmd, "macro")
-        )
+        .forEach((cmd) => Session.current.send_command(cmd, "macro"))
     }
     cli.value = macro
     cli.focus()
-    cli.setSelectionRange(
-      replacement - 1,
-      replacement + "?".length
-    )
+    cli.setSelectionRange(replacement - 1, replacement + "?".length)
   }
 
   static global_handlekeypress(e) {
     const cli = document.getElementById("cli")
     if (!cli || CLI.is_macro(e)) return
-    if (e.key == "Enter")
-      return CLI.on_enter(cli, cli.value)
+    if (e.key == "Enter") return CLI.on_enter(cli, cli.value)
     cli.focus()
   }
 
   static autocomplete_right(_) {
     requestAnimationFrame(function () {
       const cli = document.getElementById("cli")
-      const suggestion = document.getElementById(
-        "cli-suggestions"
-      )
+      const suggestion = document.getElementById("cli-suggestions")
       if (!cli || !suggestion) return
       // do not disable the right arrow if we
       // are not at the head of the input buffer
@@ -119,17 +104,14 @@ module.exports = class CLI {
       "#cli-suggestions"
     )
     if (!suggestions || !Session.current) return
-    if (e.target.value == "")
-      return (suggestions.placeholder = "")
-    const [most_recent] = Session.current.history.match(
-      e.target.value
-    )
+    if (e.target.value == "") return (suggestions.placeholder = "")
+    const [most_recent] = Session.current.history.match(e.target.value)
     suggestions.placeholder = most_recent || ""
   }
 
   static onclick(_) {
-    Session.focused().state._modals.commands = !Session.focused()
-      .state._modals.commands
+    Session.focused().state._modals.commands = !Session.focused().state
+      ._modals.commands
   }
 
   view({ attrs }) {
@@ -145,11 +127,7 @@ module.exports = class CLI {
       roundTimeVisible = 1
     }
 
-    const castTime = Lens.get(
-      sess,
-      "state._timers.casttime.remaining",
-      0
-    )
+    const castTime = Lens.get(sess, "state._timers.casttime.remaining", 0)
     let castTimeVisible = 0
     if (castTime) {
       castTimeVisible = 1
@@ -164,17 +142,13 @@ module.exports = class CLI {
       : ""
 
     // TODO: This does NOT seem ideal, but the idea is to force the timer bar `<div>` to re-kick-off the CSS animations when the `style` attribute changes. That can be done by forcing the browser to redraw (since Mithril itself doesn't redraw the whole element, it just updates the attributes).
-    const forceRT = document.querySelector(
-      ".round-time-current"
-    )
+    const forceRT = document.querySelector(".round-time-current")
     if (forceRT) {
       forceRT.classList.remove("go")
       void forceRT.offsetWidth
       forceRT.classList.add("go")
     }
-    const forceCT = document.querySelector(
-      ".cast-time-current"
-    )
+    const forceCT = document.querySelector(".cast-time-current")
     if (forceCT) {
       forceCT.classList.remove("go")
       void forceRT.offsetWidth
@@ -192,11 +166,7 @@ module.exports = class CLI {
       ]),
       m(
         "span.prompt",
-        Lens.get(
-          Session.focused(),
-          "state.prompt.innerText",
-          ">"
-        )
+        Lens.get(Session.focused(), "state.prompt.innerText", ">")
       ),
       m("#cnc", [
         m("input#cli", {
@@ -227,8 +197,7 @@ module.exports = class CLI {
             }),
             m("h2", "Illthorn"),
             m("a.contribute", {
-              href:
-                "https://github.com/elanthia-online/illthorn",
+              href: "https://github.com/elanthia-online/illthorn",
               text: "Contribute on GitHub",
             }),
           ]),

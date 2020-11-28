@@ -46,7 +46,7 @@ module.exports = class Vitals {
   }
 
   static parse(ele) {
-    const text = attr(ele, "text", attr(ele, "id"))
+    const text = attr(ele, "text", attr(ele, "value", attr(ele, "id")))
     const [_0, title, value, max] = text.match(Vitals.PATTERN) || []
     const parsed = {
       id: ele.className,

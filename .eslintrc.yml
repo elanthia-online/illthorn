@@ -16,6 +16,7 @@ parserOptions:
   ecmaVersion: 12
 globals:
   MAIN_WINDOW_WEBPACK_ENTRY: readonly
+  MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: readonly
 rules:
   prettier/prettier: ["error"]
   no-unused-vars:

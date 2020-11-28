@@ -168,7 +168,6 @@ module.exports = class Feed {
   ingest(text, prompt) {
     if (!text.hasChildNodes()) return
     this.append(text)
-    console.log("prompt:: %o", prompt)
     prompt && this.append(prompt)
   }
 }

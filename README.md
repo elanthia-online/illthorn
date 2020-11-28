@@ -38,7 +38,7 @@ Lich might also be `lich.rbw` on your setup. You can run multiple connections (f
 ## Planned Features
 
 - [ ] Plugin Interface
-- [ ] Custom Highlights
+- [x] Custom Highlights
 - [ ] Macros
 - [ ] Saved Logging
 - [ ] Download Public Themes
@@ -122,6 +122,27 @@ Sets the stream panels. State is `on` or `off`. Names are:
 - `death`
 
 Example: `:stream thoughts on`
+
+#### `:config`
+
+Display current configuration for Illthorn.
+
+#### `:hilite add <pattern> <group>`
+
+Adds a regular expression to the specified highlight group.
+
+#### `:hilite group <group> <css-property>=<css-value>`
+
+Specifies a set of CSS properties to apply to a given group highlight. Multiple property-value pairs can be specified for a group. Typical properties include:
+
+1.  `color` for foreground color.
+2.  `background-color` for background color.
+3.  `font-weight` to make text bold.
+4.  `font-style` to make text italics.
+
+#### `:hilite reload`
+
+Reload highlight configuration.
 
 ## Autocomplete
 

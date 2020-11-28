@@ -8,6 +8,7 @@ const {
 const TreeWalker = require("./dom-walker")
 // enum of all normalized game tags
 const Tags = require("./tags")
+const Url = require("../util/url")
 
 const pp = require("debug")("illthorn:parser:v2")
 const raw = require("debug")("illthorn:parser:v2:raw")
@@ -96,6 +97,8 @@ const onNode = (parsed, node) => {
       return ondeletecontainer(parsed, node)
     case Tags.SKIN:
       return onskin(parsed, node)
+    case Tags.LAUNCHURL:
+      return onlaunchurl(parsed, node)
     case Tags.SPELL:
       return onspell(parsed, node)
     case Tags.RIGHT:
@@ -320,4 +323,12 @@ const oncasttime = (exports.oncasttime = (parsed, casttime) => {
 const onroundtime = (exports.oncasttime = (parsed, roundtime) => {
   appendParsedMetadata(parsed, roundtime)
   removeChildren(parsed, roundtime)
+})
+
+const onlaunchurl = (exports.onlaunchurl = (parsed, launchurl) => {
+  launchurl.remove()
+  console.log(Url)
+  Url.open_external_link(
+    "https://www.play.net" + launchurl.attributes.src.value
+  )
 })

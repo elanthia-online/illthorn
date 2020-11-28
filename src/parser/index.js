@@ -2,8 +2,7 @@ const { addLinks } = require("./add-links")
 const { addHilites } = require("./add-hilites")
 const { normalize } = require("./normalize")
 const isDanglingStream = require("./is-dangling-stream")
-const _v1 = require("./_v1")
-const _v2 = require("./_v2")
+const v2 = require("./_v2")
 const Log = require("./log")
 
 exports.parse = async (session, incoming) => {
@@ -23,7 +22,7 @@ exports.parse = async (session, incoming) => {
     doc.body.append(...doc.head.childNodes)
     if (session.has_focus()) Log.parsed(doc.body.innerHTML)
 
-    const parsed = _v2.parse(session, doc.body)
+    const parsed = v2.parse(session, doc.body)
 
     if (session.has_focus()) {
       Log.sorted(

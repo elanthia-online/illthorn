@@ -15,7 +15,7 @@ module.exports = class Feed {
    * safely check if an HTMLElement is a prompt or not
    */
   static is_prompt(pre) {
-    return pre && pre.tagName == "PROMPT"
+    return pre && typeof pre.matches == "function" && pre.matches("prompt")
   }
   /**
    * pure constructor
@@ -45,9 +45,7 @@ module.exports = class Feed {
       if (!e.target) return
       if (!e.target.classList.contains("d")) return
       if (this.root.classList.contains("clickable")) {
-        this.session.send_command(
-          e.target.dataset.cmd || e.target.text
-        )
+        this.session.send_command(e.target.dataset.cmd || e.target.text)
       }
     })
 
@@ -59,8 +57,7 @@ module.exports = class Feed {
 
   get _scrolling() {
     // no content scrollable
-    if (this.root.scrollHeight == this.root.clientHeight)
-      return false
+    if (this.root.scrollHeight == this.root.clientHeight) return false
     // check the relative scroll offset from the head
     return (
       this.root.scrollHeight - this.root.scrollTop !==
@@ -99,9 +96,7 @@ module.exports = class Feed {
    */
   activate() {
     // turn siblings off
-    Array.from(Feed.Feeds).forEach(([_, feed]) =>
-      feed.idle()
-    )
+    Array.from(Feed.Feeds).forEach(([_, feed]) => feed.idle())
     this._focused = true
     this.reattach_head()
     return this
@@ -140,10 +135,7 @@ module.exports = class Feed {
 
     // swap for the latest prompt
     if (Feed.is_prompt(ele) && this.has_prompt()) {
-      return this.root.replaceChild(
-        ele,
-        this.root.lastElementChild
-      )
+      return this.root.replaceChild(ele, this.root.lastElementChild)
     }
     // append the tag to the actual HTML
     this.root.append(ele)
@@ -167,12 +159,8 @@ module.exports = class Feed {
    * finalizer for pruned nodes
    */
   flush() {
-    while (
-      this.root.childElementCount > Feed.MAX_MEMORY_LENGTH
-    ) {
-      this.root &&
-        this.root.firstChild &&
-        this.root.firstChild.remove()
+    while (this.root.childElementCount > Feed.MAX_MEMORY_LENGTH) {
+      this.root && this.root.firstChild && this.root.firstChild.remove()
     }
     return this
   }
@@ -180,6 +168,7 @@ module.exports = class Feed {
   ingest(text, prompt) {
     if (!text.hasChildNodes()) return
     this.append(text)
+    console.log("prompt:: %o", prompt)
     prompt && this.append(prompt)
   }
 }

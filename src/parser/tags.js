@@ -25,9 +25,13 @@ module.exports = {
   STREAM: "STREAM",
   LINK: "LINK",
   CASTTIME: "CASTTIME",
+  ROUNDTIME: "ROUNDTIME",
+  DELETECONTAINER: "DELETECONTAINER",
   SKIN: "SKIN",
   SPELL: "SPELL",
   RIGHT: "RIGHT",
   LEFT: "LEFT",
   COMPDEF: "COMPDEF",
+  CLOSEDIALOG: "CLOSEDIALOG",
+  MARK: "MARK", // custom illthorn tag for normalizing presets
 }

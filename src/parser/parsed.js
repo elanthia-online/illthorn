@@ -3,7 +3,7 @@ const pp = require("debug")("illthorn:parser:parsed")
 exports.Parsed = () => {
   return {
     metadata: document.createElement("div"),
-    text: document.createElement("div"),
+    text: document.createDocumentFragment(),
     textBuffer: exports.makeTextBuffer(),
     prompt: void 0,
   }
@@ -47,4 +47,16 @@ exports.swapTextBuffer = (parsed) => {
   pp("swapTextBuffer(%s)", textBuffer.outerHTML)
   text.append(textBuffer)
   parsed.textBuffer = exports.makeTextBuffer()
+}
+
+exports.cleanUpWhiteSpace = (pre) => {
+  const lastChild = pre.lastChild
+  if (!lastChild) return
+  if (lastChild.tagName == "PRE")
+    return exports.cleanUpWhiteSpace(lastChild)
+  console.log("cleanup:whitespace", lastChild)
+  const trimmedText = lastChild.textContent.trimRight()
+  if (lastChild.nodeType == Node.TEXT_NODE && trimmedText == "") {
+    lastChild.remove()
+  }
 }

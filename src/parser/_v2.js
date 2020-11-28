@@ -3,8 +3,9 @@ const {
   appendParsedText,
   appendParsedMetadata,
   swapTextBuffer,
+  cleanUpWhiteSpace,
 } = require("./parsed")
-const TreeWalker = require("./tree-walker")
+const TreeWalker = require("./dom-walker")
 // enum of all normalized game tags
 const Tags = require("./tags")
 
@@ -16,14 +17,21 @@ exports.parse = (session, ele) => {
   TreeWalker(ele, onNode.bind(null, parsed))
   // ensure we flush the text buffer
   swapTextBuffer(parsed)
+  // since we are processing XML tags from a tcp stream
+  // there are a lot of left-over \n tags
+  cleanUpWhiteSpace(parsed.text)
   // validity case for feed
-  /*console.assert(ele.innerHTML.length == 0, 
-    "did not process all feed elements:\n %s", 
-    ele.innerHTML)
+  console.assert(
+    ele.innerHTML.trim().length == 0,
+    "did not process all feed elements:\n %s",
+    ele.innerHTML
+  )
   // validity case for buffer
-  console.assert(parsed.textBuffer.childNodes.length == 0,
+  console.assert(
+    parsed.textBuffer.childNodes.length == 0,
     "did not process all buffered text nodes:\n %s",
-    parsed.textBuffer.innerHTML)*/
+    parsed.textBuffer.innerHTML
+  )
   // return whatever was parsed
   return parsed
 }
@@ -64,6 +72,7 @@ const onNode = (parsed, node) => {
     case Tags.SWITCHQUICKBAR:
       return onswitchquickbar(parsed, node)
     case Tags.OPENDIALOG:
+    case Tags.CLOSEDIALOG:
       return onopendialog(parsed, node)
     case Tags.CLEARSTREAM:
       return onclearstream(parsed, node)
@@ -81,6 +90,8 @@ const onNode = (parsed, node) => {
       return onlink(parsed, node)
     case Tags.EXPOSECONTAINER:
       return onexposecontainer(parsed, node)
+    case Tags.DELETECONTAINER:
+      return ondeletecontainer(parsed, node)
     case Tags.SKIN:
       return onskin(parsed, node)
     case Tags.SPELL:
@@ -91,10 +102,13 @@ const onNode = (parsed, node) => {
       return onleft(parsed, node)
     case Tags.CASTTIME:
       return oncasttime(parsed, node)
+    case Tags.ROUNDTIME:
+      return onroundtime(parsed, node)
     // text elements
     case Tags.A:
     case Tags.B:
     case Tags.D:
+    case Tags.MARK:
     case undefined:
       return ontext(parsed, node)
     default:
@@ -269,6 +283,14 @@ const onexposecontainer = (exports.onexposecontainer = (
   removeChildren(parsed, exposecontainer)
 })
 
+const ondeletecontainer = (exports.ondeletecontainer = (
+  parsed,
+  deletecontainer
+) => {
+  appendParsedMetadata(parsed, deletecontainer)
+  removeChildren(parsed, deletecontainer)
+})
+
 const onskin = (exports.onskin = (parsed, skin) => {
   removeChildren(parsed, skin)
   skin.remove()
@@ -289,4 +311,9 @@ const onleft = (exports.onleft = (parsed, left) => {
 const oncasttime = (exports.oncasttime = (parsed, casttime) => {
   appendParsedMetadata(parsed, casttime)
   removeChildren(parsed, casttime)
+})
+
+const onroundtime = (exports.oncasttime = (parsed, roundtime) => {
+  appendParsedMetadata(parsed, roundtime)
+  removeChildren(parsed, roundtime)
 })

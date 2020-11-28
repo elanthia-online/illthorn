@@ -167,7 +167,7 @@ module.exports = class Session extends events.EventEmitter {
   quit() {}
 
   has_focus() {
-    return this.feed.has_focus()
+    return this.feed && this.feed.has_focus()
   }
 
   activate() {

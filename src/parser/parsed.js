@@ -1,4 +1,4 @@
-const pp = require("debug")("illthorn:parser:parsed")
+const pp = require("debug")("illthorn:parser:parsed:api")
 
 exports.Parsed = () => {
   return {

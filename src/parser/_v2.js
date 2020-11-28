@@ -10,9 +10,11 @@ const TreeWalker = require("./dom-walker")
 const Tags = require("./tags")
 
 const pp = require("debug")("illthorn:parser:v2")
+const raw = require("debug")("illthorn:parser:v2:raw")
 
 exports.parse = (session, ele) => {
   const parsed = Parsed()
+  if (session.has_focus()) raw(ele.innerHTML)
   // single-pass parser
   TreeWalker(ele, onNode.bind(null, parsed))
   // ensure we flush the text buffer
@@ -159,10 +161,12 @@ const onpre = (exports.onpre = (parsed, pre) => {
 
 const onprogressbar = (exports.onprogressbar = (parsed, progress) => {
   appendParsedMetadata(parsed, progress)
+  removeChildren(parsed, progress)
 })
 
 const onopendialog = (exports.onopendialog = (parsed, opendialog) => {
   appendParsedMetadata(parsed, opendialog)
+  removeChildren(parsed, opendialog)
 })
 
 const onsep = (exports.onsep = (parsed, sep) => {
@@ -176,6 +180,7 @@ const onlabel = (exports.onlabel = ({ metadata }, label) => {
 
 const ondir = (exports.ondir = ({ metadata }, dir) => {
   if (metadata.contains(dir)) return
+  console.log(":dir %s", dir.outerHTML)
   onunhandled({ metadata }, dir)
 })
 
@@ -221,6 +226,8 @@ const onswitchquickbar = (exports.onswitchquickbar = (
 
 const oncompass = (exports.oncompass = (parsed, compass) => {
   appendParsedMetadata(parsed, compass)
+
+  console.log(":compass %s", compass.outerHTML)
 
   Array.from(compass.querySelectorAll("dir")).forEach((dir) => {
     compass.append(dir)

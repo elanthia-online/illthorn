@@ -54,7 +54,6 @@ exports.cleanUpWhiteSpace = (pre) => {
   if (!lastChild) return
   if (lastChild.tagName == "PRE")
     return exports.cleanUpWhiteSpace(lastChild)
-  console.log("cleanup:whitespace", lastChild)
   const trimmedText = lastChild.textContent.trimRight()
   if (lastChild.nodeType == Node.TEXT_NODE && trimmedText == "") {
     lastChild.remove()

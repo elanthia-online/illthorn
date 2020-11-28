@@ -6,7 +6,7 @@ const Panel = require("./panel")
 const _pp = require("debug")("illthorn:vitals")
 
 const span = (text, klass = "") =>
-  m(`span.${klass}`, (text || "").toString().toLowerCase())
+  m(`span.${klass}`, text.toString().toLowerCase())
 
 const attr = (ele, attr, fallback) =>
   Lens.get(ele, `attributes.${attr}.value`, fallback)
@@ -48,9 +48,8 @@ module.exports = class Vitals {
   static parse(ele) {
     const text = attr(ele, "text", attr(ele, "id"))
     const [_0, title, value, max] = text.match(Vitals.PATTERN) || []
-
     const parsed = {
-      id: attr(ele, "id"),
+      id: ele.className,
       max: parseInt(max || "100", 10),
       value: parseInt(value || attr(ele, "value", "0"), 10),
       text: text,
@@ -73,11 +72,17 @@ module.exports = class Vitals {
       parsed.title = Vitals.STANCE_ORDER[index]
     }
 
+    parsed.value = typeof parsed.value == "number" ? parsed.value : 0
+
     if (typeof parsed.value == "number") {
       parsed.percent = Math.round(
         (Math.max(parsed.value, 0) / parsed.max) * 100
       )
-      return Vitals.classify(parsed)
+
+      parsed.value = parsed.value || parsed.percent
+      parsed.max = parsed.max || 100
+      Vitals.classify(parsed)
+      return parsed
     }
 
     return parsed
@@ -93,12 +98,13 @@ module.exports = class Vitals {
   }
 
   static show(attrs) {
+    console.log("Vitals.show(%o)", attrs)
     return m(
       `li#vitals-${attrs.id}.${attrs.threshold}.vital`,
       { key: attrs.id },
       [
-        attrs.title !== "" && span(attrs.title, ".label"),
-        attrs.value !== "" && span(attrs.value, ".value"),
+        span(attrs.title, ".label"),
+        span(attrs.value, ".value"),
         isNaN(attrs.max) ? void 0 : m("span.max", attrs.max),
       ]
     )

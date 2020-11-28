@@ -180,7 +180,6 @@ const onlabel = (exports.onlabel = ({ metadata }, label) => {
 
 const ondir = (exports.ondir = ({ metadata }, dir) => {
   if (metadata.contains(dir)) return
-  console.log(":dir %s", dir.outerHTML)
   onunhandled({ metadata }, dir)
 })
 
@@ -226,8 +225,6 @@ const onswitchquickbar = (exports.onswitchquickbar = (
 
 const oncompass = (exports.oncompass = (parsed, compass) => {
   appendParsedMetadata(parsed, compass)
-
-  console.log(":compass %s", compass.outerHTML)
 
   Array.from(compass.querySelectorAll("dir")).forEach((dir) => {
     compass.append(dir)

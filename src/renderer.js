@@ -7,6 +7,8 @@ const Macros = require("./macros")
 const Theme = require("./storage/theme")
 const Settings = require("./settings")
 
+window.Session = Session
+
 window.messages = window.messages || []
 
 let theme = Settings.get("theme")

@@ -7,8 +7,7 @@ const SpellDetails = require("../../../constants/spells")
 const Pipe = require("../../../util/pipe")
 const Empty = document.createElement("div")
 
-const selector = (ele, selector) =>
-  ele.querySelectorAll(selector)
+const selector = (ele, selector) => ele.querySelectorAll(selector)
 
 const attr = (ele, attr, fallback) =>
   Lens.get(ele, `attributes.${attr}.value`, fallback)
@@ -23,18 +22,14 @@ module.exports = class ActiveSpells {
 
   static percent_remaining(spell) {
     return (
-      (ActiveSpells.minutes_left(spell) /
-        ActiveSpells.MAX_DURATION) *
-      100
+      (ActiveSpells.minutes_left(spell) / ActiveSpells.MAX_DURATION) * 100
     )
   }
 
   static spell(spell) {
     const name = attr(spell, "anchor_right", "")
     const remaining = attr(spell, "value", "")
-    const percent = ActiveSpells.percent_remaining(
-      remaining
-    )
+    const percent = ActiveSpells.percent_remaining(remaining)
     const spellDetails = SpellDetails({ name }) || {}
 
     return m(
@@ -55,10 +50,7 @@ module.exports = class ActiveSpells {
   }
 
   static list(spells) {
-    return m(
-      `ol.spells.panel-list`,
-      spells.map(ActiveSpells.spell)
-    )
+    return m(`ol.spells.panel-list`, spells.map(ActiveSpells.spell))
   }
 
   static spells() {

@@ -12,12 +12,9 @@ module.exports = class CommandHistory {
     this.index = 0
 
     // Load commands from storage
-    this.buffer = LimitedList.of(
-      Storage.get("commandHistory"),
-      {
-        limit: 100,
-      }
-    )
+    this.buffer = LimitedList.of(Storage.get("commandHistory"), {
+      limit: 100,
+    })
   }
 
   /**
@@ -63,8 +60,7 @@ module.exports = class CommandHistory {
 
   match(input) {
     return this.buffer.filter(
-      (cmd) =>
-        cmd.startsWith(input) && cmd.length > input.length
+      (cmd) => cmd.startsWith(input) && cmd.length > input.length
     )
   }
 

@@ -48,9 +48,7 @@ module.exports = class List {
   }
 
   static concat(lists) {
-    return List.reduce(lists, [], (acc, list) =>
-      acc.concat(list)
-    )
+    return List.reduce(lists, [], (acc, list) => acc.concat(list))
   }
 
   static slice(list, { start = 0, end = list.length }) {

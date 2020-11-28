@@ -15,18 +15,13 @@ module.exports = class Macros {
   }
 
   static last_profile() {
-    return Macros.Storage.get(
-      "active_profile",
-      Macros.DEFAULT
-    )
+    return Macros.Storage.get("active_profile", Macros.DEFAULT)
   }
 
   static set_context(profile = Macros.last_profile()) {
     const exists = Macros.get(profile)
     if (!exists) {
-      throw new Error(
-        `Macros(profile: ${profile}) does not exist`
-      )
+      throw new Error(`Macros(profile: ${profile}) does not exist`)
     }
     Macros.Storage.set("active_profile", profile)
     Macros.load(profile)
@@ -40,9 +35,7 @@ module.exports = class Macros {
     })
 
     KeyboardJS.on("right", (_) => {
-      document.dispatchEvent(
-        new Event("autocomplete/right")
-      )
+      document.dispatchEvent(new Event("autocomplete/right"))
     })
 
     "1 2 3 4 5 6 7 8 9".split(" ").forEach((sess_idx) => {
@@ -61,8 +54,7 @@ module.exports = class Macros {
       const sess = Session.focused()
       const cli = document.getElementById("cli")
       if (!sess || !cli) return
-      if (!sess.history.seeking)
-        sess.history.write(cli, { back: 1 })
+      if (!sess.history.seeking) sess.history.write(cli, { back: 1 })
     })
 
     KeyboardJS.on("down", (e) => {
@@ -104,18 +96,13 @@ module.exports = class Macros {
     const macros = Macros.get(profile)
     Macros.bind_meta_macros()
     Object.entries(macros).forEach(([combo, macro]) =>
-      KeyboardJS.bind(combo.toLowerCase(), (_) =>
-        Bus.emit("macro", macro)
-      )
+      KeyboardJS.bind(combo.toLowerCase(), (_) => Bus.emit("macro", macro))
     )
   }
 
   static async put(profile, combo, command) {
     combo = combo.toLowerCase()
-    Macros.Storage.set(
-      `profiles.${profile}.${combo}`,
-      command
-    )
+    Macros.Storage.set(`profiles.${profile}.${combo}`, command)
   }
 
   static async delete(...path) {

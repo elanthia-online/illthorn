@@ -44,8 +44,7 @@ const createWindow = () => {
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
 
   // Open the DevTools.
-  if (process.env.ENV == "dev")
-    mainWindow.webContents.openDevTools()
+  if (process.env.ENV == "dev") mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {

@@ -63,29 +63,23 @@ Pipe._apply = Pipe.apply = function (fn, args) {
   if (args.length == 1) return fn(args[0])
   if (args.length == 2) return fn(args[0], args[1])
   if (args.length == 3) return fn(args[0], args[1], args[2])
-  if (args.length == 4)
-    return fn(args[0], args[1], args[2], args[3])
+  if (args.length == 4) return fn(args[0], args[1], args[2], args[3])
   if (args.length == 5)
     return fn(args[0], args[1], args[2], args[3], args[4])
-  throw new Error(
-    "Pipe._apply() does not support arity > 5"
-  )
+  throw new Error("Pipe._apply() does not support arity > 5")
 }
 
 Pipe.maybe = function (val, fn, _ /*rest*/) {
   if (!val) return val
   return Pipe._apply(
     fn,
-    [val].concat(
-      __slice.call(arguments, 2, arguments.length)
-    )
+    [val].concat(__slice.call(arguments, 2, arguments.length))
   )
 }
 
 Pipe.curry = function (fn, args, ctx) {
   args = args || []
-  if (args.length > fn.length - 1)
-    return fn.apply(ctx, args)
+  if (args.length > fn.length - 1) return fn.apply(ctx, args)
   return function curried() {
     var args2 = args.concat(__slice.call(arguments))
     return Pipe.curry(fn, args2, ctx)

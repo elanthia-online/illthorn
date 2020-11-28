@@ -9,15 +9,11 @@ exports.swap = Command.of(["other"], ({ other }) => {
   const focused = Session.focused()
 
   if (!focused) {
-    throw new Error(
-      "Cannot swap names without an active session"
-    )
+    throw new Error("Cannot swap names without an active session")
   }
 
   if (!Session.has(other)) {
-    throw new Error(
-      `No sessions named ${other} were found to swap with`
-    )
+    throw new Error(`No sessions named ${other} were found to swap with`)
   }
 
   const swap = Math.random().toString(13).replace("0.", "")

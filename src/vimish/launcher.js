@@ -1,9 +1,7 @@
 const path = require("path")
 const { format } = require("util")
 const Session = require("../session")
-const LauncherSettings = require("../settings").of(
-  "launcher"
-)
+const LauncherSettings = require("../settings").of("launcher")
 const { spawn } = require("child_process")
 const Bus = require("../bus")
 // example: /cabal UP {...info}
@@ -27,9 +25,7 @@ function spawn_launcher(bin, { char, port }) {
   const with_char = bin.replace("{char}", char)
 
   const prepared_cmd =
-    typeof port == "string"
-      ? with_char.replace("{port}", port)
-      : with_char
+    typeof port == "string" ? with_char.replace("{port}", port) : with_char
 
   const [absolute_bin, ...argv] = prepared_cmd.split(" ")
 

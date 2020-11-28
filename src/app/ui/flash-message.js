@@ -7,10 +7,8 @@ module.exports = class FlashMessage {
       (flash) => flash.ttl > Date.now()
     )
     if (window.messages.length == 0) return
-    return window.messages.map(
-      ({ kind = "info", message }) => {
-        return m(`.flash.${kind}`, message)
-      }
-    )
+    return window.messages.map(({ kind = "info", message }) => {
+      return m(`.flash.${kind}`, message)
+    })
   }
 }

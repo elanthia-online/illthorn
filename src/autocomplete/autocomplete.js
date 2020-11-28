@@ -9,37 +9,24 @@ module.exports = class Autocomplete {
    * where a lower score indicates similarity to the command we
    * are trying to build a suggestion list for
    */
-  static qwerty_distance_suggestions([
-    command,
-    suggestions,
-  ]) {
-    return [
-      command,
-      Autocomplete.qwerty_sort([command, suggestions]),
-    ]
+  static qwerty_distance_suggestions([command, suggestions]) {
+    return [command, Autocomplete.qwerty_sort([command, suggestions])]
   }
   static qwerty_sort([command, suggestions]) {
     return suggestions
-      .map((suggestion) =>
-        suggestion.padEnd(command.length, " ")
-      )
+      .map((suggestion) => suggestion.padEnd(command.length, " "))
       .map((suggestion) => [
         suggestion,
         qwerty.default.word_distance(command, suggestion),
       ])
       .sort(([, a], [, b]) => a - b)
-      .filter(
-        ([_, score]) =>
-          score < Autocomplete.MIN_CLOSENESS_SCORE
-      )
+      .filter(([_, score]) => score < Autocomplete.MIN_CLOSENESS_SCORE)
       .map(([suggestion, _]) => suggestion.trimRight())
   }
   static prune([command, suggestions]) {
     return [
       command,
-      suggestions.filter((suggestion) =>
-        suggestion.startsWith(command)
-      ),
+      suggestions.filter((suggestion) => suggestion.startsWith(command)),
     ]
   }
   static lift([_, suggestions]) {

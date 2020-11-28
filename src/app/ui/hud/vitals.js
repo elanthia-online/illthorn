@@ -47,8 +47,7 @@ module.exports = class Vitals {
 
   static parse(ele) {
     const text = attr(ele, "text", attr(ele, "id"))
-    const [_0, title, value, max] =
-      text.match(Vitals.PATTERN) || []
+    const [_0, title, value, max] = text.match(Vitals.PATTERN) || []
 
     const parsed = {
       id: attr(ele, "id"),
@@ -100,9 +99,7 @@ module.exports = class Vitals {
       [
         attrs.title !== "" && span(attrs.title, ".label"),
         attrs.value !== "" && span(attrs.value, ".value"),
-        isNaN(attrs.max)
-          ? void 0
-          : m("span.max", attrs.max),
+        isNaN(attrs.max) ? void 0 : m("span.max", attrs.max),
       ]
     )
   }

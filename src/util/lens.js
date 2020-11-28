@@ -1,8 +1,7 @@
 const make_path = (path) =>
   Array.isArray(path) ? path.slice(0) : path.split(".")
 
-const is_nothing = (t) =>
-  typeof t === "undefined" || t === null
+const is_nothing = (t) => typeof t === "undefined" || t === null
 
 module.exports = class Lens {
   static of(path) {
@@ -41,8 +40,7 @@ module.exports = class Lens {
 
   constructor(path) {
     this.path = path
-    this.get = (obj, fallback) =>
-      Lens.get(obj, this.path, fallback)
+    this.get = (obj, fallback) => Lens.get(obj, this.path, fallback)
     this.put = (obj, val) => Lens.put(obj, this.path, val)
   }
 }

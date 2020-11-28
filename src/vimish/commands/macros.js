@@ -23,8 +23,6 @@ exports.macros = exports.macro = Command.of(
       return Macros.delete(profile, combo)
     }
 
-    throw new Error(
-      `:macros ${sub_command} is not a valid subcommand`
-    )
+    throw new Error(`:macros ${sub_command} is not a valid subcommand`)
   }
 )

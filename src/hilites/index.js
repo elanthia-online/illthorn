@@ -17,8 +17,7 @@ module.exports = class Hilites {
 
   static sheet() {
     return (
-      document.getElementById("hilites") ||
-      Hilites.make_stylesheet()
+      document.getElementById("hilites") || Hilites.make_stylesheet()
     ).sheet
   }
 
@@ -39,9 +38,7 @@ module.exports = class Hilites {
   }
 
   static is_regex(hilite) {
-    return (
-      hilite[0] == "/" && hilite[hilite.length - 1] == "/"
-    )
+    return hilite[0] == "/" && hilite[hilite.length - 1] == "/"
   }
 
   static reload() {
@@ -55,10 +52,7 @@ module.exports = class Hilites {
 
     return (Hilites._CACHE = Object.entries(
       Hilites.Patterns.get(null, {})
-    ).map(([pattern, color]) => [
-      Hilites.deserialize(pattern),
-      color,
-    ]))
+    ).map(([pattern, color]) => [Hilites.deserialize(pattern), color]))
   }
 
   static _CACHE = this.reload()
@@ -69,10 +63,7 @@ module.exports = class Hilites {
 
   static deserialize(hilite) {
     if (Hilites.is_regex(hilite))
-      return new RegExp(
-        hilite.slice(1, hilite.length - 2),
-        "g"
-      )
+      return new RegExp(hilite.slice(1, hilite.length - 2), "g")
     return new RegExp(hilite, "g")
   }
 

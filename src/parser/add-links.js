@@ -9,8 +9,7 @@ exports.addLinks = async (ele) => {
     },
     events: {
       click: (e) =>
-        e.preventDefault() ||
-        Url.open_external_link(e.target.href),
+        e.preventDefault() || Url.open_external_link(e.target.href),
     },
   })
 }

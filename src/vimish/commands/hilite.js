@@ -13,26 +13,20 @@ exports.hilite = exports.hilites = exports.hilight = Command.of(
         )
       }
       if (!group) {
-        throw new Error(
-          ":hilite add <pattern> <group> was missing group"
-        )
+        throw new Error(":hilite add <pattern> <group> was missing group")
       }
       return Hilites.add_pattern(group, pattern)
     }
 
     if (
-      (opts.sub_command == "rm" ||
-        opts.sub_command == "remove") &&
+      (opts.sub_command == "rm" || opts.sub_command == "remove") &&
       sudo
     ) {
       throw new Error(":hilite remove not implemented yet")
       // todo: sudo ?
     }
 
-    if (
-      opts.sub_command == "rm" ||
-      opts.sub_command == "remove"
-    ) {
+    if (opts.sub_command == "rm" || opts.sub_command == "remove") {
       throw new Error(":sudo is required for :hilite rm")
     }
 
@@ -54,8 +48,7 @@ exports.hilite = exports.hilites = exports.hilight = Command.of(
         rules
           .map((rule) => rule.split("="))
           .reduce(
-            (acc, [rule, value]) =>
-              Object.assign(acc, { [rule]: value }),
+            (acc, [rule, value]) => Object.assign(acc, { [rule]: value }),
             {}
           )
       )

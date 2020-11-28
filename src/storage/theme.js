@@ -5,9 +5,7 @@ exports.changeTheme = async function (data) {
     return Promise.reject({ err: "invalid-theme" })
   }
 
-  const styleTags = document.querySelectorAll(
-    "style:not(#hilites)"
-  )
+  const styleTags = document.querySelectorAll("style:not(#hilites)")
 
   // You'd think you could do like
   // `../app/styles/themes/${data.theme}.scss`

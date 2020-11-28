@@ -44,11 +44,8 @@ module.exports = class Settings {
     this._path = (path) =>
       this.namespace.join(".") +
       (typeof path == "string" ? "." + path : "")
-    this.get = (path, fallback) =>
-      Settings.get(this._path(path), fallback)
-    this.set = (path, value) =>
-      Settings.set(this._path(path), value)
-    this.delete = (path) =>
-      Settings.delete(this._path(path))
+    this.get = (path, fallback) => Settings.get(this._path(path), fallback)
+    this.set = (path, value) => Settings.set(this._path(path), value)
+    this.delete = (path) => Settings.delete(this._path(path))
   }
 }

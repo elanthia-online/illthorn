@@ -58,8 +58,7 @@ module.exports = class Session extends events.EventEmitter {
 
     return Session.select(
       (sess) =>
-        sess.name &&
-        ~sess.name.toLowerCase().indexOf(name.toLowerCase())
+        sess.name && ~sess.name.toLowerCase().indexOf(name.toLowerCase())
     )
   }
 
@@ -72,13 +71,9 @@ module.exports = class Session extends events.EventEmitter {
   static async of(opts) {
     let addr = "127.0.0.1"
     try {
-      addr = (await dns.promises.lookup("localhost"))
-        .address
+      addr = (await dns.promises.lookup("localhost")).address
     } catch {
-      console.log(
-        "Could not resolve localhost, defaulting to %j",
-        addr
-      )
+      console.log("Could not resolve localhost, defaulting to %j", addr)
     }
     opts.addr = addr
     const char = new Session(opts)
@@ -104,9 +99,7 @@ module.exports = class Session extends events.EventEmitter {
     this.sock = void 0
     this.history = History.of()
     this.name = name || port
-    this.log = require("debug")(
-      "illthorn:session:" + this.name
-    )
+    this.log = require("debug")("illthorn:session:" + this.name)
     this.feed = Feed.of({ session: this })
     this.streams = Streams.of({ session: this })
     this.state = State.of(this)
@@ -124,9 +117,7 @@ module.exports = class Session extends events.EventEmitter {
     await this.io.fmap(async () => {
       const { parsed } = await Parser.parse(this, string)
       if (!parsed) return
-      const streams = [
-        ...parsed.text.querySelectorAll("stream"),
-      ]
+      const streams = [...parsed.text.querySelectorAll("stream")]
       streams.forEach((stream) => {
         if (this.streams.wants(stream.className)) {
           stream.remove()
@@ -143,11 +134,13 @@ module.exports = class Session extends events.EventEmitter {
       Bus.emit(Bus.events.REDRAW)
     })
     const t1 = performance.now()
-    this.log(
-      `parsed ${string.length} characters in ${Math.round(
-        (t1 - t0) * 1000
-      )}μs`
-    )
+    setTimeout(() => {
+      this.log(
+        `parsed ${string.length} characters in ${Math.round(
+          (t1 - t0) * 1000
+        )}μs`
+      )
+    })
   }
 
   close() {
@@ -196,8 +189,7 @@ module.exports = class Session extends events.EventEmitter {
   }
 
   rename(name) {
-    if (this.name && Session.has(this.name))
-      Session.delete(this.name)
+    if (this.name && Session.has(this.name)) Session.delete(this.name)
     this.name = name
     Session.set(this.name, this)
     Bus.emit(Bus.events.REDRAW)
@@ -211,8 +203,7 @@ module.exports = class Session extends events.EventEmitter {
       : document.createElement("prompt")
     prompt.className = ""
     prompt.classList.add(id, "sent")
-    prompt.innerText =
-      this.state.get("prompt.innerText", ">") + cmd
+    prompt.innerText = this.state.get("prompt.innerText", ">") + cmd
     if (!prompt.parentNode) {
       this.feed.append(prompt)
     }

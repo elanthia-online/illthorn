@@ -1,7 +1,8 @@
 const StreamsSettings = require("../settings").of("streams")
 const Lens = require("../util/lens")
 const Storage = require("../storage")
-const Parser = require("../parser")
+const { addHilites } = require("../parser/add-hilites")
+const { addLinks } = require("../parser/add-links")
 
 module.exports = class Streams {
   // this class on the top-level application element
@@ -74,8 +75,8 @@ module.exports = class Streams {
     pre.classList.add(tag.className, tagName)
     const parts = this.transformStreamMessage(tag.textContent)
     parts.forEach((ele) => pre.append(ele))
-    await Parser.addHilites(pre)
-    await Parser.addLinks(pre)
+    await addHilites(pre)
+    await addLinks(pre)
     return pre
   }
 

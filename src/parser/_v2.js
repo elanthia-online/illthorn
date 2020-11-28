@@ -327,7 +327,6 @@ const onroundtime = (exports.oncasttime = (parsed, roundtime) => {
 
 const onlaunchurl = (exports.onlaunchurl = (parsed, launchurl) => {
   launchurl.remove()
-  console.log(Url)
   Url.open_external_link(
     "https://www.play.net" + launchurl.attributes.src.value
   )

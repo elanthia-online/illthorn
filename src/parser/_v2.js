@@ -13,7 +13,7 @@ const pp = require("debug")("illthorn:parser:v2")
 const raw = require("debug")("illthorn:parser:v2:raw")
 
 exports.parse = (session, ele) => {
-  const parsed = Parsed()
+  const parsed = Parsed(session)
   if (session.has_focus()) raw(ele.innerHTML)
   // single-pass parser
   TreeWalker(ele, onNode.bind(null, parsed))

@@ -72,11 +72,10 @@ module.exports = class SessionState {
         end: Lens.get(tag, "attributes.value.value"),
       })
     }
-    /*
+
     ~[].forEach.call(tag.childNodes, (node) =>
       SessionState.consume(state, node.cloneNode(true))
     )
-    */
   }
 
   constructor(session) {

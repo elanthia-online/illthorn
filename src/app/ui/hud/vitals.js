@@ -98,7 +98,6 @@ module.exports = class Vitals {
   }
 
   static show(attrs) {
-    console.log("Vitals.show(%o)", attrs)
     return m(
       `li#vitals-${attrs.id}.${attrs.threshold}.vital`,
       { key: attrs.id },

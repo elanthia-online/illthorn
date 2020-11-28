@@ -1,10 +1,11 @@
 const pp = require("debug")("illthorn:parser:parsed:api")
 
-exports.Parsed = () => {
+exports.Parsed = (session) => {
   return {
     metadata: document.createElement("div"),
     text: document.createDocumentFragment(),
     textBuffer: exports.makeTextBuffer(),
+    session: session,
     prompt: void 0,
   }
 }

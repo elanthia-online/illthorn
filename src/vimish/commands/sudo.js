@@ -1,12 +1,14 @@
 const Command = require("../command")
+const Commands = require("../index")
 
 /**
  * for sudo actions
  */
 exports.sudo = Command.of(["command"], async (opts, argv) => {
-  const command =
-    opts.command[0] == ":" ? opts.command.slice(1) : opts.command
-  const cmd = exports[command]
+  const command = opts.command.startsWith(":")
+    ? opts.command.slice(1)
+    : opts.command
+  const cmd = Commands.commands.get(command)[command]
   if (cmd) return cmd.run(argv, true)
-  throw new Error(`:${opts.command} not found`)
+  throw new Error(`:${command} not found`)
 })

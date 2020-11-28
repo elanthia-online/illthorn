@@ -7,9 +7,7 @@ exports.compiler = Command.of(
     if (option == "off") {
       option = "run"
       value = false
-    }
-
-    if (option == "on") {
+    } else if (option == "on") {
       option = "run"
       value = true
     }

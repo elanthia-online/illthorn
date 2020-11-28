@@ -83,4 +83,14 @@ module.exports = class Hilites {
     Hilites.Groups.set(group, rules)
     Hilites.reload()
   }
+
+  static remove_pattern(pattern) {
+    Hilites.Patterns.delete(pattern)
+    Hilites.reload()
+  }
+
+  static remove_group(group) {
+    Hilites.Groups.delete(group)
+    Hilites.reload()
+  }
 }

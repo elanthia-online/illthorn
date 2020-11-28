@@ -32,6 +32,7 @@ const createWindow = () => {
       nodeIntegration: true,
       nodeIntegrationInWorker: true,
       webSecurity: false,
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
     titleBarStyle: "hidden",
     icon: "/src/app/img/app-icon.png",

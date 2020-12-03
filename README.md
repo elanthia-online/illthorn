@@ -144,6 +144,10 @@ Specifies a set of CSS properties to apply to a given group highlight. Multiple 
 
 Reload highlight configuration.
 
+#### `:hilite remove <type> <text>`
+
+Removes the type of hilight object matching the `text` entry. `type` must be either "pattern" for a pattern that is matched, or "group" for the specification of how to handle matches, as described in previous sections. This group must be run using `:sudo`. If a group is being removed, and patterns are still assigned to that group, the command needs to include the phrase `confirm` (e.g. `:hilite remove group confirm <text>`).
+
 ## Autocomplete
 
 Previous commands in a session are saved and will show a ghosted version as you type characters which you can autocomplete by pressing the **right arrow** key to complete the command.

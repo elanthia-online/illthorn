@@ -1,13 +1,8 @@
-const { is_line_break, is_text_node, match } = require("../util/dom")
+const { is_line_break, has_ancestor, match } = require("../util/dom")
 
 const Options = NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT
 
 const is_meaningful_tag = (node) => {
-  //return NodeFilter.FILTER_ACCEPT
-  if (!is_text_node(node)) {
-    return NodeFilter.FILTER_ACCEPT
-  }
-
   if (is_line_break(node)) {
     return NodeFilter.FILTER_REJECT
   }

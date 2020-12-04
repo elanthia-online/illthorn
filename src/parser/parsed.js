@@ -26,12 +26,11 @@ exports.appendParsedText = (parsed, textEle) => {
     return
   }
 
-  pp("appendParsedText(%s)", textEle.outerHTML || textEle.textContent)
-
   if (textEle.tagName == "PRE") {
     textBuffer.childNodes.length && exports.swapTextBuffer(parsed)
-    return text.append(textEle)
   }
+
+  if (text.contains(textEle)) return
 
   textBuffer.append(textEle)
 }

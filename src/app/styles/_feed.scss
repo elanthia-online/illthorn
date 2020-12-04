@@ -6,6 +6,11 @@
   transform: translate3d(0, 0, 0);
 }
 
+pre.speech,
+pre.whisper {
+  display: inline;
+}
+
 .feed pre {
   margin: 0;
   line-height: 1.4;

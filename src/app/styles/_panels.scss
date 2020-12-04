@@ -58,6 +58,33 @@
   }
 }
 
+.panel-list {
+  display: flex;
+  flex-direction: column;
+}
+// This order should probably be enforced in the DOM by the JavaScript since for accessibility the visual order should match the tabbing order. But this is a fix for now.
+#vitals-health {
+  order: 1;
+}
+#vitals-mana {
+  order: 2;
+}
+#vitals-spirit {
+  order: 3;
+}
+#vitals-stamina {
+  order: 4;
+}
+#vitals-encumlevel {
+  order: 5;
+}
+#vitals-pbarStance {
+  order: 6;
+}
+#vitals-mindState {
+  order: 7;
+}
+
 .high .label {
   color: var(--ok);
 }

@@ -17,12 +17,18 @@ exports.parse = (session, ele) => {
   const parsed = Parsed(session)
   if (session.has_focus()) raw(ele.innerHTML)
   // single-pass parser
-  TreeWalker(ele, onNode.bind(null, parsed))
+  TreeWalker(ele, onNode.bind(session, parsed))
   // ensure we flush the text buffer
   swapTextBuffer(parsed)
   // since we are processing XML tags from a tcp stream
   // there are a lot of left-over \n tags
   cleanUpWhiteSpace(parsed.text)
+  if (session.has_focus()) {
+    const t = document.createElement("div")
+    t.append(parsed.text.cloneNode(true))
+    pp(":text/parsed", t.outerHTML)
+    pp(":metadata/parsed", parsed.metadata.outerHTML)
+  }
   // validity case for feed
   console.assert(
     ele.innerHTML.trim().length == 0,
@@ -39,12 +45,13 @@ exports.parse = (session, ele) => {
   return parsed
 }
 
-const onNode = (parsed, node) => {
-  pp(
-    "processing %s",
-    node.tagName || ":text-node",
-    node.outerHTML || node.textContent
-  )
+function onNode(parsed, node) {
+  if (this.has_focus && this.has_focus())
+    pp(
+      "processing %s",
+      node.tagName || ":text-node",
+      node.outerHTML || node.textContent
+    )
   switch (node.tagName) {
     case Tags.SEP:
       return onsep(parsed, node)
@@ -134,14 +141,12 @@ const ontext = (exports.ontext = (parsed, textNode) => {
     metadata.contains(textNode)
   )
     return
-  //console.log(":text %o -> %o", textNode, parsed)
   appendParsedText(parsed, textNode)
 })
 
 const removeChildren = (parsed, tag) => {
   Array.from(tag.childNodes).forEach((child) => {
     child.remove()
-    pp(":child->remove parent(%s): %o", tag.tagName, child)
     onNode(parsed, child)
   })
 }

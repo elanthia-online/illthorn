@@ -15,7 +15,7 @@ exports.normalize = (string) => {
     .replace(/<\/preset>/g, "</pre>")
     .replace(/<clearContainer/g, "</clearcontainer")
     .replace(/<streamwindow /, "</streamwindow ")
-    .replace(/<preset/g, "<mark")
+    .replace(/<preset/g, "<pre")
     .replace(/<clearStream id='inv' ifClosed=''\/>/, "")
     .replace(/\sid="/g, ` class="`)
     .replace(/\sid='/g, ` class='`)

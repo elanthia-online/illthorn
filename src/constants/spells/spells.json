@@ -3385,5 +3385,13 @@
     "type": "timer",
     "duration": "5",
     "bonus": null
+  },
+  {
+    "availability": "self-cast",
+    "name": "Crossbow Cooldown",
+    "number": "9078",
+    "type": "timer",
+    "duration": "30",
+    "bonus": null
   }
 ]

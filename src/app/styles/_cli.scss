@@ -68,15 +68,14 @@ button.ui-help-button:hover {
   // The bar maxes out, visually, at 20s timers
   width: calc(var(--steps) * 5%);
   &.go {
-    animation: roundtime var(--duration) steps(var(--steps))
-      forwards;
+    animation: roundtime var(--duration) steps(var(--steps)) forwards;
   }
 }
 .round-time-current {
-  background: linear-gradient(to right, darkred, red);
+  background: var(--danger, red);
 }
 .cast-time-current {
-  background: linear-gradient(to right, #008a83, #03b9cc);
+  background: var(--gentle-warn, lightgreen);
 }
 // TODO: This is a cool idea for a tick-by-second timer that still animates the segments: https://codepen.io/berky93/pen/yLOazVv
 @keyframes roundtime {

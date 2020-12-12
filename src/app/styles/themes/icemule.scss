@@ -59,11 +59,7 @@ pre,
   margin: 10px;
   border: 1px solid;
   border-image-slice: 1;
-  border-image-source: linear-gradient(
-    to left,
-    #81a1c1,
-    #b48dac
-  );
+  border-image-source: linear-gradient(to left, #81a1c1, #b48dac);
   background: linear-gradient(
     160deg,
     rgba(59, 66, 82, 1) 0%,
@@ -76,7 +72,7 @@ pre,
     margin: 0 0 4px 0;
   }
   li {
-    margin: 3px 0 3px 0;
+    margin: 1px 0 1px 0;
   }
 }
 
@@ -185,7 +181,6 @@ pre,
 // Stance
 // TODO: These classes like "offensive" are missing now, can we bring them back?
 #hud .panel li#vitals-pbarStance.vital {
-  margin-bottom: 0px;
   &.low {
     background-color: var(--danger);
   }
@@ -293,6 +288,14 @@ pre,
       top: 0.1px;
     }
   }
+  &[data-spell-type="timer"] {
+    &:before {
+      content: "⏳";
+      position: absolute;
+      left: -3px;
+      top: 0.1px;
+    }
+  }
   font-size: 0.8rem;
   padding: 0.1rem 0.2rem;
   &:nth-child(even) {
@@ -363,6 +366,7 @@ details.panel summary {
   border-bottom: 3px solid var(--info);
   overflow: hidden;
   resize: vertical;
+  z-index: 1;
 }
 #streams-wrapper::-webkit-resizer {
   background-image: url("data:image/svg+xml,%3Csvg id='svg10654' height='512' viewBox='0 0 6.3499999 6.3500002' width='512' xmlns='http://www.w3.org/2000/svg' xmlns:svg='http://www.w3.org/2000/svg'%3E%3Cg id='layer1' transform='translate(0 -290.65)'%3E%3Cpath id='path13002' d='m3.0029248 290.97809-1.8515676 1.5875c-.26837478.22945.07579.63201.3441648.40256l1.6794851-1.44125 1.6794851 1.44125c.2683748.22945.6125395-.17311.3441647-.40256l-1.8515674-1.5875c-.047405-.0406-.1076219-.0631-.1826763-.063-.067572.005-.1196023.0272-.1614884.063zm.1715664 2.31976c-.1360276-.00004-.2718885.0508-.3741394.15296-.2044965.20437-.2043775.54429 0 .74879.2043801.2045.5437796.20438.7482761 0 .2044991-.20437.2048933-.54377.0005292-.74827-.1021874-.10225-.2386278-.15344-.3746527-.15348zm1.8691357 1.30793c-.070808-.00079-.1389327.0271-.1891347.077l-1.6794851 1.4397-1.6794851-1.4397c-.053486-.0476-.1239573-.0714-.1953366-.0661-.2360824.0189-.33040112.31458-.1488282.46664l1.8515676 1.58802c.099052.0848.2451126.0848.3441647 0l1.8515674-1.58802c.2045467-.15099.0992-.47545-.15503-.47749z' font-variant-ligatures='normal' font-variant-position='normal' font-variant-caps='normal' font-variant-numeric='normal' font-variant-alternates='normal' font-feature-settings='normal' text-indent='0' text-align='start' text-decoration-line='none' text-decoration-style='solid' text-decoration-color='rgb(136, 192, 208)' text-transform='none' text-orientation='mixed' white-space='normal' shape-padding='0' isolation='auto' mix-blend-mode='normal' solid-color='rgb(136, 192, 208)' fill='%2388C0D0' opacity='0.4' vector-effect='none'/%3E%3C/g%3E%3C/svg%3E");
@@ -396,7 +400,9 @@ details.panel summary {
 }
 
 //Main
-
+.feed pre {
+  line-height: 1.6;
+}
 .feed.scroll {
   overflow-x: hidden;
 }
@@ -460,16 +466,31 @@ a[noun="spell"] {
 a.monster {
   color: #ebcb8b;
 }
-#speech,
-.speech {
+pre.speech {
+  prompt {
+    display: none;
+  }
   color: #5e81ad;
   font-weight: bold;
-  padding: 4px 4px;
-  background-color: lighten(#2e3440, 2);
+  display: inline-block;
+  padding: 5px 5px;
+  margin: 6px 0 6px 0;
+  background: rgb(50, 57, 70);
+  background: linear-gradient(
+    90deg,
+    rgba(50, 57, 70, 1) 0%,
+    rgba(50, 57, 70, 0.7707457983193278) 48%,
+    rgba(50, 57, 70, 0) 100%
+  );
 }
-.whisper {
+pre.whisper {
+  prompt {
+    display: none;
+  }
   font-weight: bold;
-  padding: 4px 4px;
+  display: block;
+  padding: 5px 5px;
+  margin: 6px 0 6px 0;
   background-color: lighten(#2e3440, 2);
 }
 b a,

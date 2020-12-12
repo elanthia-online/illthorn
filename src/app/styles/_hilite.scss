@@ -22,7 +22,8 @@ b a[exist] {
   color: var(--whisper-color, var(--speech-color, #00921f));
 }
 
-.external-link {
+.external-link,
+.feed a {
   cursor: pointer;
   color: var(--link-color, #27a4fd);
 }

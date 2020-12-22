@@ -68,6 +68,7 @@ window.addEventListener("resize", function () {
 })
 
 document.addEventListener("keypress", UI.CLI.global_handlekeypress)
+document.addEventListener("keypress", UI.Numpad.handlekeypress)
 document.addEventListener("autocomplete/right", UI.CLI.autocomplete_right)
 
 document.addEventListener("click", (e) => {

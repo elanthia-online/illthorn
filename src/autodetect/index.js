@@ -21,8 +21,12 @@ const match = (string, regex) => string.match(regex) || []
 const extract_port = (cmd) =>
   match(cmd, /--detachable-client=(\d+)/)[1] || match(cmd, /port=(\d+)/)[1]
 
-const extract_name = (cmd) =>
-  match(cmd, /character=(\w+)\b/)[1] || match(cmd, /--login\s(\w+)\s/)[1]
+const extract_name = (cmd) => {
+  return (
+    match(cmd, /character=(\w+)\b/)[1] ||
+    match(cmd, /--login\s+(\w+)\b/)[1]
+  )
+}
 
 const parse_lich_cmd = (proc) => ({
   ...proc,

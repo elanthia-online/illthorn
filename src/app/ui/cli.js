@@ -76,8 +76,13 @@ module.exports = class CLI {
     cli.setSelectionRange(replacement - 1, replacement + "?".length)
   }
 
+  /**
+   * Handle any keypress relevant to the CLI.
+   * @param {event} e keypress causing the event
+   */
   static global_handlekeypress(e) {
     const cli = document.getElementById("cli")
+    // Do not process the event if a macro key is active.
     if (!cli || CLI.is_macro(e)) return
     if (e.key == "Enter") return CLI.on_enter(cli, cli.value)
     cli.focus()

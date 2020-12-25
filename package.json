@@ -142,7 +142,6 @@
     ]
   },
   "jest": {
-    "runner": "@jest-runner/electron/main",
-    "testEnvironment": "node"
+    "runner": "@jest-runner/electron/main"
   }
 }

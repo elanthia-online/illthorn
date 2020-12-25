@@ -1,4 +1,3 @@
-"use strict"
 const { test, expect, beforeAll, afterAll } = require("@jest/globals")
 let Storage = require("../src/storage")
 

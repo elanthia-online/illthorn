@@ -1,4 +1,3 @@
-"use strict"
 const { expect, test } = require("@jest/globals")
 const LimitedList = require("../src/util/limited-list")
 

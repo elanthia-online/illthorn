@@ -16,6 +16,7 @@
     justify-content: center;
     &.on {
       background: var(--ok);
+      color: var(--info);
     }
     &.off {
       background: var(--info);

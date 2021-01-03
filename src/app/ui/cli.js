@@ -231,11 +231,11 @@ module.exports = class CLI {
             m("span", "Show/Hide Thoughts Stream"),
           ]),
           m("div.command-wrap.space-after", [
+            m("code.command", ":theme theme-name"),
             m(
-              "code.command",
-              ":theme original|rogue|dark-king|icemule|kobold|raging-thrak"
+              "span",
+              "Change Theme (original, rogue, dark-king, icemule,  kobold, raging-thrak, or discstone)"
             ),
-            m("span", "Change Theme"),
           ]),
           m("div.command-wrap", [
             m("code.command", ":explain"),

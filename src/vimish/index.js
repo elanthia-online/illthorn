@@ -15,5 +15,6 @@ commands.set("sudo", require("./commands/sudo.js"))
 commands.set("swap", require("./commands/swap.js"))
 commands.set("theme", require("./commands/theme.js"))
 commands.set("ui", require("./commands/ui.js"))
+commands.set("new-window", require("./commands/new-window.js"))
 
 exports.commands = commands

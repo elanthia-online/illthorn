@@ -5,4 +5,5 @@ module.exports = {
   icemule: "icemule",
   rogue: "rogue",
   ["raging-thrak"]: "raging-thrak",
+  discstone: "discstone",
 }

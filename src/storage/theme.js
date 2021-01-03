@@ -23,6 +23,8 @@ exports.changeTheme = async function (data) {
     require(`../app/styles/themes/rogue.scss`)
   } else if (data.theme == "raging-thrak") {
     require(`../app/styles/themes/raging-thrak.scss`)
+  } else if (data.theme == "discstone") {
+    require(`../app/styles/themes/discstone.scss`)
   }
 
   styleTags.forEach((tag) => {

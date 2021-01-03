@@ -8,16 +8,10 @@
     <div id="flash-container"></div>
     <div id="app">
       <div id="sessions" class="pane"></div>
-      <div
-        id="panels-left"
-        class="panels panels-left scroll"
-      >
+      <div id="panels-left" class="panels panels-left scroll">
         <div id="hud" class="pane"></div>
       </div>
-      <div
-        id="panels-right"
-        class="panels panels-right scroll"
-      ></div>
+      <div id="panels-right" class="panels panels-right scroll"></div>
       <div id="main" class="pane">
         <div id="hands-wrapper"></div>
         <div id="streams-wrapper"></div>
@@ -30,9 +24,7 @@
   <script>
     document.addEventListener("keydown", function (e) {
       if (e.which === 123) {
-        require("electron")
-          .remote.getCurrentWindow()
-          .toggleDevTools()
+        require("electron").remote.getCurrentWindow().toggleDevTools()
       } else if (e.which === 116) {
         location.reload()
       }

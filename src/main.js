@@ -1,6 +1,7 @@
 const { app, BrowserWindow } = require("electron")
 const windowStateKeeper = require("electron-window-state")
 const contextMenu = require("electron-context-menu")
+const platform = require("src/util/platform")
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -65,7 +66,7 @@ app.on("ready", createWindow)
 app.on("window-all-closed", () => {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== "darwin") {
+  if (!platform.isMac()) {
     app.quit()
   }
 })

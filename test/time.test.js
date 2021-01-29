@@ -1,4 +1,3 @@
-"use strict"
 const { test, expect } = require("@jest/globals")
 const time = require("../src/util/time")
 
@@ -15,13 +14,9 @@ test("90 minutes formats to include hours", () => {
 })
 
 test("1.5 days formats to include days as well", () => {
-  expect(time.format(60 * 60 * 24 * 1.5)).toBe(
-    "1d 12h 00m 00s"
-  )
+  expect(time.format(60 * 60 * 24 * 1.5)).toBe("1d 12h 00m 00s")
 })
 
 test("500 days doesn't produce years", () => {
-  expect(time.format(60 * 60 * 24 * 500)).toBe(
-    "500d 00m 00s"
-  )
+  expect(time.format(60 * 60 * 24 * 500)).toBe("500d 00m 00s")
 })

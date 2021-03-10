@@ -127,7 +127,7 @@ Example: `:stream thoughts on`
 
 Display current configuration for Illthorn.
 
-#### `:hilite add <pattern> <group>`
+#### `:hilite add <group> <pattern>`
 
 Adds a regular expression to the specified highlight group.
 

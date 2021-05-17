@@ -34,6 +34,7 @@ const createWindow = () => {
       nodeIntegrationInWorker: true,
       webSecurity: false,
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      enableRemoteModule: true,
     },
     titleBarStyle: "hidden",
     icon: "/src/app/img/app-icon.png",

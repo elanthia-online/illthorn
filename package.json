@@ -5,7 +5,7 @@
   "description": "A modern front-end for Gemstone IV",
   "main": ".webpack/main",
   "scripts": {
-    "start": "ENV=dev electron-forge start",
+    "start": "cross-env ENV=dev electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "lint": "pretty-quick --check && eslint src",
@@ -110,6 +110,7 @@
     "@jest-runner/electron": "^3.0.0",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^4.3.0",
     "electron": "5.0.6",
     "eslint": "^7.14.0",

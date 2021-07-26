@@ -58,10 +58,12 @@ module.exports = class Feed {
   get _scrolling() {
     // no content scrollable
     if (this.root.scrollHeight == this.root.clientHeight) return false
-    // check the relative scroll offset from the head
+    // FIX: Calculate whether we're within 1px of the head.
+    // needed to account for scrollTop having sub-pixel precision on hidpi displays, where it returns a float value
+    // see:  https://github.com/jquery/api.jquery.com/issues/608
     return (
-      this.root.scrollHeight - this.root.scrollTop !==
-      this.root.clientHeight
+      this.root.offsetHeight + this.root.scrollTop <=
+      this.root.scrollHeight + -1
     )
   }
   /**
@@ -152,7 +154,7 @@ module.exports = class Feed {
    * reattaching to the head of the message feed
    */
   reattach_head() {
-    this.root.scrollTop = this.root.scrollHeight
+    this.root.scrollTo(0, this.root.scrollHeight)
     return this
   }
   /**

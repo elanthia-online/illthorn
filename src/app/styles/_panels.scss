@@ -121,12 +121,12 @@
   }
 }
 
-#active-spells {
+.effects {
   .value {
     margin-left: 0;
     display: flex;
     width: 100%;
-    .spell {
+    .effect {
       font-weight: normal;
       padding-right: 1em;
       margin-right: auto;

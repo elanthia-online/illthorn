@@ -116,6 +116,8 @@ function onNode(parsed, node) {
       return oncasttime(parsed, node)
     case Tags.ROUNDTIME:
       return onroundtime(parsed, node)
+    case Tags.NAV:
+      return onnav(parsed, node)
     // text elements
     case Tags.A:
     case Tags.B:
@@ -170,6 +172,10 @@ const onpre = (exports.onpre = (parsed, pre) => {
 const onprogressbar = (exports.onprogressbar = (parsed, progress) => {
   appendParsedMetadata(parsed, progress)
   removeChildren(parsed, progress)
+})
+
+const onnav = (exports.onnav = (parsed, nav) => {
+  orphan(parsed, nav)
 })
 
 const onopendialog = (exports.onopendialog = (parsed, opendialog) => {

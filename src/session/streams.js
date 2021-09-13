@@ -38,8 +38,8 @@ module.exports = class Streams {
     if (this._view.scrollHeight == this._view.clientHeight) return false
     // check the relative scroll offset from the head
     return (
-      this._view.scrollHeight - this._view.scrollTop !==
-      this._view.clientHeight
+      this._view.offsetHeight + this._view.scrollTop <=
+      this._view.clientHeight + -1
     )
   }
 

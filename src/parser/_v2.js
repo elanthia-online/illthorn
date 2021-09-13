@@ -174,6 +174,10 @@ const onprogressbar = (exports.onprogressbar = (parsed, progress) => {
   removeChildren(parsed, progress)
 })
 
+const onnav = (exports.onnav = (parsed, nav) => {
+  orphan(parsed, nav)
+})
+
 const onopendialog = (exports.onopendialog = (parsed, opendialog) => {
   appendParsedMetadata(parsed, opendialog)
   removeChildren(parsed, opendialog)

@@ -35,4 +35,5 @@ module.exports = {
   LAUNCHURL: "LAUNCHURL",
   CLOSEDIALOG: "CLOSEDIALOG",
   MARK: "MARK", // custom illthorn tag for normalizing presets
+  NAV: "NAV",
 }

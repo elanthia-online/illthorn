@@ -116,6 +116,8 @@ function onNode(parsed, node) {
       return oncasttime(parsed, node)
     case Tags.ROUNDTIME:
       return onroundtime(parsed, node)
+    case Tags.NAV:
+      return onnav(parsed, node)
     // text elements
     case Tags.A:
     case Tags.B:

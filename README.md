@@ -1,6 +1,6 @@
 # Illthorn / Electron 9
 
-Moving to electron 9 has significant improvements for the developer \u0026 packaging workflow as well as security.
+Moving to electron 9 has significant improvements for the developer packaging workflow as well as security.
 
 There were a significant amount of breaking changes however, and I have decided to use this as an opportunity to roll with that and bundle as many of the breaking changes I also wanted to make as possible into this major release.
 
@@ -26,3 +26,4 @@ Goals:
 # Links
 
 - [electron-webpack](https://github.com/electron-userland/electron-webpack)
+- [electron-builder](https://github.com/electron-userland/electron-builder)

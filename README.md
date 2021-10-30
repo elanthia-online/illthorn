@@ -1,46 +1,28 @@
-# electron-webpack-quick-start
-> A bare minimum project structure to get started developing with [`electron-webpack`](https://github.com/electron-userland/electron-webpack).
+# Illthorn / Electron 9
 
-Thanks to the power of `electron-webpack` this template comes packed with...
+Moving to electron 9 has significant improvements for the developer \u0026 packaging workflow as well as security.
 
-* Use of [`webpack-dev-server`](https://github.com/webpack/webpack-dev-server) for development
-* HMR for both `renderer` and `main` processes
-* Use of [`babel-preset-env`](https://github.com/babel/babel-preset-env) that is automatically configured based on your `electron` version
-* Use of [`electron-builder`](https://github.com/electron-userland/electron-builder) to package and build a distributable electron application
+There were a significant amount of breaking changes however, and I have decided to use this as an opportunity to roll with that and bundle as many of the breaking changes I also wanted to make as possible into this major release.
 
-Make sure to check out [`electron-webpack`'s documentation](https://webpack.electron.build/) for more details.
+Goals:
+- [X] remove as many external runtime dependencies as possible
+        * small stack means less work to maintain
+- [X] move from mithril.js to plain Web Components
+        * mithril is amazing for redraw/diff cycles, but most of our operations
+          are simple appends which need to happen as close to the DOM as possible.
+          Web Components are also a de facto web standard, and require no framework
+          specific knowledge, which makes it easier for outside contributors.
+- [x] move from javascript to typescript for maintainability
+        * I found it next to impossible to pick this project up after a hiatus
+          due to how complex it is, which made it less likely I would work on it
+          in general, typescript will help a lot here.
+- [x] move from a singleton view to a context based layout
+        * in the future this will allow the context to be settings, etc more easily
+- [x] move from everything passing through a global event bus to session-specific buses
+- [x] rewrite the parser... again
+        * the complexity of shoehorning the `DOMParser` api into parsing the Gemstone feed
+          led to more edge-cases than I anticipated, it ended up being very fast at doing a very bad job.  I have completely rewritten the parser in plain Typescript, with a suite of tests to handle all of the various oddities in the game feed.
 
-## Getting Started
-Simply clone down this repository, install dependencies, and get started on your application.
+# Links
 
-The use of the [yarn](https://yarnpkg.com/) package manager is **strongly** recommended, as opposed to using `npm`.
-
-```bash
-# create a directory of your choice, and copy template using curl
-mkdir new-electron-webpack-project && cd new-electron-webpack-project
-curl -fsSL https://github.com/electron-userland/electron-webpack-quick-start/archive/master.tar.gz | tar -xz --strip-components 1
-
-# or copy template using git clone
-git clone https://github.com/electron-userland/electron-webpack-quick-start.git
-cd electron-webpack-quick-start
-rm -rf .git
-
-# install dependencies
-yarn
-```
-
-### Development Scripts
-
-```bash
-# run application in development mode
-yarn dev
-
-# compile source code and create webpack output
-yarn compile
-
-# `yarn compile` & create build with electron-builder
-yarn dist
-
-# `yarn compile` & create unpacked build with electron-builder
-yarn dist:dir
-```
+- [electron-webpack](https://github.com/electron-userland/electron-webpack)

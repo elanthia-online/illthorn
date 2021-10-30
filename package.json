@@ -1,0 +1,42 @@
+{
+  "name": "illthorn",
+  "version": "1.0.0",
+  "license": "MIT",
+  "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "src/renderer"
+    ]
+  },
+  "scripts": {
+    "dev": "electron-webpack dev",
+    "compile": "electron-webpack",
+    "dist": "yarn compile && electron-builder",
+    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
+    "test": "yarn ava"
+  },
+  "dependencies": {
+    "electron-context-menu": "^3.1.1",
+    "source-map-support": "^0.5.16"
+  },
+  "devDependencies": {
+    "@ava/typescript": "^2.0.0",
+    "@babel/preset-typescript": "^7.15.0",
+    "@types/jest": "^27.0.2",
+    "ava": "^3.15.0",
+    "electron": "8.2.0",
+    "electron-builder": "^22.4.1",
+    "electron-webpack": "^2.8.2",
+    "electron-webpack-ts": "^4.0.1",
+    "jest": "^27.3.1",
+    "node-sass": "^6.0.1",
+    "sass-loader": "^10",
+    "spectron": "^15.0.0",
+    "typescript": "^4.3.5",
+    "webpack": "~4.42.1",
+    "webpack-build-notifier": "^2.3.0"
+  },
+  "electronWebpack": {
+    "title": "Illthorn"
+  }
+}

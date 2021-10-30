@@ -1,0 +1,70 @@
+body {
+  background-color: var(--main-bg-color, black);
+  color: var(--text-color, white);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  width: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(
+    --scrollbar-thumb-color,
+    var(--info, #184f3f)
+  );
+}
+
+
+#feed-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+#app {
+  display: grid;
+  height: 100vh;
+  grid-template-columns:
+    var(--actions-width, 6em)
+    1fr 0;
+  overflow: hidden;
+}
+
+/*
+
+#app.right-panels-on {
+  grid-template-columns:
+    var(--session-width, 6em) var(--column-width, 16em)
+    1fr var(--column-width);
+}
+
+#actions {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.session .hud {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+#panels-right {
+  grid-column: 4 / 5;
+  grid-row: 1 / 2;
+}
+
+
+
+#main {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+
+  display: grid;
+  grid-auto-rows: 3em 0 1fr 4em;
+  max-height: 100vh;
+}
+#app.streams-on #main {
+  grid-auto-rows: 3em var(--stream-height, 13em) 1fr 4em;
+}
+*/

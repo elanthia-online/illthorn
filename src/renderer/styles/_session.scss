@@ -1,0 +1,50 @@
+.session {
+  display: grid;
+  height: 100vh;
+  grid-template-columns:
+    var(--hud-width, 14em)
+    1fr 0;
+  overflow: hidden;
+
+  
+  .hud {
+    border-right: 1px solid var(--info);
+
+    illthorn-panel {
+      font-size: 14px;
+      position: relative;
+      // If we start saving panel heights to storage, let's do this
+      // overflow-x: hidden;
+      // overflow-y: auto;
+      resize: vertical;
+
+      &:not(:first-child) {
+        padding-top: 1em;
+      }
+    }
+    summary {
+      margin: 0;
+      padding: 0.5em;
+      text-transform: uppercase;
+      text-align: center;
+      background-color: var(--info);
+      font-weight: bold;
+      &:focus {
+        /* TODO: Strategy for focus styles */
+        outline: 0;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  
+
+  .main {
+    display: grid;
+    grid-template-rows: 3em 0 1fr 4em;
+    //grid-auto-rows: 3em 0 1fr 4em;
+    max-height: 100vh;
+  }
+  
+}

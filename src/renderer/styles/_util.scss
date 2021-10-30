@@ -1,0 +1,14 @@
+.scroll {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.severity-1 {
+  color: var(--gentle-warn);
+}
+.severity-2 {
+  color: var(--warn);
+}
+.severity-3 {
+  color: var(--danger);
+}

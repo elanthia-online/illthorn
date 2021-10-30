@@ -1,0 +1,45 @@
+/**
+ * String highlighting via :hilite
+ */
+
+a[exist],
+.b {
+  color: var(--hilite-color, #a0a0a0);
+}
+
+b,
+b a[exist] {
+  color: var(--monster-color, var(--warn, #fb5d2d));
+}
+
+.thoughts {
+  color: var(--thoughts-color, var(--text-color, white));
+}
+.speech {
+  color: var(--speech-color, #1ce21c);
+}
+.whisper {
+  color: var(--whisper-color, var(--speech-color, #00921f));
+}
+
+.external-link,
+.feed a {
+  cursor: pointer;
+  color: var(--link-color, #27a4fd);
+}
+
+.clickable d[cmd] {
+  border-bottom: 2px solid var(--link-color, #27a4fd);
+}
+
+.clickable d[cmd]:hover {
+  cursor: pointer;
+}
+
+.macro {
+  background: var(--macro-color, #de5aff);
+}
+
+ins {
+  text-decoration: none;
+}

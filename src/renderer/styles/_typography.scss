@@ -1,0 +1,75 @@
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 400;
+  src: url("./fonts/MonoLisa/MonoLisa-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 700;
+  src: url("./fonts/MonoLisa/MonoLisa-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 400;
+  font-style: italic;
+  src: url("./fonts/MonoLisa/MonoLisa-RegularItalic.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "MonoLisa";
+  font-weight: 700;
+  font-style: italic;
+  src: url("./fonts/MonoLisa/MonoLisa-BoldItalic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "DutchMediaeval";
+  font-weight: 400;
+  src: url("./fonts/DutchMediaeval/regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "DutchMediaeval";
+  font-weight: 700;
+  src: url("./fonts/DutchMediaeval/bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "DutchMediaeval";
+  font-weight: 400;
+  font-style: italic;
+  src: url("./fonts/DutchMediaeval/italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "DutchMediaeval";
+  font-weight: 700;
+  font-style: italic;
+  src: url("./fonts/DutchMediaeval/bolditalic.woff2") format("woff2");
+}
+
+body {
+  font-size: var(--base-font-size, 15px);
+  font-family: system-ui, sans-serif;
+}
+
+h2 {
+  margin: 0 0 1em 0;
+}
+
+ol,
+ul {
+  list-style-type: none;
+}
+
+pre {
+  font-family: "MonoLisa", system-ui, sans-serif;
+}
+
+.feed,
+.feed > *,
+.stream {
+  display: block;
+  font-family: "MonoLisa", system-ui, sans-serif;
+  white-space: pre-wrap;
+  line-height: 1.6;
+  word-break: break-word;
+  margin: 0;
+}

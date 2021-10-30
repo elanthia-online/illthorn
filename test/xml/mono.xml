@@ -1,0 +1,12 @@
+<output class="mono"/>
+ Constitution (CON):   100 (20)    ...  100 (20)
+    Dexterity (DEX):   100 (35)    ...  100 (35)
+      Agility (AGI):   100 (30)    ...  100 (30)
+   Discipline (DIS):   100 (15)    ...  <pushBold/>105<popBold/> (<pushBold/>17<popBold/>)
+         Aura (AUR):   100 (35)    ...  100 (35)
+        Logic (LOG):    98 (24)    ...  <pushBold/>108<popBold/> (<pushBold/>29<popBold/>)
+    Intuition (INT):    99 (29)    ...   99 (29)
+       Wisdom (WIS):    84 (22)    ...   84 (22)
+    Influence (INF):   100 (20)    ...  100 (20)
+ Mana:  311   Silver: 0
+<output class=""/>

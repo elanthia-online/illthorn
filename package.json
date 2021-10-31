@@ -22,7 +22,7 @@
   "devDependencies": {
     "@babel/preset-typescript": "^7.15.0",
     "@types/jest": "^27.0.2",
-    "electron": "8.2.0",
+    "electron": "11.5.0",
     "electron-builder": "^22.4.1",
     "electron-webpack": "^2.8.2",
     "electron-webpack-ts": "^4.0.1",

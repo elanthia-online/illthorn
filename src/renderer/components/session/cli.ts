@@ -1,6 +1,7 @@
 import { IllthornEvent } from "../../events"
 import type { Session } from "../../session"
 import { sendCommandToGame } from "../../session"
+import { Mode } from "../../session/command-history"
 
 export class CLI extends HTMLElement {
   history : string[]
@@ -11,10 +12,27 @@ export class CLI extends HTMLElement {
     this.input   = document.createElement("input")
     this.append(this.input)
 
+    this.input.addEventListener("keydown", e => {
+      if (e.key == "Tab") return e.preventDefault()
+    })
+
     this.input.addEventListener("keyup", e => {
       switch (e.key) {
         case "Enter":
-          return this.broadcastCommand()
+          e.preventDefault()
+          this.submitCommand()
+          return false
+        case "ArrowUp":
+          e.preventDefault()
+          session.history.write(this.input, Mode.BACKWARD)
+          return false
+        case "ArrowDown":
+          e.preventDefault()
+          session.history.write(this.input, Mode.FORWARD)
+          return false
+        case "Tab":
+          e.preventDefault()
+          return // todo
         default:
           return
       }
@@ -32,12 +50,13 @@ export class CLI extends HTMLElement {
     return parseInt(position, 10)
   }
 
-  broadcastCommand () {
-    const value = this.input.value
+  submitCommand () {
+    const command = this.input.value
+    this.session.history.add(command)
     this.input.value = ""
-    value[0] == ":"
-      ? this.session.bus.dispatchEvent(IllthornEvent.SUBMIT_ILLTHORN_COMMAND, value)
-      : sendCommandToGame(this.session, value)
+    command[0] == ":"
+      ? this.session.bus.dispatchEvent(IllthornEvent.SUBMIT_ILLTHORN_COMMAND, command)
+      : sendCommandToGame(this.session, command)
   }
 }
 

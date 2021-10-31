@@ -6,6 +6,9 @@ import { castToHTML } from "../parser/dom"
 import { makeSessionUI, SessionUI } from "./ui"
 import { GameTag } from "../parser/tag"
 import * as App from "../app"
+import { CommandHistory } from "./command-history"
+import { SessionButton } from "../components/session/action-button"
+import { actionsMenu } from "../layout"
 export type SessionOpts =
   { port : number
   ; name : string
@@ -20,22 +23,24 @@ export class Session {
   readonly port : number
   hasFocus : boolean
   name : string
-  buffer : string
   readonly ui : SessionUI
   readonly parser : Parser
   readonly bus    : Bus
   readonly socket : net.Socket
+  readonly history : CommandHistory
+  readonly actionButton : SessionButton
   constructor({ port, name, host } : SessionOpts) {
     this.port     = port
     this.hasFocus = false
     this.name     = name || port.toString()
     this.socket   = net.connect({ port, host })
     // buffer for incoming game lines
-    this.buffer   = ""
     this.parser   = Parser.of()
     // buss must exist before the ui is created
     this.bus      = new Bus
     this.ui       = makeSessionUI(this)
+    this.history  = new CommandHistory()
+    this.actionButton = new SessionButton(this)
   }
 }
 
@@ -49,7 +54,7 @@ export async function makeSession (opts : SessionOpts) {
   const session = new Session({...opts, host})
   renameSession(session, session.name)
   attachSessionListeners(session)
-  //this.bus.dispatchEvent(IllthornEvent.SESSION_NEW, session)
+  actionsMenu.append(session.actionButton)
   return session
 }
 export async function ingestSessionIncoming(session : Session, incoming : string) {
@@ -90,12 +95,17 @@ export function currentSession () {
 }
 
 export function focusSession (session : Session) {
-  session.hasFocus = true
+  if (session.hasFocus) return session // noop
+  Array.from(Sessions).forEach(([_, otherSession])=> {
+    otherSession.hasFocus = otherSession == session
+  })
+
   App.bus.dispatchEvent("session/focus", session)
   return session
 }
 
 export function renderSession (session : Session, container : HTMLElement) {
+  container.innerHTML = ""
   container.append(session.ui.context)
   return session
 }

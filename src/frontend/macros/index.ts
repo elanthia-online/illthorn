@@ -53,22 +53,6 @@ export async function bindMetaMacros () {
     })
   })
 
-  keyboardjs.on("up", (e) => {
-    e?.preventDefault()
-    const session = currentSession()
-    if (!session) return
-    const proposedCmd = session.history.back()
-    if (proposedCmd) session.ui.cli.input.value = proposedCmd
-  })
-
-  keyboardjs.on("down", (e) => {
-    e?.preventDefault()
-    const session = currentSession()
-    if (!session) return
-    const proposedCmd = session.history.forward()
-    if (proposedCmd) session.ui.cli.input.value = proposedCmd
-  })
-
   keyboardjs.on("ctrl+pagedown", (_) => {
     const sess = currentSession()
     sess && sess.ui.feed.scrollToNow()

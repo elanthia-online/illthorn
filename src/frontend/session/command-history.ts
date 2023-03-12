@@ -55,14 +55,14 @@ export class CommandHistory extends Array<string> {
   forward() {
     this.position = wrap_index(this.position - 1, this.length)
     //console.log("history:forward", this.index, this.read(), this.toJSON())
-    return this[this.position]
+    return this.read()
   }
   /**
    * Step current index one step deeper into the history.
    */
   back() {
     this.position = wrap_index(this.position + 1, this.length)
-    return this[this.position]
+    return this.read()
     //console.log("history:back", this.index, this.read(), this.toJSON())
   }
   /**

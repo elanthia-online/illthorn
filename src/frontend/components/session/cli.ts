@@ -4,21 +4,26 @@ import { type FrontendSession } from "../../session"
 import { Illthorn } from "../../illthorn"
 
 export class CLI extends HTMLElement {
-  history : string[]
   input   : HTMLInputElement
   constructor (readonly session : FrontendSession) {
     super()
-    this.history = []
     this.input   = document.createElement("input")
     this.input.autofocus = true
     this.append(this.input)
 
     this.input.addEventListener("keydown", e => {
+      const history = this.session.history
       switch (e.key) {
         case "Enter":
-          currentSession()?.history.resetPosition()
-          e.preventDefault()
-          this.submitCommand()
+          //e.preventDefault()
+          return this.submitCommand()
+        case "ArrowUp":
+          if (history.position == 0) {
+            history.add(this.input.value)
+          }
+          return this.setInput(history.back())
+        case "ArrowDown":
+          return this.setInput(history.forward())
       }
 
     })
@@ -29,6 +34,13 @@ export class CLI extends HTMLElement {
           return
       }
     })
+  }
+
+  setInput (value : string) {
+    this.input.value = value
+    setTimeout(()=> {
+      this.input.setSelectionRange(value.length, value.length)
+    }, 0)
   }
 
   connectedCallback () {

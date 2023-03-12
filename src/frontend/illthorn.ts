@@ -14,7 +14,8 @@ export const Illthorn = window.Illthorn = new class IIllthorn {
     })
 
     this.bus.subscribeEvent<string>(IllthornEvent.MACRO, ({detail: macro})=> {
-      UI.cli.handleMacro(macro)
+      const currentSess = currentSession()
+      if (currentSess) currentSess.handleMacro(macro)
     })
 
     this.bus.subscribeEvent<string>(IllthornEvent.SUBMIT_ILLTHORN_COMMAND, async e => {

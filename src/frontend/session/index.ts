@@ -59,5 +59,23 @@ export class FrontendSession {
       session.ui.feed.appendParsed(prompt)
     }
     if (metadata.length) metadata.forEach(tag => dispatchMetadata(session, tag))
+  }
+
+  handleMacro (macro : string) {
+    const cliInput = this.ui.cli.input
+
+    const replacement = macro.indexOf("?")
+
+    if (!~replacement) {
+      return macro
+        .trim()
+        .split(/\r|\n/g)
+        .map((cmd) => cmd.trim())
+        .filter((cmd) => cmd.length)
+        .forEach((cmd) => this.sendCommand(cmd))
     }
+    cliInput.value = macro
+    cliInput.focus()
+    cliInput.setSelectionRange(replacement - 1, replacement + "?".length)
+  }
 }

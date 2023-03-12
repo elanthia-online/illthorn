@@ -1,0 +1,30 @@
+name: debian-release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Create .deb
+        id: create_deb
+        run: |
+          yarn install --frozen-lockfile
+          yarn make -p win32
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: ${{steps.build_changelog.outputs.changelog}}
+          token: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          files: |
+            out/make/squirrel.windows/*.exe

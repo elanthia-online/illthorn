@@ -1,0 +1,39 @@
+illthorn-vitals, illthorn-effects {
+  display: flex;
+  flex-direction: column;
+}
+
+illthorn-progress-bar {
+  text-align: center;
+  padding: 0.5em;
+  position: relative;
+
+  .flavor-text {
+    text-align: right;
+  }
+
+  .meter {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  span {
+    z-index: 1;
+    position: relative;
+  }
+
+  &.high .meter {
+    background-color: var(--ok);
+  }
+
+  &.medium .meter {
+    background-color: var(--warn);
+  }
+
+  &.low {
+    background-color: var(--danger);
+    font-weight: bold;
+  }
+}

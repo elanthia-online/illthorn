@@ -1,0 +1,361 @@
+/*! THEME: dark-king */
+
+@import "../vars";
+
+$blue: #6cadd0;
+$green: #91d686;
+$purple: #a990ef;
+$orange: #fbb17b;
+$red: #d64e4e;
+
+:root {
+  --main-bg-color: #1a1a1d;
+  --text-color: #f1f1f1;
+  --info: purple;
+
+  --ok: #{$green};
+  --gentle-warn: #{$orange};
+  --warn: #{$red};
+  --danger: #{$red};
+
+  --icon-size: 1.4em;
+  --border-width: 2px;
+  --border-color: #2f2733;
+  --base-font-size: 15px;
+  --stream-font-size: 12px;
+
+  --column-width: minmax(16em, 0.33fr);
+
+  --stream-channel-color: #{$green};
+
+  --scrollbar-thumb-color: black;
+}
+
+// Global
+body {
+  font-family: "DutchMediaeval", serif;
+  font-weight: 400;
+}
+
+#sessions,
+#panels-left,
+#panels-right,
+#hands-wrapper,
+#cli-wrapper {
+  background: linear-gradient(261.75deg, #202224 35.86%, #352f48 77.44%);
+}
+
+// Sessions
+.session-name {
+  font-family: "DutchMediaeval", serif;
+}
+
+// Hands
+.hand#left::before {
+  transform: rotate(22deg) scaleX(-1);
+}
+.hand#right::before {
+  transform: rotate(-22deg);
+  order: 2;
+  margin-right: 0;
+  margin-left: 1em;
+}
+
+// Streams
+.streams {
+  padding: 1em;
+}
+
+#feed-wrapper,
+#streams-wrapper {
+  position: relative;
+  // under-shadow
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(black, 0.75),
+      rgba(black, 0)
+    );
+    height: 2em;
+  }
+}
+
+// Feed
+#feed-wrapper {
+  padding: 0 0 0 1em;
+}
+.feed .roomName {
+  margin: 1em 0 0 0;
+  background: linear-gradient(to right, rgba($purple, 0.35), transparent);
+  color: white;
+  padding: 0.5em 1em;
+}
+.feed .roomDesc {
+  margin: 0 0 1em 0;
+  padding: 0.5em 1em;
+  opacity: 0.66;
+  background: linear-gradient(to right, rgba($purple, 0.2), transparent);
+}
+.feed {
+  prompt.sent {
+    margin-left: -1em;
+    opacity: 0.75;
+  }
+  prompt.game {
+    visibility: hidden;
+  }
+}
+
+.label {
+  text-transform: capitalize;
+}
+
+.panel {
+  padding: 1px;
+  // Gradient border around panels
+  &::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    background: linear-gradient(135deg, #39abeb, #570275);
+    border-radius: 8px;
+  }
+  > div {
+    position: relative;
+    background: #191919;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    overflow: hidden;
+    padding: 1em;
+  }
+  > summary {
+    text-transform: capitalize;
+    text-align: left;
+    font-weight: bold;
+    position: relative;
+    font-size: 1.2em;
+    background: #191919;
+    border-radius: 6px;
+    border-bottom: 1px solid black;
+    position: relative;
+    z-index: 1;
+    padding: 0.8em 0.5em 0.7em 0.8em;
+    margin: 0;
+  }
+  &[open] > summary {
+    box-shadow: 0 1px 1px 0 #282323;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
+  li {
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid black;
+    box-shadow: 0 1px 1px 0 #282323;
+  }
+}
+
+@mixin panelRow($color) {
+  background: linear-gradient(5deg, rgba($color, 0.2), rgba($color, 0));
+  margin-left: -1em;
+  width: calc(100% + 2em);
+  padding: 0.7em 1em 0.5em;
+
+  &.low {
+    background: linear-gradient(5deg, rgba($color, 0.2), rgba($color, 0)),
+      radial-gradient(ellipse at top right, rgba(red, 0.5), rgba(red, 0));
+    &::before {
+      content: "⚠️";
+      display: inline-block;
+      line-height: 1;
+    }
+  }
+
+  .label,
+  .value {
+    color: $color;
+  }
+}
+
+@mixin title($title) {
+  margin-top: 28px;
+  &::before {
+    content: $title;
+    display: block;
+    position: absolute;
+    top: -10px;
+    left: 0;
+    font-size: 0.65em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+}
+
+#vitals {
+  > div {
+    padding-top: 0;
+  }
+}
+
+li#vitals-spirit,
+li#vitals-health,
+li#vitals-mana,
+li#vitals-stamina {
+  border: 0;
+  position: relative;
+  font-size: 1.2em;
+  margin-bottom: 0;
+  .label {
+    font-family: "DutchMediaeval", serif;
+  }
+}
+
+#vitals-spirit {
+  @include panelRow($purple);
+}
+#vitals-health {
+  @include panelRow($green);
+}
+#vitals-mana {
+  @include panelRow($blue);
+}
+#vitals-stamina {
+  @include panelRow($orange);
+}
+
+#vitals-encumlevel {
+  @include title("Encumbrance");
+}
+#vitals-mindState {
+  @include title("Mind");
+}
+#vitals-pbarStance {
+  @include title("Stance");
+}
+
+.spells {
+  li {
+    .value {
+      display: grid;
+      grid-template-columns: 1fr 45px;
+      .spell {
+        text-align: left;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+    &:hover {
+      background: black;
+    }
+  }
+  li.low {
+    .spell {
+      color: #ff6e6e;
+    }
+  }
+}
+
+.injury,
+.scar {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid black;
+  box-shadow: 0 1px 1px 0 #282323;
+  border-radius: 0;
+  padding-bottom: 0.5em;
+}
+.injury.severity-1,
+.scar.severity-1 {
+  color: #ff7c7c;
+}
+.injury.severity-2 {
+  .injury-name::before {
+    content: "🩸";
+  }
+}
+.injury.severity-2,
+.scar.severity-2 {
+  color: #ff3333;
+  font-weight: bold;
+}
+.injury.severity-3 {
+  .injury-name::before {
+    content: "🩸";
+  }
+}
+.injury.severity-3,
+.scar.severity-3 {
+  color: #ff0000;
+  text-shadow: 0 0 16px red;
+  font-weight: bold;
+}
+
+// Highlighting
+[exist] {
+  color: #a7a7a7;
+}
+
+@each $direction in $directions {
+  a[exist][noun="#{$direction}"] {
+    color: $blue;
+  }
+}
+@each $box in $boxes {
+  a[exist][noun="#{$box}"] {
+    color: $green;
+    font-weight: bold;
+  }
+}
+$start: 0;
+@each $gem in $gems {
+  a[exist][noun="#{$gem}"] {
+    color: adjust-hue($blue, $start);
+  }
+  $start: $start + 1;
+}
+@each $magic in $magics {
+  a[exist][noun="#{$magic}"] {
+    color: $purple;
+  }
+}
+
+[noun="scarab"]::before {
+  content: "🐞";
+}
+[noun="shell"]::before {
+  content: "🦪";
+}
+[noun="waraxe"]::before,
+[noun="axe"]::before {
+  content: "🪓";
+}
+[noun="dagger"]::before {
+  content: "🗡";
+}
+[noun="shield"]::before {
+  content: "🛡";
+}
+[noun="beer"]::before,
+[noun="ale"]::before {
+  content: "🍺";
+}
+[noun="diamond"]::before {
+  content: "🔹";
+}
+[noun="bone"]::before {
+  content: "🦴";
+}
+[noun="donut"]::before {
+  content: "🍩";
+}

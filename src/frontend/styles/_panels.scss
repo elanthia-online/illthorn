@@ -1,0 +1,99 @@
+.hud {
+  border-right: var(--border-width, 3px) solid
+    var(--border-color, var(--info));
+}
+
+illthorn-panel {
+  font-size: 13px;
+  position: relative;
+  //padding: 4px;
+  //margin: 10px;
+  // If we start saving panel heights to storage, let's do this
+  // overflow-x: hidden;
+  // overflow-y: auto;
+  resize: vertical;
+  summary {
+    margin: 0;
+    padding: 0.5em;
+    text-transform: uppercase;
+    text-align: center;
+    background-color: var(--info);
+    font-weight: bold;
+    &:focus {
+      /* TODO: Strategy for focus styles */
+      outline: 0;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  illthorn-progress-bar {
+    position: relative;
+    padding: 0.4em 0 0.2em;
+    display: flex;
+    align-items: center;
+  }
+  span {
+    flex: 1;
+  }
+  .value {
+    margin-left: auto;
+    font-weight: bold;
+  }
+}
+
+// This order should probably be enforced in the DOM by the JavaScript since for accessibility the visual order should match the tabbing order. But this is a fix for now.
+illthorn-progress-bar.health {
+  order: 1;
+}
+illthorn-progress-bar.mana {
+  order: 2;
+}
+illthorn-progress-bar.spirit {
+  order: 3;
+}
+illthorn-progress-bar.stamina {
+  order: 4;
+}
+illthorn-progress-bar.encum {
+  order: 5;
+}
+illthorn-progress-bar.stance {
+  order: 6;
+}
+illthorn-progress-bar.mind {
+  order: 7;
+}
+
+.high .label {
+  color: var(--ok);
+}
+
+.medium .label {
+  color: var(--warn);
+}
+
+.low .label,
+.low .spell {
+  color: var(--danger);
+}
+
+.injury-name {
+  padding-right: 1em;
+  margin-right: auto;
+}
+
+.active-spells {
+  .value {
+    margin-left: 0;
+    display: flex;
+    width: 100%;
+  }
+
+  .flavor-text {
+      font-weight: normal;
+      padding-right: 1em;
+      margin-right: auto;
+      flex: 2;
+    }
+}

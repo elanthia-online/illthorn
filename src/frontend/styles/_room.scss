@@ -1,0 +1,41 @@
+illthorn-room {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  // todo: make this purdy
+  span {
+    flex: 1;
+  }
+}
+
+illthorn-compass {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  width: 90px;
+  height: 150px;
+  margin: 0 auto;
+  a {
+    height: 30px;
+    width: 30px;
+    padding: 0;
+    line-height: 30px;
+    align-content: center;
+    justify-content: center;
+    background: var(--info);
+    opacity: 0.2;
+
+    &.on {
+      background: var(--ok);
+      color: var(--info, #f1f1ff);
+      opacity: 1;
+    }
+
+    &:empty {
+      visibility: hidden;
+    }
+  }
+}

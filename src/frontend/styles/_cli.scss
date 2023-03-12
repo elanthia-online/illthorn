@@ -1,0 +1,87 @@
+.cli-wrapper {
+  background-color: var(--info);
+  display: grid;
+  grid-template-columns: 4em 1fr 22px;
+  //grid-template-rows: 6px 1fr;
+  grid-gap: 0 0.5em;
+  padding: 1em 0.5em;
+  align-items: center;
+  padding-left: var(--hud-width, 14em);
+  illthorn-prompt {
+    font-family: "MonoLisa", monospace;
+    display: inline-block;
+    text-align: right;
+    font-size: 1.6em;
+    position: relative;
+    top: -0.1em;
+  }
+}
+
+illthorn-cli {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+illthorn-cli input {
+  font-family: "MonoLisa", monospace;
+  left: 0;
+  top: 0;
+  border: none;
+  width: 100%;
+  padding: 0.5em;
+  color: #fff;
+  font-size: 1em;
+  background-color: rgba(white, 0.1);
+  z-index: 1;
+  &:focus {
+    outline: none;
+  }
+
+  &#cli-suggestions {
+    background-color: rgba(black, 0.2);
+  }
+}
+
+button.ui-help-button {
+  display: inline-block;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  text-indent: -9999px;
+  background-color: rgba(white, 0.33);
+  width: 22px;
+  height: 22px;
+  mask: url(./svg/icon-help.svg) no-repeat 50% 50%;
+  -webkit-mask: url(./svg/icon-help.svg) no-repeat 50% 50%;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+}
+button.ui-help-button:hover {
+  background-color: rgba(white, 0.66);
+}
+
+.timers {
+  grid-column: 1 / -1;
+  align-self: start;
+}
+.timer-bar {
+  height: 3px;
+  // The bar maxes out, visually, at 20s timers
+  width: calc(var(--steps) * 5%);
+  &.go {
+    animation: roundtime var(--duration) steps(var(--steps)) forwards;
+  }
+}
+.round-time-current {
+  background: var(--danger, red);
+}
+.cast-time-current {
+  background: var(--gentle-warn, lightgreen);
+}
+// TODO: This is a cool idea for a tick-by-second timer that still animates the segments: https://codepen.io/berky93/pen/yLOazVv
+@keyframes roundtime {
+  to {
+    transform: scaleX(0);
+  }
+}

@@ -1,0 +1,26 @@
+#current-session-feed {
+  overflow: hidden;
+}
+
+illthorn-feed {
+  padding: 0 1em 1em 1em;
+  height: 100%;
+
+  // Force onto GPU for best rendering
+  transform: translate3d(0, 0, 0);
+}
+
+pre.speech,
+pre.whisper {
+  display: inline;
+}
+
+.feed pre {
+  margin: 0;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
+.feed mark {
+  background-color: transparent;
+}

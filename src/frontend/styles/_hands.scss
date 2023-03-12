@@ -1,0 +1,36 @@
+.hands {
+  border-bottom: var(--border-width, 3px) solid
+    var(--border-color, var(--info));
+  -webkit-app-region: drag;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+illthorn-hand {
+  -webkit-app-region: no-drag;
+  padding: 0 1em;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  &::before {
+    content: "";
+    display: inline-block;
+    height: var(--icon-size, 1em);
+    width: var(--icon-size, 1em);
+    mask: url(./svg/hand.svg) no-repeat 50% 50%;
+    -webkit-mask: url(./svg/hand.svg) no-repeat 50% 50%;
+    mask-size: cover;
+    -webkit-mask-size: cover;
+    margin-right: 1em;
+    background-color: var(--text-color);
+  }
+}
+
+illthorn-hand.spell {
+  &::before {
+    mask: url(./svg/magic.svg) no-repeat 50% 50%;
+    -webkit-mask: url(./svg/magic.svg) no-repeat 50% 50%;
+  }
+}

@@ -1,0 +1,124 @@
+/*! THEME: raging-thrak */
+
+@import "../vars";
+
+$yellow: #ffd60a; // hsl(50, 100%, 52%)
+
+[theme='raging-thrak'] {
+  --main-bg-color: #1a1a1d;
+  --text-color: #f1f1f1;
+  --hilite-color: #ffd28e;
+
+  --info: #484848;
+  --ok: white;
+  --gentle-warn: #f7f012;
+  --warn: #ff5402;
+  --danger: #ff0000;
+  --monster-color: #{$yellow};
+
+  --icon-size: 1em;
+  --border-width: 0;
+  --scrollbar-thumb-color: #{rgba($yellow, 0.33)};
+
+  --column-width: minmax(16em, 0.33fr);
+
+  --stream-channel-color: #91d686;
+}
+
+body {
+  background-image: url(../../img/city.jpg);
+  background-size: cover;
+  font-family: "DutchMediaeval";
+}
+
+// Putting Hands by CLI
+#main {
+  grid-auto-rows: 0 1fr 2em 4em;
+  padding-bottom: 1em;
+}
+#app {
+  background: linear-gradient(
+    45deg,
+    rgba(black, 0.9),
+    rgba(black, 0.1)
+  );
+}
+#app.streams-on #main {
+  grid-auto-rows: var(--stream-height, 13em) 1fr 2em 4em;
+}
+
+#sessions {
+  background: none;
+}
+.panels {
+  padding: 1em;
+}
+#hands-wrapper {
+  padding-top: 0.5em;
+  grid-row: 3;
+}
+#streams-wrapper,
+#feed-wrapper {
+  padding: 1em 1em 0 0;
+}
+#streams-wrapper {
+  padding-bottom: 0.5em;
+}
+.streams,
+.feed,
+#cli-wrapper,
+.panel {
+  border: 3px solid black;
+  border-image: url(../../img/wooden-border.png) 25 / 20px
+    round;
+  background: rgba(black, 0.9);
+}
+#cli-wrapper {
+  margin: 0 1em 0 0;
+}
+
+.panel {
+  background: rgba(black, 0.6);
+  padding: 4px;
+  margin: 0 0 20px 0;
+  > summary {
+    background: none;
+    font-family: "DutchMediaeval";
+    font-weight: bold;
+    padding: 1em;
+    font-size: 1.1em;
+    letter-spacing: 0.04em;
+    margin: 0 0 0.45em 0;
+    border-radius: 3px;
+    background: linear-gradient(
+      to bottom,
+      rgba(212, 156, 0, 0.5),
+      rgba(64, 44, 0, 0.6)
+    );
+    box-shadow: inset 0px -4px 6px 0px rgba(black, 0.5);
+  }
+  > div {
+    padding: 0 0.5em 0.5em 0.5em;
+  }
+}
+
+.feed .roomName {
+  margin: 10px 0 0 0;
+  background: linear-gradient(
+    to right,
+    rgba($yellow, 0.35),
+    transparent
+  );
+  color: white;
+  padding: 2px;
+}
+.feed .roomDesc {
+  margin: 0 0 10px 0;
+  padding: 6px;
+  opacity: 0.75;
+  background: linear-gradient(
+    to right,
+    rgba($yellow, 0.1),
+    transparent
+  );
+}

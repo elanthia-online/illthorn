@@ -1,0 +1,93 @@
+/*! THEME: rogue */
+
+[theme='rogue'] {
+  --black: #232323;
+  --yellow: #e6db74;
+  --orange: #fd971f;
+  --red: #f92672;
+  --magenta: #fd5ff0;
+  --violet: #ae81ff;
+  --blue: #66d9ef;
+  --cyan: #a1efe4;
+  --green: #a6e22e;
+  --charcoal: #36454f;
+
+  // map our palette to illthorn vars
+  --main-bg-color: var(--black);
+  --text-color: #f8f8f2;
+  --info: var(--charcoal);
+  --warn: var(--red);
+  --gentle-warn: var(--orange);
+  --ok: var(--green);
+
+  --stream-height: 10em;
+
+  --icon-size: 1em;
+  --base-padding: 3em;
+
+  --column-width: 20em;
+  --monster-color: var(--orange);
+
+  illthorn-vitals, illthorn-effects {
+    .meter {
+      display: none;
+    }
+
+    .high .value {
+      color: var(--info)
+    }
+
+    .medium .value {
+      color: var(--gentle-warn)
+    }
+
+    .low .value {
+      color: var(--warn)
+    }
+
+    .inverted {
+      &.high .value {
+        color: var(--warn)
+      }
+
+      &.medium .value {
+        color: var(--gentle-warn)
+      }
+
+      &.low .value {
+        color: var(--info)
+      }
+    }
+  }
+
+
+  illthorn-panel {
+    padding: 0;
+    border-bottom: 0;
+    summary {
+      border-bottom: 1px solid var(--charcoal);
+      background: var(--charcoal);
+      margin: 0 0 3px 0;
+    }
+
+    .value {
+      margin-left: 0;
+    }
+  }
+
+  illthorn-session-button {
+    border-radius: 0;
+    &.on {
+      box-shadow: 0 0 0 2px var(--ok);
+    }
+    &.off {
+      border-color: var(--info);
+    }
+  }
+
+
+
+  .roomName {
+    color: var(--cyan);
+  }
+}

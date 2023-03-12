@@ -9,7 +9,7 @@ import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
 
 const deb = new MakerDeb(
-  { options: {icon: "./icons/app-icon.png"}
+  { options: {icon: "./icons/app-icon.png", productName: "illthorn"}
   })
 const rpm = new MakerRpm(
   { options: {icon: "./icons/app-icon.png"}

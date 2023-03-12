@@ -1,4 +1,4 @@
-name: debian-release
+name: windows-release
 
 on:
   push:

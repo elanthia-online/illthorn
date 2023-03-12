@@ -26,6 +26,7 @@ jobs:
       - name: Create .deb
         id: create_deb
         run: |
+          yarn install --frozen-lockfile
           yarn make
       - name: Release
         uses: softprops/action-gh-release@v1

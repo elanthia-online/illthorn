@@ -1,5 +1,5 @@
-import {CLI} from "../components/cli"
-import { Prompt } from "../components/prompt"
+import {CLI} from "../components/session/cli"
+import { Prompt } from "../components/session/prompt"
 import { Context } from "../components/context"
 import { Feed } from "../components/session/feed"
 import { Compass } from "../components/session/compass"
@@ -9,11 +9,13 @@ import {Panel} from "../components/session/panel"
 import { Room } from "../components/session/room"
 import { Effects } from "../components/session/effects"
 import {div} from "../util/dom"
-import type { FrontendSession as  Session } from "../session"
+import type { FrontendSession as Session } from "../session"
 
 export type SessionUI =
   { context : Context
+  ; cli     : CLI
   ; feed    : Feed
+  ; prompt  : Prompt
   ; vitals  : Vitals
   ; streams : HTMLDivElement
   ; hands   : { left: Hand, right: Hand, spell: Hand }
@@ -59,9 +61,13 @@ export function makeSessionUI (session : Session): SessionUI {
   // feeds and streams
   const streams = div({classes: "streams"})
   const feed    = new Feed(session)
-  //const prompt         = new Prompt(session)
-  //commandBar.append(prompt, cli)
+
+  // cli related ui components
+  const commandBar     = div({classes: "cli-wrapper"})
+  const cli            = new CLI(session)
+  const prompt         = new Prompt(session)
+  commandBar.append(prompt, cli)
   
-  main.append(handsContainer, streams, feed)
-  return {context, vitals, feed, streams, hands}
+  main.append(handsContainer, streams, feed, commandBar)
+  return {context, vitals, cli, feed, prompt, streams, hands}
 }

@@ -1,11 +1,12 @@
-import { IllthornEvent } from "../events"
-import { currentSession, sendCommandToGame } from "../session/helpers"
-import { Illthorn } from "../illthorn"
+import { IllthornEvent } from "../../events"
+import { currentSession} from "../../session/helpers"
+import { type FrontendSession } from "../../session"
+import { Illthorn } from "../../illthorn"
 
 export class CLI extends HTMLElement {
   history : string[]
   input   : HTMLInputElement
-  constructor () {
+  constructor (readonly session : FrontendSession) {
     super()
     this.history = []
     this.input   = document.createElement("input")
@@ -42,35 +43,12 @@ export class CLI extends HTMLElement {
 
   submitCommand () {
     const command = this.input.value
-    const sess = currentSession()
     this.input.value = ""
-    
-    if (sess) sess.history.add(command)
+    this.session.history.add(command)
 
     command[0] == ":"
       ? Illthorn.bus.dispatchEvent(IllthornEvent.SUBMIT_ILLTHORN_COMMAND, command)
-      : sess && sendCommandToGame(sess, command)
-  }
-
-  handleMacro (macro : string) {
-    const session = currentSession()
-    if (!session) return
-      
-    const cliInput = this.input
-
-    const replacement = macro.indexOf("?")
-
-    if (!~replacement) {
-      return macro
-        .trim()
-        .split(/\r|\n/g)
-        .map((cmd) => cmd.trim())
-        .filter((cmd) => cmd.length)
-        .forEach((cmd) => session.sendCommand(cmd))
-    }
-    cliInput.value = macro
-    cliInput.focus()
-    cliInput.setSelectionRange(replacement - 1, replacement + "?".length)
+      : this.session.sendCommand(command)
   }
 }
 

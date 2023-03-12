@@ -1,6 +1,6 @@
 .session {
   display: grid;
-  height: calc(100vh - 4em);
+  height: 100vh;
   grid-template-columns:
     var(--hud-width, 14em)
     1fr 0;

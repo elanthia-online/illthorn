@@ -8,10 +8,23 @@ import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
 
+const deb = new MakerDeb(
+  { options: {icon: "./icons/app-icon.png"}
+  })
+const rpm = new MakerRpm(
+  { options: {icon: "./icons/app-icon.png"}
+  })
+const squirrel = new MakerSquirrel(
+  { iconUrl: "https://raw.githubusercontent.com/elanthia-online/illthorn/electron-22/icons/app-icon.ico"
+  })
+const zip = new MakerZIP(
+  {
+  }, ['darwin'])
+
 const config: ForgeConfig = {
   packagerConfig: {},
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [deb, rpm, squirrel, zip],
   plugins: [
     new WebpackPlugin({
       mainConfig,

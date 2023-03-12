@@ -27,6 +27,10 @@ export const Illthorn = window.Illthorn = new class IIllthorn {
     return SessionMap
   }
 
+  currentSession () {
+    return currentSession()
+  }
+
   renderSession (session : FrontendSession) {
     renderSession(session, document.getElementById("current-context"))
   }

@@ -16,6 +16,7 @@ const rpm = new MakerRpm(
   })
 const squirrel = new MakerSquirrel(
   { iconUrl: "https://raw.githubusercontent.com/elanthia-online/illthorn/electron-22/icons/app-icon.ico"
+  , setupIcon: "./icons/app-icon.ico"
   })
 const zip = new MakerZIP(
   {

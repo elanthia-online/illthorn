@@ -16,8 +16,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Create .deb
-        id: create_deb
+      - name: Create .exe
+        id: create_exe
         run: |
           yarn install --frozen-lockfile
           yarn make -p win32
@@ -27,4 +27,4 @@ jobs:
           body: ${{steps.build_changelog.outputs.changelog}}
           token: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
           files: |
-            out/make/squirrel.windows/*.exe
+            out/make/squirrel.windows/x64/*.exe

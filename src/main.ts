@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen } from 'electron'
+import { app, BrowserWindow, screen, shell } from 'electron'
 import path from "path"
 import "./backend"
 import { setWebContents } from "./backend/webcontents"
@@ -25,6 +25,11 @@ const createWindow = async (): Promise<void> => {
   });
 
   setWebContents(mainWindow.webContents)
+
+  mainWindow.webContents.setWindowOpenHandler((details) => {
+    shell.openExternal(details.url)
+    return { action: 'deny' }
+  })
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)

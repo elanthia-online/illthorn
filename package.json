@@ -1,7 +1,7 @@
 {
   "name": "illthorn",
   "productName": "illthorn",
-  "version": "0.0.2-rc.2",
+  "version": "0.0.2-rc.3",
   "description": "a modern FE for Gemstone IV",
   "main": ".webpack/main",
   "scripts": {
@@ -55,13 +55,12 @@
     "mark.js": "^8.11.1",
     "ws": "^8.12.1"
   },
-	"ava": {
-		"extensions": {
-			"ts": "module"
-		},
-		"nodeArguments": [
-			"--loader=ts-node/esm"
-		]
-}
-
+  "ava": {
+    "extensions": {
+      "ts": "module"
+    },
+    "nodeArguments": [
+      "--loader=ts-node/esm"
+    ]
+  }
 }

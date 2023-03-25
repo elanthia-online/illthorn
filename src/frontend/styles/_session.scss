@@ -6,6 +6,15 @@
     1fr 0;
   overflow: hidden;
 
+  &.no-hud {
+    // disable hud menu
+    grid-template-columns: 0 1fr 0;
+
+    .hud {
+      visibility: hidden;
+    }
+  }
+
 
   .hud {
     border-right: 1px solid var(--info);
@@ -46,5 +55,8 @@
     //grid-auto-rows: 3em 0 1fr 4em;
     max-height: 100vh;
   }
+}
 
+.streams-on .main {
+  grid-template-rows: 3em var(--stream-height, 13em) 1fr 4em;
 }

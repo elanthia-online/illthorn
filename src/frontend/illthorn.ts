@@ -31,6 +31,11 @@ export const Illthorn = window.Illthorn = new class IIllthorn {
     return currentSession()
   }
 
+  hud (on:boolean) {
+    const sess = currentSession()
+    sess.ui.context.classList.toggle("no-hud", !on)
+  }
+
   renderSession (session : FrontendSession) {
     renderSession(session, document.getElementById("current-context"))
   }
@@ -42,6 +47,10 @@ export const Illthorn = window.Illthorn = new class IIllthorn {
       case ":dq":
         const sess = currentSession()
         return sess && endSession(sess)
+      case ":hud on":
+        return this.hud(true)
+      case ":hud off":
+        return this.hud(false)
     }
   }
 }

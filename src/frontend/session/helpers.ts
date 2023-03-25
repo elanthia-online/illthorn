@@ -37,7 +37,7 @@ export function focusSession (session : Session) {
 export function renderSession (session : Session, container : HTMLElement) {
   container.innerHTML = ""
   container.append(session.ui.context)
-  session.ui.feed.scrollToNow()
+  session.onFocus()
   return session
 }
 

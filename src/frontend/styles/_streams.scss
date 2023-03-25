@@ -1,24 +1,25 @@
-#app.streams-on #streams-wrapper {
+.streams-on illthorn-streams {
   border-bottom: var(--border-width, 3px) solid
     var(--border-color, var(--info));
-  height: var(--stream-height, 13em);
 }
 
-.streams {
+illthorn-streams {
   font-size: var(
     --stream-font-size,
     var(--base-font-size, 15px)
   );
   height: 100%;
   padding: 0 1em;
+  overflow-y: scroll;
 }
 
-.streams mark {
+illthorn-streams mark {
   background: transparent;
 }
 
-.streams pre {
+illthorn-streams pre {
   margin: 0.2em 0;
+  white-space: pre-wrap;
 }
 .stream-channel {
   font-weight: bold;
@@ -29,9 +30,6 @@
   }
 }
 
-.stream-channel[data-stream-channel="[Dreavening]"] {
-  color: var(--warn, #fb5d2d);
-}
 .stream-channel[data-stream-channel="[PrivateTo]"],
 .stream-channel[data-stream-channel="[Private]"] {
   background: var(--danger, #ff3b00);

@@ -125,11 +125,11 @@ export function handleStreamTag (frag : DocumentFragment, tag : GameTag): void {
     case "room":
       return // noop / these are duplicated
     default:
-      console.log("stream/detected", tag.attrs.id)
+      //console.log("stream/detected", tag.attrs.id)
       const streamEle = document.createElement("pre")
       const streamFrag = document.createDocumentFragment()
       const styles = Object.values(tag.attrs) as string[]
-      streamEle.classList.add(...styles)
+      streamEle.classList.add(...styles, "stream")
 
       tag.children
         .forEach((tag, idx) => handleTag(tag, idx, tag.children, streamFrag, []))

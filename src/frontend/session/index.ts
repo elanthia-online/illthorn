@@ -27,6 +27,7 @@ export class FrontendSession {
     // this must be done last after all the other stuff
     this.ui     = makeSessionUI(this)
     this.actionButton = new SessionButton(this)
+    this.streams(true)
     SessionMap.set(this.name, this)
   }
 
@@ -36,6 +37,12 @@ export class FrontendSession {
 
   get port () {
     return this.config.port
+  }
+
+  streams (on: boolean) {
+    this.ui.context.classList.toggle("streams-on", on)
+    this.ui.streams.scrollToNow()
+    this.ui.feed.scrollToNow()
   }
 
   async sendCommand (command : string) {
@@ -51,14 +58,23 @@ export class FrontendSession {
 
     // prompts are special, they are both metadata and rendered inline (sometimes)
     if (prompt) {session.bus.dispatchEvent("prompt", prompt) }
+    await addHilites(frag)
+
+    const streams = [...frag.querySelectorAll(".stream.thoughts")]
+
+    if (streams.length) {
+      streams.forEach(entry =>session.ui.streams.addEntry(entry))
+    }
+
     if (frag.hasChildNodes() && frag.textContent?.trim() !== ""){
-      await addHilites(frag)
       session.ui.feed.appendParsed(frag)
     }
+
     if (!session.ui.feed.has_prompt() && prompt) {
       session.ui.feed.appendParsed(prompt)
     }
-    if (metadata.length) metadata.forEach(tag => dispatchMetadata(session, tag))
+    if (metadata.length) metadata
+      .forEach(tag => dispatchMetadata(session, tag))
   }
 
   handleMacro (macro : string) {
@@ -77,5 +93,10 @@ export class FrontendSession {
     cliInput.value = macro
     cliInput.focus()
     cliInput.setSelectionRange(replacement - 1, replacement + "?".length)
+  }
+
+  async onFocus () {
+    this.ui.streams.scrollToNow()
+    this.ui.feed.scrollToNow()
   }
 }

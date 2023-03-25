@@ -7,6 +7,7 @@ import {makeHand, Hand}   from "../components/session/hand"
 import { Vitals } from "../components/session/vitals"
 import {Panel} from "../components/session/panel"
 import { Room } from "../components/session/room"
+import { Streams } from "../components/session/streams"
 import { Effects } from "../components/session/effects"
 import {div} from "../util/dom"
 import type { FrontendSession as Session } from "../session"
@@ -17,14 +18,15 @@ export type SessionUI =
   ; feed    : Feed
   ; prompt  : Prompt
   ; vitals  : Vitals
-  ; streams : HTMLDivElement
+  ; streams : Streams
   ; hands   : { left: Hand, right: Hand, spell: Hand }
   }
 
 export function makeSessionUI (session : Session): SessionUI {
   // wrapper for an app context
-  const context = new Context()
-  context.classList.add("session", session.name)
+  const context = new Context(session)
+  context.classList.add("session")
+  context.id = session.name
 
   const hud   = div({classes: "hud"})
   const main  = div({classes: "main"})
@@ -59,7 +61,7 @@ export function makeSessionUI (session : Session): SessionUI {
   handsContainer.append(left, right, spell)
 
   // feeds and streams
-  const streams = div({classes: "streams"})
+  const streams = new Streams(session)
   const feed    = new Feed(session)
 
   // cli related ui components

@@ -1,5 +1,5 @@
 export class Streams extends HTMLElement {
-  addEntry (entry : HTMLElement) {
+  addEntry (entry : Element) {
     const wasScrolled = this.isScrolling
     this.appendChild(entry.cloneNode(true))
     if (wasScrolled) return 

@@ -63,7 +63,8 @@ export class FrontendSession {
     const streams = [...frag.querySelectorAll(".stream.thoughts")]
 
     if (streams.length) {
-      streams.forEach(entry =>session.ui.streams.addEntry(entry))
+      streams.forEach(entry =>  
+        session.ui.streams.addEntry(entry))
     }
 
     if (frag.hasChildNodes() && frag.textContent?.trim() !== ""){

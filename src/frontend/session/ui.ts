@@ -61,7 +61,7 @@ export function makeSessionUI (session : Session): SessionUI {
   handsContainer.append(left, right, spell)
 
   // feeds and streams
-  const streams = new Streams(session)
+  const streams = new Streams()
   const feed    = new Feed(session)
 
   // cli related ui components

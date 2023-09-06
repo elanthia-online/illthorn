@@ -34,7 +34,7 @@
     "ava": "^5.2.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.0.0",
-    "electron": "22.0.3",
+    "electron": "22.3.21",
     "eslint": "^8.0.1",
     "eslint-plugin-import": "^2.25.0",
     "fork-ts-checker-webpack-plugin": "^7.2.13",

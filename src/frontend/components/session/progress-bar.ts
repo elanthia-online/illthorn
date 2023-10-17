@@ -36,8 +36,8 @@ export class ProgressBar extends HTMLElement {
   updatePercent (percentEmptyStr : string) {
     const percentRemaining = parseInt(percentEmptyStr)
     this.meter.style.width = percentRemaining + "%"
-    this.classList.toggle("high", percentRemaining > 66)
-    this.classList.toggle("medium", percentRemaining < 66 && percentRemaining > 33)
+    this.classList.toggle("high", percentRemaining >= 66)
+    this.classList.toggle("medium", percentRemaining < 66 && percentRemaining >= 33)
     this.classList.toggle("low", percentRemaining < 33)
   }
 }

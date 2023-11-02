@@ -58,9 +58,17 @@ export class CLI extends HTMLElement {
     this.input.value = ""
     this.session.history.add(command)
 
-    command[0] == ":"
-      ? Illthorn.bus.dispatchEvent(IllthornEvent.SUBMIT_ILLTHORN_COMMAND, command)
-      : this.session.sendCommand(command)
+    if (command[0] == ":") {
+      return Illthorn.bus.dispatchEvent(IllthornEvent.SUBMIT_ILLTHORN_COMMAND, command)
+    }
+    if (command[0] == ";") {
+      // This is going to Lich, so we'll not monkey with it
+      return this.session.sendCommand(command)
+    } 
+    return command.split("\\r").forEach(c => {
+        c = c.trim()
+        this.session.sendCommand(c)
+      })
   }
 }
 
